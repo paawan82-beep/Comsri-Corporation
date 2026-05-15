@@ -22,8 +22,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#f6f5f8] flex flex-col font-sans">
       {/* Top Header */}
-      <header className="bg-white py-4 px-8 border-b border-gray-100 flex items-center justify-between">
-        <div className="flex-shrink-0 flex items-center gap-1 cursor-pointer">
+      <header className="bg-white py-4 border-b border-gray-100">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between w-full">
+          <div className="flex-shrink-0 flex items-center gap-1 cursor-pointer">
           {/* Logo Placeholder */}
           <div className="flex flex-col">
             <div className="flex items-center">
@@ -70,20 +71,22 @@ export default function Home() {
             Login / Register
           </button>
         </div>
+        </div>
       </header>
 
       {/* Navigation Bar */}
-      <nav className="bg-[#faba5b] px-8 py-3 flex items-center justify-between text-[14px] font-medium text-black">
-        <ul className="flex items-center gap-x-6">
-          <li><a href="#" className="text-[#374bf9]">Home</a></li>
-          <li><a href="#" className="hover:text-gray-700">About Us</a></li>
+      <nav className="bg-[#faba5b] py-3 text-[14px] font-medium text-black">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between w-full">
+        <ul className="flex flex-wrap items-center gap-y-2 gap-x-6">
+          <li><a href="/" className="text-[#374bf9]">Home</a></li>
+          <li><a href="/about" className="hover:text-gray-700">About Us</a></li>
           <li className="flex items-center gap-1 cursor-pointer hover:text-gray-700">
             Refurbished Products <ChevronDown size={14} className="text-gray-500" />
           </li>
           <li className="flex items-center gap-1 cursor-pointer hover:text-gray-700">
             New Products <ChevronDown size={14} className="text-gray-500" />
           </li>
-          <li><a href="#" className="hover:text-gray-700">Bulk Orders</a></li>
+          <li><a href="/bulk-orders" className="hover:text-gray-700">Bulk Orders</a></li>
           <li><a href="#" className="hover:text-gray-700">Blog</a></li>
           <li><a href="#" className="hover:text-gray-700">Contact Us</a></li>
           <li className="flex items-center gap-1 cursor-pointer hover:text-gray-700">
@@ -109,6 +112,7 @@ export default function Home() {
               0
             </span>
           </button>
+        </div>
         </div>
       </nav>
 
@@ -777,7 +781,7 @@ export default function Home() {
 
       {/* Footer Section */}
       <footer className="bg-[#fcb643] pt-16 pb-12 w-full relative">
-        <div className="max-w-[1536px] mx-auto px-6 lg:px-12 flex flex-col gap-12">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex flex-col gap-12">
           
           {/* Top Columns */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 justify-between">
