@@ -332,7 +332,7 @@ export default function Home() {
               { name: 'Microsoft', src: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg' },
             ].map((brand, idx) => (
               <div key={idx} className="bg-white rounded-[20px] p-6 flex flex-col items-center justify-center h-[100px] md:h-[120px] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-gray-100">
-                <img src={brand.src} alt={brand.name} className="w-auto h-auto max-h-[35px] max-w-[90px] object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <img   src={brand.src} alt={brand.name} className="w-auto h-auto max-h-[35px] max-w-[90px] object-contain opacity-80 hover:opacity-100 transition-opacity" />
               </div>
             ))}
           </div>
@@ -543,7 +543,7 @@ export default function Home() {
             
             <div className="space-y-4 text-white/90 text-[14px] leading-relaxed mb-10">
               <p>
-                At <strong className="text-white">Comsri Corporation</strong>, we believe premium computing should be accessible to everyone. As a trusted destination for <strong className="text-white">Refurbished Computers Online in India</strong>, we specialize in delivering high-quality refurbished and brand-new laptops and desktops to students, professionals, startups, enterprises, and gamers across India. Whether you're upgrading your office infrastructure, purchasing a personal device, or sourcing systems in bulk, our online computer store provides dependable performance at competitive prices.
+                At <strong className="text-white">Comsri Corporation</strong>, we believe premium computing should be accessible to everyone. As a trusted destination for <strong className="text-white">Refurbished Computers Online in India</strong>, we specialize in delivering high-quality refurbished and brand-new laptops and desktops to students, professionals, startups, enterprises, and gamers across India. Whether you&apos;re upgrading your office infrastructure, purchasing a personal device, or sourcing systems in bulk, our online computer store provides dependable performance at competitive prices.
               </p>
               <p>
                 Recognized by customers as one of the <strong className="text-white">Top 10 Refurbished Laptops Online Store</strong> options in India, Comsri Corporation offers a carefully curated range of systems designed for productivity, learning, and business use. From <strong className="text-white">cheap refurbished laptops India</strong> for everyday tasks to powerful workstations for professional workloads, we help you find the right device without overspending.
@@ -552,7 +552,7 @@ export default function Home() {
                 Every refurbished laptop and desktop undergoes a strict multi-point quality inspection, professional hardware testing, and performance validation. Our expert technicians ensure each system delivers smooth, long-lasting operation—giving you complete confidence when you <strong className="text-white">Buy Refurbished Laptops Online in India</strong>. Each unit is cleaned, optimized, and configured to offer like-new reliability, making Comsri Corporation a preferred choice for anyone searching for the <strong className="text-white">Best refurbished laptop India</strong>.
               </p>
               <p>
-                If you're looking to buy refurbished computers online in India with peace of mind, Comsri Corporation is your trusted partner—delivering value, performance, and reliability nationwide.
+                If you&apos;re looking to buy refurbished computers online in India with peace of mind, Comsri Corporation is your trusted partner—delivering value, performance, and reliability nationwide.
               </p>
             </div>
             
@@ -569,7 +569,7 @@ export default function Home() {
           {/* Right Image */}
           <div className="lg:w-[450px] xl:w-[500px] flex-shrink-0 w-full relative">
             <div className="aspect-[4/5] w-full rounded-[24px] overflow-hidden shadow-2xl">
-              <img 
+              <img   
                 src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=1000" 
                 alt="Desktop setup with monitor" 
                 className="w-full h-full object-cover"
@@ -597,7 +597,7 @@ export default function Home() {
             <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
               {/* Image */}
               <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                <img 
+                <img   
                   src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=600" 
                   alt="Blog cover" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -644,7 +644,7 @@ export default function Home() {
             <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
               {/* Image */}
               <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                <img 
+                <img   
                   src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" 
                   alt="Blog cover" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -672,7 +672,7 @@ export default function Home() {
 
                 {/* Description */}
                 <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
-                  In today's competitive business environment, organizations are under constant pressure to reduce op...
+                  In today&apos;s competitive business environment, organizations are under constant pressure to reduce op...
                 </p>
 
                 {/* Footer (Tag and Date) */}
@@ -691,7 +691,7 @@ export default function Home() {
             <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
               {/* Image */}
               <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                <img 
+                <img   
                   src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&q=80&w=600" 
                   alt="Blog cover" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -772,7 +772,7 @@ export default function Home() {
               "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&q=80&w=400",
             ].map((src, index) => (
               <div key={index} className="w-full aspect-square md:rounded-[20px] rounded-[12px] overflow-hidden bg-white shadow-sm group relative">
-                <img src={src} alt="Instagram post" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img   src={src} alt="Instagram post" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
             ))}
           </div>
@@ -888,19 +888,19 @@ export default function Home() {
             <p className="text-[14px] font-bold text-[#111]">Copyright 2026 by Comsri Corporation All Right Reserved.</p>
             <div className="flex gap-1.5">
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
+                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
               </div>
               <div className="bg-[#1a1f71] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
+                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
               </div>
               <div className="bg-[#003087] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
+                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
               </div>
               <div className="bg-[#2d9cdb] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
+                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
               </div>
               <div className="bg-[#6772e5] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
+                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
               </div>
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center px-1">
                 <span className="text-white text-[10px]">G</span><span className="text-white text-[12px] font-bold">Pay</span>
@@ -909,7 +909,7 @@ export default function Home() {
                 <Apple size={14} className="fill-white text-white mr-0.5" /><span className="text-white text-[10px] font-semibold mt-[1px]">Pay</span>
               </div>
               <div className="bg-[#004b87] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
+                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
               </div>
             </div>
           </div>

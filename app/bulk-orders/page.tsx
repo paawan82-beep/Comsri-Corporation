@@ -3,9 +3,19 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
-import { Search, ChevronDown, Shuffle, Heart, ShoppingCart, Apple, Play, Facebook, Instagram, Youtube, MessageCircle, HeartHandshake, ShieldCheck, Truck, Users, Package, Check, ArrowRight, ArrowDown } from "lucide-react";
+import { Search, ChevronDown, Shuffle, Heart, ShoppingCart, Apple, Play, Facebook, Instagram, Youtube, MessageCircle, HeartHandshake, ShieldCheck, Truck, Users, Package, Check, ArrowRight, ArrowDown, RefreshCw, Target, Briefcase, Clock, HeartPulse, IndianRupee, ClipboardCheck, Rocket, Shield, ChartColumn, Leaf, Phone, MapPin, Mail, Send, MessageSquare } from "lucide-react";
+
+const faqs = [
+  { q: "What is the minimum quantity required to qualify as a bulk order?", a: "To qualify for bulk pricing and specialized organizational support, a minimum order quantity of 10 devices is required." },
+  { q: "Do you offer custom configurations matching our IT policies?", a: "Yes, we can pre-configure laptops and desktops with custom OS images, required software, and hardware configurations per your IT specifications before shipping." },
+  { q: "How long does the delivery take for Pan-India bulk orders?", a: "Our typical delivery timeframe is 3-7 business days across India. For large custom orders, a delivery schedule will be shared during the quote process." },
+  { q: "What kind of warranty and post-sales support do you provide?", a: "We provide comprehensive 1-year hardware warranty on all refurbished and new systems, along with priority helpdesk support and options for specialized AMC covering your entire inventory." },
+  { q: "Are your refurbished systems certified and secure?", a: "Absolutely. We follow stringent 6-stage quality checks. Data from previous usage is wiped securely to DoD standards, and every component undergoes rigorous stress-testing." }
+];
 
 export default function BulkOrdersPage() {
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
   return (
     <div className="min-h-screen bg-[#f6f5f8] flex flex-col font-sans">
       {/* Top Header */}
@@ -109,11 +119,11 @@ export default function BulkOrdersPage() {
         </div>
 
         {/* Hero Section */}
-        <div className="w-full relative overflow-hidden py-16 lg:py-24 bg-[#146ba1]">
+        <div className="w-full relative overflow-hidden py-10 lg:py-16 bg-[#146ba1]">
            <div className="absolute inset-0 bg-gradient-to-r from-[#175d8d] to-[#128dc9] opacity-100"></div>
            
-           <div className="max-w-[1600px] mx-auto px-6 lg:px-12 relative z-10 flex flex-col lg:flex-row items-center gap-10">
-                  <div className="w-full lg:w-[48%] xl:w-[45%] flex flex-col items-start gap-5 text-white pr-4">
+           <div className="w-full mx-auto px-6 lg:px-12 relative z-10 flex flex-col lg:flex-row items-center gap-10">
+                  <div className="w-full lg:w-[60%] xl:w-[60%] flex flex-col items-start gap-5 text-white pr-4">
                   <div className="flex flex-wrap gap-2.5 mb-2">
                      <span className="bg-white/10 border border-white/20 text-white text-[12.5px] font-normal py-1.5 px-3.5 rounded-full flex items-center gap-2 hover:bg-white/20 transition-colors cursor-default backdrop-blur-sm shadow-sm">
                        <span className="w-2 h-2 rounded-full bg-[#4ade80] shadow-[0_0_8px_rgba(74,222,128,0.6)]"></span> NSE Listed
@@ -127,11 +137,11 @@ export default function BulkOrdersPage() {
                   </div>
                   
                   <h1 className="text-[42px] font-normal leading-[1.1] tracking-tight mb-2 text-white">
-                    Cut Enterprise IT Costs by <span className="text-[#faba5b]">70%</span> Without Compromising Performance
+                    Optimize Your Enterprise IT Infrastructure <br />and Save Up to <span className="text-[#faba5b]">70%</span> on Costs
                   </h1>
                   
                   <p className="text-[18px] text-white/95 leading-relaxed font-normal mb-5 mt-2 max-w-xl shadow-none">
-                    Enterprise-grade refurbished laptops, desktops & IT equipment for India&apos;s leading companies. From ₹15,000 with flexible payment options.
+                    High-performance refurbished laptops, desktops & enterprise IT equipment for businesses across India. Starting from ₹15,000 with easy and flexible payment plans.
                   </p>
                   
                   <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-8 w-full sm:w-auto">
@@ -151,23 +161,23 @@ export default function BulkOrdersPage() {
                   </div>
               </div>
               
-              <div className="w-full lg:w-[52%] xl:w-[55%] relative mt-12 lg:mt-0">
-                 <div className="w-[100%] h-[350px] sm:h-[450px] lg:w-[110%] lg:h-[560px] rounded-[24px] lg:rounded-l-[24px] lg:rounded-r-none overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] lg:translate-x-[5%] border border-white/10 relative">
+              <div className="w-full lg:w-[40%] xl:w-[40%] relative mt-12 lg:mt-0">
+                 <div className="w-[100%] h-[350px] sm:h-[400px] lg:w-[100%] lg:h-[460px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/10 relative rounded-[30px]">
                      <Image 
                        src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=1200" 
                        alt="Enterprise IT Team" 
                        fill 
-                       className="object-cover object-center" 
+                       className="object-cover object-center rounded-[30px]" 
                        referrerPolicy="no-referrer" 
                      />
-                     <div className="absolute inset-0 bg-[#0d7fba]/10 mix-blend-overlay"></div>
+                     <div className="absolute inset-0 bg-[#0d7fba]/10 mix-blend-overlay rounded-[30px]"></div>
                  </div>
               </div>
            </div>
         </div>
 
         {/* Stats & Trusted By Section */}
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-16 lg:py-20 bg-white">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-16 lg:py-20 bg-[#f6f5f8]">
           <div className="flex flex-col lg:flex-row items-center mb-10 gap-8 lg:gap-4 w-full justify-between">
              <div className="w-full lg:w-[35%] xl:w-[30%]">
                <div className="flex items-center justify-center lg:justify-start gap-4 text-[11px] font-bold text-gray-400 tracking-[0.2em] relative whitespace-nowrap">
@@ -250,6 +260,579 @@ export default function BulkOrdersPage() {
           </div>
         </div>
 
+        {/* Full Asset Lifecycle Management Section */}
+        <div className="w-full bg-[#f6f5f8] py-20 lg:py-24">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
+            <div className="mb-14 max-w-4xl">
+              <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-[32px] md:text-[40px] font-medium text-[#111] mb-4 tracking-tight"
+              >
+                What <span className="text-[#0d7fba] font-bold">Comsri</span> Does : <span className="text-[#0d7fba]">Full Asset Lifecycle Management</span>
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-[17px] text-[#555] leading-relaxed max-w-3xl font-medium"
+              >
+                Comsri delivers a closed-loop IT asset lifecycle programme — from procurement through to certified disposal — designed specifically for compliance-intensive environments.
+              </motion.p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {/* Card 1 */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="bg-white border border-gray-100 rounded-[24px] p-8 lg:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group"
+              >
+                <div className="w-14 h-14 bg-[#eef8fe] rounded-2xl flex items-center justify-center mb-6 text-[#0d7fba] group-hover:bg-[#0d7fba] group-hover:text-white transition-colors">
+                  <RefreshCw size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3">Buyback of Old Assets</h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  Structured buyback of your existing devices to immediately recover residual value and reduce write-off exposure — with certified documentation for every asset collected.
+                </p>
+              </motion.div>
+
+              {/* Card 2 */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="bg-white border border-gray-100 rounded-[24px] p-8 lg:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group"
+              >
+                <div className="w-14 h-14 bg-[#eef8fe] rounded-2xl flex items-center justify-center mb-6 text-[#0d7fba] group-hover:bg-[#0d7fba] group-hover:text-white transition-colors">
+                  <Target size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3">Refurbish & Redeploy</h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  Certified refurbishment and internal redeployment ensures assets reach full potential before end-of-life consideration — with a 72+ point QC checklist on every device.
+                </p>
+              </motion.div>
+
+              {/* Card 3 */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="bg-white border border-gray-100 rounded-[24px] p-8 lg:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group"
+              >
+                <div className="w-14 h-14 bg-[#eef8fe] rounded-2xl flex items-center justify-center mb-6 text-[#0d7fba] group-hover:bg-[#0d7fba] group-hover:text-white transition-colors">
+                  <Briefcase size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3">Refurbished Device Supply</h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  Grade-A refurbished devices supplied with full QC documentation, warranty coverage, and traceability records — ready for deployment the moment they arrive.
+                </p>
+              </motion.div>
+
+              {/* Card 4 */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="bg-white border border-gray-100 rounded-[24px] p-8 lg:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group"
+              >
+                <div className="w-14 h-14 bg-[#eef8fe] rounded-2xl flex items-center justify-center mb-6 text-[#0d7fba] group-hover:bg-[#0d7fba] group-hover:text-white transition-colors">
+                  <Clock size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3">AMC & Uptime Management</h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  Annual Maintenance Contracts with defined SLAs and fast-swap protocols to minimise operational disruption — including advance replacement for mission-critical terminals.
+                </p>
+              </motion.div>
+
+              {/* Card 5 */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="bg-white border border-gray-100 rounded-[24px] p-8 lg:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group"
+              >
+                <div className="w-14 h-14 bg-[#eef8fe] rounded-2xl flex items-center justify-center mb-6 text-[#0d7fba] group-hover:bg-[#0d7fba] group-hover:text-white transition-colors">
+                  <HeartPulse size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3">CSR Redeployment</h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  End-of-life assets redirected through verified CSR channels with full visibility reporting for ESG disclosures — CPCB/EPR certified disposal included.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* Why Choose Us Section */}
+        <div className="w-full bg-[#f6f5f8] py-20 lg:py-24 border-t border-gray-100">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
+            <div className="mb-14 max-w-4xl">
+              <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-[32px] md:text-[38px] font-medium text-[#0d7fba] mb-4 tracking-tight"
+              >
+                Why India&apos;s Leading Enterprises Choose Comsri
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-[17px] text-[#666] leading-relaxed max-w-3xl font-medium"
+              >
+                The most trusted name in enterprise refurbished IT — quality you can count on, savings you can prove.
+              </motion.p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {/* Card 1 */}
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
+                whileHover={{ y: -8 }}
+                className="bg-white border border-gray-100 relative overflow-hidden rounded-[20px] p-8 lg:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(13,127,186,0.1)] hover:border-[#0d7fba]/30 transition-all duration-300 group z-10"
+              >
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-amber-500/10 to-transparent rounded-bl-full -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 text-amber-500 group-hover:scale-110 group-hover:bg-amber-100 transition-all duration-300 shadow-sm">
+                  <IndianRupee size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3 group-hover:text-[#0d7fba] transition-colors relative inline-block">
+                  Save Up to 70%
+                </h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  Get enterprise-grade ThinkPad, Latitude & EliteBook devices at a fraction of the new price.
+                </p>
+              </motion.div>
+
+              {/* Card 2 */}
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
+                whileHover={{ y: -8 }}
+                className="bg-white border border-gray-100 relative overflow-hidden rounded-[20px] p-8 lg:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(13,127,186,0.1)] hover:border-[#0d7fba]/30 transition-all duration-300 group z-10"
+              >
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-green-500/10 to-transparent rounded-bl-full -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 text-green-500 group-hover:scale-110 group-hover:bg-green-100 transition-all duration-300 shadow-sm">
+                  <ClipboardCheck size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3 group-hover:text-[#0d7fba] transition-colors">
+                  72+ Quality Checks
+                </h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  Every device goes through rigorous multi-point inspection before it reaches your team.
+                </p>
+              </motion.div>
+
+              {/* Card 3 */}
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.3 }}
+                whileHover={{ y: -8 }}
+                className="bg-white border border-gray-100 relative overflow-hidden rounded-[20px] p-8 lg:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(13,127,186,0.1)] hover:border-[#0d7fba]/30 transition-all duration-300 group z-10"
+              >
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-rose-500/10 to-transparent rounded-bl-full -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="w-14 h-14 bg-rose-50 rounded-2xl flex items-center justify-center mb-6 text-rose-500 group-hover:scale-110 group-hover:bg-rose-100 transition-all duration-300 shadow-sm">
+                  <Rocket size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3 group-hover:text-[#0d7fba] transition-colors">
+                  Fast Deployment
+                </h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  From order to your desk in 3-7 days anywhere in India. 500 devices, no problem.
+                </p>
+              </motion.div>
+
+              {/* Card 4 */}
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.4 }}
+                whileHover={{ y: -8 }}
+                className="bg-white border border-gray-100 relative overflow-hidden rounded-[20px] p-8 lg:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(13,127,186,0.1)] hover:border-[#0d7fba]/30 transition-all duration-300 group z-10"
+              >
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#0d7fba]/10 to-transparent rounded-bl-full -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="w-14 h-14 bg-[#eef8fe] rounded-2xl flex items-center justify-center mb-6 text-[#0d7fba] group-hover:scale-110 group-hover:bg-[#e0f2fe] transition-all duration-300 shadow-sm">
+                  <Shield size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3 group-hover:text-[#0d7fba] transition-colors">
+                  1-3 Year Warranty
+                </h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  Comprehensive warranty with pan-India service network. Extended plans available.
+                </p>
+              </motion.div>
+
+              {/* Card 5 */}
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.5 }}
+                whileHover={{ y: -8 }}
+                className="bg-white border border-gray-100 relative overflow-hidden rounded-[20px] p-8 lg:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(13,127,186,0.1)] hover:border-[#0d7fba]/30 transition-all duration-300 group z-10"
+              >
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-purple-500/10 to-transparent rounded-bl-full -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 text-purple-500 group-hover:scale-110 group-hover:bg-purple-100 transition-all duration-300 shadow-sm">
+                  <ChartColumn size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3 group-hover:text-[#0d7fba] transition-colors">
+                  Flexible Payments
+                </h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  Lease, rent, or buy. OpEx-friendly models to protect your cash flow and balance sheet.
+                </p>
+              </motion.div>
+
+              {/* Card 6 */}
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.6 }}
+                whileHover={{ y: -8 }}
+                className="bg-white border border-gray-100 relative overflow-hidden rounded-[20px] p-8 lg:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(13,127,186,0.1)] hover:border-[#0d7fba]/30 transition-all duration-300 group z-10"
+              >
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-emerald-500/10 to-transparent rounded-bl-full -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 text-emerald-500 group-hover:scale-110 group-hover:bg-emerald-100 transition-all duration-300 shadow-sm">
+                  <Leaf size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3 group-hover:text-[#0d7fba] transition-colors">
+                  ESG Compliant
+                </h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  Reduce e-waste by 65%. Meet sustainability targets and CSR commitments effortlessly.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+        {/* Contact Form Section */}
+        <div 
+          className="bg-[#0B1120] pt-12 lg:pt-16 pb-12 lg:pb-16 relative overflow-hidden"
+          style={{
+            borderRadius: '30px',
+            marginLeft: '20px',
+            marginRight: '20px',
+            width: '100%',
+            maxWidth: 'calc(100% - 40px)'
+          }}
+        >
+            {/* Background elements */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+              <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-white/5 rounded-full blur-[100px]"></div>
+              <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#ffc300]/10 rounded-full blur-[100px]"></div>
+            </div>
+
+          <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row relative z-10 px-6 lg:px-12">
+            
+            {/* Left Column (Text & Contact Info) */}
+            <div className="w-full lg:w-[55%] py-8 lg:py-8 lg:pr-16 xl:pr-24 flex flex-col justify-center gap-10 lg:gap-12 relative z-10">
+               <div>
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    className="inline-flex items-center gap-2 border border-[#ffc300]/30 rounded-full py-1.5 px-3 mb-8"
+                  >
+                     <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center text-black shadow-sm">
+                       <MessageSquare size={14} />
+                     </div>
+                     <span className="text-[#ffc300] font-medium text-[14px] pr-2">Start A Project</span>
+                  </motion.div>
+
+                  <motion.h2 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                    className="text-[40px] md:text-[56px] lg:text-[64px] font-bold text-white leading-[1.05] tracking-tight mb-6"
+                  >
+                    Let&apos;s Build Your<br/>Digital Future
+                  </motion.h2>
+
+                  <motion.p 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 }}
+                    className="text-[16px] md:text-[18px] text-white/50 leading-relaxed max-w-lg mb-8 font-medium"
+                  >
+                    Ready to launch your next project? Fill out the form below or reach out directly to start a conversation about your business needs and how we can help you grow.
+                  </motion.p>
+               </div>
+
+               <motion.div 
+                 initial={{ opacity: 0, y: 30 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 transition={{ delay: 0.3 }}
+                 className="flex flex-col sm:flex-row flex-wrap gap-8 lg:gap-x-12 gap-y-6"
+               >
+                  <div className="flex items-center gap-4 group">
+                     <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                        <Phone size={20} strokeWidth={2.5} />
+                     </div>
+                     <span className="text-white font-semibold text-[15px] group-hover:text-[#ffc300] transition-colors">+1(555) 123-4567</span>
+                  </div>
+                  <div className="flex items-center gap-4 group">
+                     <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                        <MapPin size={20} strokeWidth={2.5} />
+                     </div>
+                     <span className="text-white font-semibold text-[15px] group-hover:text-[#ffc300] transition-colors">San Francisco, CA</span>
+                  </div>
+                  <div className="flex items-center gap-4 group mt-2 sm:mt-0 xl:mt-2">
+                     <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                        <Mail size={20} strokeWidth={2.5} />
+                     </div>
+                     <span className="text-white font-semibold text-[15px] group-hover:text-[#ffc300] transition-colors">hello@digitalagency.com</span>
+                  </div>
+               </motion.div>
+            </div>
+
+                        {/* Right Column (Form) */}
+            <motion.div 
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 80, damping: 20 }}
+              className="w-full lg:w-[45%] py-8 lg:py-12 flex items-center"
+            >
+               <div className="w-full h-full bg-[#ffc300] rounded-[24px] lg:rounded-[32px] p-8 lg:p-12 shadow-[0_20px_50px_rgba(255,195,0,0.15)] flex flex-col justify-center">
+                  <div className="space-y-6 w-full">
+                     {/* Row 1 */}
+                     <motion.div
+                       className="flex flex-col md:flex-row gap-6 w-full"
+                       initial={{ opacity: 0, y: 15 }}
+                       whileInView={{ opacity: 1, y: 0 }}
+                       viewport={{ once: true }}
+                       transition={{ delay: 0.3 }}
+                     >
+                       <div className="w-full md:w-1/2">
+                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Your Name</label>
+                         <input 
+                           type="text" 
+                           placeholder="Full Name" 
+                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
+                         />
+                       </div>
+                       <div className="w-full md:w-1/2">
+                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Organization Name</label>
+                         <input 
+                           type="text" 
+                           placeholder="Organization" 
+                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
+                         />
+                       </div>
+                     </motion.div>
+
+                     {/* Row 2 */}
+                     <motion.div
+                       className="flex flex-col md:flex-row gap-6 w-full"
+                       initial={{ opacity: 0, y: 15 }}
+                       whileInView={{ opacity: 1, y: 0 }}
+                       viewport={{ once: true }}
+                       transition={{ delay: 0.4 }}
+                     >
+                       <div className="w-full md:w-1/2">
+                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Organization Mail</label>
+                         <input 
+                           type="email" 
+                           placeholder="Email Address" 
+                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
+                         />
+                       </div>
+                       <div className="w-full md:w-1/2">
+                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Phone Number</label>
+                         <input 
+                           type="tel" 
+                           placeholder="Phone Number" 
+                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
+                         />
+                       </div>
+                     </motion.div>
+
+                     {/* Row 3 */}
+                     <motion.div
+                       className="flex flex-col md:flex-row gap-6 w-full"
+                       initial={{ opacity: 0, y: 15 }}
+                       whileInView={{ opacity: 1, y: 0 }}
+                       viewport={{ once: true }}
+                       transition={{ delay: 0.5 }}
+                     >
+                       <div className="w-full md:w-1/2">
+                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Device Category</label>
+                         <div className="relative">
+                           <select defaultValue="" className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] text-[16px] outline-none focus:bg-white/50 transition-all font-medium appearance-none cursor-pointer shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300">
+                             <option value="" disabled className="text-[#131212]/50 bg-white">Select Category</option>
+                             <option value="desktop" className="text-[#131212] bg-white">Laptops & Desktops</option>
+                             <option value="mobile" className="text-[#131212] bg-white">Mobiles & Tablets</option>
+                             <option value="workstation" className="text-[#131212] bg-white">Workstations</option>
+                             <option value="other" className="text-[#131212] bg-white">Other Devices</option>
+                           </select>
+                           <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-[#131212]/50">
+                             <ChevronDown size={20} />
+                           </div>
+                         </div>
+                       </div>
+                       <div className="w-full md:w-1/2">
+                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Quantity</label>
+                         <input 
+                           type="number" 
+                           placeholder="Quantity" 
+                           min="1"
+                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
+                         />
+                       </div>
+                     </motion.div>
+
+                     {/* Row 4 */}
+                     <motion.div
+                       initial={{ opacity: 0, y: 15 }}
+                       whileInView={{ opacity: 1, y: 0 }}
+                       viewport={{ once: true }}
+                       transition={{ delay: 0.6 }}
+                     >
+                       <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Additional Information</label>
+                       <textarea 
+                           placeholder="Write your message or requirements here..." 
+                           rows={4}
+                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300 resize-none"
+                        ></textarea>
+                     </motion.div>
+
+                     <motion.div 
+                       className="pt-4"
+                       initial={{ opacity: 0, y: 15 }}
+                       whileInView={{ opacity: 1, y: 0 }}
+                       viewport={{ once: true }}
+                       transition={{ delay: 0.7 }}
+                     >
+                       <button className="bg-[#0B1120] hover:bg-[#1e293b] text-white rounded-full py-4 px-8 inline-flex items-center gap-3 transition-colors group shadow-lg hover:shadow-xl">
+                          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black group-hover:scale-110 transition-transform">
+                             <Send size={14} className="ml-[-2px] mt-[1px]" />
+                          </div>
+                          <span className="font-bold text-[16px] pr-2 group-hover:translate-x-1 transition-transform">Submit Request</span>
+                       </button>
+                     </motion.div>
+                  </div>
+               </div>
+            </motion.div>
+          </div>
+        </div>
+
+        
+        {/* FAQs Section */}
+        <div className="w-full bg-[#f6f5f8] py-20 lg:py-24 border-t border-gray-100">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row gap-16">
+            {/* Left Content */}
+            <div className="w-full lg:w-[40%] flex flex-col items-start pt-4">
+               <motion.div 
+                 initial={{ opacity: 0, y: 20 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 className="inline-flex items-center gap-2 border border-[#0d7fba]/20 bg-[#eef8fe] rounded-full py-1.5 px-3 mb-6"
+               >
+                 <MessageCircle size={14} className="text-[#0d7fba]" />
+                 <span className="text-[#0d7fba] font-medium text-[13px] tracking-wide uppercase">Common Questions</span>
+               </motion.div>
+               <motion.h2 
+                 initial={{ opacity: 0, y: 20 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 transition={{ delay: 0.1 }}
+                 className="text-[36px] md:text-[45px] lg:text-[50px] font-bold text-[#111] leading-[1.1] tracking-tight mb-6"
+               >
+                 Everything you need to know about bulk orders.
+               </motion.h2>
+               <motion.p 
+                 initial={{ opacity: 0, y: 20 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 transition={{ delay: 0.2 }}
+                 className="text-[17px] text-[#666] leading-relaxed mb-10 max-w-md"
+               >
+                 Find answers to common questions about our bulk ordering process, organizational discounts, and post-sales support.
+               </motion.p>
+               
+               <motion.div
+                 initial={{ opacity: 0, scale: 0.95 }}
+                 whileInView={{ opacity: 1, scale: 1 }}
+                 viewport={{ once: true }}
+                 transition={{ delay: 0.3 }}
+                 className="p-6 bg-white rounded-[24px] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-md"
+               >
+                 <div className="w-12 h-12 bg-[#fff5eb] rounded-full flex items-center justify-center mb-4">
+                   <Phone size={20} className="text-orange-500" />
+                 </div>
+                 <h4 className="text-[18px] font-bold text-[#111] mb-2">Still have questions?</h4>
+                 <p className="text-[15px] text-[#666] mb-4">Can&apos;t find the answer you&apos;re looking for? Please chat to our friendly team.</p>
+                 <button className="text-[#0d7fba] font-bold text-[15px] flex items-center gap-2 hover:gap-3 transition-all">
+                   Get in touch <ArrowRight size={16} />
+                 </button>
+               </motion.div>
+            </div>
+            
+            {/* Right Accordion */}
+            <div className="w-full lg:w-[60%] flex flex-col gap-4">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaqIndex === index;
+                return (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 * index }}
+                    key={index}
+                    className={`bg-white rounded-[24px] border ${isOpen ? 'border-[#0d7fba]/30 shadow-[0_10px_40px_rgba(13,127,186,0.1)]' : 'border-gray-100 shadow-sm hover:border-[#0d7fba]/20'} overflow-hidden transition-all duration-500`}
+                  >
+                    <button 
+                      onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                      className="w-full text-left px-8 py-6 flex items-center justify-between focus:outline-none group"
+                    >
+                       <span className={`text-[17px] md:text-[19px] font-bold pr-8 ${isOpen ? 'text-[#0d7fba]' : 'text-[#111] group-hover:text-[#0d7fba]'} transition-colors`}>{faq.q}</span>
+                       <span className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-500 ${isOpen ? 'bg-[#0d7fba] text-white rotate-180' : 'bg-[#f6f5f8] text-[#111] group-hover:bg-[#eef8fe] group-hover:text-[#0d7fba]'}`}>
+                         <ChevronDown size={20} />
+                       </span>
+                    </button>
+                    
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+                        >
+                           <div className="px-8 pb-8 pt-0 text-[16px] text-[#666] leading-relaxed">
+                             {faq.a}
+                           </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </main>
 
       {/* Footer Section */}

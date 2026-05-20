@@ -1,0 +1,153 @@
+
+
+        {/* Savings Estimator Section */}
+        <div className="w-full bg-[#0d3f66] relative overflow-hidden py-20 lg:py-28">
+           <div className="absolute inset-0 bg-gradient-to-br from-[#0c3151] to-[#12588c] opacity-100"></div>
+           <motion.div 
+             animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.15, 0.1] }}
+             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+             className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] bg-[#2db1ff] rounded-full blur-[120px]"
+           />
+           <motion.div 
+             animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.2, 0.1] }}
+             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+             className="absolute -bottom-[20%] -right-[10%] w-[50%] h-[50%] bg-[#4ade80] rounded-full blur-[120px]"
+           />
+           
+           <div className="max-w-[1600px] mx-auto px-6 lg:px-12 relative z-10 flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
+              {/* Left Content */}
+              <div className="w-full lg:w-[45%] flex flex-col items-start text-white">
+                <motion.h2 
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="text-[32px] md:text-[42px] font-medium leading-[1.15] tracking-tight mb-5"
+                >
+                  Calculate Your <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">Potential Savings</span>
+                </motion.h2>
+                <motion.p 
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                  className="text-[17px] text-white/80 leading-relaxed font-normal mb-10 max-w-xl"
+                >
+                  See exactly how much your organisation could save by switching to Comsri enterprise-grade refurbished IT.
+                </motion.p>
+                
+                <div className="flex gap-12 lg:gap-16">
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 }}
+                    className="flex flex-col"
+                  >
+                    <span className="text-[36px] font-bold text-[#4ade80] mb-1">₹18 Cr+</span>
+                    <span className="text-[12px] font-bold tracking-[0.1em] text-white/70 uppercase">Saved by Clients in FY26</span>
+                  </motion.div>
+                  <motion.div 
+                     initial={{ opacity: 0, scale: 0.9 }}
+                     whileInView={{ opacity: 1, scale: 1 }}
+                     viewport={{ once: true }}
+                     transition={{ delay: 0.3 }}
+                     className="flex flex-col"
+                  >
+                    <span className="text-[36px] font-bold text-[#4ade80] mb-1">450+ Kt</span>
+                    <span className="text-[12px] font-bold tracking-[0.1em] text-white/70 uppercase">CO2 Reduced</span>
+                  </motion.div>
+                </div>
+              </div>
+              
+              {/* Right Form Card */}
+              <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
+                className="w-full lg:w-[55%] xl:w-[50%] bg-white/10 backdrop-blur-xl border border-white/20 rounded-[24px] p-8 lg:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.2)] relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-white/10 to-transparent rounded-bl-full -z-10"></div>
+                
+                <h3 className="text-[22px] font-bold text-white mb-8 flex items-center gap-3">
+                  Quick Savings Estimator
+                </h3>
+                
+                <div className="space-y-6">
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <label className="block text-[11px] font-bold text-white/70 uppercase tracking-[0.1em] mb-2">Number of Devices Needed</label>
+                    <div className="relative">
+                      <input 
+                        type="number" 
+                        defaultValue="100"
+                        className="w-full bg-black/20 transform-gpu hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] border border-white/10 rounded-[12px] py-4 px-5 text-white text-[16px] outline-none focus:border-[#4ade80]/50 focus:bg-black/30 transition-all duration-300 font-medium appearance-none"
+                      />
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 }}
+                  >
+                     <label className="block text-[11px] font-bold text-white/70 uppercase tracking-[0.1em] mb-2">Device Category</label>
+                     <div className="relative">
+                       <select className="w-full bg-black/20 transform-gpu hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] border border-white/10 rounded-[12px] py-4 px-5 text-white text-[16px] outline-none focus:border-[#4ade80]/50 focus:bg-black/30 transition-all duration-300 font-medium appearance-none cursor-pointer pr-12">
+                         <option value="laptops" className="bg-[#12588c] text-white">Business Laptops (i5, 8GB, 256GB SSD)</option>
+                         <option value="desktops" className="bg-[#12588c] text-white">Enterprise Desktops (i7, 16GB, 512GB SSD)</option>
+                         <option value="monitors" className="bg-[#12588c] text-white">Professional Monitors (24-inch FHD)</option>
+                       </select>
+                       <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/70 group-hover:text-white transition-colors duration-300">
+                         <ChevronDown size={20} />
+                       </div>
+                     </div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
+                    whileHover={{ scale: 1.02 }}
+                    className="mt-8 bg-[#0a2336]/60 rounded-[16px] p-6 border border-[#4ade80]/20 hover:border-[#4ade80]/40 transition-colors duration-300 shadow-inner"
+                  >
+                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-6">
+                       <div>
+                         <div className="text-[28px] font-bold text-white leading-tight mb-1">₹45,00,000</div>
+                         <div className="text-[12px] font-medium text-white/60 uppercase tracking-widest">New Equipment Cost</div>
+                       </div>
+                       <div className="hidden sm:block w-px h-12 bg-white/10"></div>
+                       <div>
+                         <div className="text-[28px] font-bold text-white leading-tight mb-1">₹18,48,000</div>
+                         <div className="text-[12px] font-medium text-white/60 uppercase tracking-widest">Comsri Cost</div>
+                       </div>
+                     </div>
+                     
+                     <div className="pt-5 border-t border-white/10">
+                       <div className="text-[18px] font-medium text-[#4ade80] mb-2">You Save <motion.span animate={{ opacity: [0.8, 1, 0.8] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="font-bold inline-block border-b-2 border-[#4ade80]/30 pb-0.5">₹26,52,000 (59%)</motion.span></div>
+                       <div className="text-[12px] text-white/60">Based on avg. market prices · 1-yr warranty included</div>
+                     </div>
+                  </motion.div>
+                  
+                  <motion.button 
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.6 }}
+                    whileHover={{ scale: 1.02, translateY: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full group bg-gradient-to-r from-[#2db1ff] to-[#0ea5e9] hover:from-[#0ea5e9] hover:to-[#0284c7] text-white font-bold py-4 px-6 rounded-[12px] transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(45,177,255,0.3)] hover:shadow-[0_12px_25px_rgba(45,177,255,0.4)] mt-4 relative overflow-hidden"
+                  >
+                     <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out"></div>
+                     <span className="relative z-10 flex items-center gap-2">Get Detailed Proposal <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /></span>
+                  </motion.button>
+                </div>
+              </motion.div>
+           </div>
+        </div>
