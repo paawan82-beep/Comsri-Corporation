@@ -1,7 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-fredoka), "Arial", "Helvetica", sans-serif;
+  --font-sans: "Fredoka", Arial, Helvetica, sans-serif;
+}
+
+/* Global Font Overrides to guarantee all text/headings across all browsers and devices render with Fredoka */
+*, ::before, ::after {
+  font-family: "Fredoka", Arial, Helvetica, sans-serif !important;
+}
+
+html, body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea, div, strong, li {
+  font-family: "Fredoka", Arial, Helvetica, sans-serif !important;
 }
 
 @layer utilities {

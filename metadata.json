@@ -2,6 +2,6 @@
   "name": "Comsri Hardware E-commerce",
   "description": "Pixel-perfect clone of the Comsri e-commerce header and hero section.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
 

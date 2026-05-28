@@ -1,0 +1,299 @@
+import { 
+  WooCommerceProduct, 
+  WooCommerceCategory, 
+  WooCommerceOrder, 
+  ProductQueryFilters, 
+  WooCommercePaginatedResponse 
+} from "../types/woocommerce";
+
+/**
+ * Production-ready server-side service for modern headless WooCommerce integration.
+ * All operations take place strictly server-side to prevent credential exposure.
+ */
+class WooCommerceServiceClient {
+  private baseUrl: string;
+  private authHeader: string;
+  private maxRetries = 3;
+  private initialBackoffMs = 500;
+
+  constructor() {
+    const url = process.env.WOOCOMMERCE_URL || "";
+    const key = process.env.WOOCOMMERCE_CONSUMER_KEY || "";
+    const secret = process.env.WOOCOMMERCE_CONSUMER_SECRET || "";
+
+    // Normalize base URL
+    this.baseUrl = url.endsWith("/") ? url.slice(0, -1) : url;
+
+    if (!url || !key || !secret) {
+      // Graceful fallback during compile/boot, fails fast on live usage
+      this.authHeader = "";
+    } else {
+      this.authHeader = `Basic ${Buffer.from(`${key}:${secret}`).toString("base64")}`;
+    }
+  }
+
+  /**
+   * Helper to execute low-level fetch calls with server-side Basic Auth,
+   * rate limit retrieval, and exponential backoff.
+   */
+  private async request(
+    endpoint: string,
+    options: RequestInit = {}
+  ): Promise<Response> {
+    if (!this.authHeader) {
+      throw new Error(
+        "WooCommerce API Client is unconfigured. Set WOOCOMMERCE_URL, WOOCOMMERCE_CONSUMER_KEY, and WOOCOMMERCE_CONSUMER_SECRET."
+      );
+    }
+
+    const separator = endpoint.includes("?") ? "&" : "?";
+    // Construct the endpoint WITHOUT appending consumer credentials in query values
+    const url = `${this.baseUrl}/wp-json/wc/v3/${endpoint}`;
+
+    const headers = new Headers(options.headers);
+    headers.set("Authorization", this.authHeader);
+    headers.set("Content-Type", "application/json");
+    headers.set("User-Agent", "Headless-NextJS-Ecommerce/1.0");
+
+    let attempt = 0;
+    let delay = this.initialBackoffMs;
+
+    while (attempt < this.maxRetries) {
+      try {
+        const response = await fetch(url, {
+          ...options,
+          headers,
+        });
+
+        // Retry on gateway errors or rate limits (e.g. status 429, 502, 503, 504)
+        if ([429, 502, 503, 504].includes(response.status) && attempt < this.maxRetries - 1) {
+          throw new Error(`Transient HTTP Error: ${response.status}`);
+        }
+
+        return response;
+      } catch (error) {
+        attempt++;
+        if (attempt >= this.maxRetries) {
+          throw new Error(
+            `WooCommerce API Request failed after ${this.maxRetries} attempts. Endpoint: ${endpoint}. Error: ${
+              error instanceof Error ? error.message : "Unknown error"
+            }`
+          );
+        }
+        // Wait with exponential jittered backoff
+        const jitter = Math.random() * 100;
+        await new Promise((resolve) => setTimeout(resolve, delay + jitter));
+        delay *= 2;
+      }
+    }
+
+    throw new Error("WooCommerce API Request exceeded max call loops.");
+  }
+
+  /**
+   * 1. GET ALL PRODUCTS (Optimized, supporting searching, sorting, and tag-caching)
+   */
+  async getProducts(
+    filters: ProductQueryFilters = {}
+  ): Promise<WooCommercePaginatedResponse<WooCommerceProduct>> {
+    const params = new URLSearchParams();
+
+    // Mapping relevant query parameters
+    if (filters.category) params.append("category", filters.category);
+    if (filters.search) params.append("search", filters.search);
+    if (filters.page) params.append("page", filters.page.toString());
+    if (filters.per_page) params.append("per_page", filters.per_page.toString());
+    if (filters.order) params.append("order", filters.order);
+    if (filters.orderby) params.append("orderby", filters.orderby);
+    if (filters.min_price) params.append("min_price", filters.min_price);
+    if (filters.max_price) params.append("max_price", filters.max_price);
+    if (filters.on_sale !== undefined) params.append("on_sale", filters.on_sale.toString());
+    if (filters.featured !== undefined) params.append("featured", filters.featured.toString());
+    if (filters.status) params.append("status", filters.status);
+    if (filters.sku) params.append("sku", filters.sku);
+
+    const endpoint = `products${params.toString() ? `?${params.toString()}` : ""}`;
+
+    // Tag based caching to allow surgical validation on webhooks hook
+    const response = await this.request(endpoint, {
+      method: "GET",
+      next: {
+        tags: ["woocommerce", "woocommerce-products"],
+        revalidate: 3600, // Fallback to 1hr ISR
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch WooCommerce products: ${response.statusText}`);
+    }
+
+    const data: WooCommerceProduct[] = await response.json();
+    const totalItems = parseInt(response.headers.get("X-WP-Total") || "0", 10);
+    const totalPages = parseInt(response.headers.get("X-WP-TotalPages") || "0", 10);
+
+    return {
+      data,
+      totalItems,
+      totalPages: totalPages || 1,
+    };
+  }
+
+  /**
+   * 2. FETCH SINGLE PRODUCT BY ID (Surgical, optimized checkout fetch)
+   * Resolves the problem of downloading the entire catalog in-memory.
+   */
+  async getProductById(id: number): Promise<WooCommerceProduct> {
+    const endpoint = `products/${id}`;
+    const response = await this.request(endpoint, {
+      method: "GET",
+      next: {
+        tags: ["woocommerce", `woocommerce-product-${id}`],
+        revalidate: 3600,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch product with ID ${id}: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * 3. FETCH SINGLE PRODUCT BY SLUG (Perfect for dynamic routes and SEO validation)
+   */
+  async getProductBySlug(slug: string): Promise<WooCommerceProduct | null> {
+    const endpoint = `products?slug=${encodeURIComponent(slug)}`;
+    const response = await this.request(endpoint, {
+      method: "GET",
+      next: {
+        tags: ["woocommerce", `woocommerce-slug-${slug}`],
+        revalidate: 3600,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch product with slug ${slug}: ${response.statusText}`);
+    }
+
+    const products: WooCommerceProduct[] = await response.json();
+    return products.length > 0 ? products[0] : null;
+  }
+
+  /**
+   * 4. FETCH CATEGORIES
+   */
+  async getCategories(parent?: number): Promise<WooCommerceCategory[]> {
+    const endpoint = parent !== undefined ? `products/categories?parent=${parent}` : "products/categories";
+    const response = await this.request(endpoint, {
+      method: "GET",
+      next: {
+        tags: ["woocommerce", "woocommerce-categories"],
+        revalidate: 3600,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch categories: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * 5. GET RELATED PRODUCTS (Retrieves related items by category ids safely)
+   */
+  async getRelatedProducts(relatedIds: number[]): Promise<WooCommerceProduct[]> {
+    if (!relatedIds || relatedIds.length === 0) return [];
+    
+    // WooCommerce limits fetching by includes: max per page default
+    const subset = relatedIds.slice(0, 4); // Show top 4
+    const endpoint = `products?include=${subset.join(",")}`;
+    
+    const response = await this.request(endpoint, {
+      method: "GET",
+      next: {
+        tags: ["woocommerce", "woocommerce-related"],
+        revalidate: 3600,
+      },
+    });
+
+    if (!response.ok) {
+      return [];
+    }
+
+    return response.json();
+  }
+
+  /**
+   * 6. CREATE AN ORDER IN WOOCOMMERCE (Strictly Pending until pay confirmation)
+   */
+  async createOrder(orderPayload: Partial<WooCommerceOrder>): Promise<WooCommerceOrder> {
+    const endpoint = "orders";
+    const response = await this.request(endpoint, {
+      method: "POST",
+      body: JSON.stringify({
+        ...orderPayload,
+        status: orderPayload.status || "pending",
+      }),
+    });
+
+    if (!response.ok) {
+      const errBody = await response.text();
+      throw new Error(`Failed to create WooCommerce order: ${response.statusText}. Payload: ${errBody}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * 7. GET ORDER BY ID (Retrieves specific order to perform status checking and payment verification)
+   */
+  async getOrderById(id: number): Promise<WooCommerceOrder> {
+    const endpoint = `orders/${id}`;
+    const response = await this.request(endpoint, {
+      method: "GET",
+      // Orders should never have active public caches for data privacy and real-time state correctness
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch WooCommerce order with ID ${id}: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * 8. UPDATE ORDER STATUS (Critical for checkout completed states)
+   */
+  async updateOrderStatus(
+    orderId: number,
+    status: WooCommerceOrder["status"],
+    transactionId?: string,
+    metadata: { key: string; value: any }[] = []
+  ): Promise<WooCommerceOrder> {
+    const endpoint = `orders/${orderId}`;
+    
+    const payload: Record<string, any> = { status };
+    if (transactionId) {
+      payload.transaction_id = transactionId;
+    }
+    if (metadata.length > 0) {
+      payload.meta_data = metadata;
+    }
+
+    const response = await this.request(endpoint, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update WooCommerce order ${orderId}: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+}
+
+export const woocommerce = new WooCommerceServiceClient();

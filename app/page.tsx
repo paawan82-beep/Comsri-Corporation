@@ -1,11 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Search, ChevronDown, Shuffle, Heart, ShoppingCart, ChevronLeft, ChevronRight, ShieldCheck, Truck, FileText, Headphones, Star, CheckCircle, ArrowRight, Share2, MessageSquare, ArrowUpRight, Package, DollarSign, ArrowDown, MessageCircle, Instagram, Facebook, Twitter, Youtube, Play, Apple } from "lucide-react";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    const logged = localStorage.getItem("isLoggedIn") === "true";
+    if (logged) {
+      const email = localStorage.getItem("userEmail") || "User";
+      setTimeout(() => {
+        setIsLoggedIn(true);
+        setUserEmail(email);
+      }, 0);
+    }
+  }, []);
 
   // ADD YOUR SLIDER IMAGES HERE:
   // Replace these placeholder URLs with the actual URLs of your images.
@@ -67,9 +81,27 @@ export default function Home() {
             </div>
             <span>IND</span>
           </div>
-          <button className="hover:text-[#374bf9] transition-colors">
-            Login / Register
-          </button>
+          {isLoggedIn ? (
+            <div className="flex items-center gap-3">
+              <span className="text-slate-700 font-bold max-w-[140px] truncate select-none">
+                Hello, {userEmail.split("@")[0]}!
+              </span>
+              <button 
+                onClick={() => {
+                  localStorage.removeItem("isLoggedIn");
+                  localStorage.removeItem("userEmail");
+                  setIsLoggedIn(false);
+                }}
+                className="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link href="/login" className="hover:text-[#6366f1] font-bold transition-colors">
+              Login / Register
+            </Link>
+          )}
         </div>
         </div>
       </header>
@@ -87,10 +119,35 @@ export default function Home() {
             New Products <ChevronDown size={14} className="text-gray-500" />
           </li>
           <li><a href="/bulk-orders" className="hover:text-gray-700">Bulk Orders</a></li>
-          <li><a href="#" className="hover:text-gray-700">Blog</a></li>
+          <li><a href="/blog" className="hover:text-gray-700">Blog</a></li>
           <li><a href="#" className="hover:text-gray-700">Contact Us</a></li>
-          <li className="flex items-center gap-1 cursor-pointer hover:text-gray-700">
-            Policies <ChevronDown size={14} className="text-gray-500" />
+          <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2">
+            <span>Policies</span>
+            <ChevronDown size={14} className="text-gray-500 transition-transform duration-200 group-hover:rotate-180 group-hover:text-[#374bf9]" />
+            
+            {/* Elegant Dropdown */}
+            <div className="absolute top-[85%] left-1/2 -translate-x-1/2 mt-2 w-64 bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-gray-100 py-3 hidden group-hover:flex flex-col text-sm text-gray-800 z-50">
+              <a href="/terms-conditions?tab=terms" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
+                <span>Terms & Conditions</span>
+                <span className="text-[10px] bg-indigo-50 text-indigo-700 font-extrabold px-2 py-0.5 rounded-full">v3.5</span>
+              </a>
+              <a href="/privacy-policy?tab=privacy" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
+                <span>Privacy Policy</span>
+                <span className="text-[10px] bg-emerald-50 text-emerald-700 font-extrabold px-2 py-0.5 rounded-full">Secure</span>
+              </a>
+              <a href="/return-refund?tab=refund" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
+                <span>Return & Refund Policy</span>
+                <span className="text-[10px] bg-rose-50 text-rose-700 font-extrabold px-2 py-0.5 rounded-full">100%</span>
+              </a>
+              <a href="/privacy-policy?tab=warranty" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
+                <span>Warranty Policy</span>
+                <span className="text-[10px] bg-amber-50 text-amber-700 font-extrabold px-2 py-0.5 rounded-full">1 Year</span>
+              </a>
+              <a href="/privacy-policy?tab=shipping" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
+                <span>Shipping Policy</span>
+                <span className="text-[10px] bg-cyan-50 text-cyan-700 font-extrabold px-2 py-0.5 rounded-full">Insured</span>
+              </a>
+            </div>
           </li>
           <li><a href="#" className="hover:text-gray-700">FAQs</a></li>
         </ul>
@@ -820,8 +877,15 @@ export default function Home() {
             <div className="flex flex-col">
               <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Useful Links</h3>
               <div className="flex flex-col gap-3">
-                {["Contact Us", "Terms & Conditions", "Privacy Policy", "Return & Refund Policy", "Warranty Policy", "Shipping Policy"].map((item, i) => (
-                  <a key={i} href="#" className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item}</a>
+                {[
+                  { label: "Contact Us", path: "/about" },
+                  { label: "Terms & Conditions", path: "/terms-conditions?tab=terms" },
+                  { label: "Privacy Policy", path: "/privacy-policy?tab=privacy" },
+                  { label: "Return & Refund Policy", path: "/return-refund?tab=refund" },
+                  { label: "Warranty Policy", path: "/privacy-policy?tab=warranty" },
+                  { label: "Shipping Policy", path: "/privacy-policy?tab=shipping" }
+                ].map((item, i) => (
+                  <a key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item.label}</a>
                 ))}
               </div>
             </div>

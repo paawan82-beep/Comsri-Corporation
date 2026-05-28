@@ -82,7 +82,7 @@ export default function BulkOrdersPage() {
             New Products <ChevronDown size={14} className="text-gray-500" />
           </li>
           <li><a href="/bulk-orders" className="text-[#374bf9]">Bulk Orders</a></li>
-          <li><a href="#" className="hover:text-gray-700">Blog</a></li>
+          <li><a href="/blog" className="hover:text-gray-700">Blog</a></li>
           <li><a href="#" className="hover:text-gray-700">Contact Us</a></li>
           <li className="flex items-center gap-1 cursor-pointer hover:text-gray-700">
             Policies <ChevronDown size={14} className="text-gray-500" />
@@ -875,8 +875,15 @@ export default function BulkOrdersPage() {
             <div className="flex flex-col">
               <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Useful Links</h3>
               <div className="flex flex-col gap-3">
-                {["Contact Us", "Terms & Conditions", "Privacy Policy", "Return & Refund Policy", "Warranty Policy", "Shipping Policy"].map((item, i) => (
-                  <a key={i} href="#" className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item}</a>
+                {[
+                  { label: "Contact Us", path: "/about" },
+                  { label: "Terms & Conditions", path: "/terms-conditions?tab=terms" },
+                  { label: "Privacy Policy", path: "/privacy-policy?tab=privacy" },
+                  { label: "Return & Refund Policy", path: "/return-refund?tab=refund" },
+                  { label: "Warranty Policy", path: "/privacy-policy?tab=warranty" },
+                  { label: "Shipping Policy", path: "/privacy-policy?tab=shipping" }
+                ].map((item, i) => (
+                  <a key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item.label}</a>
                 ))}
               </div>
             </div>
