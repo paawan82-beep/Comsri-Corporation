@@ -353,13 +353,40 @@ export default function LoginPage() {
       <nav className="bg-[#faba5b] py-3 text-[14px] font-medium text-black">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between w-full">
         <ul className="flex flex-wrap items-center gap-y-2 gap-x-6">
-          <li><a href="/" className="text-[#374bf9]">Home</a></li>
+          <li><a href="/" className="hover:text-[#374bf9]">Home</a></li>
+          <li><a href="/shop" className="hover:text-[#374bf9] font-semibold">Shop Catalog</a></li>
           <li><a href="/about" className="hover:text-gray-700">About Us</a></li>
-          <li className="flex items-center gap-1 cursor-pointer hover:text-gray-700">
-            Refurbished Products <ChevronDown size={14} className="text-gray-500" />
+          <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2">
+            <a href="/shop" className="flex items-center gap-1">
+              <span>Refurbished Products</span>
+              <ChevronDown size={14} className="text-gray-500 transition-transform duration-200 group-hover:rotate-180 group-hover:text-[#374bf9]" />
+            </a>
+            <div className="absolute top-[85%] left-1/2 -translate-x-1/2 mt-2 w-56 bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-gray-100 py-3 hidden group-hover:flex flex-col text-sm text-gray-800 z-50">
+              <a href="/shop" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors">
+                Explore Refurbished Shop
+              </a>
+              <a href="/shop?orderby=date" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium transition-colors">
+                Latest Arrivals
+              </a>
+              <a href="/shop?on_sale=true" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium text-amber-600 transition-colors flex items-center justify-between">
+                <span>Special Hot Deals</span>
+                <span className="text-[10px] bg-amber-50 text-amber-800 font-extrabold px-2 py-0.5 rounded-full">Sale</span>
+              </a>
+            </div>
           </li>
-          <li className="flex items-center gap-1 cursor-pointer hover:text-gray-700">
-            New Products <ChevronDown size={14} className="text-gray-500" />
+          <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2">
+            <a href="/shop" className="flex items-center gap-1">
+              <span>New Products</span>
+              <ChevronDown size={14} className="text-gray-500 transition-transform duration-200 group-hover:rotate-180 group-hover:text-[#374bf9]" />
+            </a>
+            <div className="absolute top-[85%] left-1/2 -translate-x-1/2 mt-2 w-56 bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-gray-100 py-3 hidden group-hover:flex flex-col text-sm text-gray-800 z-50">
+              <a href="/shop" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors">
+                Explore New Shop
+              </a>
+              <a href="/shop" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium transition-colors">
+                Brand New Hardware
+              </a>
+            </div>
           </li>
           <li><a href="/bulk-orders" className="hover:text-gray-700">Bulk Orders</a></li>
           <li><a href="/blog" className="hover:text-gray-700">Blog</a></li>
