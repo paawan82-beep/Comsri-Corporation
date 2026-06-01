@@ -5,11 +5,12 @@ import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { 
-  Search, ChevronDown, Shuffle, Heart, ShoppingCart, Apple, Play, 
+  ChevronDown, Apple, Play, 
   Facebook, Instagram, Youtube, MessageCircle, ShieldCheck, FileText, 
   Lock, RefreshCw, Truck, Printer, CheckCircle, ArrowRight, Clock, 
-  Mail, MapPin, Phone, HelpCircle, Download, Check
+  Mail, MapPin, Phone, HelpCircle, Download, Check, Search
 } from "lucide-react";
+import Header from "../Header";
 
 // Types for navigation & data
 type PolicyTab = "terms" | "privacy" | "refund" | "warranty" | "shipping";
@@ -152,152 +153,7 @@ function PolicyContentPage() {
         />
       </div>
 
-      {/* Top Header */}
-      <header className="bg-white py-4 border-b border-gray-100">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between w-full">
-          <div className="flex-shrink-0 flex items-center gap-1 cursor-pointer" onClick={() => router.push("/")}>
-            <div className="flex flex-col">
-              <div className="flex items-center">
-                <div className="relative w-8 h-8 mr-1 flex items-center justify-center">
-                  <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[#4caf50]">
-                    <path d="M 50 10 C 70 10 90 20 90 40 C 90 60 70 80 50 80 C 30 80 10 60 10 40 C 10 20 30 10 50 10 Z" opacity="0.3"></path>
-                    <path d="M 50 20 C 65 20 80 30 80 40 C 80 50 65 60 50 60" stroke="#1f44a3" strokeWidth="8" fill="none"></path>
-                  </svg>
-                </div>
-                <span className="text-3xl font-bold tracking-tight text-[#1b4332]">COMSRI</span>
-              </div>
-              <span className="text-[10px] uppercase font-semibold text-gray-700 tracking-wider text-center pr-2">Corporation</span>
-            </div>
-          </div>
-
-          {/* Search Bar */}
-          <div className="flex-1 max-w-2xl mx-12 hidden md:block">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search for systems, specifications or products..."
-                className="w-full h-[46px] pl-6 pr-14 text-sm text-gray-700 border border-gray-200 rounded-full focus:outline-none focus:border-gray-300 bg-[#fbfbfd]"
-                onClick={() => router.push("/")}
-              />
-              <button 
-                onClick={() => router.push("/")}
-                className="absolute right-1 top-1 bottom-1 w-[38px] bg-[#374bf9] rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
-              >
-                <Search size={18} />
-              </button>
-            </div>
-          </div>
-
-          {/* Right Actions */}
-          <div className="flex items-center gap-x-6 text-sm font-medium text-gray-800">
-            <div className="flex items-center gap-2 cursor-pointer border-r border-gray-300 pr-6">
-              <div className="w-6 h-4 overflow-hidden rounded relative flex-shrink-0">
-                <div className="h-1/3 bg-[#FF9933] w-full"></div>
-                <div className="h-1/3 bg-white w-full flex justify-center items-center">
-                  <div className="w-2 h-2 rounded-full border border-[0.5px] border-[#000080]"></div>
-                </div>
-                <div className="h-1/3 bg-[#138808] w-full"></div>
-              </div>
-              <span>IND</span>
-            </div>
-            <button className="hover:text-[#374bf9] transition-colors" onClick={() => router.push("/")}>
-              Login / Register
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Navigation Bar */}
-      <nav className="bg-[#faba5b] py-3 text-[14px] font-medium text-black">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between w-full">
-          <ul className="flex flex-wrap items-center gap-y-2 gap-x-6">
-            <li><a href="/" className="hover:text-[#374bf9] transition-colors">Home</a></li>
-            <li><a href="/shop" className="hover:text-[#374bf9] font-semibold transition-colors">Shop Catalog</a></li>
-            <li><a href="/about" className="hover:text-[#374bf9] transition-colors">About Us</a></li>
-            <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2">
-              <a href="/shop" className="flex items-center gap-1">
-                <span>Refurbished Products</span>
-                <ChevronDown size={14} className="text-gray-500 transition-transform duration-200 group-hover:rotate-180 group-hover:text-[#374bf9]" />
-              </a>
-              <div className="absolute top-[85%] left-1/2 -translate-x-1/2 mt-2 w-56 bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-gray-100 py-3 hidden group-hover:flex flex-col text-sm text-gray-800 z-50">
-                <a href="/shop" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors">
-                  Explore Refurbished Shop
-                </a>
-                <a href="/shop?orderby=date" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium transition-colors">
-                  Latest Arrivals
-                </a>
-                <a href="/shop?on_sale=true" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium text-amber-600 transition-colors flex items-center justify-between">
-                  <span>Special Hot Deals</span>
-                  <span className="text-[10px] bg-amber-50 text-amber-800 font-extrabold px-2 py-0.5 rounded-full">Sale</span>
-                </a>
-              </div>
-            </li>
-            <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2">
-              <a href="/shop" className="flex items-center gap-1">
-                <span>New Products</span>
-                <ChevronDown size={14} className="text-gray-500 transition-transform duration-200 group-hover:rotate-180 group-hover:text-[#374bf9]" />
-              </a>
-              <div className="absolute top-[85%] left-1/2 -translate-x-1/2 mt-2 w-56 bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-gray-100 py-3 hidden group-hover:flex flex-col text-sm text-gray-800 z-50">
-                <a href="/shop" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors">
-                  Explore New Shop
-                </a>
-                <a href="/shop" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium transition-colors">
-                  Brand New Hardware
-                </a>
-              </div>
-            </li>
-            <li><a href="/bulk-orders" className="hover:text-[#374bf9] transition-colors">Bulk Orders</a></li>
-            <li><a href="/blog" className="hover:text-[#374bf9] transition-colors">Blog</a></li>
-            <li><a href="#" className="hover:text-gray-700">Contact Us</a></li>
-            <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2 text-[#374bf9] font-bold">
-              <span>Policies</span>
-              <ChevronDown size={14} className="text-[#374bf9] transition-transform duration-200 group-hover:rotate-180" />
-              
-              {/* Elegant Dropdown */}
-              <div className="absolute top-[85%] left-1/2 -translate-x-1/2 mt-2 w-64 bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-gray-100 py-3 hidden group-hover:flex flex-col text-sm text-gray-800 z-50">
-                <a href="/terms-conditions?tab=terms" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
-                  <span>Terms & Conditions</span>
-                  <span className="text-[10px] bg-indigo-50 text-indigo-700 font-extrabold px-2 py-0.5 rounded-full">v3.5</span>
-                </a>
-                <a href="/privacy-policy?tab=privacy" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
-                  <span>Privacy Policy</span>
-                  <span className="text-[10px] bg-emerald-50 text-emerald-700 font-extrabold px-2 py-0.5 rounded-full">Secure</span>
-                </a>
-                <a href="/return-refund?tab=refund" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
-                  <span>Return & Refund Policy</span>
-                  <span className="text-[10px] bg-rose-50 text-rose-700 font-extrabold px-2 py-0.5 rounded-full">100%</span>
-                </a>
-                <a href="/privacy-policy?tab=warranty" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
-                  <span>Warranty Policy</span>
-                  <span className="text-[10px] bg-amber-50 text-amber-700 font-extrabold px-2 py-0.5 rounded-full">1 Year</span>
-                </a>
-                <a href="/privacy-policy?tab=shipping" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
-                  <span>Shipping Policy</span>
-                  <span className="text-[10px] bg-cyan-50 text-cyan-700 font-extrabold px-2 py-0.5 rounded-full">Insured</span>
-                </a>
-              </div>
-            </li>
-            <li><a href="/about" className="hover:text-gray-700">FAQs</a></li>
-          </ul>
-
-          <div className="flex items-center gap-x-5 pl-5 border-l border-black/10">
-            <button className="flex items-center gap-1.5 hover:text-gray-700" onClick={() => router.push("/")}>
-              <Shuffle size={18} />
-              <span className="font-semibold">0</span>
-            </button>
-            <button className="flex items-center gap-1.5 hover:text-gray-700" onClick={() => router.push("/")}>
-              <Heart size={18} />
-              <span className="font-semibold">0</span>
-            </button>
-            
-            <button className="bg-[#374bf9] text-white rounded-full flex items-center px-4 py-2 gap-x-2 relative hover:bg-blue-700 transition-colors ml-2 shadow-sm" onClick={() => router.push("/")}>
-              <ShoppingCart size={18} />
-              <span className="font-semibold tracking-wide">₹0.00</span>
-              <span className="absolute -top-1.5 -right-1.5 bg-white text-[#374bf9] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-gray-200">0</span>
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Header />
 
       {/* Main Content Area */}
       <main className="flex-1 w-full bg-[#f6f5f8]">

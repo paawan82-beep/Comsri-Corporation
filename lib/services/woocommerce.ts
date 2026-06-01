@@ -294,6 +294,26 @@ class WooCommerceServiceClient {
 
     return response.json();
   }
+
+  /**
+   * 9. GET ALL PUBLISHED PRODUCTS (For robust client-side/in-memory filtering and count calculations)
+   */
+  async getAllProducts(): Promise<WooCommerceProduct[]> {
+    const endpoint = "products?per_page=100&status=publish&_fields=id,name,slug,price,regular_price,sale_price,on_sale,stock_status,categories,images,attributes,date_created";
+    const response = await this.request(endpoint, {
+      method: "GET",
+      next: {
+        tags: ["woocommerce", "woocommerce-products"],
+        revalidate: 3600,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch all WooCommerce products: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
 }
 
 export const woocommerce = new WooCommerceServiceClient();

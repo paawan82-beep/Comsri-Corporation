@@ -21,6 +21,8 @@ interface SidebarFiltersProps {
   currentOnSaleOnly: boolean;
   currentQuery: string;
   currentSorting: string;
+  onFilterChange: (overrides: Record<string, string | null>) => void;
+  counts?: any;
 }
 
 export default function SidebarFilters({
@@ -31,8 +33,15 @@ export default function SidebarFilters({
   currentOnSaleOnly,
   currentQuery,
   currentSorting,
+  onFilterChange,
+  counts,
 }: SidebarFiltersProps) {
   const router = useRouter();
+
+  const handleLinkClick = (overrides: Record<string, string | null>) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    onFilterChange(overrides);
+  };
 
   // Unified lists of known tag values for combinatorial search queries
   const knownBrands = ["apple", "dell", "hp", "lenovo", "microsoft"];
@@ -145,13 +154,12 @@ export default function SidebarFilters({
     return `/shop${queryStr ? `?${queryStr}` : ""}`;
   };
 
-  // Trigger router push when clicking "Filter" button
+  // Trigger filter change when clicking "Filter" button
   const applyPriceFilter = () => {
-    const url = getFilterUrl({
+    onFilterChange({
       min_price: minPrice.toString(),
       max_price: maxPrice.toString(),
     });
-    router.push(url);
   };
 
   // Pre-configured brand items with high resolution official branding logo images
@@ -160,70 +168,70 @@ export default function SidebarFilters({
       name: "Apple",
       slug: "apple",
       tag: "Apple",
-      count: 2,
+      count: counts?.brandCounts?.["apple"] ?? 2,
       imgUrl: "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/apple.webp",
     },
     {
       name: "Dell",
       slug: "dell",
       tag: "Dell",
-      count: 11,
+      count: counts?.brandCounts?.["dell"] ?? 11,
       imgUrl: "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/dell.webp",
     },
     {
       name: "HP",
       slug: "hp",
       tag: "HP",
-      count: 8,
+      count: counts?.brandCounts?.["hp"] ?? 8,
       imgUrl: "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/hp.webp",
     },
     {
       name: "Lenovo",
       slug: "lenovo",
       tag: "Lenovo",
-      count: 5,
+      count: counts?.brandCounts?.["lenovo"] ?? 5,
       imgUrl: "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/lenovo.webp",
     },
     {
       name: "Microsoft",
       slug: "microsoft",
       tag: "Microsoft",
-      count: 1,
+      count: counts?.brandCounts?.["microsoft"] ?? 1,
       imgUrl: "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/microsoft.webp",
     },
   ];
 
   // Pre-configured processors
   const processors = [
-    { label: "Intel® Core™ i3", value: "i3", count: 4 },
-    { label: "Intel® Core™ i5", value: "i5", count: 19 },
-    { label: "Intel® Core™ i7", value: "i7", count: 8 },
+    { label: "Intel® Core™ i3", value: "i3", count: counts?.processorCounts?.["i3"] ?? 4 },
+    { label: "Intel® Core™ i5", value: "i5", count: counts?.processorCounts?.["i5"] ?? 19 },
+    { label: "Intel® Core™ i7", value: "i7", count: counts?.processorCounts?.["i7"] ?? 2 },
   ];
 
   // Pre-configured generations
   const generations = [
-    { label: "4th Gen", value: "4th gen", count: 1 },
-    { label: "6th Gen", value: "6th gen", count: 9 },
-    { label: "7th Gen", value: "7th gen", count: 1 },
-    { label: "8th Gen", value: "8th gen", count: 11 },
-    { label: "9th Gen", value: "9th gen", count: 1 },
-    { label: "10th Gen", value: "10th gen", count: 1 },
+    { label: "4th Gen", value: "4th gen", count: counts?.genCounts?.["4th gen"] ?? 1 },
+    { label: "6th Gen", value: "6th gen", count: counts?.genCounts?.["6th gen"] ?? 9 },
+    { label: "7th Gen", value: "7th gen", count: counts?.genCounts?.["7th gen"] ?? 1 },
+    { label: "8th Gen", value: "8th gen", count: counts?.genCounts?.["8th gen"] ?? 11 },
+    { label: "9th Gen", value: "9th gen", count: counts?.genCounts?.["9th gen"] ?? 1 },
+    { label: "10th Gen", value: "10th gen", count: counts?.genCounts?.["10th gen"] ?? 1 },
   ];
 
   // Pre-configured RAM options
   const ramOptions = [
-    { label: "4 GB", value: "4gb", count: 3 },
-    { label: "8 GB", value: "8gb", count: 26 },
-    { label: "16 GB", value: "16gb", count: 24 },
-    { label: "32 GB", value: "32gb", count: 3 },
-    { label: "64 GB", value: "64gb", count: 1 },
+    { label: "4 GB", value: "4gb", count: counts?.ramCounts?.["4gb"] ?? 3 },
+    { label: "8 GB", value: "8gb", count: counts?.ramCounts?.["8gb"] ?? 26 },
+    { label: "16 GB", value: "16gb", count: counts?.ramCounts?.["16gb"] ?? 24 },
+    { label: "32 GB", value: "32gb", count: counts?.ramCounts?.["32gb"] ?? 3 },
+    { label: "64 GB", value: "64gb", count: counts?.ramCounts?.["64gb"] ?? 1 },
   ];
 
   // Pre-configured Hard Disk Drive / Storage options
   const hddOptions = [
-    { label: "500 HDD", value: "500 hdd", count: 3 },
-    { label: "256 SSD", value: "256 ssd", count: 26 },
-    { label: "512 SSD", value: "512 ssd", count: 24 },
+    { label: "500 HDD", value: "500 hdd", count: counts?.storageCounts?.["500 hdd"] ?? 3 },
+    { label: "256 SSD", value: "256 ssd", count: counts?.storageCounts?.["256 ssd"] ?? 26 },
+    { label: "512 SSD", value: "512 ssd", count: counts?.storageCounts?.["512 ssd"] ?? 24 },
   ];
 
   // Animation Variant definitions
@@ -348,6 +356,7 @@ export default function SidebarFilters({
                 <Link
                   key={brand.slug}
                   href={getFilterUrl({ search: getUpdatedSearchQuery("brand", brand.slug, isActive) })}
+                  onClick={handleLinkClick({ search: getUpdatedSearchQuery("brand", brand.slug, isActive) })}
                   className="block focus:outline-none"
                 >
                   <motion.div
@@ -454,6 +463,7 @@ export default function SidebarFilters({
                 <Link
                   key={proc.value}
                   href={getFilterUrl({ search: getUpdatedSearchQuery("processor", proc.value, isActive) })}
+                  onClick={handleLinkClick({ search: getUpdatedSearchQuery("processor", proc.value, isActive) })}
                   className="block focus:outline-none"
                 >
                   <motion.div
@@ -503,6 +513,7 @@ export default function SidebarFilters({
                 <Link
                   key={gen.value}
                   href={getFilterUrl({ search: getUpdatedSearchQuery("generation", gen.value, isActive) })}
+                  onClick={handleLinkClick({ search: getUpdatedSearchQuery("generation", gen.value, isActive) })}
                   className="block focus:outline-none"
                 >
                   <motion.div
@@ -552,6 +563,7 @@ export default function SidebarFilters({
                 <Link
                   key={ram.value}
                   href={getFilterUrl({ search: getUpdatedSearchQuery("ram", ram.value, isActive) })}
+                  onClick={handleLinkClick({ search: getUpdatedSearchQuery("ram", ram.value, isActive) })}
                   className="block focus:outline-none"
                 >
                   <motion.div
@@ -601,6 +613,7 @@ export default function SidebarFilters({
                 <Link
                   key={storage.value}
                   href={getFilterUrl({ search: getUpdatedSearchQuery("storage", storage.value, isActive) })}
+                  onClick={handleLinkClick({ search: getUpdatedSearchQuery("storage", storage.value, isActive) })}
                   className="block focus:outline-none"
                 >
                   <motion.div
@@ -634,83 +647,7 @@ export default function SidebarFilters({
           </div>
         </motion.div>
 
-        {/* Divider 6 */}
-        <hr className="border-[#eeeeee] my-6" />
 
-        {/* ==================================== CATEGORIES / DEPARTMENTS SECTION ==================================== */}
-        <motion.div variants={itemVariants}>
-          <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
-            <span>Departments</span>
-            <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
-          </h3>
-          <div className="flex flex-col gap-0.5">
-            <Link
-              href={getFilterUrl({ category: null })}
-              className="block focus:outline-none"
-            >
-              <motion.div
-                whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
-                whileTap={{ scale: 0.98 }}
-                className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
-                  !currentCategory 
-                    ? "bg-blue-50/50 text-[#3452ef]" 
-                    : "text-gray-700"
-                }`}
-              >
-                {!currentCategory && (
-                  <motion.div 
-                    layoutId="deptActiveIndicator"
-                    className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
-                  />
-                )}
-                <span className="text-[14.5px] font-semibold">All Categories</span>
-                <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
-                  !currentCategory 
-                    ? "bg-[#3452ef] text-white border-transparent" 
-                    : "bg-slate-55 text-gray-400 border-slate-100"
-                }`}>
-                  {categories.reduce((acc, cat) => acc + (cat.count || 0), 0)}
-                </span>
-              </motion.div>
-            </Link>
-            
-            {categories.map((cat) => {
-              const isActive = currentCategory === cat.id.toString();
-              return (
-                <Link
-                  key={cat.id}
-                  href={getFilterUrl({ category: isActive ? null : cat.id.toString() })}
-                  className="block focus:outline-none"
-                >
-                  <motion.div
-                    whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
-                      isActive 
-                        ? "bg-blue-50/50 text-[#3452ef]" 
-                        : "text-gray-700"
-                    }`}
-                  >
-                    {isActive && (
-                      <motion.div 
-                        layoutId="deptActiveIndicator"
-                        className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
-                      />
-                    )}
-                    <span className="text-[14.5px] font-semibold truncate pr-2">{cat.name}</span>
-                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border shrink-0 ${
-                      isActive 
-                        ? "bg-[#3452ef] text-white border-transparent" 
-                        : "bg-slate-55 text-gray-400 border-slate-100"
-                    }`}>
-                      {cat.count}
-                    </span>
-                  </motion.div>
-                </Link>
-              );
-            })}
-          </div>
-        </motion.div>
 
         {/* Clear All Active Filters Button with AnimatePresence support */}
         <AnimatePresence>
@@ -723,6 +660,13 @@ export default function SidebarFilters({
             >
               <Link
                 href="/shop"
+                onClick={handleLinkClick({
+                  category: null,
+                  search: null,
+                  min_price: null,
+                  max_price: null,
+                  on_sale: null
+                })}
                 className="block focus:outline-none"
               >
                 <motion.div
@@ -738,36 +682,7 @@ export default function SidebarFilters({
         </AnimatePresence>
       </div>
 
-      {/* Sale/Deals Toggle widget mapped to framer motion spring */}
-      <motion.div 
-        variants={itemVariants}
-        className="bg-white rounded-[24px] p-6 border border-[#eeeeee] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_35px_rgb(0,0,0,0.05)] transition-shadow duration-300"
-      >
-        <Link
-          href={getFilterUrl({ on_sale: currentOnSaleOnly ? null : "true" })}
-          className="block focus:outline-none"
-        >
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.99 }}
-            className={`p-3.5 rounded-2xl border flex items-center justify-between transition-colors cursor-pointer text-xs font-bold leading-normal ${
-              currentOnSaleOnly 
-                ? "bg-amber-500 border-transparent text-white shadow-md shadow-amber-500/20" 
-                : "bg-slate-50 hover:bg-slate-100 border-[#eeeeee] text-slate-700"
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <span className="text-base">🔥</span>
-              <span className={`text-[13.5px] font-bold ${currentOnSaleOnly ? "text-white" : "text-[#111]"}`}>Special Hot Deals</span>
-            </div>
-            <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
-              currentOnSaleOnly ? "bg-white border-white text-amber-500 animate-pulse" : "border-slate-300 bg-white"
-            }`}>
-              {currentOnSaleOnly && <Check size={10} strokeWidth={3} />}
-            </div>
-          </motion.div>
-        </Link>
-      </motion.div>
+
 
       {/* Trust Assurances badge list item */}
       <motion.div 

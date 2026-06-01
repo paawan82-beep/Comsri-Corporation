@@ -35,7 +35,11 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
     ]);
 
     productsData = productsResult;
-    categories = categoriesResult || [];
+    categories = (categoriesResult || []).filter(
+      (cat: any) =>
+        cat.name.toLowerCase() !== "new products" &&
+        cat.name.toLowerCase() !== "refurbished products"
+    );
   } catch (error) {
     console.error("[Catalog Loading Error]:", error);
     // Graceful fallback lists
@@ -46,15 +50,15 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
 
   return (
     <main className="min-h-screen bg-[#F5F6F8] py-12 px-4 md:px-8 max-w-[1600px] mx-auto font-sans">
-      
+
       {/* Header and Intro banner */}
       <div className="mb-10 text-center md:text-left" id="catalog-header">
-        <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
+        <h1 className="text-4xl font-medium text-slate-900 tracking-tight mb-2">
           {activeCategoryObject ? activeCategoryObject.name : "Explore Our Catalog"}
         </h1>
         <p className="text-slate-500 max-w-xl text-sm leading-relaxed">
-          {activeCategoryObject?.description 
-            ? activeCategoryObject.description 
+          {activeCategoryObject?.description
+            ? activeCategoryObject.description
             : "Browse our high-performance headless products synchronized directly with secure payment gateways."
           }
         </p>
@@ -71,8 +75,8 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
             </p>
           </div>
         </div>
-        <Link 
-          href="/products/test" 
+        <Link
+          href="/products/test"
           className="bg-slate-950 hover:bg-slate-900 text-white font-bold text-xs px-5 py-3 rounded-xl transition active:scale-[0.98] text-center shrink-0"
         >
           Check API Connection Status →
@@ -80,19 +84,18 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8" id="catalog-layout">
-        
+
         {/* Left sidebar categories filtering */}
         <aside className="w-full lg:w-64 shrink-0 bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_25px_rgba(47,48,74,0.02)] h-fit" id="catalog-sidebar">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4 pb-2 border-b border-slate-100">
+          <h2 className="text-sm font-medium uppercase tracking-wider text-slate-400 mb-4 pb-2 border-b border-slate-100">
             Departments
           </h2>
-          
+
           <div className="flex flex-col gap-1.5 font-semibold text-sm">
             <Link
               href="/products"
-              className={`px-3 py-2 rounded-xl transition ${
-                !currentCategory ? "bg-indigo-600 text-white" : "text-slate-650 hover:bg-slate-50"
-              }`}
+              className={`px-3 py-2 rounded-xl transition ${!currentCategory ? "bg-indigo-600 text-white" : "text-slate-650 hover:bg-slate-50"
+                }`}
             >
               All Departments ({categories.reduce((acc, cat) => acc + (cat.count || 0), 0)})
             </Link>
@@ -101,14 +104,12 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
               <Link
                 key={cat.id}
                 href={`/products?category=${cat.id}`}
-                className={`px-3 py-2 rounded-xl transition flex justify-between items-center ${
-                  currentCategory === cat.id.toString() ? "bg-indigo-600 text-white" : "text-slate-650 hover:bg-slate-50"
-                }`}
+                className={`px-3 py-2 rounded-xl transition flex justify-between items-center ${currentCategory === cat.id.toString() ? "bg-indigo-600 text-white" : "text-slate-650 hover:bg-slate-50"
+                  }`}
               >
                 <span className="truncate">{cat.name}</span>
-                <span className={`text-xs ml-2 font-mono px-1.5 py-0.5 rounded-md ${
-                  currentCategory === cat.id.toString() ? "bg-indigo-550 text-indigo-100" : "bg-slate-100 text-slate-500"
-                }`}>
+                <span className={`text-xs ml-2 font-mono px-1.5 py-0.5 rounded-md ${currentCategory === cat.id.toString() ? "bg-indigo-550 text-indigo-100" : "bg-slate-100 text-slate-500"
+                  }`}>
                   {cat.count}
                 </span>
               </Link>
@@ -118,7 +119,7 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
 
         {/* Right product viewing dynamic grid */}
         <div className="flex-1">
-          
+
           {/* Dynamic Search block */}
           <form className="mb-6 flex gap-2 w-full max-w-md" action="/products" method="GET">
             {currentCategory && <input type="hidden" name="category" value={currentCategory} />}
@@ -152,8 +153,8 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="product-catalog-grid">
                 {productsData.data.map((product) => {
                   const hasImage = product.images && product.images.length > 0;
-                  const thumbUrl = hasImage 
-                    ? product.images[0].src 
+                  const thumbUrl = hasImage
+                    ? product.images[0].src
                     : "https://picsum.photos/seed/placeholder/350/250";
 
                   return (
@@ -182,9 +183,9 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
                           <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-1.5">
                             {product.categories?.[0]?.name || "Catalog product"}
                           </div>
-                          
+
                           <Link href={`/products/${product.slug}`}>
-                            <h3 className="text-base font-extrabold text-slate-900 group-hover:text-indigo-600 transition leading-tight line-clamp-1 mb-2 cursor-pointer">
+                            <h3 className="text-base font-extrabold text-slate-500 group-hover:text-indigo-600 transition leading-tight line-clamp-1 mb-2 cursor-pointer">
                               {product.name}
                             </h3>
                           </Link>
@@ -192,11 +193,11 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
                           <div className="flex gap-2.5 items-baseline">
                             {product.on_sale && product.regular_price ? (
                               <>
-                                <span className="text-lg font-black text-slate-950">₹{product.sale_price}</span>
+                                <span className="text-lg font-black text-slate-500">₹{product.sale_price}</span>
                                 <span className="text-xs text-slate-400 line-through">₹{product.regular_price}</span>
                               </>
                             ) : (
-                              <span className="text-lg font-black text-slate-950">
+                              <span className="text-lg font-black text-slate-500">
                                 ₹{product.price || "Check Price"}
                               </span>
                             )}
@@ -204,12 +205,11 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
                         </div>
 
                         <div className="mt-4 flex items-center justify-between gap-2">
-                          <span className={`text-[10px] font-bold uppercase tracking-wider ${
-                            product.stock_status === "instock" ? "text-emerald-600" : "text-rose-500"
-                          }`}>
+                          <span className={`text-[10px] font-bold uppercase tracking-wider ${product.stock_status === "instock" ? "text-emerald-600" : "text-rose-500"
+                            }`}>
                             {product.stock_status === "instock" ? "● In Stock" : "● Out of Stock"}
                           </span>
-                          
+
                           <Link
                             href={`/products/${product.slug}`}
                             className="bg-slate-50 border border-slate-100 group-hover:bg-indigo-55 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg transition"
@@ -234,7 +234,7 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
                       Previous
                     </Link>
                   )}
-                  
+
                   <span className="text-xs font-mono font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg">
                     Page {currentPage} of {productsData.totalPages}
                   </span>

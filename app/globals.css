@@ -14,6 +14,10 @@ html, body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea,
   font-family: "Fredoka", Arial, Helvetica, sans-serif !important;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500 !important;
+}
+
 @layer utilities {
   .animate-marquee {
     animation: marquee 80s linear infinite;
