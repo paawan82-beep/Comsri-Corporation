@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Apple, Check } from "lucide-react";
+import Image from "next/image";
+import { Check } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
 interface Category {
   id: number;
@@ -31,7 +33,62 @@ export default function SidebarFilters({
   currentSorting,
 }: SidebarFiltersProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+
+  // Unified lists of known tag values for combinatorial search queries
+  const knownBrands = ["apple", "dell", "hp", "lenovo", "microsoft"];
+  const knownProcessors = ["i3", "i5", "i7"];
+  const knownGens = ["4th gen", "6th gen", "7th gen", "8th gen", "9th gen", "10th gen"];
+  const knownRams = ["16gb", "32gb", "64gb", "8gb", "4gb"]; // Longest to shortest to avoid partial replacements
+  const knownHdds = ["500 hdd", "256 ssd", "512 ssd"];
+
+  const getUpdatedSearchQuery = (
+    group: "brand" | "processor" | "generation" | "ram" | "storage",
+    value: string,
+    isActive: boolean
+  ) => {
+    const text = currentQuery.trim().toLowerCase();
+    
+    // Parse current tags in search
+    let activeBrand = knownBrands.find(b => text.includes(b)) || "";
+    let activeProc = knownProcessors.find(p => text.includes(p)) || "";
+    let activeGen = knownGens.find(g => text.includes(g)) || "";
+    let activeRam = knownRams.find(r => text.includes(r)) || "";
+    let activeHdd = knownHdds.find(h => text.includes(h)) || "";
+
+    // Extract any search term that is NOT in our tags list
+    let customText = text;
+    [activeBrand, activeProc, activeGen, activeRam, activeHdd].forEach((t) => {
+      if (t) {
+        customText = customText.replace(t, "").trim();
+      }
+    });
+
+    // Update the targeted tag slot
+    if (group === "brand") {
+      activeBrand = isActive ? "" : value.toLowerCase();
+    } else if (group === "processor") {
+      activeProc = isActive ? "" : value.toLowerCase();
+    } else if (group === "generation") {
+      activeGen = isActive ? "" : value.toLowerCase();
+    } else if (group === "ram") {
+      activeRam = isActive ? "" : value.toLowerCase();
+    } else if (group === "storage") {
+      activeHdd = isActive ? "" : value.toLowerCase();
+    }
+
+    // Reconstruct query with custom words + active tags
+    const words: string[] = [];
+    if (customText) words.push(customText);
+    
+    if (activeBrand) words.push(activeBrand);
+    if (activeProc) words.push(activeProc);
+    if (activeGen) words.push(activeGen);
+    if (activeRam) words.push(activeRam);
+    if (activeHdd) words.push(activeHdd);
+
+    const result = words.join(" ").trim();
+    return result || null;
+  };
 
   // Price Range Bounds: min 7000, max 60000 (representing our shop inventory)
   const minLimit = 7000;
@@ -62,7 +119,7 @@ export default function SidebarFilters({
   const minPercent = ((minPrice - minLimit) / (maxLimit - minLimit)) * 100;
   const maxPercent = ((maxPrice - minLimit) / (maxLimit - minLimit)) * 100;
 
-  // Build target URL
+  // Build target URL for clean state preservation
   const getFilterUrl = (overrides: Record<string, string | null>) => {
     const params = new URLSearchParams();
 
@@ -97,69 +154,42 @@ export default function SidebarFilters({
     router.push(url);
   };
 
-  // Pre-configured brand items with custom SVG icons (Dell, HP, Lenovo, Microsoft) matching their real branding
+  // Pre-configured brand items with high resolution official branding logo images
   const brands = [
     {
       name: "Apple",
       slug: "apple",
       tag: "Apple",
       count: 2,
-      logo: (
-        <Apple size={16} className="text-black" />
-      ),
+      imgUrl: "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/apple.webp",
     },
     {
       name: "Dell",
       slug: "dell",
       tag: "Dell",
       count: 11,
-      logo: (
-        <svg viewBox="0 0 100 100" className="w-[18px] h-[18px] select-none" fill="none">
-          <circle cx="50" cy="50" r="42" stroke="#0076c0" strokeWidth="12" />
-          <path d="M28 35 H42 C48 35 52 38 52 42 V45 C52 49 48 52 42 52 H36 V65 H28 V35 Z M36 41 V46 H41 C43 46 44 45 44 44 C44 43 43 41 41 41 Z" fill="#0076c0" />
-          <path d="M54 35 H68 V41 H60 V47 H66 V53 H60 V59 H68 V65 H54 Z" fill="#0076c0" />
-          <path d="M70 35 H76 V59 H84 V65 H70 Z" fill="#0076c0" />
-          <path d="M85 35 H91 V59 H99 V65 H85 Z" fill="#0076c0" stroke="#0076c0" strokeWidth="0.5" />
-        </svg>
-      ),
+      imgUrl: "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/dell.webp",
     },
     {
       name: "HP",
       slug: "hp",
       tag: "HP",
       count: 8,
-      logo: (
-        <svg viewBox="0 0 100 100" className="w-[18px] h-[18px] select-none">
-          <circle cx="50" cy="50" r="46" fill="#0096d6" />
-          {/* Handcraft thin stylized h and p lines */}
-          <path d="M36 22 V72 M36 44 C41 40 48 40 48 48 V72 M52 28 V78 M52 48 C52 40 59 40 64 44 V72" stroke="white" strokeWidth="9" strokeLinecap="round" fill="none" />
-        </svg>
-      ),
+      imgUrl: "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/hp.webp",
     },
     {
       name: "Lenovo",
       slug: "lenovo",
       tag: "Lenovo",
       count: 5,
-      logo: (
-        <div className="bg-red-600 text-white font-extrabold text-[8px] tracking-tighter px-1.5 py-0.5 rounded uppercase select-none font-sans leading-none">
-          lenovo
-        </div>
-      ),
+      imgUrl: "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/lenovo.webp",
     },
     {
       name: "Microsoft",
       slug: "microsoft",
       tag: "Microsoft",
       count: 1,
-      logo: (
-        <div className="grid grid-cols-2 gap-[2px] w-[15px] h-[15px] select-none">
-          <div className="bg-[#f25022] w-1.5 h-1.5"></div>
-          <div className="bg-[#7fba00] w-1.5 h-1.5"></div>
-          <div className="bg-[#00a4ef] w-1.5 h-1.5"></div>
-          <div className="bg-[#ffb900] w-1.5 h-1.5"></div>
-        </div>
-      ),
+      imgUrl: "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/microsoft.webp",
     },
   ];
 
@@ -170,29 +200,83 @@ export default function SidebarFilters({
     { label: "Intel® Core™ i7", value: "i7", count: 8 },
   ];
 
-  return (
-    <div className="space-y-6">
-      {/* Dynamic Unified Side Filter Card */}
-      <div className="bg-white rounded-[24px] p-6 lg:p-7 border border-[#eeeeee] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_35px_rgb(0,0,0,0.05)] transition-all">
-        {/* ==================================== PRICE SLIDER Section ==================================== */}
-        <div>
-          <h3 className="text-[17px] font-semibold text-[#111] mb-5">Filter By Price</h3>
+  // Pre-configured generations
+  const generations = [
+    { label: "4th Gen", value: "4th gen", count: 1 },
+    { label: "6th Gen", value: "6th gen", count: 9 },
+    { label: "7th Gen", value: "7th gen", count: 1 },
+    { label: "8th Gen", value: "8th gen", count: 11 },
+    { label: "9th Gen", value: "9th gen", count: 1 },
+    { label: "10th Gen", value: "10th gen", count: 1 },
+  ];
 
-          {/* Double Range Slider UI */}
+  // Pre-configured RAM options
+  const ramOptions = [
+    { label: "4 GB", value: "4gb", count: 3 },
+    { label: "8 GB", value: "8gb", count: 26 },
+    { label: "16 GB", value: "16gb", count: 24 },
+    { label: "32 GB", value: "32gb", count: 3 },
+    { label: "64 GB", value: "64gb", count: 1 },
+  ];
+
+  // Pre-configured Hard Disk Drive / Storage options
+  const hddOptions = [
+    { label: "500 HDD", value: "500 hdd", count: 3 },
+    { label: "256 SSD", value: "256 ssd", count: 26 },
+    { label: "512 SSD", value: "512 ssd", count: 24 },
+  ];
+
+  // Animation Variant definitions
+  const containerVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -10 },
+    visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 25 } },
+  } as const;
+
+  const springTransition = { type: "spring", stiffness: 400, damping: 25 } as const;
+
+  return (
+    <motion.div 
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="space-y-6"
+    >
+      {/* Dynamic Unified Side Filter Card */}
+      <div className="bg-white rounded-[24px] p-6 lg:p-7 border border-[#eeeeee] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_35px_rgb(0,0,0,0.05)] transition-all relative overflow-hidden">
+        
+        {/* ==================================== PRICE SLIDER Section ==================================== */}
+        <motion.div variants={itemVariants}>
+          <h3 className="text-[17px] font-semibold text-[#111] mb-5 tracking-tight flex items-center justify-between">
+            <span>Filter By Price</span>
+            <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
+          </h3>
+
+          {/* Double Range Slider UI with Custom Slider Styling */}
           <div className="relative w-full h-8 flex items-center mb-4">
             {/* Background Gray Line */}
-            <div className="absolute inset-x-0 h-[4px] bg-gray-200 rounded-full"></div>
+            <div className="absolute inset-x-0 h-[4px] bg-slate-100 rounded-full"></div>
             
             {/* Active Blue Line */}
             <div 
-              className="absolute h-[4px] bg-[#3452ef] rounded-full"
+              className="absolute h-[4px] bg-gradient-to-r from-[#3452ef] to-blue-500 rounded-full"
               style={{
                 left: `${minPercent}%`,
                 width: `${maxPercent - minPercent}%`
               }}
             ></div>
 
-            {/* Hidden over-sized HTML sliders overlapping */}
+            {/* Range Slides overlapping */}
             <input
               type="range"
               min={minLimit}
@@ -216,113 +300,378 @@ export default function SidebarFilters({
                 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-[4px] [&::-moz-range-thumb]:bg-[#3452ef] [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none"
             />
 
-            {/* Custom Range Knobs Visual ticks inside track */}
-            <div 
-              className="absolute w-3 h-3 bg-white border-2 border-[#3452ef] rounded-full -mt-[1px] pointer-events-none shadow-sm z-30"
-              style={{ left: `calc(${minPercent}% - 6px)` }}
-            ></div>
-            <div 
-              className="absolute w-3 h-3 bg-white border-2 border-[#3452ef] rounded-full -mt-[1px] pointer-events-none shadow-sm z-30"
-              style={{ left: `calc(${maxPercent}% - 6px)` }}
-            ></div>
+            {/* Custom Knobs with Framer Motion spring updates */}
+            <motion.div 
+              layout
+              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+              className="absolute w-4 h-4 bg-white border-2 border-[#3452ef] rounded-full -mt-[1px] pointer-events-none shadow-md z-30 flex items-center justify-center after:content-[''] after:w-1 after:h-1 after:bg-[#3452ef] after:rounded-full"
+              style={{ left: `calc(${minPercent}% - 8px)` }}
+            />
+            <motion.div 
+              layout
+              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+              className="absolute w-4 h-4 bg-white border-2 border-[#3452ef] rounded-full -mt-[1px] pointer-events-none shadow-md z-30 flex items-center justify-center after:content-[''] after:w-1 after:h-1 after:bg-[#3452ef] after:rounded-full"
+              style={{ left: `calc(${maxPercent}% - 8px)` }}
+            />
           </div>
 
-          {/* Pricing Text and Filter Trigger Button */}
-          <div className="flex items-center justify-between mt-2">
-            <span className="text-[14px] text-gray-500 font-medium">
+          {/* Pricing Text and Modern Hover Filter Trigger Button */}
+          <div className="flex items-center justify-between mt-2 pt-0.5">
+            <span className="text-[13.5px] text-gray-500 font-medium tracking-tight">
               Price: <span className="text-[#111] font-bold">₹{minPrice.toLocaleString()} — ₹{maxPrice.toLocaleString()}</span>
             </span>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05, y: -1 }}
+              whileTap={{ scale: 0.95 }}
+              transition={springTransition}
               onClick={applyPriceFilter}
-              className="bg-[#f5f5f5] hover:bg-gray-200 text-black text-[13px] font-semibold px-4 py-1.5 rounded-full transition-colors focus:outline-none"
+              className="bg-[#f5f5f5] hover:bg-[#3452ef] hover:text-white text-black text-[13px] font-bold px-4.5 py-1.5 rounded-full transition-colors duration-200 focus:outline-none shadow-sm"
             >
               Filter
-            </button>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Divider 1 */}
         <hr className="border-[#eeeeee] my-6" />
 
         {/* ==================================== BRANDS SECTION ==================================== */}
-        <div>
-          <h3 className="text-[17px] font-semibold text-[#111] mb-5">Shop By Brand</h3>
-          <div className="flex flex-col gap-1">
+        <motion.div variants={itemVariants}>
+          <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
+            <span>Shop By Brand</span>
+            <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
+          </h3>
+          <div className="flex flex-col gap-1.5">
             {brands.map((brand) => {
-              const isActive = currentQuery.toLowerCase() === brand.slug;
+              const isActive = currentQuery.toLowerCase().includes(brand.slug);
               return (
                 <Link
                   key={brand.slug}
-                  href={getFilterUrl({ search: isActive ? null : brand.name })}
-                  className={`flex items-center justify-between py-2.5 px-3 rounded-xl transition-all group ${
-                    isActive 
-                      ? "bg-slate-50 text-[#3452ef]" 
-                      : "text-gray-700 hover:bg-slate-50/70 hover:text-black"
-                  }`}
+                  href={getFilterUrl({ search: getUpdatedSearchQuery("brand", brand.slug, isActive) })}
+                  className="block focus:outline-none"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 flex items-center justify-center bg-gray-50 rounded-lg shrink-0 group-hover:bg-white transition-colors border border-transparent group-hover:border-gray-100">
-                      {brand.logo}
+                  <motion.div
+                    whileHover="hover"
+                    whileTap={{ scale: 0.98 }}
+                    className={`flex items-center justify-between p-2.5 rounded-2xl relative overflow-hidden group transition-all duration-300 ${
+                      isActive 
+                        ? "text-[#3452ef]" 
+                        : "text-gray-750 hover:text-gray-900"
+                    }`}
+                  >
+                    {/* Animated Solid Slider Background for active state */}
+                    {isActive && (
+                      <motion.div 
+                        layoutId="brandActiveBg"
+                        className="absolute inset-0 bg-blue-50/45 border border-blue-100/50 rounded-2xl -z-10"
+                        transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                      />
+                    )}
+                    {/* Subtle Hover background highlight (only when not active) */}
+                    {!isActive && (
+                      <div className="absolute inset-0 bg-slate-50/0 group-hover:bg-slate-50/75 rounded-2xl transition-all duration-300 -z-10 border border-transparent group-hover:border-slate-100/50" />
+                    )}
+
+                    <div className="flex items-center gap-4">
+                      {/* Logo Frame */}
+                      <div className={`w-[68px] h-[44px] flex items-center justify-center rounded-xl shrink-0 transition-all duration-500 shadow-[0_2px_6px_rgba(0,0,0,0.01)] group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.04)] relative overflow-hidden p-1.5 bg-white ${
+                        isActive 
+                          ? "border-[1.5px] border-[#3452ef] ring-4 ring-[#3452ef]/5" 
+                          : "border border-slate-200/80"
+                      }`}>
+                        <motion.div
+                          variants={{
+                            hover: { scale: 1.06, rotate: 1 }
+                          }}
+                          transition={{ type: "spring", stiffness: 450, damping: 20 }}
+                          className="w-full h-full relative"
+                        >
+                          <Image
+                            src={brand.imgUrl}
+                            alt={`${brand.name} Logo`}
+                            fill
+                            className="object-contain mix-blend-multiply"
+                            referrerPolicy="no-referrer"
+                          />
+                        </motion.div>
+                      </div>
+
+                      <div className="flex flex-col">
+                        <span className={`text-[15px] font-semibold tracking-tight transition-colors duration-200 ${
+                          isActive ? "text-[#3452ef] font-bold" : "text-gray-800"
+                        }`}>
+                          {brand.name}
+                        </span>
+                        <span className="text-[11px] text-gray-400 font-medium leading-none mt-0.5">Explore items</span>
+                      </div>
                     </div>
-                    <span className="text-[14px] font-medium">{brand.name}</span>
-                  </div>
-                  <span className="text-[11px] font-semibold text-gray-400 bg-gray-100/55 px-2 py-0.5 rounded-full border border-gray-100">
-                    {brand.count}
-                  </span>
+
+                    <div className="flex items-center gap-2 z-10 shrink-0">
+                      <AnimatePresence mode="popLayout" initial={false}>
+                        {isActive ? (
+                          <motion.div
+                            key="active"
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                            className="w-5 h-5 rounded-full bg-[#3452ef] flex items-center justify-center text-white shadow-md shadow-blue-500/20"
+                          >
+                            <Check size={11} strokeWidth={3} />
+                          </motion.div>
+                        ) : (
+                          <motion.div
+                            key="inactive"
+                            initial={{ opacity: 0.6 }}
+                            animate={{ opacity: 1 }}
+                            className="text-[12px] font-bold px-2.5 py-0.5 rounded-full border bg-slate-50 border-slate-100 text-gray-400 group-hover:bg-white group-hover:border-slate-200/80 group-hover:text-gray-600 transition-all duration-300"
+                          >
+                            {brand.count}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </motion.div>
                 </Link>
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
         {/* Divider 2 */}
         <hr className="border-[#eeeeee] my-6" />
 
         {/* ==================================== PROCESSORS SECTION ==================================== */}
-        <div>
-          <h3 className="text-[17px] font-semibold text-[#111] mb-5">Shop By Processor</h3>
+        <motion.div variants={itemVariants}>
+          <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
+            <span>Shop By Processor</span>
+            <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
+          </h3>
           <div className="flex flex-col gap-0.5">
             {processors.map((proc) => {
               const isActive = currentQuery.toLowerCase().includes(proc.value);
               return (
                 <Link
                   key={proc.value}
-                  href={getFilterUrl({ search: isActive ? null : proc.value })}
-                  className={`flex items-center justify-between py-2.5 px-3 rounded-xl transition-all ${
-                    isActive 
-                      ? "bg-slate-50 text-[#3452ef]" 
-                      : "text-gray-700 hover:bg-slate-50/70 hover:text-black"
-                  }`}
+                  href={getFilterUrl({ search: getUpdatedSearchQuery("processor", proc.value, isActive) })}
+                  className="block focus:outline-none"
                 >
-                  <span className="text-[14px] font-medium">{proc.label}</span>
-                  <span className="text-[11px] font-semibold text-gray-400 bg-gray-100/55 px-2 py-0.5 rounded-full border border-gray-100">
-                    {proc.count}
-                  </span>
+                  <motion.div
+                    whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
+                      isActive 
+                        ? "bg-blue-50/50 text-[#3452ef]" 
+                        : "text-gray-700"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div 
+                        layoutId="procActiveIndicator"
+                        className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
+                      />
+                    )}
+                    <span className="text-[14.5px] font-semibold">{proc.label}</span>
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
+                      isActive 
+                        ? "bg-[#3452ef] text-white border-transparent" 
+                        : "bg-slate-50 text-gray-400 border-slate-100"
+                    }`}>
+                      {proc.count}
+                    </span>
+                  </motion.div>
                 </Link>
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
         {/* Divider 3 */}
         <hr className="border-[#eeeeee] my-6" />
 
+        {/* ==================================== GENERATION SECTION ==================================== */}
+        <motion.div variants={itemVariants}>
+          <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
+            <span>Shop By Generation</span>
+            <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
+          </h3>
+          <div className="flex flex-col gap-0.5">
+            {generations.map((gen) => {
+              const isActive = currentQuery.toLowerCase().includes(gen.value);
+              return (
+                <Link
+                  key={gen.value}
+                  href={getFilterUrl({ search: getUpdatedSearchQuery("generation", gen.value, isActive) })}
+                  className="block focus:outline-none"
+                >
+                  <motion.div
+                    whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
+                      isActive 
+                        ? "bg-blue-50/50 text-[#3452ef]" 
+                        : "text-gray-700"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div 
+                        layoutId="genActiveIndicator"
+                        className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
+                      />
+                    )}
+                    <span className="text-[14.5px] font-semibold">{gen.label}</span>
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
+                      isActive 
+                        ? "bg-[#3452ef] text-white border-transparent" 
+                        : "bg-slate-50 text-gray-400 border-slate-100"
+                    }`}>
+                      {gen.count}
+                    </span>
+                  </motion.div>
+                </Link>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Divider 4 */}
+        <hr className="border-[#eeeeee] my-6" />
+
+        {/* ==================================== RAM SECTION ==================================== */}
+        <motion.div variants={itemVariants}>
+          <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
+            <span>Shop By Ram</span>
+            <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
+          </h3>
+          <div className="flex flex-col gap-0.5">
+            {ramOptions.map((ram) => {
+              const isActive = currentQuery.toLowerCase().split(/\s+/).includes(ram.value);
+              return (
+                <Link
+                  key={ram.value}
+                  href={getFilterUrl({ search: getUpdatedSearchQuery("ram", ram.value, isActive) })}
+                  className="block focus:outline-none"
+                >
+                  <motion.div
+                    whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
+                      isActive 
+                        ? "bg-blue-50/50 text-[#3452ef]" 
+                        : "text-gray-700"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div 
+                        layoutId="ramActiveIndicator"
+                        className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
+                      />
+                    )}
+                    <span className="text-[14.5px] font-semibold">{ram.label}</span>
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
+                      isActive 
+                        ? "bg-[#3452ef] text-white border-transparent" 
+                        : "bg-slate-50 text-gray-400 border-slate-100"
+                    }`}>
+                      {ram.count}
+                    </span>
+                  </motion.div>
+                </Link>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Divider 5 */}
+        <hr className="border-[#eeeeee] my-6" />
+
+        {/* ==================================== STORAGE SECTION ==================================== */}
+        <motion.div variants={itemVariants}>
+          <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
+            <span>Shop By Hard Disk Drive</span>
+            <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
+          </h3>
+          <div className="flex flex-col gap-0.5">
+            {hddOptions.map((storage) => {
+              const isActive = currentQuery.toLowerCase().includes(storage.value);
+              return (
+                <Link
+                  key={storage.value}
+                  href={getFilterUrl({ search: getUpdatedSearchQuery("storage", storage.value, isActive) })}
+                  className="block focus:outline-none"
+                >
+                  <motion.div
+                    whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
+                      isActive 
+                        ? "bg-blue-50/50 text-[#3452ef]" 
+                        : "text-gray-700"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div 
+                        layoutId="storageActiveIndicator"
+                        className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
+                      />
+                    )}
+                    <span className="text-[14.5px] font-semibold">{storage.label}</span>
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
+                      isActive 
+                        ? "bg-[#3452ef] text-white border-transparent" 
+                        : "bg-slate-50 text-gray-400 border-slate-100"
+                    }`}>
+                      {storage.count}
+                    </span>
+                  </motion.div>
+                </Link>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Divider 6 */}
+        <hr className="border-[#eeeeee] my-6" />
+
         {/* ==================================== CATEGORIES / DEPARTMENTS SECTION ==================================== */}
-        <div>
-          <h3 className="text-[17px] font-semibold text-[#111] mb-5">Departments</h3>
+        <motion.div variants={itemVariants}>
+          <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
+            <span>Departments</span>
+            <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
+          </h3>
           <div className="flex flex-col gap-0.5">
             <Link
               href={getFilterUrl({ category: null })}
-              className={`flex items-center justify-between py-2.5 px-3 rounded-xl transition-all ${
-                !currentCategory 
-                  ? "bg-slate-50 text-[#3452ef] font-bold" 
-                  : "text-gray-700 hover:bg-slate-50/70 hover:text-black"
-              }`}
+              className="block focus:outline-none"
             >
-              <span className="text-[14px] font-medium">All Categories</span>
-              <span className="text-[11px] font-semibold text-gray-400 bg-gray-100/55 px-2 py-0.5 rounded-full border border-gray-100">
-                {categories.reduce((acc, cat) => acc + (cat.count || 0), 0)}
-              </span>
+              <motion.div
+                whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
+                whileTap={{ scale: 0.98 }}
+                className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
+                  !currentCategory 
+                    ? "bg-blue-50/50 text-[#3452ef]" 
+                    : "text-gray-700"
+                }`}
+              >
+                {!currentCategory && (
+                  <motion.div 
+                    layoutId="deptActiveIndicator"
+                    className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
+                  />
+                )}
+                <span className="text-[14.5px] font-semibold">All Categories</span>
+                <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
+                  !currentCategory 
+                    ? "bg-[#3452ef] text-white border-transparent" 
+                    : "bg-slate-55 text-gray-400 border-slate-100"
+                }`}>
+                  {categories.reduce((acc, cat) => acc + (cat.count || 0), 0)}
+                </span>
+              </motion.div>
             </Link>
             
             {categories.map((cat) => {
@@ -331,68 +680,109 @@ export default function SidebarFilters({
                 <Link
                   key={cat.id}
                   href={getFilterUrl({ category: isActive ? null : cat.id.toString() })}
-                  className={`flex items-center justify-between py-2.5 px-3 rounded-xl transition-all ${
-                    isActive 
-                      ? "bg-slate-50 text-[#3452ef] font-bold" 
-                      : "text-gray-700 hover:bg-slate-50/70 hover:text-black"
-                  }`}
+                  className="block focus:outline-none"
                 >
-                  <span className="text-[14px] font-medium truncate pr-2">{cat.name}</span>
-                  <span className="text-[11px] font-semibold text-gray-400 bg-gray-100/55 px-2 py-0.5 rounded-full border border-gray-100 shrink-0">
-                    {cat.count}
-                  </span>
+                  <motion.div
+                    whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
+                      isActive 
+                        ? "bg-blue-50/50 text-[#3452ef]" 
+                        : "text-gray-700"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div 
+                        layoutId="deptActiveIndicator"
+                        className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
+                      />
+                    )}
+                    <span className="text-[14.5px] font-semibold truncate pr-2">{cat.name}</span>
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border shrink-0 ${
+                      isActive 
+                        ? "bg-[#3452ef] text-white border-transparent" 
+                        : "bg-slate-55 text-gray-400 border-slate-100"
+                    }`}>
+                      {cat.count}
+                    </span>
+                  </motion.div>
                 </Link>
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
-        {/* Clear All Active Filters Button (if any) */}
-        { (currentCategory || currentQuery || currentMinPrice || currentMaxPrice || currentOnSaleOnly) && (
-          <div className="mt-6 pt-4 border-t border-dashed border-[#eeeeee]">
-            <Link
-              href="/shop"
-              className="w-full py-2.5 rounded-xl border border-rose-100 hover:border-rose-200 text-rose-600 hover:bg-rose-50/50 text-[13px] font-bold transition-all text-center flex items-center justify-center gap-1.5"
+        {/* Clear All Active Filters Button with AnimatePresence support */}
+        <AnimatePresence>
+          { (currentCategory || currentQuery || currentMinPrice || currentMaxPrice || currentOnSaleOnly) && (
+            <motion.div 
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="mt-6 pt-4 border-t border-dashed border-[#eeeeee] overflow-hidden"
             >
-              Reset All Filters
-            </Link>
-          </div>
-        )}
+              <Link
+                href="/shop"
+                className="block focus:outline-none"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-2.5 rounded-xl border border-rose-100 hover:border-rose-200 text-rose-600 hover:bg-rose-50/50 text-[13px] font-bold transition-colors text-center flex items-center justify-center gap-1.5"
+                >
+                  Reset All Filters
+                </motion.div>
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Sale/Deals Toggle widget */}
-      <div className="bg-white rounded-[24px] p-6 border border-[#eeeeee] shadow-[0_8px_30px_rgb(0,0,0,0.03)]">
+      {/* Sale/Deals Toggle widget mapped to framer motion spring */}
+      <motion.div 
+        variants={itemVariants}
+        className="bg-white rounded-[24px] p-6 border border-[#eeeeee] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_35px_rgb(0,0,0,0.05)] transition-shadow duration-300"
+      >
         <Link
           href={getFilterUrl({ on_sale: currentOnSaleOnly ? null : "true" })}
-          className={`p-3.5 rounded-2xl border flex items-center justify-between transition-all cursor-pointer text-xs font-bold leading-normal ${
-            currentOnSaleOnly 
-              ? "bg-orange-50 border-orange-200 text-orange-700 shadow-sm" 
-              : "bg-slate-50 hover:bg-slate-100 border-[#eeeeee] text-slate-700"
-          }`}
+          className="block focus:outline-none"
         >
-          <div className="flex items-center gap-2">
-            <span className="text-base">🔥</span>
-            <span className="text-[13px] font-semibold">Special Hot Deals</span>
-          </div>
-          <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
-            currentOnSaleOnly ? "bg-orange-500 border-orange-500 text-white" : "border-slate-300 bg-white"
-          }`}>
-            {currentOnSaleOnly && <Check size={10} />}
-          </div>
+          <motion.div
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            className={`p-3.5 rounded-2xl border flex items-center justify-between transition-colors cursor-pointer text-xs font-bold leading-normal ${
+              currentOnSaleOnly 
+                ? "bg-amber-500 border-transparent text-white shadow-md shadow-amber-500/20" 
+                : "bg-slate-50 hover:bg-slate-100 border-[#eeeeee] text-slate-700"
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <span className="text-base">🔥</span>
+              <span className={`text-[13.5px] font-bold ${currentOnSaleOnly ? "text-white" : "text-[#111]"}`}>Special Hot Deals</span>
+            </div>
+            <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+              currentOnSaleOnly ? "bg-white border-white text-amber-500 animate-pulse" : "border-slate-300 bg-white"
+            }`}>
+              {currentOnSaleOnly && <Check size={10} strokeWidth={3} />}
+            </div>
+          </motion.div>
         </Link>
-      </div>
+      </motion.div>
 
       {/* Trust Assurances badge list item */}
-      <div className="bg-[#111111] text-white p-6 rounded-[24px] relative overflow-hidden shadow-md">
-        <div className="absolute right-[-20px] bottom-[-20px] w-24 h-24 bg-white/5 rounded-full pointer-events-none"></div>
-        <svg viewBox="0 0 24 24" className="w-8 h-8 text-[#fcb643] mb-4 stroke-current fill-none" strokeWidth="1.5">
+      <motion.div 
+        variants={itemVariants}
+        className="bg-[#111111] text-white p-6 rounded-[24px] relative overflow-hidden shadow-md group hover:shadow-xl transition-shadow duration-300"
+      >
+        <div className="absolute right-[-20px] bottom-[-20px] w-24 h-24 bg-white/5 rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
+        <svg viewBox="0 0 24 24" className="w-8 h-8 text-[#fcb643] mb-4 stroke-current fill-none group-hover:rotate-12 transition-transform duration-300" strokeWidth="1.5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
         </svg>
         <h4 className="text-[15px] font-bold text-white tracking-wide uppercase">COMSRI CERTIFIED</h4>
         <p className="text-[12px] text-gray-400 mt-2 leading-relaxed">
           Every desktop and laptop undergoes a strict 40-point hardware diagnostic test and includes a 1-year product warranty coverage support.
         </p>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

@@ -34,7 +34,7 @@ import HeaderActions from "./HeaderActions";
 import SidebarFilters from "./SidebarFilters";
 import ProductCard from "./ProductCard";
 
-export const revalidate = 3600; // Optimal caching for WooCommerce storefront with webhook purges
+export const dynamic = "force-dynamic"; // Ensure runtime dynamic evaluation for URL search/filter updates
 
 interface ShopPageProps {
   searchParams: Promise<{
