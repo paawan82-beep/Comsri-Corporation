@@ -69,48 +69,10 @@ export async function generateMetadata(
   }
 }
 
-/**
- * 2. PRODUCTION STATIC GENERATION LOOP WITH INFINITE SCALING (Problem 5 Fix)
- * Completely paginates all WooCommerce entries during static compile (not just the first 50),
- * keeping RAM clean and build robust on large-scale catalogs.
- */
 export async function generateStaticParams() {
-  const allParams: { slug: string }[] = [];
-  let page = 1;
-  const perPage = 100; // WooCommerce max optimal slice size
-  let hasMore = true;
-
-  try {
-    while (hasMore) {
-      const response = await woocommerce.getProducts({
-        page,
-        per_page: perPage,
-        status: "publish",
-      });
-
-      if (!response.data || response.data.length === 0) {
-        hasMore = false;
-        break;
-      }
-
-      for (const item of response.data) {
-        if (item.slug) {
-          allParams.push({ slug: item.slug });
-        }
-      }
-
-      // Safe bounds checking
-      if (page >= response.totalPages || response.data.length < perPage) {
-        hasMore = false;
-      } else {
-        page++;
-      }
-    }
-  } catch (error) {
-    console.error("[generateStaticParams Builder Error]:", error);
-  }
-
-  return allParams;
+  // Return empty list to generate products on-demand via Incremental Static Regeneration (ISR).
+  // This prevents build-time rate-limiting and 500 errors from WooCommerce API.
+  return [];
 }
 
 /**

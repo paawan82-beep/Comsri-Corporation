@@ -44,3 +44,87 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateX(0%);
   }
 }
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float1 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0) rotate(8deg);
+  }
+}
+@keyframes float2 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(20deg);
+  }
+  50% {
+    transform: translate3d(0, 8px, 0) rotate(45deg);
+  }
+}
+@keyframes float3 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) rotate(180deg) scale(1.06);
+  }
+}
+@keyframes float4 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-15deg);
+  }
+  50% {
+    transform: translate3d(0, 10px, 0) rotate(10deg);
+  }
+}
+.animate-float-1 {
+  animation: float1 4.5s ease-in-out infinite;
+  will-change: transform;
+}
+.animate-float-2 {
+  animation: float2 5.5s ease-in-out infinite;
+  will-change: transform;
+}
+.animate-float-3 {
+  animation: float3 7s ease-in-out infinite;
+  will-change: transform;
+}
+.animate-float-4 {
+  animation: float4 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes scan {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+.animate-scan {
+  animation: scan 1.2s linear infinite;
+}
+
+/* Add padding-bottom to body on mobile to prevent the bottom navigation from covering footer content */
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: 72px !important;
+  }
+}
+

@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Search, ChevronDown, Shuffle, Heart, ShoppingCart, Apple, Menu, X } from "lucide-react";
+import { Search, ChevronDown, Shuffle, Heart, ShoppingCart, Apple, Menu, X, Home, Info, ShoppingBag, Package, User } from "lucide-react";
 
 function HeaderSearchForm() {
   const searchParams = useSearchParams();
@@ -34,6 +34,40 @@ function HeaderSearchForm() {
         className="absolute right-1 top-1 bottom-1 w-[38px] h-[38px] bg-[#374bf9] rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
       >
         <Search size={18} />
+      </button>
+    </form>
+  );
+}
+
+function MobileSearchForm() {
+  const searchParams = useSearchParams();
+  const currentCategory = searchParams.get("category") || "";
+  const currentMinPrice = searchParams.get("min_price") || "";
+  const currentMaxPrice = searchParams.get("max_price") || "";
+  const currentOnSaleOnly = searchParams.get("on_sale") === "true";
+  const currentSorting = searchParams.get("orderby") || "date";
+  const currentQuery = searchParams.get("search") || "";
+
+  return (
+    <form className="relative w-full" action="/shop" method="GET">
+      {currentCategory && <input type="hidden" name="category" value={currentCategory} />}
+      {currentMinPrice && <input type="hidden" name="min_price" value={currentMinPrice} />}
+      {currentMaxPrice && <input type="hidden" name="max_price" value={currentMaxPrice} />}
+      {currentOnSaleOnly && <input type="hidden" name="on_sale" value="true" />}
+      {currentSorting !== "date" && <input type="hidden" name="orderby" value={currentSorting} />}
+
+      <input
+        type="text"
+        name="search"
+        defaultValue={currentQuery}
+        placeholder="Search for products"
+        className="w-full h-11 pl-6 pr-14 text-[14.5px] font-medium text-gray-700 bg-white rounded-full focus:outline-none"
+      />
+      <button
+        type="submit"
+        className="absolute right-1 top-[4px] w-9 h-9 bg-[#374bf9] rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
+      >
+        <Search size={16} />
       </button>
     </form>
   );
@@ -90,30 +124,19 @@ export default function Header() {
 
   return (
     <>
-      {/* -------------------- BRAND HEADER -------------------- */}
-      <header className="bg-white py-3 md:py-4 border-b border-gray-100" id="shop-header">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 flex items-center justify-between w-full gap-3">
-          
-          {/* Mobile: Hamburger button */}
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
-            aria-label="Open menu"
-          >
-            <Menu size={24} className="text-gray-800" />
-          </button>
-
+      {/* -------------------- DESKTOP HEADER -------------------- */}
+      <header className="hidden lg:block bg-white py-3 md:py-4 border-b border-gray-100" id="shop-header">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between w-full gap-3">
           {/* Logo element */}
           <Link href="/" className="flex-shrink-0 flex items-center cursor-pointer">
-            <img 
-              src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png" 
+            <img loading="lazy" src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png" 
               alt="Comsri Corporation Logo" 
-              className="h-[36px] md:h-[44px] lg:h-[52px] w-auto object-contain"
+              className="h-[52px] w-auto object-contain"
             />
           </Link>
 
-          {/* Search bar inside header — DESKTOP ONLY */}
-          <div className="hidden lg:block flex-1 max-w-2xl mx-12">
+          {/* Search bar inside header */}
+          <div className="flex-1 max-w-2xl mx-12">
             <Suspense fallback={
               <div className="relative">
                 <input
@@ -132,9 +155,10 @@ export default function Header() {
           </div>
 
           {/* Right Actions — desktop */}
-          <div className="hidden lg:flex items-center gap-x-6 text-sm font-medium text-gray-800">
+          <div className="flex items-center gap-x-6 text-sm font-medium text-gray-800">
             <div className="flex items-center gap-2 cursor-pointer border-r border-gray-350 pr-6 h-5">
               <img 
+                loading="lazy"
                 src="https://comsri.com/wp-content/uploads/2025/10/indian-flag-1-1.jpg" 
                 alt="IND" 
                 className="w-5 h-[13px] object-cover rounded-[1px]" 
@@ -163,19 +187,55 @@ export default function Header() {
               </Link>
             )}
           </div>
+        </div>
+      </header>
 
-          {/* Mobile/Tablet: Cart + Search icons */}
-          <div className="flex lg:hidden items-center gap-2">
-            <Link href="/shop" className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
-              <Search size={20} className="text-gray-700" />
-            </Link>
-            <button className="relative w-9 h-9 flex items-center justify-center rounded-full bg-[#374bf9] text-white">
-              <ShoppingCart size={18} />
-              <span className="absolute -top-1 -right-1 bg-white text-[#374bf9] text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-gray-200">
-                0
-              </span>
-            </button>
-          </div>
+      {/* -------------------- MOBILE HEADER (Matches Mockup Exactly) -------------------- */}
+      <header className="lg:hidden w-full flex flex-col bg-white border-b border-gray-100" id="shop-header-mobile">
+        {/* Upper Row: Hamburger, Centered Logo, Profile */}
+        <div className="flex items-center justify-between px-4 py-2 w-full">
+          {/* Left: Hamburger menu */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-50 transition-colors"
+            aria-label="Open menu"
+          >
+            <Menu size={24} className="text-gray-800" />
+          </button>
+
+          {/* Center: Centered Logo */}
+          <Link href="/" className="flex-shrink-0 flex items-center justify-center">
+            <img 
+              loading="lazy" 
+              src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png" 
+              alt="Comsri Corporation Logo" 
+              className="h-[34px] w-auto object-contain"
+            />
+          </Link>
+
+          {/* Right: Profile User Icon */}
+          <Link href="/login" className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-50 transition-colors">
+            <User size={24} className="text-gray-800" />
+          </Link>
+        </div>
+
+        {/* Lower Row: Search Bar (Gold Background #faba5b) */}
+        <div className="w-full bg-[#faba5b] px-4 py-2.5 shadow-inner">
+          <Suspense fallback={
+            <div className="relative w-full">
+              <input
+                type="text"
+                placeholder="Search for products"
+                className="w-full h-11 pl-6 pr-14 text-sm text-gray-700 bg-white rounded-full focus:outline-none"
+                disabled
+              />
+              <div className="absolute right-1 top-1 bottom-1 w-9 h-9 bg-[#374bf9] rounded-full flex items-center justify-center text-white">
+                <Search size={16} />
+              </div>
+            </div>
+          }>
+            <MobileSearchForm />
+          </Suspense>
         </div>
       </header>
 
@@ -409,8 +469,7 @@ export default function Header() {
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-            <img 
-              src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png" 
+            <img loading="lazy" src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png" 
               alt="Comsri Corporation Logo" 
               className="h-[32px] w-auto object-contain"
             />
@@ -541,7 +600,7 @@ export default function Header() {
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <img src="https://comsri.com/wp-content/uploads/2025/10/indian-flag-1-1.jpg" alt="IND" className="w-5 h-[13px] object-cover rounded-[1px]" />
+              <img loading="lazy" src="https://comsri.com/wp-content/uploads/2025/10/indian-flag-1-1.jpg" alt="IND" className="w-5 h-[13px] object-cover rounded-[1px]" />
               <span className="text-[13px] font-medium text-gray-700">IND</span>
             </div>
           </div>
@@ -572,6 +631,91 @@ export default function Header() {
               Login / Register
             </Link>
           )}
+        </div>
+      </div>
+
+      {/* ================== MOBILE BOTTOM NAVIGATION ================== */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[90] lg:hidden bg-[#374bf9]/95 backdrop-blur-md border border-[#2539db] shadow-[0_8px_35px_rgba(55,75,249,0.35)] px-3 py-1.5 w-[92%] max-w-[420px] rounded-full">
+        <div className="flex items-center justify-around h-11 w-full mx-auto">
+          {/* Home Tab */}
+          <Link
+            href="/"
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${
+              pathname === "/" 
+                ? "bg-[#faba5b] text-black px-4 py-2" 
+                : "text-white/80 hover:text-white p-2"
+            }`}
+          >
+            <Home size={20} className="stroke-[2.5]" />
+            {pathname === "/" && (
+              <span className="text-[13px] font-bold tracking-wide">Home</span>
+            )}
+          </Link>
+
+          {/* About Us Tab */}
+          <Link
+            href="/about"
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${
+              pathname === "/about" 
+                ? "bg-[#faba5b] text-black px-4 py-2" 
+                : "text-white/80 hover:text-white p-2"
+            }`}
+          >
+            <Info size={20} className="stroke-[2.5]" />
+            {pathname === "/about" && (
+              <span className="text-[13px] font-bold tracking-wide">About</span>
+            )}
+          </Link>
+
+          {/* Shop Tab */}
+          <Link
+            href="/shop"
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${
+              pathname === "/shop" 
+                ? "bg-[#faba5b] text-black px-4 py-2" 
+                : "text-white/80 hover:text-white p-2"
+            }`}
+          >
+            <ShoppingBag size={20} className="stroke-[2.5]" />
+            {pathname === "/shop" && (
+              <span className="text-[13px] font-bold tracking-wide">Shop</span>
+            )}
+          </Link>
+
+          {/* Bulk Orders Tab */}
+          <Link
+            href="/bulk-orders"
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${
+              pathname === "/bulk-orders" 
+                ? "bg-[#faba5b] text-black px-4 py-2" 
+                : "text-white/80 hover:text-white p-2"
+            }`}
+          >
+            <Package size={20} className="stroke-[2.5]" />
+            {pathname === "/bulk-orders" && (
+              <span className="text-[13px] font-bold tracking-wide">Bulk</span>
+            )}
+          </Link>
+
+          {/* Cart Tab */}
+          <Link
+            href="#"
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${
+              pathname === "/cart" || pathname === "#cart"
+                ? "bg-[#faba5b] text-black px-4 py-2" 
+                : "text-white/80 hover:text-white p-2"
+            }`}
+          >
+            <div className="relative">
+              <ShoppingCart size={20} className="stroke-[2.5]" />
+              <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                0
+              </span>
+            </div>
+            {(pathname === "/cart" || pathname === "#cart") && (
+              <span className="text-[13px] font-bold tracking-wide">Cart</span>
+            )}
+          </Link>
         </div>
       </div>
     </>

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Check } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+// Framer Motion is removed to make filters lightweight and smooth for low-end systems
 
 interface Category {
   id: number;
@@ -234,37 +234,13 @@ export default function SidebarFilters({
     { label: "512 SSD", value: "512 ssd", count: counts?.storageCounts?.["512 ssd"] ?? 24 },
   ];
 
-  // Animation Variant definitions
-  const containerVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        staggerChildren: 0.08,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -10 },
-    visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 25 } },
-  } as const;
-
-  const springTransition = { type: "spring", stiffness: 400, damping: 25 } as const;
-
   return (
-    <motion.div 
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="space-y-6"
-    >
+    <div className="space-y-6 animate-fade-in">
       {/* Dynamic Unified Side Filter Card */}
       <div className="bg-white rounded-[24px] p-6 lg:p-7 border border-[#eeeeee] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_35px_rgb(0,0,0,0.05)] transition-all relative overflow-hidden">
         
         {/* ==================================== PRICE SLIDER Section ==================================== */}
-        <motion.div variants={itemVariants}>
+        <div>
           <h3 className="text-[17px] font-semibold text-[#111] mb-5 tracking-tight flex items-center justify-between">
             <span>Filter By Price</span>
             <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
@@ -308,17 +284,13 @@ export default function SidebarFilters({
                 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-[4px] [&::-moz-range-thumb]:bg-[#3452ef] [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none"
             />
 
-            {/* Custom Knobs with Framer Motion spring updates */}
-            <motion.div 
-              layout
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
-              className="absolute w-4 h-4 bg-white border-2 border-[#3452ef] rounded-full -mt-[1px] pointer-events-none shadow-md z-30 flex items-center justify-center after:content-[''] after:w-1 after:h-1 after:bg-[#3452ef] after:rounded-full"
+            {/* Custom Knobs positioned absolute */}
+            <div 
+              className="absolute w-4 h-4 bg-white border-2 border-[#3452ef] rounded-full -mt-[1px] pointer-events-none shadow-md z-30 flex items-center justify-center after:content-[''] after:w-1 after:h-1 after:bg-[#3452ef] after:rounded-full transition-[left] duration-150 ease-out"
               style={{ left: `calc(${minPercent}% - 8px)` }}
             />
-            <motion.div 
-              layout
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
-              className="absolute w-4 h-4 bg-white border-2 border-[#3452ef] rounded-full -mt-[1px] pointer-events-none shadow-md z-30 flex items-center justify-center after:content-[''] after:w-1 after:h-1 after:bg-[#3452ef] after:rounded-full"
+            <div 
+              className="absolute w-4 h-4 bg-white border-2 border-[#3452ef] rounded-full -mt-[1px] pointer-events-none shadow-md z-30 flex items-center justify-center after:content-[''] after:w-1 after:h-1 after:bg-[#3452ef] after:rounded-full transition-[left] duration-150 ease-out"
               style={{ left: `calc(${maxPercent}% - 8px)` }}
             />
           </div>
@@ -328,23 +300,20 @@ export default function SidebarFilters({
             <span className="text-[13.5px] text-gray-500 font-medium tracking-tight">
               Price: <span className="text-[#111] font-bold">₹{minPrice.toLocaleString()} — ₹{maxPrice.toLocaleString()}</span>
             </span>
-            <motion.button
-              whileHover={{ scale: 1.05, y: -1 }}
-              whileTap={{ scale: 0.95 }}
-              transition={springTransition}
+            <button
               onClick={applyPriceFilter}
-              className="bg-[#f5f5f5] hover:bg-[#3452ef] hover:text-white text-black text-[13px] font-bold px-4.5 py-1.5 rounded-full transition-colors duration-200 focus:outline-none shadow-sm"
+              className="bg-[#f5f5f5] hover:bg-[#3452ef] hover:text-white hover:scale-105 active:scale-95 text-black text-[13px] font-bold px-4.5 py-1.5 rounded-full transition-all duration-200 focus:outline-none shadow-sm cursor-pointer"
             >
               Filter
-            </motion.button>
+            </button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Divider 1 */}
         <hr className="border-[#eeeeee] my-6" />
 
         {/* ==================================== BRANDS SECTION ==================================== */}
-        <motion.div variants={itemVariants}>
+        <div>
           <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
             <span>Shop By Brand</span>
             <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
@@ -357,12 +326,10 @@ export default function SidebarFilters({
                   key={brand.slug}
                   href={getFilterUrl({ search: getUpdatedSearchQuery("brand", brand.slug, isActive) })}
                   onClick={handleLinkClick({ search: getUpdatedSearchQuery("brand", brand.slug, isActive) })}
-                  className="block focus:outline-none"
+                  className="block focus:outline-none animate-fade-in"
                 >
-                  <motion.div
-                    whileHover="hover"
-                    whileTap={{ scale: 0.98 }}
-                    className={`flex items-center justify-between p-2.5 rounded-2xl relative overflow-hidden group transition-all duration-300 ${
+                  <div
+                    className={`flex items-center justify-between p-2.5 rounded-2xl relative overflow-hidden group transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] ${
                       isActive 
                         ? "text-[#3452ef]" 
                         : "text-gray-750 hover:text-gray-900"
@@ -370,11 +337,7 @@ export default function SidebarFilters({
                   >
                     {/* Animated Solid Slider Background for active state */}
                     {isActive && (
-                      <motion.div 
-                        layoutId="brandActiveBg"
-                        className="absolute inset-0 bg-blue-50/45 border border-blue-100/50 rounded-2xl -z-10"
-                        transition={{ type: "spring", stiffness: 380, damping: 28 }}
-                      />
+                      <div className="absolute inset-0 bg-blue-50/45 border border-blue-100/50 rounded-2xl -z-10" />
                     )}
                     {/* Subtle Hover background highlight (only when not active) */}
                     {!isActive && (
@@ -388,13 +351,7 @@ export default function SidebarFilters({
                           ? "border-[1.5px] border-[#3452ef] ring-4 ring-[#3452ef]/5" 
                           : "border border-slate-200/80"
                       }`}>
-                        <motion.div
-                          variants={{
-                            hover: { scale: 1.06, rotate: 1 }
-                          }}
-                          transition={{ type: "spring", stiffness: 450, damping: 20 }}
-                          className="w-full h-full relative"
-                        >
+                        <div className="w-full h-full relative group-hover:scale-105 group-hover:rotate-1 transition-transform duration-300">
                           <Image
                             src={brand.imgUrl}
                             alt={`${brand.name} Logo`}
@@ -402,7 +359,7 @@ export default function SidebarFilters({
                             className="object-contain mix-blend-multiply"
                             referrerPolicy="no-referrer"
                           />
-                        </motion.div>
+                        </div>
                       </div>
 
                       <div className="flex flex-col">
@@ -416,42 +373,28 @@ export default function SidebarFilters({
                     </div>
 
                     <div className="flex items-center gap-2 z-10 shrink-0">
-                      <AnimatePresence mode="popLayout" initial={false}>
-                        {isActive ? (
-                          <motion.div
-                            key="active"
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0, opacity: 0 }}
-                            transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                            className="w-5 h-5 rounded-full bg-[#3452ef] flex items-center justify-center text-white shadow-md shadow-blue-500/20"
-                          >
-                            <Check size={11} strokeWidth={3} />
-                          </motion.div>
-                        ) : (
-                          <motion.div
-                            key="inactive"
-                            initial={{ opacity: 0.6 }}
-                            animate={{ opacity: 1 }}
-                            className="text-[12px] font-bold px-2.5 py-0.5 rounded-full border bg-slate-50 border-slate-100 text-gray-400 group-hover:bg-white group-hover:border-slate-200/80 group-hover:text-gray-600 transition-all duration-300"
-                          >
-                            {brand.count}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      {isActive ? (
+                        <div className="w-5 h-5 rounded-full bg-[#3452ef] flex items-center justify-center text-white shadow-md shadow-blue-500/20 transition-all duration-200 scale-100">
+                          <Check size={11} strokeWidth={3} />
+                        </div>
+                      ) : (
+                        <div className="text-[12px] font-bold px-2.5 py-0.5 rounded-full border bg-slate-50 border-slate-100 text-gray-400 group-hover:bg-white group-hover:border-slate-200/80 group-hover:text-gray-600 transition-all duration-300">
+                          {brand.count}
+                        </div>
+                      )}
                     </div>
-                  </motion.div>
+                  </div>
                 </Link>
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
         {/* Divider 2 */}
         <hr className="border-[#eeeeee] my-6" />
 
         {/* ==================================== PROCESSORS SECTION ==================================== */}
-        <motion.div variants={itemVariants}>
+        <div>
           <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
             <span>Shop By Processor</span>
             <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
@@ -466,42 +409,36 @@ export default function SidebarFilters({
                   onClick={handleLinkClick({ search: getUpdatedSearchQuery("processor", proc.value, isActive) })}
                   className="block focus:outline-none"
                 >
-                  <motion.div
-                    whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
+                  <div
+                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative transition-all duration-200 hover:translate-x-1 ${
                       isActive 
                         ? "bg-blue-50/50 text-[#3452ef]" 
-                        : "text-gray-700"
+                        : "text-gray-700 hover:text-gray-900 hover:bg-slate-100/60"
                     }`}
                   >
                     {isActive && (
-                      <motion.div 
-                        layoutId="procActiveIndicator"
-                        className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
-                      />
+                      <div className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r" />
                     )}
                     <span className="text-[14.5px] font-semibold">{proc.label}</span>
-                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border transition-all duration-200 ${
                       isActive 
                         ? "bg-[#3452ef] text-white border-transparent" 
                         : "bg-slate-50 text-gray-400 border-slate-100"
                     }`}>
                       {proc.count}
                     </span>
-                  </motion.div>
+                  </div>
                 </Link>
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
         {/* Divider 3 */}
         <hr className="border-[#eeeeee] my-6" />
 
         {/* ==================================== GENERATION SECTION ==================================== */}
-        <motion.div variants={itemVariants}>
+        <div>
           <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
             <span>Shop By Generation</span>
             <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
@@ -516,42 +453,36 @@ export default function SidebarFilters({
                   onClick={handleLinkClick({ search: getUpdatedSearchQuery("generation", gen.value, isActive) })}
                   className="block focus:outline-none"
                 >
-                  <motion.div
-                    whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
+                  <div
+                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative transition-all duration-200 hover:translate-x-1 ${
                       isActive 
                         ? "bg-blue-50/50 text-[#3452ef]" 
-                        : "text-gray-700"
+                        : "text-gray-700 hover:text-gray-900 hover:bg-slate-100/60"
                     }`}
                   >
                     {isActive && (
-                      <motion.div 
-                        layoutId="genActiveIndicator"
-                        className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
-                      />
+                      <div className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r" />
                     )}
                     <span className="text-[14.5px] font-semibold">{gen.label}</span>
-                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border transition-all duration-200 ${
                       isActive 
                         ? "bg-[#3452ef] text-white border-transparent" 
                         : "bg-slate-50 text-gray-400 border-slate-100"
                     }`}>
                       {gen.count}
                     </span>
-                  </motion.div>
+                  </div>
                 </Link>
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
         {/* Divider 4 */}
         <hr className="border-[#eeeeee] my-6" />
 
         {/* ==================================== RAM SECTION ==================================== */}
-        <motion.div variants={itemVariants}>
+        <div>
           <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
             <span>Shop By Ram</span>
             <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
@@ -566,42 +497,36 @@ export default function SidebarFilters({
                   onClick={handleLinkClick({ search: getUpdatedSearchQuery("ram", ram.value, isActive) })}
                   className="block focus:outline-none"
                 >
-                  <motion.div
-                    whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
+                  <div
+                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative transition-all duration-200 hover:translate-x-1 ${
                       isActive 
                         ? "bg-blue-50/50 text-[#3452ef]" 
-                        : "text-gray-700"
+                        : "text-gray-700 hover:text-gray-900 hover:bg-slate-100/60"
                     }`}
                   >
                     {isActive && (
-                      <motion.div 
-                        layoutId="ramActiveIndicator"
-                        className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
-                      />
+                      <div className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r" />
                     )}
                     <span className="text-[14.5px] font-semibold">{ram.label}</span>
-                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border transition-all duration-200 ${
                       isActive 
                         ? "bg-[#3452ef] text-white border-transparent" 
                         : "bg-slate-50 text-gray-400 border-slate-100"
                     }`}>
                       {ram.count}
                     </span>
-                  </motion.div>
+                  </div>
                 </Link>
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
         {/* Divider 5 */}
         <hr className="border-[#eeeeee] my-6" />
 
         {/* ==================================== STORAGE SECTION ==================================== */}
-        <motion.div variants={itemVariants}>
+        <div>
           <h3 className="text-[17px] font-semibold text-[#111] mb-4.5 tracking-tight flex items-center justify-between">
             <span>Shop By Hard Disk Drive</span>
             <span className="w-1.5 h-1.5 bg-[#3452ef] rounded-full"></span>
@@ -616,78 +541,56 @@ export default function SidebarFilters({
                   onClick={handleLinkClick({ search: getUpdatedSearchQuery("storage", storage.value, isActive) })}
                   className="block focus:outline-none"
                 >
-                  <motion.div
-                    whileHover={{ x: 4, backgroundColor: "rgba(241, 245, 249, 0.6)" }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative ${
+                  <div
+                    className={`flex items-center justify-between py-2.5 px-3 rounded-xl relative transition-all duration-200 hover:translate-x-1 ${
                       isActive 
                         ? "bg-blue-50/50 text-[#3452ef]" 
-                        : "text-gray-700"
+                        : "text-gray-700 hover:text-gray-900 hover:bg-slate-100/60"
                     }`}
                   >
                     {isActive && (
-                      <motion.div 
-                        layoutId="storageActiveIndicator"
-                        className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r"
-                      />
+                      <div className="absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-[#3452ef] rounded-r" />
                     )}
                     <span className="text-[14.5px] font-semibold">{storage.label}</span>
-                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border transition-all duration-200 ${
                       isActive 
                         ? "bg-[#3452ef] text-white border-transparent" 
                         : "bg-slate-50 text-gray-400 border-slate-100"
                     }`}>
                       {storage.count}
                     </span>
-                  </motion.div>
+                  </div>
                 </Link>
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
-
-
-        {/* Clear All Active Filters Button with AnimatePresence support */}
-        <AnimatePresence>
-          { (currentCategory || currentQuery || currentMinPrice || currentMaxPrice || currentOnSaleOnly) && (
-            <motion.div 
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="mt-6 pt-4 border-t border-dashed border-[#eeeeee] overflow-hidden"
+        {/* Clear All Active Filters Button */}
+        { (currentCategory || currentQuery || currentMinPrice || currentMaxPrice || currentOnSaleOnly) && (
+          <div className="mt-6 pt-4 border-t border-dashed border-[#eeeeee] overflow-hidden">
+            <Link
+              href="/shop"
+              onClick={handleLinkClick({
+                category: null,
+                search: null,
+                min_price: null,
+                max_price: null,
+                on_sale: null
+              })}
+              className="block focus:outline-none"
             >
-              <Link
-                href="/shop"
-                onClick={handleLinkClick({
-                  category: null,
-                  search: null,
-                  min_price: null,
-                  max_price: null,
-                  on_sale: null
-                })}
-                className="block focus:outline-none"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full py-2.5 rounded-xl border border-rose-100 hover:border-rose-200 text-rose-600 hover:bg-rose-50/50 text-[13px] font-bold transition-colors text-center flex items-center justify-center gap-1.5"
-                >
-                  Reset All Filters
-                </motion.div>
-              </Link>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              <div className="w-full py-2.5 rounded-xl border border-rose-100 hover:border-rose-200 text-rose-600 hover:bg-rose-50/50 text-[13px] font-bold transition-all duration-200 text-center flex items-center justify-center gap-1.5 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+                Reset All Filters
+              </div>
+            </Link>
+          </div>
+        )}
       </div>
 
-
-
       {/* Trust Assurances badge list item */}
-      <motion.div 
-        variants={itemVariants}
-        className="bg-[#111111] text-white p-6 rounded-[24px] relative overflow-hidden shadow-md group hover:shadow-xl transition-shadow duration-300"
+      <div 
+        className="bg-[#111111] text-white p-6 rounded-[24px] relative overflow-hidden shadow-md group hover:shadow-xl transition-all duration-300 hover:scale-[1.01]"
       >
         <div className="absolute right-[-20px] bottom-[-20px] w-24 h-24 bg-white/5 rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
         <svg viewBox="0 0 24 24" className="w-8 h-8 text-[#fcb643] mb-4 stroke-current fill-none group-hover:rotate-12 transition-transform duration-300" strokeWidth="1.5">
@@ -697,7 +600,7 @@ export default function SidebarFilters({
         <p className="text-[12px] text-gray-400 mt-2 leading-relaxed">
           Every desktop and laptop undergoes a strict 40-point hardware diagnostic test and includes a 1-year product warranty coverage support.
         </p>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

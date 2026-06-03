@@ -298,8 +298,7 @@ export default function ConnectionTestPage() {
                     <div key={p.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-150 flex gap-4 items-center">
                       {p.images[0] ? (
                         <div className="w-16 h-16 rounded-xl bg-slate-100 overflow-hidden relative shrink-0">
-                          <img 
-                            src={p.images[0]} 
+                          <img loading="lazy" src={p.images[0]} 
                             alt={p.name} 
                             className="object-cover w-full h-full"
                           />

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "motion/react";
 import { ChevronDown, Apple, Play, Facebook, Instagram, Youtube, MessageCircle, ShieldCheck, Package } from "lucide-react";
 import Header from "../Header";
 
@@ -55,7 +54,7 @@ const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
   <div className="bg-white p-7 rounded-[24px] shadow-[0_4px_24px_-8px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col gap-4 w-[340px] md:w-[380px] shrink-0">
     <div className="flex justify-between items-start">
       <div className="flex items-center gap-3">
-        <img src={review.avatar} alt={review.name} className="w-12 h-12 rounded-full object-cover" />
+        <img loading="lazy" src={review.avatar} alt={review.name} className="w-12 h-12 rounded-full object-cover" />
         <div className="flex flex-col">
           <span className="font-bold text-[#111] text-[15px] leading-tight">{review.name}</span>
           <span className="text-[#3452ef] font-bold text-[11px] uppercase tracking-wider">{review.city}</span>
@@ -106,21 +105,17 @@ const FAQItem = ({ faq, isOpen, onToggle }: { faq: typeof faqs[0], isOpen: boole
         <ChevronDown size={20} className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </span>
     </button>
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="overflow-hidden"
-        >
-          <div className="px-6 lg:px-8 pb-6 pt-0 text-[15.5px] text-gray-600 font-medium leading-relaxed">
-            {faq.a}
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div
+      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
+        isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+      }`}
+    >
+      <div className="overflow-hidden">
+        <div className="px-6 lg:px-8 pb-6 pt-0 text-[15.5px] text-gray-600 font-medium leading-relaxed">
+          {faq.a}
+        </div>
+      </div>
+    </div>
   </div>
 );
 
@@ -220,9 +215,9 @@ export default function AboutPage() {
               
               <div className="flex flex-wrap items-center gap-6 mt-4">
                 <div className="flex -space-x-3">
-                  <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150&h=150" alt="Avatar 1" className="w-[46px] h-[46px] rounded-full border-2 border-[#fcf9f4] object-cover" />
-                  <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150" alt="Avatar 2" className="w-[46px] h-[46px] rounded-full border-2 border-[#fcf9f4] object-cover" />
-                  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=150&h=150" alt="Avatar 3" className="w-[46px] h-[46px] rounded-full border-2 border-[#fcf9f4] object-cover" />
+                  <img loading="lazy" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150&h=150" alt="Avatar 1" className="w-[46px] h-[46px] rounded-full border-2 border-[#fcf9f4] object-cover" />
+                  <img loading="lazy" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150" alt="Avatar 2" className="w-[46px] h-[46px] rounded-full border-2 border-[#fcf9f4] object-cover" />
+                  <img loading="lazy" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=150&h=150" alt="Avatar 3" className="w-[46px] h-[46px] rounded-full border-2 border-[#fcf9f4] object-cover" />
                 </div>
                 <button className="bg-[#3452ef] text-white px-7 py-3 rounded-full text-[15px] font-bold hover:bg-[#263ec4] transition-colors shadow-sm">Contact With An Expert</button>
               </div>
@@ -450,19 +445,19 @@ export default function AboutPage() {
             <p className="text-[14px] font-bold text-[#111]">Copyright 2026 by Comsri Corporation All Right Reserved.</p>
             <div className="flex gap-1.5">
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
               </div>
               <div className="bg-[#1a1f71] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
               </div>
               <div className="bg-[#003087] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
               </div>
               <div className="bg-[#2d9cdb] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
               </div>
               <div className="bg-[#6772e5] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
               </div>
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center px-1">
                 <span className="text-white text-[10px]">G</span><span className="text-white text-[12px] font-bold">Pay</span>
@@ -471,7 +466,7 @@ export default function AboutPage() {
                 <Apple size={14} className="fill-white text-white mr-0.5" /><span className="text-white text-[10px] font-semibold mt-[1px]">Pay</span>
               </div>
               <div className="bg-[#004b87] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
               </div>
             </div>
           </div>

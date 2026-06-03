@@ -60,6 +60,7 @@ export default function ShopCatalogClient({
   const [totalPages, setTotalPages] = useState(initialTotalPages);
   const [counts, setCounts] = useState(initialCounts);
   const [loading, setLoading] = useState(false);
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
   // Filter States
   const [category, setCategory] = useState(initialParams.category);
@@ -165,7 +166,7 @@ export default function ShopCatalogClient({
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
       {/* ==================== LEFT FILTER SIDEBAR ==================== */}
-      <aside className="w-full lg:col-span-1 space-y-6 flex flex-col h-fit" id="shop-sidebar">
+      <aside className="hidden lg:flex lg:col-span-1 space-y-6 flex-col h-fit" id="shop-sidebar">
         <SidebarFilters
           categories={categories}
           currentCategory={category}
@@ -185,70 +186,81 @@ export default function ShopCatalogClient({
         {/* Controls Bar for Active Filters & Quick Sort */}
         <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
 
-          {/* Active Filter Chips */}
-          <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 self-start md:self-auto">
-            <span className="text-slate-400 flex items-center gap-1">
-              <SlidersHorizontal size={13} />
-              Active Filters:
-            </span>
+          {/* Active Filter Chips & Mobile Toggle */}
+          <div className="flex flex-wrap items-center gap-2.5 text-xs font-semibold text-slate-500 self-stretch md:self-auto justify-between md:justify-start w-full md:w-auto">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-slate-400 flex items-center gap-1">
+                <SlidersHorizontal size={13} />
+                Active Filters:
+              </span>
 
-            {hasActiveFilters ? (
-              <>
-                <button
-                  onClick={() => handleFilterChange({ category: null, search: null, min_price: null, max_price: null, on_sale: null, orderby: null })}
-                  className="bg-rose-50 text-rose-600 border border-rose-100 px-3 py-1 rounded-lg hover:bg-rose-100 transition flex items-center gap-1 font-bold text-[11px] cursor-pointer"
-                >
-                  Clear All Filters <X size={12} />
-                </button>
-
-                {category && (
+              {hasActiveFilters ? (
+                <>
                   <button
-                    onClick={() => handleFilterChange({ category: null })}
-                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1 transition cursor-pointer"
+                    onClick={() => handleFilterChange({ category: null, search: null, min_price: null, max_price: null, on_sale: null, orderby: null })}
+                    className="bg-rose-50 text-rose-600 border border-rose-100 px-3 py-1 rounded-lg hover:bg-rose-100 transition flex items-center gap-1 font-bold text-[11px] cursor-pointer"
                   >
-                    Category: {activeCategoryObject?.name || category} <X size={12} />
+                    Clear All Filters <X size={12} />
                   </button>
-                )}
 
-                {search && (
-                  <button
-                    onClick={() => handleFilterChange({ search: null })}
-                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1 transition cursor-pointer"
-                  >
-                    Query: &quot;{search}&quot; <X size={12} />
-                  </button>
-                )}
+                  {category && (
+                    <button
+                      onClick={() => handleFilterChange({ category: null })}
+                      className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1 transition cursor-pointer"
+                    >
+                      Category: {activeCategoryObject?.name || category} <X size={12} />
+                    </button>
+                  )}
 
-                {(minPrice || maxPrice) && (
-                  <button
-                    onClick={() => handleFilterChange({ min_price: null, max_price: null })}
-                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1 transition cursor-pointer"
-                  >
-                    Price Range <X size={12} />
-                  </button>
-                )}
+                  {search && (
+                    <button
+                      onClick={() => handleFilterChange({ search: null })}
+                      className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1 transition cursor-pointer"
+                    >
+                      Query: &quot;{search}&quot; <X size={12} />
+                    </button>
+                  )}
 
-                {onSale && (
-                  <button
-                    onClick={() => handleFilterChange({ on_sale: null })}
-                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1 transition cursor-pointer"
-                  >
-                    On Sale Only <X size={12} />
-                  </button>
-                )}
+                  {(minPrice || maxPrice) && (
+                    <button
+                      onClick={() => handleFilterChange({ min_price: null, max_price: null })}
+                      className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1 transition cursor-pointer"
+                    >
+                      Price Range <X size={12} />
+                    </button>
+                  )}
 
-                {orderby !== "date" && (
-                  <button
-                    onClick={() => handleFilterChange({ orderby: null })}
-                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1 transition cursor-pointer"
-                  >
-                    Sorting override <X size={12} />
-                  </button>
-                )}
-              </>
-            ) : (
-              <span className="text-slate-400 font-mono text-[11px]">None (Showing complete catalog)</span>
-            )}
+                  {onSale && (
+                    <button
+                      onClick={() => handleFilterChange({ on_sale: null })}
+                      className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1 transition cursor-pointer"
+                    >
+                      On Sale Only <X size={12} />
+                    </button>
+                  )}
+
+                  {orderby !== "date" && (
+                    <button
+                      onClick={() => handleFilterChange({ orderby: null })}
+                      className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg flex items-center gap-1 transition cursor-pointer"
+                    >
+                      Sorting override <X size={12} />
+                    </button>
+                  )}
+                </>
+              ) : (
+                <span className="text-slate-400 font-mono text-[11px]">None (Showing complete catalog)</span>
+              )}
+            </div>
+
+            {/* Mobile/Tablet Filter Drawer Trigger */}
+            <button
+              onClick={() => setIsFilterDrawerOpen(true)}
+              className="lg:hidden flex items-center gap-1.5 bg-[#374bf9] text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 transition cursor-pointer shadow-sm ml-auto md:ml-0"
+            >
+              <SlidersHorizontal size={14} />
+              <span>Filters</span>
+            </button>
           </div>
 
           {/* Quick Sort Options */}
@@ -387,6 +399,50 @@ export default function ShopCatalogClient({
               )}
             </div>
           )}
+        </div>
+      </div>
+
+      {/* ================== MOBILE FILTER DRAWER ================== */}
+      {/* Backdrop overlay */}
+      <div
+        className={`fixed inset-0 bg-black/50 z-[100] transition-opacity duration-300 lg:hidden ${isFilterDrawerOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"}`}
+        onClick={() => setIsFilterDrawerOpen(false)}
+      />
+
+      {/* Slide-in drawer */}
+      <div
+        className={`fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-[#f6f5f8] z-[110] shadow-2xl transform transition-transform duration-300 ease-out lg:hidden flex flex-col ${isFilterDrawerOpen ? "translate-x-0" : "translate-x-full"}`}
+      >
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100 shrink-0">
+          <h2 className="text-lg font-bold text-gray-900">Filters</h2>
+          <button
+            onClick={() => setIsFilterDrawerOpen(false)}
+            className="w-9 h-9 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors cursor-pointer"
+            aria-label="Close filters"
+          >
+            <X size={22} className="text-gray-700" />
+          </button>
+        </div>
+
+        {/* Scrollable filters list */}
+        <div className="flex-1 overflow-y-auto p-6">
+          <SidebarFilters
+            categories={categories}
+            currentCategory={category}
+            currentMinPrice={minPrice}
+            currentMaxPrice={maxPrice}
+            currentOnSaleOnly={onSale}
+            currentQuery={search}
+            currentSorting={orderby}
+            onFilterChange={(overrides) => {
+              handleFilterChange(overrides);
+              if (overrides.hasOwnProperty("category") || overrides.hasOwnProperty("search") || overrides.hasOwnProperty("on_sale")) {
+                setIsFilterDrawerOpen(false);
+              }
+            }}
+            counts={counts}
+          />
         </div>
       </div>
     </div>

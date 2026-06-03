@@ -13,7 +13,7 @@ import {
 class WooCommerceServiceClient {
   private baseUrl: string;
   private authHeader: string;
-  private maxRetries = 3;
+  private maxRetries = 5;
   private initialBackoffMs = 500;
 
   constructor() {
@@ -65,8 +65,8 @@ class WooCommerceServiceClient {
           headers,
         });
 
-        // Retry on gateway errors or rate limits (e.g. status 429, 502, 503, 504)
-        if ([429, 502, 503, 504].includes(response.status) && attempt < this.maxRetries - 1) {
+        // Retry on internal server errors, gateway errors, or rate limits (e.g. status 429, 500, 502, 503, 504)
+        if ([429, 500, 502, 503, 504].includes(response.status) && attempt < this.maxRetries - 1) {
           throw new Error(`Transient HTTP Error: ${response.status}`);
         }
 

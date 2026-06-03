@@ -39,7 +39,6 @@ import {
   Heart,
   Search
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
 import Header from "../Header";
 
 // Interactive Enhancement Features Data matching the exact screenshot design
@@ -228,31 +227,16 @@ export default function BlogPage() {
           
           {/* Header Layout */}
           <div className="text-center max-w-4xl mx-auto mb-16">
-            <motion.h1 
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-4xl md:text-5xl lg:text-6.5xl font-extrabold text-slate-900 tracking-tight leading-tight"
-            >
+            <h1 className="text-4xl md:text-5xl lg:text-6.5xl font-extrabold text-slate-900 tracking-tight leading-tight">
               Stay Up-to-Date with the Latest Enhancements
-            </motion.h1>
+            </h1>
             
-            <motion.p 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-              className="text-slate-500 text-[15px] md:text-base leading-relaxed max-w-3xl mx-auto mt-6"
-            >
+            <p className="text-slate-500 text-[15px] md:text-base leading-relaxed max-w-3xl mx-auto mt-6">
               At TrackForce, we&apos;re constantly improving and updating our CRM platform to give you the best possible experience. From new features and performance enhancements to bug fixes and optimizations.
-            </motion.p>
+            </p>
             
             {/* Email Input / Newsletter Subscription Box */}
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="mt-10 max-w-xl mx-auto"
-            >
+            <div className="mt-10 max-w-xl mx-auto">
               <form onSubmit={handleSubscribe} className="flex gap-x-2.5 bg-white p-1 rounded-full border border-slate-100 shadow-sm focus-within:shadow focus-within:border-indigo-200 transition-all">
                 <input
                   id="email-input"
@@ -272,19 +256,12 @@ export default function BlogPage() {
                 </button>
               </form>
               
-              <AnimatePresence>
-                {newsletterSubscribed && (
-                  <motion.p 
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="text-emerald-500 text-xs font-semibold mt-3 text-center"
-                  >
-                    Thanks! Checking your updates details. You are now registered on our priority update distribution list.
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </motion.div>
+              {newsletterSubscribed && (
+                <p className="text-emerald-500 text-xs font-semibold mt-3 text-center animate-fade-in">
+                  Thanks! Checking your updates details. You are now registered on our priority update distribution list.
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Filtering Dropdown Blocks Row */}
@@ -301,31 +278,26 @@ export default function BlogPage() {
                 <ChevronDown size={14} className={`text-slate-400 transition-transform ${activeDropdown === "release" ? "rotate-180" : ""}`} />
               </button>
               
-              <AnimatePresence>
-                {activeDropdown === "release" && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute z-50 mt-1.5 w-full bg-white border border-slate-100 rounded-xl shadow-lg py-1.5 focus:outline-none"
-                  >
-                    {filterOptions.releaseTypes.map((item) => (
-                      <button
-                        key={item}
-                        onClick={() => {
-                          setSelectedReleaseType(item);
-                          setActiveDropdown(null);
-                        }}
-                        className={`w-full text-left px-5 py-2 text-xs transition-colors ${
-                          selectedReleaseType === item ? "text-[#374bf9] font-bold bg-[#374bf9]/5" : "text-slate-600 hover:bg-slate-50"
-                        }`}
-                      >
-                        {item === "All" ? "Clear Filter" : item}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {activeDropdown === "release" && (
+                <div 
+                  className="absolute z-50 mt-1.5 w-full bg-white border border-slate-100 rounded-xl shadow-lg py-1.5 focus:outline-none animate-fade-in"
+                >
+                  {filterOptions.releaseTypes.map((item) => (
+                    <button
+                      key={item}
+                      onClick={() => {
+                        setSelectedReleaseType(item);
+                        setActiveDropdown(null);
+                      }}
+                      className={`w-full text-left px-5 py-2 text-xs transition-colors ${
+                        selectedReleaseType === item ? "text-[#374bf9] font-bold bg-[#374bf9]/5" : "text-slate-600 hover:bg-slate-50"
+                      }`}
+                    >
+                      {item === "All" ? "Clear Filter" : item}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Filter 2: Product Area */}
@@ -339,31 +311,26 @@ export default function BlogPage() {
                 <ChevronDown size={14} className={`text-slate-400 transition-transform ${activeDropdown === "area" ? "rotate-180" : ""}`} />
               </button>
               
-              <AnimatePresence>
-                {activeDropdown === "area" && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute z-50 mt-1.5 w-full bg-white border border-slate-100 rounded-xl shadow-lg py-1.5 focus:outline-none"
-                  >
-                    {filterOptions.productAreas.map((item) => (
-                      <button
-                        key={item}
-                        onClick={() => {
-                          setSelectedProductArea(item);
-                          setActiveDropdown(null);
-                        }}
-                        className={`w-full text-left px-5 py-2 text-xs transition-colors ${
-                          selectedProductArea === item ? "text-[#374bf9] font-bold bg-[#374bf9]/5" : "text-slate-600 hover:bg-slate-50"
-                        }`}
-                      >
-                        {item === "All" ? "Clear Filter" : item}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {activeDropdown === "area" && (
+                <div 
+                  className="absolute z-50 mt-1.5 w-full bg-white border border-slate-100 rounded-xl shadow-lg py-1.5 focus:outline-none animate-fade-in"
+                >
+                  {filterOptions.productAreas.map((item) => (
+                    <button
+                      key={item}
+                      onClick={() => {
+                        setSelectedProductArea(item);
+                        setActiveDropdown(null);
+                      }}
+                      className={`w-full text-left px-5 py-2 text-xs transition-colors ${
+                        selectedProductArea === item ? "text-[#374bf9] font-bold bg-[#374bf9]/5" : "text-slate-600 hover:bg-slate-50"
+                      }`}
+                    >
+                      {item === "All" ? "Clear Filter" : item}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Filter 3: Integration */}
@@ -377,31 +344,26 @@ export default function BlogPage() {
                 <ChevronDown size={14} className={`text-slate-400 transition-transform ${activeDropdown === "integration" ? "rotate-180" : ""}`} />
               </button>
               
-              <AnimatePresence>
-                {activeDropdown === "integration" && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute z-50 mt-1.5 w-full bg-white border border-slate-100 rounded-xl shadow-lg py-1.5 focus:outline-none"
-                  >
-                    {filterOptions.integrations.map((item) => (
-                      <button
-                        key={item}
-                        onClick={() => {
-                          setSelectedIntegration(item);
-                          setActiveDropdown(null);
-                        }}
-                        className={`w-full text-left px-5 py-2 text-xs transition-colors ${
-                          selectedIntegration === item ? "text-[#374bf9] font-bold bg-[#374bf9]/5" : "text-slate-600 hover:bg-slate-50"
-                        }`}
-                      >
-                        {item === "All" ? "Clear Filter" : item}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {activeDropdown === "integration" && (
+                <div 
+                  className="absolute z-50 mt-1.5 w-full bg-white border border-slate-100 rounded-xl shadow-lg py-1.5 focus:outline-none animate-fade-in"
+                >
+                  {filterOptions.integrations.map((item) => (
+                    <button
+                      key={item}
+                      onClick={() => {
+                        setSelectedIntegration(item);
+                        setActiveDropdown(null);
+                      }}
+                      className={`w-full text-left px-5 py-2 text-xs transition-colors ${
+                        selectedIntegration === item ? "text-[#374bf9] font-bold bg-[#374bf9]/5" : "text-slate-600 hover:bg-slate-50"
+                      }`}
+                    >
+                      {item === "All" ? "Clear Filter" : item}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Filter 4: Date */}
@@ -415,36 +377,30 @@ export default function BlogPage() {
                 <ChevronDown size={14} className={`text-slate-400 transition-transform ${activeDropdown === "date" ? "rotate-180" : ""}`} />
               </button>
               
-              <AnimatePresence>
-                {activeDropdown === "date" && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute z-50 mt-1.5 w-full bg-white border border-slate-100 rounded-xl shadow-lg py-1.5 focus:outline-none"
-                  >
-                    {filterOptions.dates.map((item) => (
-                      <button
-                        key={item}
-                        onClick={() => {
-                          setSelectedDateFilter(item);
-                          setActiveDropdown(null);
-                        }}
-                        className={`w-full text-left px-5 py-2 text-xs transition-colors ${
-                          selectedDateFilter === item ? "text-[#374bf9] font-bold bg-[#374bf9]/5" : "text-slate-600 hover:bg-slate-50"
-                        }`}
-                      >
-                        {item === "All" ? "Clear Filter" : item}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {activeDropdown === "date" && (
+                <div 
+                  className="absolute z-50 mt-1.5 w-full bg-white border border-slate-100 rounded-xl shadow-lg py-1.5 focus:outline-none animate-fade-in"
+                >
+                  {filterOptions.dates.map((item) => (
+                    <button
+                      key={item}
+                      onClick={() => {
+                        setSelectedDateFilter(item);
+                        setActiveDropdown(null);
+                      }}
+                      className={`w-full text-left px-5 py-2 text-xs transition-colors ${
+                        selectedDateFilter === item ? "text-[#374bf9] font-bold bg-[#374bf9]/5" : "text-slate-600 hover:bg-slate-50"
+                      }`}
+                    >
+                      {item === "All" ? "Clear Filter" : item}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>          {/* List of Custom High-Fidelity Cards */}
           <div className="space-y-12 max-w-[1140px] mx-auto">
-            <AnimatePresence mode="popLayout">
-              {filteredEnhancements.map((post) => {
+            {filteredEnhancements.map((post) => {
                 const isExpanded = expandedPostIds.includes(post.id);
                 const isLiked = likedPosts.includes(post.id);
                 const isBookmarked = bookmarkedPosts.includes(post.id);
@@ -521,14 +477,9 @@ export default function BlogPage() {
                 };
 
                 return (
-                  <motion.div
+                  <div
                     key={post.id}
-                    layout="position"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                    className="group bg-white rounded-[32px] border border-slate-100 p-8 lg:p-10 flex flex-col xl:flex-row gap-8 xl:gap-12 items-stretch justify-between shadow-[0_2px_12px_rgba(30,41,59,0.01)] hover:shadow-[0_20px_50px_rgba(30,41,59,0.06)] hover:border-indigo-100/70 transition-all duration-500 relative overflow-hidden"
+                    className="group bg-white rounded-[32px] border border-slate-100 p-8 lg:p-10 flex flex-col xl:flex-row gap-8 xl:gap-12 items-stretch justify-between shadow-[0_2px_12px_rgba(30,41,59,0.01)] hover:shadow-[0_20px_50px_rgba(30,41,59,0.06)] hover:border-indigo-100/70 hover:-translate-y-1 transition-all duration-500 relative overflow-hidden"
                   >
                     {/* Artistic gradient background accent glow */}
                     <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-indigo-50/10 via-purple-50/5 to-transparent rounded-full filter blur-[80px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -594,21 +545,17 @@ export default function BlogPage() {
                         </div>
 
                         {/* Rich Content Expanded View Toggle */}
-                        <AnimatePresence>
-                          {isExpanded && (
-                            <motion.div 
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                              className="overflow-hidden"
-                            >
-                              <div className="mt-6 pt-6 border-t border-slate-100 prose prose-slate prose-sm max-w-none prose-h3:text-slate-800 prose-p:text-slate-500 prose-ul:text-slate-500">
-                                <div dangerouslySetInnerHTML={{ __html: post.detailMarkdown }} />
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                        <div 
+                          className={`grid transition-[grid-template-rows,opacity] duration-350 ease-in-out ${
+                            isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                          }`}
+                        >
+                          <div className="overflow-hidden">
+                            <div className="mt-6 pt-6 border-t border-slate-100 prose prose-slate prose-sm max-w-none prose-h3:text-slate-800 prose-p:text-slate-500 prose-ul:text-slate-500">
+                              <div dangerouslySetInnerHTML={{ __html: post.detailMarkdown }} />
+                            </div>
+                          </div>
+                        </div>
 
                       </div>
 
@@ -636,9 +583,9 @@ export default function BlogPage() {
                                 : "bg-white border-slate-100 text-slate-400 hover:text-red-500 hover:bg-slate-50 hover:border-slate-200"
                             }`}
                           >
-                            <motion.span animate={isLiked ? { scale: [1, 1.3, 1] } : {}} transition={{ duration: 0.3 }}>
+                            <span className={`inline-block transition-transform duration-300 ${isLiked ? "scale-125 text-red-500" : ""}`}>
                               <Heart size={14} fill={isLiked ? "currentColor" : "none"} />
-                            </motion.span>
+                            </span>
                             <span>{isLiked ? 142 : 141}</span>
                           </button>
 
@@ -916,11 +863,8 @@ export default function BlogPage() {
                             
                             {/* Scanning green line animation overlay */}
                             {securityStatus === "scanning" && (
-                              <motion.div 
-                                initial={{ left: "-100%" }}
-                                animate={{ left: "100%" }}
-                                transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
-                                className="absolute inset-y-0 w-24 bg-gradient-to-r from-transparent via-[#4caf50]/20 to-transparent pointer-events-none"
+                              <div 
+                                className="absolute inset-y-0 w-24 bg-gradient-to-r from-transparent via-[#4caf50]/20 to-transparent pointer-events-none animate-scan"
                               />
                             )}
 
@@ -974,17 +918,14 @@ export default function BlogPage() {
 
                     </div>
 
-                  </motion.div>
+                  </div>
                 );
               })}
-            </AnimatePresence>
 
             {/* Empty view block if filters yield no elements */}
             {filteredEnhancements.length === 0 && (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="py-16 text-center"
+              <div 
+                className="py-16 text-center animate-fade-in"
               >
                 <div className="w-14 h-14 bg-indigo-50 text-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Search size={22} />
@@ -1003,7 +944,7 @@ export default function BlogPage() {
                 >
                   Clear All Filters
                 </button>
-              </motion.div>
+              </div>
             )}
 
           </div>

@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion, AnimatePresence } from "motion/react";
 import { supabase, hasSupabaseConfig } from "@/lib/supabase";
 
 import { 
@@ -278,23 +277,19 @@ export default function LoginPage() {
 
       {/* 3. Centered Login Card Panel */}
       <div className="flex-1 w-full max-w-[1600px] mx-auto bg-[#F5F6F8] flex items-center justify-center p-4 md:p-8 lg:p-16 relative overflow-hidden selection:bg-indigo-100">
-        {/* Dynamic ambient soft lighting glows in the background */}
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[60%] rounded-full bg-indigo-200/40 blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[60%] rounded-full bg-emerald-100/40 blur-[130px] pointer-events-none" />
+        {/* Dynamic ambient soft lighting glows using fast GPU radial gradients instead of heavy blur filters */}
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[60%] pointer-events-none bg-[radial-gradient(circle_at_center,rgba(165,180,252,0.25)_0%,transparent_70%)]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[60%] pointer-events-none bg-[radial-gradient(circle_at_center,rgba(167,243,208,0.25)_0%,transparent_70%)]" />
 
         {/* Main card container (ARROW REMOVED AS REQUESTED) */}
-        <motion.div 
-          layout 
-          transition={{ type: "spring", stiffness: 180, damping: 25, mass: 1.1 }}
+        <div 
           id="login-card-container" 
-          className={`relative w-full max-w-[1600px] bg-white/90 backdrop-blur-xl rounded-[32px] overflow-hidden shadow-[0_24px_70px_rgba(47,48,74,0.08)] border border-slate-100 flex flex-col ${isSignUp ? "md:flex-row-reverse" : "md:flex-row"} min-h-[640px] md:min-h-[700px] z-10`}
+          className={`relative w-full max-w-[1600px] bg-white rounded-[32px] overflow-hidden shadow-[0_24px_70px_rgba(47,48,74,0.08)] border border-slate-100 flex flex-col ${isSignUp ? "md:flex-row-reverse" : "md:flex-row"} min-h-[640px] md:min-h-[700px] z-10 transition-all duration-500 ease-in-out`}
         >
           
           {/* Left Side: Log In / Sign Up Form Panel */}
-          <motion.div 
-            layout 
-            transition={{ type: "spring", stiffness: 180, damping: 25, mass: 1.1 }}
-            className="w-full md:w-[52%] p-8 sm:p-12 md:p-16 flex flex-col justify-between relative bg-white/40"
+          <div 
+            className="w-full md:w-[52%] p-8 sm:p-12 md:p-16 flex flex-col justify-between relative bg-white transition-all duration-500 ease-in-out"
           >
             
             {/* Logo & Brand to match image mockups */}
@@ -328,36 +323,27 @@ export default function LoginPage() {
 
  
               {/* Error notifications */}
-              <AnimatePresence>
-                {error && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="mb-5 p-3.5 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl flex items-center gap-2.5 text-xs font-semibold"
-                  >
-                    <ShieldAlert size={16} className="shrink-0 text-rose-500" />
-                    <span>{error}</span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {error && (
+                <div 
+                  className="mb-5 p-3.5 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl flex items-center gap-2.5 text-xs font-semibold animate-fade-in"
+                >
+                  <ShieldAlert size={16} className="shrink-0 text-rose-500" />
+                  <span>{error}</span>
+                </div>
+              )}
  
               {/* Success Animation overlay */}
-              <AnimatePresence>
-                {success && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="mb-5 p-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex flex-col items-center gap-2 text-center text-sm font-bold shadow-sm"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-1">
-                      <Check size={20} className="stroke-[3]" />
-                    </div>
-                    <div>{isSignUp ? "Account Created Successfully!" : "Authentication Successful!"}</div>
-                    <div className="text-xs text-emerald-600 font-medium font-mono">Redirecting to Comsri...</div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {success && (
+                <div 
+                  className="mb-5 p-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl flex flex-col items-center gap-2 text-center text-sm font-bold shadow-sm animate-fade-in"
+                >
+                  <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-1">
+                    <Check size={20} className="stroke-[3]" />
+                  </div>
+                  <div>{isSignUp ? "Account Created Successfully!" : "Authentication Successful!"}</div>
+                  <div className="text-xs text-emerald-600 font-medium font-mono">Redirecting to Comsri...</div>
+                </div>
+              )}
  
               <form onSubmit={handleSignIn} className="space-y-4">
                 {isSignUp ? (
@@ -545,13 +531,11 @@ export default function LoginPage() {
                 {isSignUp ? "Sign In" : "Sign Up"}
               </button>
             </div>
-          </motion.div>
+          </div>
  
           {/* Right Side: Charcoal Promo Panel with modern 3D Look and Hexagon */}
-          <motion.div 
-            layout 
-            transition={{ type: "spring", stiffness: 180, damping: 25, mass: 1.1 }}
-            className="w-full md:w-[48%] bg-[#121316] relative flex flex-col justify-between p-8 sm:p-12 text-white overflow-hidden"
+          <div 
+            className="w-full md:w-[48%] bg-[#121316] relative flex flex-col justify-between p-8 sm:p-12 text-white overflow-hidden transition-all duration-500 ease-in-out"
           >
             
             {/* Subtle Grid Art background inside the pane */}
@@ -571,19 +555,9 @@ export default function LoginPage() {
             <div className="relative flex-1 w-full flex items-center justify-center mt-6 min-h-[280px]">
               
               {/* SVG Floating Dodecahedron (Purple) - Top Left */}
-              <motion.div
-                animate={{ 
-                  y: [0, -12, 0],
-                  rotateX: [0, 15, 0],
-                  rotateY: [0, -20, 0]
-                }}
-                transition={{
-                  duration: 4.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
+              <div
                 style={{ perspective: 400 }}
-                className="absolute left-[8%] top-[12%] z-20 cursor-grab active:cursor-grabbing"
+                className="absolute left-[8%] top-[12%] z-20 cursor-grab active:cursor-grabbing animate-float-1"
               >
                 <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
                   <defs>
@@ -600,40 +574,17 @@ export default function LoginPage() {
                   <polygon points="8,70 50,50 8,30" fill="none" stroke="#e0e7ff" strokeWidth="2.5" opacity="0.7" />
                   <polygon points="8,30 50,50 50,5" fill="none" stroke="#e0e7ff" strokeWidth="2.5" opacity="0.7" />
                 </svg>
-              </motion.div>
+              </div>
 
               {/* SVG Floating Wireframe (Yellow) - Top Right */}
-              <motion.div
-                animate={{ 
-                  y: [0, 8, 0],
-                  rotate: [20, 45, 20]
-                }}
-                transition={{
-                  duration: 5.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="absolute right-[12%] top-[18%] z-20"
-              >
+              <div className="absolute right-[12%] top-[18%] z-20 animate-float-2">
                 <svg width="22" height="22" viewBox="0 0 100 100" fill="none">
                   <rect x="15" y="15" width="70" height="70" rx="16" stroke="#facc15" strokeWidth="18" className="opacity-90" />
                 </svg>
-              </motion.div>
+              </div>
 
               {/* SVG Floating Torus Ring (Mint Green) - Bottom Right */}
-              <motion.div
-                animate={{ 
-                  y: [0, -10, 0],
-                  rotate: [0, 360],
-                  scale: [1, 1.06, 1]
-                }}
-                transition={{
-                  duration: 7,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="absolute right-[5%] bottom-[12%] z-20"
-              >
+              <div className="absolute right-[5%] bottom-[12%] z-20 animate-float-3">
                 <svg width="55" height="55" viewBox="0 0 100 100" fill="none">
                   <defs>
                     <linearGradient id="mintGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -644,30 +595,19 @@ export default function LoginPage() {
                   </defs>
                   <circle cx="50" cy="50" r="32" stroke="url(#mintGrad)" strokeWidth="14" fill="none" />
                 </svg>
-              </motion.div>
+              </div>
 
               {/* SVG Floating Triangle Pyramid (Green) - Bottom Left */}
-              <motion.div
-                animate={{ 
-                  y: [0, 10, 0],
-                  rotate: [-15, 10, -15]
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="absolute left-[15%] bottom-[18%] z-20"
-              >
+              <div className="absolute left-[15%] bottom-[18%] z-20 animate-float-4">
                 <svg width="26" height="26" viewBox="0 0 100 100" fill="none">
                   <polygon points="50,15 90,85 10,85" stroke="#a3e635" strokeWidth="14" strokeLinejoin="round" fill="none" />
                 </svg>
-              </motion.div>
+              </div>
 
               {/* Radiant Hexagon container */}
               <div className="relative w-64 h-64 flex items-center justify-center">
-                {/* Outer hexagon glowing outline mask */}
-                <div className="absolute inset-x-0 inset-y-0 opacity-40 blur-[25px] bg-gradient-to-tr from-emerald-400 to-indigo-500 scale-105 pointer-events-none" />
+                 {/* Outer hexagon glowing outline mask using fast radial-gradient */}
+                 <div className="absolute inset-x-0 inset-y-0 opacity-40 bg-[radial-gradient(circle_at_center,rgba(74,222,128,0.3)_0%,rgba(129,140,248,0.3)_50%,transparent_100%)] scale-105 pointer-events-none" />
 
                 {/* The glowing gradient hexagon borders */}
                 <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full fill-none">
@@ -783,23 +723,17 @@ export default function LoginPage() {
             <div className="relative text-center mt-4">
               
               <div className="h-28 overflow-hidden relative max-w-[340px] mx-auto">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeSlide}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -15 }}
-                    transition={{ duration: 0.4 }}
-                    className="absolute inset-0 flex flex-col justify-center"
-                  >
-                    <h2 className="text-[21px] font-extrabold tracking-tight mb-2 select-none text-slate-100">
-                      {slides[activeSlide].title}
-                    </h2>
-                    <p className="text-slate-400 text-xs font-medium leading-relaxed select-none max-w-[280px] mx-auto">
-                      {slides[activeSlide].subtitle}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
+                <div
+                  key={activeSlide}
+                  className="absolute inset-0 flex flex-col justify-center animate-fade-in"
+                >
+                  <h2 className="text-[21px] font-extrabold tracking-tight mb-2 select-none text-slate-100">
+                    {slides[activeSlide].title}
+                  </h2>
+                  <p className="text-slate-400 text-xs font-medium leading-relaxed select-none max-w-[280px] mx-auto">
+                    {slides[activeSlide].subtitle}
+                  </p>
+                </div>
               </div>
 
               {/* Slider Dots */}
@@ -816,9 +750,9 @@ export default function LoginPage() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
  
-        </motion.div>
+        </div>
       </div>
 
       {/* 4. Footer Section (Replicated from page.tsx) */}
@@ -937,19 +871,19 @@ export default function LoginPage() {
             <p className="text-[14px] font-bold text-[#111]">Copyright 2026 by Comsri Corporation All Right Reserved.</p>
             <div className="flex gap-1.5">
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
               </div>
               <div className="bg-[#1a1f71] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
               </div>
               <div className="bg-[#003087] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
               </div>
               <div className="bg-[#2d9cdb] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
               </div>
               <div className="bg-[#6772e5] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
               </div>
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center px-1">
                 <span className="text-white text-[10px]">G</span><span className="text-white text-[12px] font-bold">Pay</span>
@@ -958,7 +892,7 @@ export default function LoginPage() {
                 <Apple size={14} className="fill-white text-white mr-0.5" /><span className="text-white text-[10px] font-semibold mt-[1px]">Pay</span>
               </div>
               <div className="bg-[#004b87] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
               </div>
             </div>
           </div>

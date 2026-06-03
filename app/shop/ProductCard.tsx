@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Heart, ShoppingCart } from "lucide-react";
-import { motion } from "motion/react";
 
 interface ProductImage {
   src: string;
@@ -39,16 +38,10 @@ export default function ProductCard({ product, index }: ProductCardProps) {
 
   const catName = product.categories?.[0]?.name || "Corporate Hardware";
 
-  // Framer Motion spring setting for snappy modern feels
-  const springTransition = { type: "spring", stiffness: 350, damping: 25 } as const;
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: Math.min(index * 0.05, 0.4), duration: 0.5, ease: "easeOut" }}
-      whileHover={{ y: -8 }}
-      className="bg-white rounded-[24px] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col group cursor-pointer border border-transparent hover:border-gray-100 hover:shadow-[0_12px_40px_rgb(0,0,0,0.12)] transition-shadow duration-300 relative overflow-hidden"
+    <div
+      style={{ animationDelay: `${Math.min(index * 50, 400)}ms` }}
+      className="bg-white rounded-[24px] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col group cursor-pointer border border-transparent hover:border-gray-100 hover:shadow-[0_12px_40px_rgb(0,0,0,0.12)] transition-all duration-300 ease-out hover:-translate-y-2 relative overflow-hidden animate-fade-in"
     >
       {/* Glow Effect Background inside the card on hover */}
       <div className="absolute inset-0 bg-radial-gradient from-blue-50/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -57,12 +50,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
       <div className="bg-[#f6f6f6] rounded-[20px] relative h-[240px] mb-4 overflow-hidden flex items-center justify-center">
         {/* Top Bar inside Image Area */}
         <div className="absolute top-4 inset-x-4 flex justify-between z-20">
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="flex gap-1.5"
-          >
+          <div className="flex gap-1.5">
             {product.featured ? (
               <span className="bg-[#3452ef] text-white text-[12px] font-semibold px-3 py-1.5 rounded-full shadow-sm tracking-wide">
                 Best Seller
@@ -72,24 +60,22 @@ export default function ProductCard({ product, index }: ProductCardProps) {
                 Just In
               </span>
             )}
-          </motion.div>
+          </div>
 
-          <motion.button 
-            whileHover={{ scale: 1.15 }}
-            whileTap={{ scale: 0.9 }}
+          <button 
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();
               setIsFavorite(!isFavorite);
             }}
-            className={`w-[36px] h-[36px] rounded-full flex items-center justify-center shadow-md transition-all focus:outline-none z-20 ${
+            className={`w-[36px] h-[36px] rounded-full flex items-center justify-center shadow-md transition-all duration-200 hover:scale-110 active:scale-95 focus:outline-none z-20 ${
               isFavorite 
                 ? "bg-rose-500 text-white" 
                 : "bg-white text-gray-700 hover:text-black hover:bg-white"
             }`}
           >
             <Heart size={16} className={isFavorite ? "fill-white text-white" : ""} />
-          </motion.button>
+          </button>
         </div>
         
         {/* Image Frame with Zoom Effect */}
@@ -149,7 +135,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           )}
         </div>
 
-        {/* Action Buttons with spring load transitions */}
+        {/* Action Buttons with CSS transitions */}
         <div className="grid grid-cols-2 gap-2 mt-auto pt-1">
           <Link 
             href={`/products/${product.slug}`} 
@@ -157,17 +143,14 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           >
             View Details
           </Link>
-          <motion.button 
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            transition={springTransition}
-            className="bg-[#3452ef] hover:bg-[#203bca] text-white text-[13.5px] font-semibold py-3 rounded-full transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 hover:shadow-blue-500/20 focus:outline-none"
+          <button 
+            className="bg-[#3452ef] hover:bg-[#203bca] text-white text-[13.5px] font-semibold py-3 rounded-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.97] flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 hover:shadow-blue-500/20 focus:outline-none"
           >
             <ShoppingCart size={15} />
             Add to Cart
-          </motion.button>
+          </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

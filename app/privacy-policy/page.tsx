@@ -3,7 +3,6 @@
 import { useState, useMemo, useEffect, useRef, Suspense } from "react";
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "motion/react";
 import { 
   ChevronDown, Apple, Play, 
   Facebook, Instagram, Youtube, MessageCircle, ShieldCheck, FileText, 
@@ -359,15 +358,7 @@ function PolicyContentPage() {
               )}
 
               {/* Animated Tab change container wrapper */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="space-y-12"
-                >
+              <div className="space-y-12">
                   
                   {filteredSections.map((sec, idx) => {
                     // Extract the title without the leading number if it exists
@@ -545,8 +536,7 @@ function PolicyContentPage() {
                     </div>
                   )}
 
-                </motion.div>
-              </AnimatePresence>
+              </div>
 
               {/* High Quality interactive consent box */}
               <div className="mt-16 bg-slate-50/70 border border-slate-205/50 rounded-2xl p-6 md:p-8">
@@ -583,21 +573,14 @@ function PolicyContentPage() {
                   </button>
                 </div>
 
-                <AnimatePresence>
-                  {showAgreementSuccess && (
-                    <motion.div 
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="mt-4 pt-4 border-t border-slate-100 overflow-hidden"
-                    >
-                      <span className="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-2 rounded-xl flex items-center justify-center gap-2">
-                        <CheckCircle size={14} />
-                        Consent logged successfully for active session. Thank you for choosing Comsri Corporation!
-                      </span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {showAgreementSuccess && (
+                  <div className="mt-4 pt-4 border-t border-slate-100 overflow-hidden transition-all duration-300 ease-in-out opacity-100">
+                    <span className="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-2 rounded-xl flex items-center justify-center gap-2">
+                      <CheckCircle size={14} />
+                      Consent logged successfully for active session. Thank you for choosing Comsri Corporation!
+                    </span>
+                  </div>
+                )}
               </div>
 
             </div>
@@ -767,19 +750,19 @@ function PolicyContentPage() {
             <p className="text-[14px] font-bold text-[#111]">Copyright 2026 by Comsri Corporation All Right Reserved.</p>
             <div className="flex gap-1.5">
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
               </div>
               <div className="bg-[#1a1f71] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
               </div>
               <div className="bg-[#003087] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
               </div>
               <div className="bg-[#2d9cdb] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
               </div>
               <div className="bg-[#6772e5] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
               </div>
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center px-1">
                 <span className="text-white text-[10px]">G</span><span className="text-white text-[12px] font-bold">Pay</span>
@@ -788,7 +771,7 @@ function PolicyContentPage() {
                 <Apple size={14} className="fill-white text-white mr-0.5" /><span className="text-white text-[10px] font-semibold mt-[1px]">Pay</span>
               </div>
               <div className="bg-[#004b87] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
               </div>
             </div>
           </div>
