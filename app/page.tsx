@@ -115,9 +115,11 @@ export default function Home() {
 
   const laptopSliderRef = useRef<HTMLDivElement>(null);
   const desktopSliderRef = useRef<HTMLDivElement>(null);
+  const blogSliderRef = useRef<HTMLDivElement>(null);
 
   const [laptopScroll, setLaptopScroll] = useState({ left: 0, width: 20 });
   const [desktopScroll, setDesktopScroll] = useState({ left: 0, width: 20 });
+  const [blogScroll, setBlogScroll] = useState({ left: 0, width: 20 });
 
   const updateScroll = (
     ref: React.RefObject<HTMLDivElement | null>,
@@ -182,12 +184,14 @@ export default function Home() {
   useEffect(() => {
     updateScroll(laptopSliderRef, setLaptopScroll);
     updateScroll(desktopSliderRef, setDesktopScroll);
+    updateScroll(blogSliderRef, setBlogScroll);
   }, [laptops, desktops]);
 
   useEffect(() => {
     const handleResize = () => {
       updateScroll(laptopSliderRef, setLaptopScroll);
       updateScroll(desktopSliderRef, setDesktopScroll);
+      updateScroll(blogSliderRef, setBlogScroll);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -461,7 +465,7 @@ export default function Home() {
             className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
           >
             {laptops.map((prod, idx) => (
-              <div key={prod.id || idx} className="w-[calc((100%-16px)/2)] md:w-[calc((100%-32px)/3)] lg:w-[calc((100%-64px)/5)] shrink-0">
+              <div key={prod.id || idx} className="w-full md:w-[calc((100%-32px)/3)] lg:w-[calc((100%-64px)/5)] shrink-0">
                 <ProductCard product={prod} index={idx} />
               </div>
             ))}
@@ -512,7 +516,7 @@ export default function Home() {
             className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
           >
             {desktops.map((prod, idx) => (
-              <div key={prod.id || idx} className="w-[calc((100%-16px)/2)] md:w-[calc((100%-32px)/3)] lg:w-[calc((100%-64px)/5)] shrink-0">
+              <div key={prod.id || idx} className="w-full md:w-[calc((100%-32px)/3)] lg:w-[calc((100%-64px)/5)] shrink-0">
                 <ProductCard product={prod} index={idx} />
               </div>
             ))}
@@ -591,152 +595,162 @@ export default function Home() {
       <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto flex flex-col pt-8 border-t-2 border-[#ffb03a]">
           {/* Header */}
-          <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+          <div className="flex flex-col items-start mb-8 gap-4">
             <h2 className="text-[28px] md:text-3xl font-bold text-[#111] tracking-tight">Latest from The Blog</h2>
-            <button className="bg-[#4169e1] hover:bg-[#345bc5] text-white px-6 py-2.5 rounded-full font-bold text-sm transition-colors shadow-sm focus:outline-none">
+            <button className="bg-[#3452ef] hover:bg-[#203bca] text-white px-8 py-3 rounded-full font-bold text-sm transition-all duration-200 active:scale-[0.98] shadow-md shadow-blue-500/10 focus:outline-none">
               More Articles
             </button>
           </div>
 
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Cards Slider */}
+          <div 
+            ref={blogSliderRef}
+            onScroll={() => updateScroll(blogSliderRef, setBlogScroll)}
+            className="flex flex-nowrap gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
+          >
             {/* Card 1 */}
-            <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
-              {/* Image */}
-              <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                <img loading="lazy"
-                  src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=600"
-                  alt="Blog cover"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-
-              {/* Content */}
-              <div className="px-2 pb-2 flex flex-col flex-1">
-                {/* Author and Read Time */}
-                <div className="text-[13px] text-gray-500 mb-2 font-medium flex items-center gap-2">
-                  <span>Comsri Corporation</span>
-                  <span className="w-1 h-1 rounded-full bg-gray-400"></span>
-                  <span>5 min read</span>
+            <div className="w-full md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] shrink-0">
+              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
+                {/* Image */}
+                <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
+                  <img loading="lazy"
+                    src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=600"
+                    alt="Blog cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
 
-                {/* Title and Icon */}
-                <div className="flex items-start justify-between gap-4 mb-2">
-                  <h3 className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2">
-                    Bulk Refurbished Computers Dealers: Smart IT Solutions for Businesses
-                  </h3>
-                  <button className="text-gray-400 group-hover:text-black transition-colors focus:outline-none flex-shrink-0 mt-1">
-                    <ArrowUpRight size={20} />
-                  </button>
-                </div>
+                {/* Content */}
+                <div className="px-2 pb-2 flex flex-col flex-1">
+                  {/* Author and Read Time */}
+                  <div className="text-[13px] text-gray-500 mb-2 font-medium flex items-center gap-2">
+                    <span>Comsri Corporation</span>
+                    <span className="w-1 h-1 rounded-full bg-gray-400"></span>
+                    <span>5 min read</span>
+                  </div>
 
-                {/* Description */}
-                <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
-                  In an era where technology upgrades are frequent and budgets are closely monitored, businesses acro...
-                </p>
+                  {/* Title and Icon */}
+                  <div className="flex items-start justify-between gap-4 mb-2">
+                    <h3 className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2">
+                      Bulk Refurbished Computers Dealers: Smart IT Solutions for Businesses
+                    </h3>
+                    <button className="text-gray-400 group-hover:text-black transition-colors focus:outline-none flex-shrink-0 mt-1">
+                      <ArrowUpRight size={20} />
+                    </button>
+                  </div>
 
-                {/* Footer (Tag and Date) */}
-                <div className="flex items-center gap-4 mt-auto">
-                  <span className="bg-[#f6f6f9] text-[#111] text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
-                    Refurbished Products
-                  </span>
-                  <span className="text-[13px] text-gray-500 font-medium whitespace-nowrap">
-                    25 Jan 2026
-                  </span>
+                  {/* Description */}
+                  <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
+                    In an era where technology upgrades are frequent and budgets are closely monitored, businesses acro...
+                  </p>
+
+                  {/* Footer (Tag and Date) */}
+                  <div className="flex items-center gap-4 mt-auto">
+                    <span className="bg-[#f6f6f9] text-[#111] text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
+                      Refurbished Products
+                    </span>
+                    <span className="text-[13px] text-gray-500 font-medium whitespace-nowrap">
+                      25 Jan 2026
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
-              {/* Image */}
-              <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                <img loading="lazy"
-                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600"
-                  alt="Blog cover"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-
-              {/* Content */}
-              <div className="px-2 pb-2 flex flex-col flex-1">
-                {/* Author and Read Time */}
-                <div className="text-[13px] text-gray-500 mb-2 font-medium flex items-center gap-2">
-                  <span>Comsri Corporation</span>
-                  <span className="w-1 h-1 rounded-full bg-gray-400"></span>
-                  <span>4 min read</span>
+            <div className="w-full md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] shrink-0">
+              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
+                {/* Image */}
+                <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
+                  <img loading="lazy"
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600"
+                    alt="Blog cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
 
-                {/* Title and Icon */}
-                <div className="flex items-start justify-between gap-4 mb-2">
-                  <h3 className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2">
-                    Bulk Refurbished Laptops for Offices: Cost vs Performance
-                  </h3>
-                  <button className="text-gray-400 group-hover:text-black transition-colors focus:outline-none flex-shrink-0 mt-1">
-                    <ArrowUpRight size={20} />
-                  </button>
-                </div>
+                {/* Content */}
+                <div className="px-2 pb-2 flex flex-col flex-1">
+                  {/* Author and Read Time */}
+                  <div className="text-[13px] text-gray-500 mb-2 font-medium flex items-center gap-2">
+                    <span>Comsri Corporation</span>
+                    <span className="w-1 h-1 rounded-full bg-gray-400"></span>
+                    <span>4 min read</span>
+                  </div>
 
-                {/* Description */}
-                <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
-                  In today&apos;s competitive business environment, organizations are under constant pressure to reduce op...
-                </p>
+                  {/* Title and Icon */}
+                  <div className="flex items-start justify-between gap-4 mb-2">
+                    <h3 className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2">
+                      Bulk Refurbished Laptops for Offices: Cost vs Performance
+                    </h3>
+                    <button className="text-gray-400 group-hover:text-black transition-colors focus:outline-none flex-shrink-0 mt-1">
+                      <ArrowUpRight size={20} />
+                    </button>
+                  </div>
 
-                {/* Footer (Tag and Date) */}
-                <div className="flex items-center gap-4 mt-auto">
-                  <span className="bg-[#f6f6f9] text-[#111] text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
-                    Refurbished Products
-                  </span>
-                  <span className="text-[13px] text-gray-500 font-medium whitespace-nowrap">
-                    07 Jan 2026
-                  </span>
+                  {/* Description */}
+                  <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
+                    In today&apos;s competitive business environment, organizations are under constant pressure to reduce op...
+                  </p>
+
+                  {/* Footer (Tag and Date) */}
+                  <div className="flex items-center gap-4 mt-auto">
+                    <span className="bg-[#f6f6f9] text-[#111] text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
+                      Refurbished Products
+                    </span>
+                    <span className="text-[13px] text-gray-500 font-medium whitespace-nowrap">
+                      07 Jan 2026
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
-              {/* Image */}
-              <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                <img loading="lazy"
-                  src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&q=80&w=600"
-                  alt="Blog cover"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-
-              {/* Content */}
-              <div className="px-2 pb-2 flex flex-col flex-1">
-                {/* Author and Read Time */}
-                <div className="text-[13px] text-gray-500 mb-2 font-medium flex items-center gap-2">
-                  <span>Comsri Corporation</span>
-                  <span className="w-1 h-1 rounded-full bg-gray-400"></span>
-                  <span>7 min read</span>
+            <div className="w-full md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] shrink-0">
+              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
+                {/* Image */}
+                <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
+                  <img loading="lazy"
+                    src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&q=80&w=600"
+                    alt="Blog cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
 
-                {/* Title and Icon */}
-                <div className="flex items-start justify-between gap-4 mb-2">
-                  <h3 className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2">
-                    E-Waste Recycling Explained: The First Step to Affordable Refurbished Technology
-                  </h3>
-                  <button className="text-gray-400 group-hover:text-black transition-colors focus:outline-none flex-shrink-0 mt-1">
-                    <ArrowUpRight size={20} />
-                  </button>
-                </div>
+                {/* Content */}
+                <div className="px-2 pb-2 flex flex-col flex-1">
+                  {/* Author and Read Time */}
+                  <div className="text-[13px] text-gray-500 mb-2 font-medium flex items-center gap-2">
+                    <span>Comsri Corporation</span>
+                    <span className="w-1 h-1 rounded-full bg-gray-400"></span>
+                    <span>7 min read</span>
+                  </div>
 
-                {/* Description */}
-                <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
-                  The rapid growth of technology has transformed how India works, studies, and does business. However...
-                </p>
+                  {/* Title and Icon */}
+                  <div className="flex items-start justify-between gap-4 mb-2">
+                    <h3 className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2">
+                      E-Waste Recycling Explained: The First Step to Affordable Refurbished Technology
+                    </h3>
+                    <button className="text-gray-400 group-hover:text-black transition-colors focus:outline-none flex-shrink-0 mt-1">
+                      <ArrowUpRight size={20} />
+                    </button>
+                  </div>
 
-                {/* Footer (Tag and Date) */}
-                <div className="flex items-center gap-4 mt-auto">
-                  <span className="bg-[#f6f6f9] text-[#111] text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
-                    Uncategorized
-                  </span>
-                  <span className="text-[13px] text-gray-500 font-medium whitespace-nowrap">
-                    06 Jan 2026
-                  </span>
+                  {/* Description */}
+                  <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
+                    The rapid growth of technology has transformed how India works, studies, and does business. However...
+                  </p>
+
+                  {/* Footer (Tag and Date) */}
+                  <div className="flex items-center gap-4 mt-auto">
+                    <span className="bg-[#f6f6f9] text-[#111] text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
+                      Uncategorized
+                    </span>
+                    <span className="text-[13px] text-gray-500 font-medium whitespace-nowrap">
+                      06 Jan 2026
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -744,9 +758,17 @@ export default function Home() {
           </div>
 
           {/* Progress bar */}
-          <div className="w-full h-[3px] bg-[#e9ecef] overflow-hidden flex mt-12 rounded-full">
-            <div className="h-full bg-[#ffb03a] w-[60%]"></div>
-            <div className="h-full bg-transparent w-[40%]"></div>
+          <div 
+            onClick={(e) => handleTrackClick(e, blogSliderRef)}
+            className="w-full h-1.5 bg-[#e9ecef] rounded-full relative overflow-hidden cursor-pointer mt-12"
+          >
+            <div 
+              className="h-full bg-[#ffb03a] rounded-full absolute top-0 left-0 transition-transform duration-100 ease-out will-change-transform"
+              style={{ 
+                width: `${blogScroll.width}%`, 
+                transform: `translate3d(${blogScroll.width > 0 ? (blogScroll.left / blogScroll.width) * 100 : 0}%, 0, 0)`
+              }}
+            ></div>
           </div>
         </div>
       </section>

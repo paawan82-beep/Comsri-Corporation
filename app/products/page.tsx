@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { woocommerce } from "@/lib/services/woocommerce";
+import { getFilteredCatalog } from "@/lib/services/catalog";
 
 interface CatalogPageProps {
   searchParams: Promise<{
@@ -24,12 +25,11 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
 
   try {
     const [productsResult, categoriesResult] = await Promise.all([
-      woocommerce.getProducts({
+      getFilteredCatalog({
         category: currentCategory,
         search: currentQuery,
         page: currentPage,
         per_page: 12,
-        status: "publish",
       }),
       woocommerce.getCategories(),
     ]);

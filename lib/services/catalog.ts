@@ -41,6 +41,24 @@ export const matchQuery = (p: WooCommerceProduct, query: string) => {
   const tokens = query.trim().toLowerCase().split(/\s+/);
   
   return tokens.every(token => {
+    // Handle generation/gen/generations explicitly to show products with a generation
+    if (["generation", "generations", "gen"].includes(token)) {
+      const hasGenAttr = p.attributes?.some(a => a.name.toLowerCase() === "generation");
+      const hasGenInName = p.name.toLowerCase().includes("gen") || p.name.toLowerCase().includes("generation");
+      return hasGenAttr || hasGenInName;
+    }
+
+    // Ignore generic IT hardware filler terms to enable flexible search matching
+    if ([
+      "model", "models", 
+      "processor", "processors", 
+      "ram", "storage", "gb", "tb",
+      "laptop", "laptops", "desktop", "desktops", "pc", "pcs", "computer", "computers",
+      "refurbished", "new", "used", "buy", "online", "india", "core"
+    ].includes(token)) {
+      return true;
+    }
+
     // Brands
     if (["apple", "dell", "hp", "lenovo", "microsoft"].includes(token)) {
       return matchBrand(p, token);

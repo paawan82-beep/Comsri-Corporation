@@ -25,50 +25,87 @@ const getRazorpayInstance = (): Razorpay => {
  */
 export async function POST(req: NextRequest) {
   try {
-    const { productId, quantity = 1, billing, shipping } = await req.json();
+    const { items, productId, quantity = 1, billing, shipping, couponCode } = await req.json();
 
-    if (!productId) {
-      return NextResponse.json({ error: "Product ID is required for checkout creation." }, { status: 400 });
+    let orderItems: { product_id: number; quantity: number }[] = [];
+    let totalLinePrice = 0;
+    let descriptionNote = "";
+    let firstProductName = "";
+
+    if (items && Array.isArray(items) && items.length > 0) {
+      console.log(`[Checkout API]: Processing multi-item order with ${items.length} items...`);
+      for (const item of items) {
+        const id = parseInt(item.productId || item.product_id, 10);
+        const qty = parseInt(item.quantity, 10) || 1;
+        
+        const product = await woocommerce.getProductById(id);
+        if (!firstProductName) {
+          firstProductName = product.name;
+        }
+        if (product.stock_status !== "instock") {
+          return NextResponse.json({ error: `Product "${product.name}" is currently out of stock.` }, { status: 400 });
+        }
+        if (product.manage_stock && product.stock_quantity !== null && product.stock_quantity < qty) {
+          return NextResponse.json(
+            { error: `Insufficient stock for "${product.name}". Only ${product.stock_quantity} units remaining.` },
+            { status: 400 }
+          );
+        }
+
+        const activePrice = parseFloat(product.price || "0.00");
+        totalLinePrice += activePrice * qty;
+        orderItems.push({ product_id: id, quantity: qty });
+        descriptionNote += `${product.name} (x${qty}), `;
+      }
+      descriptionNote = descriptionNote.slice(0, 120);
+    } else {
+      if (!productId) {
+        return NextResponse.json({ error: "Product ID or items list is required for checkout creation." }, { status: 400 });
+      }
+      const id = parseInt(productId, 10);
+      const qty = parseInt(quantity, 10) || 1;
+      
+      const product = await woocommerce.getProductById(id);
+      firstProductName = product.name;
+      if (product.stock_status !== "instock") {
+        return NextResponse.json({ error: "The selected item is currently out of stock." }, { status: 400 });
+      }
+      if (product.manage_stock && product.stock_quantity !== null && product.stock_quantity < qty) {
+        return NextResponse.json(
+          { error: `Insufficient stock. Only ${product.stock_quantity} units remaining in inventory.` },
+          { status: 400 }
+        );
+      }
+
+      const activePrice = parseFloat(product.price || "0.00");
+      totalLinePrice = activePrice * qty;
+      orderItems.push({ product_id: id, quantity: qty });
+      descriptionNote = `${product.name} (x${qty})`;
     }
 
-    // 1. SURGICAL PRODUCT RETRIEVAL & ERROR HANDLING (Problem 2 Fix)
-    // Avoids downloading the entire catalog by retrieving the single target product.
-    console.log(`[Checkout API]: Verifying product ID: ${productId} with WooCommerce...`);
-    let product;
-    try {
-      product = await woocommerce.getProductById(parseInt(productId, 10));
-    } catch (err: any) {
-      return NextResponse.json({ error: `Product not found: ${err.message}` }, { status: 404 });
+    // Apply Coupon Code Validation and Discount calculation server-side
+    let discountAmount = 0;
+    if (couponCode) {
+      const code = couponCode.toUpperCase();
+      if (code === "WELCOME10") {
+        discountAmount = totalLinePrice * 0.1;
+      } else if (code === "COMSRI70") {
+        discountAmount = totalLinePrice * 0.7;
+      } else if (code === "DEAL1500") {
+        discountAmount = Math.min(1500, totalLinePrice);
+      } else {
+        return NextResponse.json({ error: "Invalid coupon code applied." }, { status: 400 });
+      }
+      totalLinePrice = Math.max(0, totalLinePrice - discountAmount);
+      descriptionNote += ` [Discount Coupon: ${code}]`;
     }
 
-    // 2. SERVER-SIDE STOCK VERIFICATION & INVENTORY CHECK
-    if (product.stock_status !== "instock") {
-      return NextResponse.json({ error: "The selected item is currently out of stock." }, { status: 400 });
-    }
-
-    if (product.manage_stock && product.stock_quantity !== null && product.stock_quantity < quantity) {
-      return NextResponse.json(
-        { error: `Insufficient stock. Only ${product.stock_quantity} units remaining in inventory.` },
-        { status: 400 }
-      );
-    }
-
-    // Compute correct price. Supports sale prices if active.
-    const activePrice = parseFloat(product.price || "0.00");
-    const totalLinePrice = activePrice * quantity;
-
-    if (totalLinePrice <= 0) {
-      return NextResponse.json({ error: "Invalid product total transaction value." }, { status: 400 });
+    if (totalLinePrice <= 0 && discountAmount === 0) {
+      return NextResponse.json({ error: "Invalid checkout total transaction value." }, { status: 400 });
     }
 
     // 3. CREATE PENDING ORDER IN WOOCOMMERCE
-    // Holds the item in a "pending" status until payment is officially confirmed via webhook.
     console.log(`[Checkout API]: Registering pending holding order in WooCommerce...`);
-    const lineItem = {
-      product_id: product.id,
-      quantity,
-    };
-
     const wooOrderPayload = {
       status: "pending" as const,
       currency: "INR",
@@ -94,8 +131,13 @@ export async function POST(req: NextRequest) {
         postcode: "400001",
         country: "IN",
       },
-      line_items: [lineItem],
-      meta_data: [{ key: "_created_via_nextjs_headless", value: "yes" }],
+      line_items: orderItems,
+      discount_total: discountAmount.toString(),
+      coupon_lines: couponCode ? [{ code: couponCode.toLowerCase() }] : [],
+      meta_data: [
+        { key: "_created_via_nextjs_headless", value: "yes" },
+        ...(couponCode ? [{ key: "_applied_coupon_code", value: couponCode }] : []),
+      ],
     };
 
     const createdWooOrder = await woocommerce.createOrder(wooOrderPayload);
@@ -115,11 +157,10 @@ export async function POST(req: NextRequest) {
     const rzpOrderOptions = {
       amount: paisaAmount,
       currency: "INR",
-      receipt: wooOrderId.toString(), // Hard links WooCommerce Order ID to Razorpay receipt reference
+      receipt: wooOrderId.toString(),
       notes: {
         woocommerce_order_id: wooOrderId.toString(),
-        product_name: product.name,
-        quantity: quantity.toString(),
+        description: descriptionNote,
       },
     };
 
@@ -127,7 +168,6 @@ export async function POST(req: NextRequest) {
 
     console.log(`[Checkout API]: Successfully synced order ${wooOrderId} with Razorpay Transaction ID: ${createdRzpOrder.id}`);
 
-    // Return the bundle key vectors, total amounts, and payment codes to the UI Client overlay
     return NextResponse.json(
       {
         success: true,
@@ -136,7 +176,7 @@ export async function POST(req: NextRequest) {
         amount: createdRzpOrder.amount,
         currency: createdRzpOrder.currency,
         keyId: process.env.RAZORPAY_KEY_ID || "",
-        productName: product.name,
+        productName: firstProductName,
       },
       { status: 200 }
     );

@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Search, ChevronDown, Shuffle, Heart, ShoppingCart, Apple, Menu, X, Home, Info, ShoppingBag, Package, User, Laptop, Monitor, Layers, Cpu, Sparkles, ArrowRight, Tag, Percent } from "lucide-react";
+import { useCart } from "@/context/CartContext";
 
 function HeaderSearchForm() {
   const searchParams = useSearchParams();
@@ -14,28 +15,140 @@ function HeaderSearchForm() {
   const currentSorting = searchParams.get("orderby") || "date";
   const currentQuery = searchParams.get("search") || "";
 
-  return (
-    <form className="relative" action="/shop" method="GET">
-      {currentCategory && <input type="hidden" name="category" value={currentCategory} />}
-      {currentMinPrice && <input type="hidden" name="min_price" value={currentMinPrice} />}
-      {currentMaxPrice && <input type="hidden" name="max_price" value={currentMaxPrice} />}
-      {currentOnSaleOnly && <input type="hidden" name="on_sale" value="true" />}
-      {currentSorting !== "date" && <input type="hidden" name="orderby" value={currentSorting} />}
+  const [query, setQuery] = useState(currentQuery);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-      <input
-        type="text"
-        name="search"
-        defaultValue={currentQuery}
-        placeholder="Search for products"
-        className="w-full h-[46px] pl-6 pr-14 text-sm text-gray-700 border border-gray-200 rounded-full focus:outline-none focus:border-gray-300"
-      />
-      <button
-        type="submit"
-        className="absolute right-1 top-1 bottom-1 w-[38px] h-[38px] bg-[#374bf9] rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
-      >
-        <Search size={18} />
-      </button>
-    </form>
+  // Sync query when searchParams change
+  useEffect(() => {
+    setQuery(currentQuery);
+  }, [currentQuery]);
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    const delayDebounceFn = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        params.set("search", query);
+        params.set("per_page", "6");
+        const res = await fetch(`/api/products?${params.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          setSuggestions(data.data || []);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [query]);
+
+  // Click outside helper
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest(".search-container-desktop")) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative search-container-desktop w-full">
+      <form className="relative" action="/shop" onSubmit={() => setIsOpen(false)} method="GET">
+        {currentCategory && <input type="hidden" name="category" value={currentCategory} />}
+        {currentMinPrice && <input type="hidden" name="min_price" value={currentMinPrice} />}
+        {currentMaxPrice && <input type="hidden" name="max_price" value={currentMaxPrice} />}
+        {currentOnSaleOnly && <input type="hidden" name="on_sale" value="true" />}
+        {currentSorting !== "date" && <input type="hidden" name="orderby" value={currentSorting} />}
+
+        <input
+          type="text"
+          name="search"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setIsOpen(true);
+          }}
+          onFocus={() => setIsOpen(true)}
+          placeholder="Search for products"
+          className="w-full h-[46px] pl-6 pr-14 text-sm text-gray-700 border border-gray-200 rounded-full focus:outline-none focus:border-gray-300"
+        />
+        <button
+          type="submit"
+          className="absolute right-1 top-1 bottom-1 w-[38px] h-[38px] bg-[#374bf9] rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
+        >
+          <Search size={18} />
+        </button>
+      </form>
+
+      {isOpen && query.trim() !== "" && (
+        <div className="absolute top-[52px] left-0 right-0 bg-white border border-gray-100 rounded-2xl shadow-xl z-50 overflow-hidden max-h-[380px] overflow-y-auto divide-y divide-gray-50 animate-in fade-in slide-in-from-top-2 duration-200">
+          {loading ? (
+            <div className="p-4 text-center text-xs text-gray-500 flex items-center justify-center gap-2">
+              <div className="w-4 h-4 border-2 border-indigo-650 border-t-transparent rounded-full animate-spin" />
+              Searching catalog...
+            </div>
+          ) : suggestions.length > 0 ? (
+            <>
+              {suggestions.map((p) => {
+                const img = p.images?.[0]?.src || "https://picsum.photos/seed/placeholder/80/80";
+                return (
+                  <Link
+                    key={p.id}
+                    href={`/products/${p.slug}`}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-3 p-3 hover:bg-slate-50 transition-colors cursor-pointer group"
+                  >
+                    <div className="relative w-12 h-12 rounded-lg bg-slate-50 overflow-hidden shrink-0 border border-slate-100">
+                      <img src={img} alt={p.name} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-xs font-bold text-slate-800 truncate group-hover:text-indigo-600 transition-colors">{p.name}</h4>
+                      <p className="text-[10px] text-slate-400 font-medium mt-0.5">{p.categories?.[0]?.name || "Catalog"}</p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      {p.on_sale && p.sale_price ? (
+                        <>
+                          <div className="text-xs font-extrabold text-[#374bf9]">₹{p.sale_price}</div>
+                          <div className="text-[10px] text-slate-400 line-through">₹{p.regular_price}</div>
+                        </>
+                      ) : (
+                        <div className="text-xs font-extrabold text-slate-800">₹{p.price || "Check Price"}</div>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
+              <div className="p-2.5 bg-slate-50 text-center border-t border-gray-100">
+                <Link
+                  href={`/shop?search=${encodeURIComponent(query)}`}
+                  onClick={() => setIsOpen(false)}
+                  className="text-xs font-bold text-[#374bf9] hover:underline"
+                >
+                  View all results for &quot;{query}&quot;
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="p-4 text-center text-xs text-gray-400">
+              No products found matching &quot;{query}&quot;
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -48,28 +161,140 @@ function MobileSearchForm() {
   const currentSorting = searchParams.get("orderby") || "date";
   const currentQuery = searchParams.get("search") || "";
 
-  return (
-    <form className="relative w-full" action="/shop" method="GET">
-      {currentCategory && <input type="hidden" name="category" value={currentCategory} />}
-      {currentMinPrice && <input type="hidden" name="min_price" value={currentMinPrice} />}
-      {currentMaxPrice && <input type="hidden" name="max_price" value={currentMaxPrice} />}
-      {currentOnSaleOnly && <input type="hidden" name="on_sale" value="true" />}
-      {currentSorting !== "date" && <input type="hidden" name="orderby" value={currentSorting} />}
+  const [query, setQuery] = useState(currentQuery);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-      <input
-        type="text"
-        name="search"
-        defaultValue={currentQuery}
-        placeholder="Search for products"
-        className="w-full h-11 pl-6 pr-14 text-[14.5px] font-medium text-gray-700 bg-white rounded-full focus:outline-none"
-      />
-      <button
-        type="submit"
-        className="absolute right-1 top-[4px] w-9 h-9 bg-[#374bf9] rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
-      >
-        <Search size={16} />
-      </button>
-    </form>
+  // Sync query when searchParams change
+  useEffect(() => {
+    setQuery(currentQuery);
+  }, [currentQuery]);
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    const delayDebounceFn = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        params.set("search", query);
+        params.set("per_page", "5");
+        const res = await fetch(`/api/products?${params.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          setSuggestions(data.data || []);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [query]);
+
+  // Click outside helper
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest(".search-container-mobile")) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative search-container-mobile w-full">
+      <form className="relative w-full" action="/shop" onSubmit={() => setIsOpen(false)} method="GET">
+        {currentCategory && <input type="hidden" name="category" value={currentCategory} />}
+        {currentMinPrice && <input type="hidden" name="min_price" value={currentMinPrice} />}
+        {currentMaxPrice && <input type="hidden" name="max_price" value={currentMaxPrice} />}
+        {currentOnSaleOnly && <input type="hidden" name="on_sale" value="true" />}
+        {currentSorting !== "date" && <input type="hidden" name="orderby" value={currentSorting} />}
+
+        <input
+          type="text"
+          name="search"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setIsOpen(true);
+          }}
+          onFocus={() => setIsOpen(true)}
+          placeholder="Search for products"
+          className="w-full h-11 pl-6 pr-14 text-[14.5px] font-medium text-gray-700 bg-white rounded-full focus:outline-none"
+        />
+        <button
+          type="submit"
+          className="absolute right-1 top-[4px] w-9 h-9 bg-[#374bf9] rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
+        >
+          <Search size={16} />
+        </button>
+      </form>
+
+      {isOpen && query.trim() !== "" && (
+        <div className="absolute top-[48px] left-0 right-0 bg-white border border-gray-150 rounded-2xl shadow-xl z-50 overflow-hidden max-h-[300px] overflow-y-auto divide-y divide-gray-50 animate-in fade-in slide-in-from-top-1 duration-200">
+          {loading ? (
+            <div className="p-3.5 text-center text-xs text-gray-500 flex items-center justify-center gap-2">
+              <div className="w-3.5 h-3.5 border-2 border-indigo-650 border-t-transparent rounded-full animate-spin" />
+              Searching catalog...
+            </div>
+          ) : suggestions.length > 0 ? (
+            <>
+              {suggestions.map((p) => {
+                const img = p.images?.[0]?.src || "https://picsum.photos/seed/placeholder/80/80";
+                return (
+                  <Link
+                    key={p.id}
+                    href={`/products/${p.slug}`}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-3.5 p-3.5 hover:bg-slate-50 transition-colors cursor-pointer"
+                  >
+                    <div className="relative w-10 h-10 rounded-lg bg-slate-50 overflow-hidden shrink-0 border border-slate-100">
+                      <img src={img} alt={p.name} className="object-cover w-full h-full" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <h4 className="text-xs font-bold text-slate-800 truncate">{p.name}</h4>
+                      <p className="text-[9.5px] text-slate-400 font-semibold mt-0.5">{p.categories?.[0]?.name || "Catalog"}</p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      {p.on_sale && p.sale_price ? (
+                        <>
+                          <div className="text-xs font-black text-[#374bf9]">₹{p.sale_price}</div>
+                          <div className="text-[9px] text-slate-400 line-through">₹{p.regular_price}</div>
+                        </>
+                      ) : (
+                        <div className="text-xs font-black text-slate-800">₹{p.price || "Check"}</div>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
+              <div className="p-2.5 bg-slate-50 text-center border-t border-gray-100">
+                <Link
+                  href={`/shop?search=${encodeURIComponent(query)}`}
+                  onClick={() => setIsOpen(false)}
+                  className="text-xs font-bold text-[#374bf9] hover:underline"
+                >
+                  View all results
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="p-3 text-center text-xs text-gray-400">
+              No products discovered
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -93,6 +318,7 @@ function MobileAccordion({ title, children, defaultOpen = false }: { title: stri
 }
 
 export default function Header() {
+  const { getCartCount, getCartTotal } = useCart();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -540,13 +766,13 @@ export default function Header() {
                 <span className="font-semibold">0</span>
               </button>
 
-              <button className="bg-[#374bf9] text-white rounded-full flex items-center px-4 py-2 gap-x-2 relative hover:bg-blue-700 transition-colors ml-2 shadow-sm border border-transparent">
+              <Link href="/cart" className="bg-[#374bf9] text-white rounded-full flex items-center px-4 py-2 gap-x-2 relative hover:bg-blue-700 transition-colors ml-2 shadow-sm border border-transparent">
                 <ShoppingCart size={18} />
-                <span className="font-semibold tracking-wide">₹0.00</span>
+                <span className="font-semibold tracking-wide">₹{getCartTotal().toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
                 <span className="absolute -top-1.5 -right-1.5 bg-white text-[#374bf9] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-gray-200">
-                  0
+                  {getCartCount()}
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -790,10 +1016,10 @@ export default function Header() {
             )}
           </Link>
 
-          {/* Cart Tab */}
+           {/* Cart Tab */}
           <Link
-            href="#"
-            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/cart" || pathname === "#cart"
+            href="/cart"
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/cart"
               ? "bg-[#faba5b] text-black px-4 py-2"
               : "text-white/80 hover:text-white p-2"
               }`}
@@ -801,10 +1027,10 @@ export default function Header() {
             <div className="relative">
               <ShoppingCart size={20} className="stroke-[2.5]" />
               <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                0
+                {getCartCount()}
               </span>
             </div>
-            {(pathname === "/cart" || pathname === "#cart") && (
+            {pathname === "/cart" && (
               <span className="text-[13px] font-bold tracking-wide">Cart</span>
             )}
           </Link>

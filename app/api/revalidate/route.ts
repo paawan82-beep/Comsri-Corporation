@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
       if (token && token === process.env.REVALIDATION_TOKEN) {
         console.log("[Revalidate API]: Authorized manual token bypass triggered.");
         const targetTag = req.nextUrl.searchParams.get("tag") || "woocommerce";
-        revalidateTag(targetTag);
+        revalidateTag(targetTag, "default");
         return NextResponse.json({ revalidated: true, manualTag: targetTag }, { status: 200 });
       }
 
@@ -49,22 +49,22 @@ export async function POST(req: NextRequest) {
 
     // Surgical Cache Purges
     // Always purge the aggregate list layout caching trigger
-    revalidateTag("woocommerce-products");
+    revalidateTag("woocommerce-products", "default");
 
     if (productId) {
       // Purge the highly structured product model page cached on-demand
-      revalidateTag(`woocommerce-product-${productId}`);
+      revalidateTag(`woocommerce-product-${productId}`, "default");
       console.log(`[Revalidate API]: Purged cache tag: woocommerce-product-${productId}`);
     }
 
     if (slug) {
       // Purge slug mapping cache
-      revalidateTag(`woocommerce-slug-${slug}`);
+      revalidateTag(`woocommerce-slug-${slug}`, "default");
       console.log(`[Revalidate API]: Purged cache tag: woocommerce-slug-${slug}`);
     }
 
     // Purge lists that are likely affected (related arrays)
-    revalidateTag("woocommerce-related");
+    revalidateTag("woocommerce-related", "default");
 
     return NextResponse.json(
       { 
@@ -97,7 +97,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized revalidation token." }, { status: 401 });
     }
 
-    revalidateTag(tag);
+    revalidateTag(tag, "default");
     console.info(`[Revalidate API GET]: Manually purged cache tag "${tag}" successfully.`);
 
     return NextResponse.json({ revalidated: true, tag, source: "manual-get" }, { status: 200 });

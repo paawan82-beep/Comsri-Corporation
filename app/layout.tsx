@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import './globals.css'; // Global styles
+import { CartProvider } from "@/context/CartContext";
 
 export const metadata: Metadata = {
   title: 'Comsri Hardware E-commerce',
@@ -39,7 +40,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <head suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: fetchSetterPolyfill }} suppressHydrationWarning />
       </head>
-      <body className="font-sans antialiased bg-[#f6f5f8]" suppressHydrationWarning>{children}</body>
+      <body className="font-sans antialiased bg-[#f6f5f8]" suppressHydrationWarning>
+        <CartProvider>
+          {children}
+        </CartProvider>
+      </body>
     </html>
   );
 }

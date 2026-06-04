@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Heart, ShoppingCart } from "lucide-react";
+import { useCart } from "@/context/CartContext";
 
 interface ProductImage {
   src: string;
@@ -33,6 +34,16 @@ interface ProductCardProps {
 export default function ProductCard({ product, index }: ProductCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeDot, setActiveDot] = useState(0);
+  const { addToCart } = useCart();
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    addToCart(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  };
 
   const mainImageStr = product.images?.[0]?.src || "https://picsum.photos/seed/placeholder/400/300";
 
@@ -130,18 +141,32 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         </div>
 
         {/* Action Buttons with CSS transitions */}
-        <div className="grid grid-cols-2 gap-2 mt-auto pt-1">
+        <div className="grid grid-cols-2 gap-1.5 mt-auto pt-1">
           <Link
             href={`/products/${product.slug}`}
-            className="bg-[#f5f5f5] hover:bg-gray-200 text-[#111] text-[13.5px] font-semibold py-3 rounded-full transition-colors duration-200 text-center flex items-center justify-center hover:shadow-sm focus:outline-none"
+            className="bg-[#f5f5f5] hover:bg-gray-200 text-[#111] text-[11px] sm:text-[13px] font-semibold py-2.5 sm:py-3 rounded-full transition-colors duration-200 text-center flex items-center justify-center hover:shadow-sm focus:outline-none"
           >
             View Details
           </Link>
           <button
-            className="bg-[#3452ef] hover:bg-[#203bca] text-white text-[13.5px] font-semibold py-3 rounded-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.97] flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 hover:shadow-blue-500/20 focus:outline-none"
+            onClick={handleAddToCart}
+            className={`${
+              added ? "bg-emerald-600 hover:bg-emerald-700" : "bg-[#3452ef] hover:bg-[#203bca]"
+            } text-white text-[11px] sm:text-[13px] font-semibold py-2.5 sm:py-3 rounded-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.97] flex items-center justify-center gap-1 sm:gap-2 cursor-pointer shadow-md shadow-blue-500/10 hover:shadow-blue-500/20 focus:outline-none`}
           >
-            <ShoppingCart size={15} />
-            Add to Cart
+            {added ? (
+              <>
+                <svg className="w-3.5 h-3.5 text-white animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Added!
+              </>
+            ) : (
+              <>
+                <ShoppingCart size={13} className="hidden sm:inline-block shrink-0" />
+                <span>Add to Cart</span>
+              </>
+            )}
           </button>
         </div>
       </div>
