@@ -29,11 +29,11 @@ export default function Home() {
       <main className="flex-1 relative bg-gray-200 overflow-hidden min-h-[220px] sm:min-h-[320px] md:min-h-[420px] lg:min-h-[650px]">
         {/* Slider Images */}
         {slides.map((slide, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           >
-            <Image 
+            <Image
               src={slide}
               alt={`Slide ${index + 1}`}
               fill
@@ -45,24 +45,24 @@ export default function Home() {
         ))}
 
         {/* Left and Right Nav Arrows */}
-        <button 
+        <button
           onClick={prevSlide}
           className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/80 rounded-full flex items-center justify-center shadow-md hover:bg-white z-30 transition-colors"
         >
-            <ChevronLeft size={20} className="text-gray-800 md:hidden" />
-            <ChevronLeft size={24} className="text-gray-800 hidden md:block" />
+          <ChevronLeft size={20} className="text-gray-800 md:hidden" />
+          <ChevronLeft size={24} className="text-gray-800 hidden md:block" />
         </button>
-        <button 
+        <button
           onClick={nextSlide}
           className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/80 rounded-full flex items-center justify-center shadow-md hover:bg-white z-30 transition-colors"
         >
-            <ChevronRight size={20} className="text-gray-800 md:hidden" />
-            <ChevronRight size={24} className="text-gray-800 hidden md:block" />
+          <ChevronRight size={20} className="text-gray-800 md:hidden" />
+          <ChevronRight size={24} className="text-gray-800 hidden md:block" />
         </button>
-        
+
         {/* Banner with a gear icon on the right edge */}
         <div className="absolute right-0 top-1/3 bg-gray-800 text-yellow-400 p-2 rounded-l-md z-30 cursor-pointer shadow-lg blur-[0.5px] hidden md:block">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </div>
 
 
@@ -70,7 +70,7 @@ export default function Home() {
       </main>
 
       {/* Shop By Categories Section */}
-      <section className="bg-[#f6f5f8] py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-12 w-full">
+      <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-[20px] md:text-[24px] lg:text-[28px] font-extrabold text-[#2d2d2d] tracking-tight">Shop By Categories</h2>
@@ -80,28 +80,28 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { 
-                title: "Refurbished Laptops", 
+              {
+                title: "Refurbished Laptops",
                 bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/510uTHyDqGL-removebg-preview-1.png.bv_resized_desktop.png.bv.webp?bv_host=comsri.com"
               },
-              { 
-                title: "Refurbished Desktops", 
+              {
+                title: "Refurbished Desktops",
                 bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/32-removebg-preview-1.png.bv.webp?bv_host=comsri.com"
               },
-              { 
-                title: "Refurbished Workstations", 
+              {
+                title: "Refurbished Workstations",
                 bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/z6_g5_v3_2x-removebg-preview-1.png.bv.webp?bv_host=comsri.com"
               },
-              { 
-                title: "Refurbished Mini PCs", 
-                bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/7040-micro-1-removebg-preview-1.png.bv.webp?bv_host=comsri.com" 
+              {
+                title: "Refurbished Mini PCs",
+                bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/7040-micro-1-removebg-preview-1.png.bv.webp?bv_host=comsri.com"
               }
             ].map((cat, idx) => (
-              <div 
+              <div
                 key={idx}
                 className="relative rounded-[16px] md:rounded-[20px] overflow-hidden cursor-pointer group pt-6 md:pt-8 px-4 md:px-6 h-[220px] sm:h-[260px] md:h-[300px] lg:h-[340px] flex flex-col items-center bg-[#fac656] shadow-sm transform transition-all duration-300 hover:shadow-md hover:-translate-y-1"
               >
-                <div 
+                <div
                   className="absolute inset-0 opacity-100 z-0 bg-no-repeat pointer-events-none transform transition-transform duration-300 group-hover:scale-105"
                   style={{
                     backgroundImage: `url('${cat.bgImage}')`,
@@ -109,7 +109,7 @@ export default function Home() {
                     backgroundPosition: 'center',
                   }}
                 />
-                
+
                 <h3 className="relative z-10 text-[16px] md:text-[18px] lg:text-[20px] font-bold text-[#1f2937] mb-auto text-center tracking-tight">
                   {cat.title}
                 </h3>
@@ -120,87 +120,87 @@ export default function Home() {
       </section>
 
       {/* Featured Products & Promo Banners */}
-      <section className="bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
+      <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto flex flex-col gap-6">
-          
+
           {/* Top Row: 2 items */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 h-auto">
             {/* New Mini PCs */}
             <div className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
-               <Image src="https://comsri.com/wp-content/uploads/2025/10/mini-pc-showcase-1.jpg" alt="New Mini PCs" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
-               <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
-               <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
-                  <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">New Mini PCs</h3>
-                  <div className="flex items-center gap-2 text-sm md:text-base lg:text-lg font-bold transform transition-transform duration-500 group-hover:-translate-y-2">
-                     <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
-                     <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                  </div>
-               </div>
+              <Image src="https://comsri.com/wp-content/uploads/2025/10/mini-pc-showcase-1.jpg" alt="New Mini PCs" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
+              <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
+                <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">New Mini PCs</h3>
+                <div className="flex items-center gap-2 text-sm md:text-base lg:text-lg font-bold transform transition-transform duration-500 group-hover:-translate-y-2">
+                  <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
+                  <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                </div>
+              </div>
             </div>
 
             {/* New All-In-One PCs */}
             <div className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
-               <Image src="https://comsri.com/wp-content/uploads/2025/10/dark-desk-setup-img.jpg-1.webp" alt="New All-In-One PCs" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
-               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
-               <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
-                  <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 max-w-[70%] leading-tight drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">New All-In-One PCs</h3>
-                  <div className="flex items-center gap-2 text-sm md:text-base lg:text-lg font-bold transform transition-transform duration-500 group-hover:-translate-y-2">
-                     <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
-                     <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                  </div>
-               </div>
+              <Image src="https://comsri.com/wp-content/uploads/2025/10/dark-desk-setup-img.jpg-1.webp" alt="New All-In-One PCs" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
+              <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
+                <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 max-w-[70%] leading-tight drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">New All-In-One PCs</h3>
+                <div className="flex items-center gap-2 text-sm md:text-base lg:text-lg font-bold transform transition-transform duration-500 group-hover:-translate-y-2">
+                  <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
+                  <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Bottom Row: 3 items */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 h-auto md:h-[450px]">
-             {/* New Desktops */}
-             <div className="bg-[#529b71] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 flex flex-col min-h-[280px] md:min-h-0">
-                <div className="h-[65%] relative overflow-hidden">
-                   <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Desktop-Showcase.png" alt="New Desktops" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+            {/* New Desktops */}
+            <div className="bg-[#529b71] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 flex flex-col min-h-[280px] md:min-h-0">
+              <div className="h-[65%] relative overflow-hidden">
+                <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Desktop-Showcase.png" alt="New Desktops" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              </div>
+              <div className="flex-1 p-8 flex flex-col justify-end items-start text-white relative">
+                <div className="absolute inset-0 bg-white/0 transition-colors duration-500 group-hover:bg-white/10 pointer-events-none"></div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3 tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">New Desktops</h3>
+                <div className="flex items-center gap-2 text-base font-bold transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">
+                  <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
+                  <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                 </div>
-                <div className="flex-1 p-8 flex flex-col justify-end items-start text-white relative">
-                   <div className="absolute inset-0 bg-white/0 transition-colors duration-500 group-hover:bg-white/10 pointer-events-none"></div>
-                   <h3 className="text-2xl md:text-3xl font-bold mb-3 tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">New Desktops</h3>
-                   <div className="flex items-center gap-2 text-base font-bold transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">
-                     <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
-                     <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                   </div>
-                </div>
-             </div>
+              </div>
+            </div>
 
-             {/* New Laptops */}
-             <div className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 min-h-[250px] md:min-h-0 md:h-full">
-                <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Laptop-Showcase.webp" alt="New Laptops" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
-                <div className="absolute inset-0 p-8 flex flex-col justify-end items-start text-white">
-                   <h3 className="text-2xl md:text-4xl font-bold mb-3 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1">New Laptops</h3>
-                   <div className="flex items-center gap-2 text-base font-bold transform transition-transform duration-500 group-hover:-translate-y-1">
-                     <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
-                     <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                   </div>
+            {/* New Laptops */}
+            <div className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 min-h-[250px] md:min-h-0 md:h-full">
+              <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Laptop-Showcase.webp" alt="New Laptops" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
+              <div className="absolute inset-0 p-8 flex flex-col justify-end items-start text-white">
+                <h3 className="text-2xl md:text-4xl font-bold mb-3 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1">New Laptops</h3>
+                <div className="flex items-center gap-2 text-base font-bold transform transition-transform duration-500 group-hover:-translate-y-1">
+                  <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
+                  <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                 </div>
-             </div>
+              </div>
+            </div>
 
-             {/* Get Upto 70% off */}
-             <div className="bg-[#5a80d8] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col relative min-h-[280px] md:min-h-0">
-                <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500 pointer-events-none z-10"></div>
-                <div className="h-[50%] relative overflow-hidden">
-                   <Image src="https://picsum.photos/seed/promo/600/400" alt="Promo" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+            {/* Get Upto 70% off */}
+            <div className="bg-[#5a80d8] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col relative min-h-[280px] md:min-h-0">
+              <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500 pointer-events-none z-10"></div>
+              <div className="h-[50%] relative overflow-hidden">
+                <Image src="https://picsum.photos/seed/promo/600/400" alt="Promo" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              </div>
+              <div className="flex-1 p-8 flex flex-col justify-center items-start text-white relative z-20">
+                <span className="bg-[#ff5b4f] text-white px-4 md:px-5 py-1.5 md:py-2 rounded-full text-lg md:text-2xl font-bold mb-3 md:mb-4 tracking-tight shadow-sm inline-block transform transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-2">
+                  Get Upto 70% off
+                </span>
+                <h3 className="text-[20px] md:text-[26px] font-bold mb-4 md:mb-6 leading-snug tracking-tight">On All New / Refurbished Products</h3>
+                <div className="flex items-center gap-2 text-base font-bold">
+                  <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
+                  <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                 </div>
-                <div className="flex-1 p-8 flex flex-col justify-center items-start text-white relative z-20">
-                   <span className="bg-[#ff5b4f] text-white px-4 md:px-5 py-1.5 md:py-2 rounded-full text-lg md:text-2xl font-bold mb-3 md:mb-4 tracking-tight shadow-sm inline-block transform transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-2">
-                     Get Upto 70% off
-                   </span>
-                   <h3 className="text-[20px] md:text-[26px] font-bold mb-4 md:mb-6 leading-snug tracking-tight">On All New / Refurbished Products</h3>
-                   <div className="flex items-center gap-2 text-base font-bold">
-                     <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
-                     <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                   </div>
-                </div>
-             </div>
+              </div>
+            </div>
           </div>
-          
+
         </div>
       </section>
 
@@ -225,7 +225,7 @@ export default function Home() {
       </section>
 
       {/* Shop by Brands */}
-      <section className="bg-[#f6f5f8] py-12 md:py-16 px-6 lg:px-12 w-full">
+      <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] py-12 md:py-16 px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto">
           <div className="flex items-center justify-between mb-8 md:mb-10">
             <h2 className="text-[28px] md:text-3xl font-bold text-gray-900 tracking-tight">Shop by Brands</h2>
@@ -243,7 +243,7 @@ export default function Home() {
               { name: 'Microsoft', src: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg' },
             ].map((brand, idx) => (
               <div key={idx} className="bg-white rounded-[20px] p-6 flex flex-col items-center justify-center h-[100px] md:h-[120px] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-gray-100">
-                <img   src={brand.src} alt={brand.name} className="w-auto h-auto max-h-[35px] max-w-[90px] object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                <img src={brand.src} alt={brand.name} className="w-auto h-auto max-h-[35px] max-w-[90px] object-contain opacity-80 hover:opacity-100 transition-opacity" />
               </div>
             ))}
           </div>
@@ -251,7 +251,7 @@ export default function Home() {
       </section>
 
       {/* Product Carousel Section */}
-      <section className="bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
+      <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-6 md:mb-8 gap-3">
@@ -292,9 +292,9 @@ export default function Home() {
                       <Heart size={16} />
                     </button>
                   </div>
-                  
+
                   {/* Image */}
-                  <div 
+                  <div
                     className="absolute inset-0 z-10 bg-no-repeat bg-cover bg-center pointer-events-none transition-transform duration-500 group-hover:scale-105 mix-blend-multiply"
                     style={{ backgroundImage: `url('${prod.image}')` }}
                   />
@@ -317,8 +317,8 @@ export default function Home() {
                   </p>
 
                   <div className="flex flex-wrap items-center gap-1.5 md:gap-2.5 mb-3 md:mb-5">
-                    <span className="text-[14px] md:text-[17px] font-bold text-[#111]">{prod.price}</span>
-                    <span className="text-[12px] md:text-[15px] text-gray-400 line-through">{prod.originalPrice}</span>
+                    <span className="text-[14px] md:text-[17px] font-bold text-[#111] price-font">{prod.price}</span>
+                    <span className="text-[12px] md:text-[15px] text-gray-400 line-through price-font">{prod.originalPrice}</span>
                     <span className="text-[11px] md:text-[15px] font-semibold text-[#008a00]">{prod.discount} off</span>
                   </div>
 
@@ -347,7 +347,7 @@ export default function Home() {
       </section>
 
       {/* Desktop Carousel Section */}
-      <section className="bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
+      <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-6 md:mb-8 gap-3">
@@ -388,9 +388,9 @@ export default function Home() {
                       <Heart size={16} />
                     </button>
                   </div>
-                  
+
                   {/* Image */}
-                  <div 
+                  <div
                     className="absolute inset-0 z-10 bg-no-repeat bg-cover bg-center pointer-events-none transition-transform duration-500 group-hover:scale-105 mix-blend-multiply"
                     style={{ backgroundImage: `url('${prod.image}')` }}
                   />
@@ -413,8 +413,8 @@ export default function Home() {
                   </p>
 
                   <div className="flex flex-wrap items-center gap-1.5 md:gap-2.5 mb-3 md:mb-5">
-                    <span className="text-[14px] md:text-[17px] font-bold text-[#111]">{prod.price}</span>
-                    <span className="text-[12px] md:text-[15px] text-gray-400 line-through">{prod.originalPrice}</span>
+                    <span className="text-[14px] md:text-[17px] font-bold text-[#111] price-font">{prod.price}</span>
+                    <span className="text-[12px] md:text-[15px] text-gray-400 line-through price-font">{prod.originalPrice}</span>
                     <span className="text-[11px] md:text-[15px] font-semibold text-[#008a00]">{prod.discount} off</span>
                   </div>
 
@@ -443,19 +443,19 @@ export default function Home() {
       </section>
 
       {/* Promo Banner Section */}
-      <section className="bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
+      <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto bg-[#3a5bf6] rounded-[20px] md:rounded-[32px] p-6 md:p-8 lg:p-12 xl:p-16 flex flex-col lg:flex-row items-center gap-8 md:gap-12 shadow-md">
-          
+
           {/* Left Content */}
           <div className="flex-1 text-white">
             <div className="inline-block bg-[#ff4522] text-white text-[14px] font-bold px-4 py-1.5 rounded-full mb-6 shadow-sm">
               Get Upto 70% Off on New & Refurbished Products
             </div>
-            
+
             <h2 className="text-[24px] sm:text-[28px] md:text-5xl font-extrabold leading-[1.15] mb-4 md:mb-6">
               Save Big on New / Refurbished<br className="hidden xl:block" /> Laptops & Desktops
             </h2>
-            
+
             <div className="space-y-3 md:space-y-4 text-white/90 text-[13px] md:text-[14px] leading-relaxed mb-6 md:mb-10">
               <p>
                 At <strong className="text-white">Comsri Corporation</strong>, we believe premium computing should be accessible to everyone. As a trusted destination for <strong className="text-white">Refurbished Computers Online in India</strong>, we specialize in delivering high-quality refurbished and brand-new laptops and desktops to students, professionals, startups, enterprises, and gamers across India. Whether you&apos;re upgrading your office infrastructure, purchasing a personal device, or sourcing systems in bulk, our online computer store provides dependable performance at competitive prices.
@@ -470,7 +470,7 @@ export default function Home() {
                 If you&apos;re looking to buy refurbished computers online in India with peace of mind, Comsri Corporation is your trusted partner—delivering value, performance, and reliability nationwide.
               </p>
             </div>
-            
+
             <div className="flex flex-wrap items-center gap-4">
               <button className="bg-[#ffb03a] hover:bg-[#faa129] text-gray-900 font-bold px-8 py-3 rounded-full transition-colors shadow-sm focus:outline-none">
                 Shop Now!
@@ -480,23 +480,23 @@ export default function Home() {
               </button>
             </div>
           </div>
-          
+
           {/* Right Image */}
           <div className="lg:w-[450px] xl:w-[500px] flex-shrink-0 w-full relative">
             <div className="aspect-[16/10] md:aspect-[4/5] w-full rounded-[16px] md:rounded-[24px] overflow-hidden shadow-2xl">
-              <img   
-                src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=1000" 
-                alt="Desktop setup with monitor" 
+              <img
+                src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=1000"
+                alt="Desktop setup with monitor"
                 className="w-full h-full object-cover"
               />
             </div>
           </div>
-          
+
         </div>
       </section>
 
       {/* Blog Section */}
-      <section className="bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
+      <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto flex flex-col pt-8 border-t-2 border-[#ffb03a]">
           {/* Header */}
           <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
@@ -512,9 +512,9 @@ export default function Home() {
             <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
               {/* Image */}
               <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                <img   
-                  src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=600" 
-                  alt="Blog cover" 
+                <img
+                  src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=600"
+                  alt="Blog cover"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -559,9 +559,9 @@ export default function Home() {
             <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
               {/* Image */}
               <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                <img   
-                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" 
-                  alt="Blog cover" 
+                <img
+                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600"
+                  alt="Blog cover"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -606,9 +606,9 @@ export default function Home() {
             <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
               {/* Image */}
               <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                <img   
-                  src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&q=80&w=600" 
-                  alt="Blog cover" 
+                <img
+                  src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&q=80&w=600"
+                  alt="Blog cover"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -650,7 +650,7 @@ export default function Home() {
             </div>
 
           </div>
-          
+
           {/* Progress bar */}
           <div className="w-full h-[3px] bg-[#e9ecef] overflow-hidden flex mt-12 rounded-full">
             <div className="h-full bg-[#ffb03a] w-[60%]"></div>
@@ -677,17 +677,17 @@ export default function Home() {
           {/* Instagram Images Grid */}
           <div className="w-full grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 md:gap-4 pb-4 px-4 lg:px-0">
             {[
-              "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&q=80&w=400",
-              "https://images.unsplash.com/photo-1593642702821-c828b81665d9?auto=format&fit=crop&q=80&w=400",
-              "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&q=80&w=400",
-              "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&q=80&w=400",
-              "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=400",
-              "https://images.unsplash.com/photo-1542393545-10f5cde2c810?auto=format&fit=crop&q=80&w=400",
-              "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=400",
-              "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&q=80&w=400",
+              "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-1.jpg",
+              "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-2.jpg",
+              "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-3.jpg",
+              "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-4.jpg",
+              "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-5.jpg",
+              "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-6.jpg",
+              "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-7.jpg",
+              "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-8.jpg",
             ].map((src, index) => (
               <div key={index} className="w-full aspect-square md:rounded-[20px] rounded-[12px] overflow-hidden bg-white shadow-sm group relative">
-                <img   src={src} alt="Instagram post" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={src} alt="Instagram post" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
             ))}
           </div>
@@ -697,7 +697,7 @@ export default function Home() {
       {/* Footer Section */}
       <footer className="bg-[#fcb643] pt-10 md:pt-16 pb-8 md:pb-12 w-full relative">
         <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 flex flex-col gap-8 md:gap-12">
-          
+
           {/* Top Columns */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 justify-between">
             {/* Address */}
@@ -794,9 +794,9 @@ export default function Home() {
               <p className="text-[14px] text-white/90 font-medium">Be the First to Know. Sign up to newsletter today</p>
             </div>
             <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-4 items-center">
-              <input 
-                type="email" 
-                placeholder="Your email address" 
+              <input
+                type="email"
+                placeholder="Your email address"
                 className="px-5 md:px-6 py-3 md:py-3.5 rounded-full text-[14px] focus:outline-none font-medium h-[44px] md:h-[48px] text-black w-full min-w-0 md:min-w-[280px] md:w-[340px]"
               />
               <button className="bg-[#fcb643] hover:bg-[#fca61f] text-[#111] px-6 md:px-8 h-[44px] md:h-[48px] rounded-full font-bold text-[14px] md:text-[15px] transition-colors whitespace-nowrap shadow-sm w-full sm:w-auto">
@@ -810,19 +810,19 @@ export default function Home() {
             <p className="text-[14px] font-bold text-[#111]">Copyright 2026 by Comsri Corporation All Right Reserved.</p>
             <div className="flex gap-1.5">
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
               </div>
               <div className="bg-[#1a1f71] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
               </div>
               <div className="bg-[#003087] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
               </div>
               <div className="bg-[#2d9cdb] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
               </div>
               <div className="bg-[#6772e5] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
               </div>
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center px-1">
                 <span className="text-white text-[10px]">G</span><span className="text-white text-[12px] font-bold">Pay</span>
@@ -831,7 +831,7 @@ export default function Home() {
                 <Apple size={14} className="fill-white text-white mr-0.5" /><span className="text-white text-[10px] font-semibold mt-[1px]">Pay</span>
               </div>
               <div className="bg-[#004b87] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
               </div>
             </div>
           </div>

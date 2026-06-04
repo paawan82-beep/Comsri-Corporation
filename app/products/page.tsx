@@ -193,11 +193,11 @@ export default async function ProductsCatalogPage({ searchParams }: CatalogPageP
                           <div className="flex gap-2.5 items-baseline">
                             {product.on_sale && product.regular_price ? (
                               <>
-                                <span className="text-lg font-black text-slate-500">₹{product.sale_price}</span>
-                                <span className="text-xs text-slate-400 line-through">₹{product.regular_price}</span>
+                                <span className="text-lg font-black text-slate-500 price-font">₹{product.sale_price}</span>
+                                <span className="text-xs text-slate-400 line-through price-font">₹{product.regular_price}</span>
                               </>
                             ) : (
-                              <span className="text-lg font-black text-slate-500">
+                              <span className="text-lg font-black text-slate-500 price-font">
                                 ₹{product.price || "Check Price"}
                               </span>
                             )}

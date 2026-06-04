@@ -35,11 +35,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   `;
 
   return (
-    <html lang="en">
+    <html lang="en" className="bg-[#f6f5f8]">
       <head suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: fetchSetterPolyfill }} suppressHydrationWarning />
       </head>
-      <body className="font-sans antialiased" suppressHydrationWarning>{children}</body>
+      <body className="font-sans antialiased bg-[#f6f5f8]" suppressHydrationWarning>{children}</body>
     </html>
   );
 }

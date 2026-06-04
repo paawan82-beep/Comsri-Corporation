@@ -134,8 +134,8 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         <div className="flex items-center gap-2.5 mb-5 mt-1">
           {product.on_sale && product.regular_price ? (
             <>
-              <span className="text-[18px] font-bold text-[#111]">₹{product.sale_price}</span>
-              <span className="text-[14px] text-gray-400 line-through font-medium">₹{product.regular_price}</span>
+              <span className="text-[18px] font-bold text-[#111] price-font">₹{product.sale_price}</span>
+              <span className="text-[14px] text-gray-400 line-through font-medium price-font">₹{product.regular_price}</span>
               {product.regular_price && product.sale_price && (
                 <span className="text-[14.5px] font-semibold text-[#008a00] bg-emerald-50 px-2 py-0.5 rounded-md">
                   {Math.round(((parseFloat(product.regular_price) - parseFloat(product.sale_price)) / parseFloat(product.regular_price)) * 100)}% off
@@ -143,7 +143,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
               )}
             </>
           ) : (
-            <span className="text-[18px] font-bold text-[#111]">
+            <span className="text-[18px] font-bold text-[#111] price-font">
               ₹{product.price || "Check Price"}
             </span>
           )}

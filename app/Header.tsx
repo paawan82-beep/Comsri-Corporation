@@ -93,7 +93,7 @@ export default function Header() {
       {/* -------------------- BRAND HEADER -------------------- */}
       <header className="bg-white py-3 md:py-4 border-b border-gray-100" id="shop-header">
         <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 flex items-center justify-between w-full gap-3">
-          
+
           {/* Mobile: Hamburger button */}
           <button
             onClick={() => setMobileMenuOpen(true)}
@@ -105,9 +105,9 @@ export default function Header() {
 
           {/* Logo element */}
           <Link href="/" className="flex-shrink-0 flex items-center cursor-pointer">
-            <img 
-              src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png" 
-              alt="Comsri Corporation Logo" 
+            <img
+              src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Comsri-Logo.png"
+              alt="Comsri Corporation Logo"
               className="h-[36px] md:h-[44px] lg:h-[52px] w-auto object-contain"
             />
           </Link>
@@ -134,10 +134,10 @@ export default function Header() {
           {/* Right Actions — desktop */}
           <div className="hidden lg:flex items-center gap-x-6 text-sm font-medium text-gray-800">
             <div className="flex items-center gap-2 cursor-pointer border-r border-gray-350 pr-6 h-5">
-              <img 
-                src="https://comsri.com/wp-content/uploads/2025/10/indian-flag-1-1.jpg" 
-                alt="IND" 
-                className="w-5 h-[13px] object-cover rounded-[1px]" 
+              <img
+                src="https://comsri.com/wp-content/uploads/2025/10/indian-flag-1-1.jpg"
+                alt="IND"
+                className="w-5 h-[13px] object-cover rounded-[1px]"
               />
               <span>IND</span>
             </div>
@@ -146,7 +146,7 @@ export default function Header() {
                 <span className="text-slate-700 font-bold max-w-[140px] truncate select-none">
                   Hello, {userEmail.split("@")[0]}!
                 </span>
-                <button 
+                <button
                   onClick={() => {
                     localStorage.removeItem("isLoggedIn");
                     localStorage.removeItem("userEmail");
@@ -182,7 +182,7 @@ export default function Header() {
       {/* -------------------- DESKTOP NAVIGATION BAR -------------------- */}
       <nav className="hidden lg:block bg-[#faba5b] py-3 text-[14px] font-medium text-black relative">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between w-full gap-x-6">
-          
+
           {/* Left navigation links */}
           <ul className="flex flex-wrap items-center gap-y-2 gap-x-6">
             <li>
@@ -200,13 +200,13 @@ export default function Header() {
                 <span>Refurbished Products</span>
                 <ChevronDown size={14} className="transition-transform duration-200 group-hover:rotate-180" />
               </Link>
-              
+
               {/* Mega Menu Dropdown */}
               <div className="absolute top-full left-0 right-0 w-full bg-white shadow-[0_20px_60px_rgba(0,0,0,0.10)] border-t border-gray-200 py-12 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-out z-50 text-gray-800 font-normal">
                 <div className="max-w-[1600px] mx-auto px-8 lg:px-16">
                   {/* 4 Column Category Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-10 pb-10 border-b border-gray-200">
-                    
+
                     {/* Column 1: Refurbished Laptops */}
                     <div className="flex flex-col gap-4">
                       <Link href="/shop?category=112" className="text-[#374bf9] font-bold text-[15px] hover:underline">
@@ -263,7 +263,7 @@ export default function Header() {
                   {/* Shop By Brands Section */}
                   <div className="flex flex-col items-center gap-5">
                     <h3 className="text-[#111] font-bold text-[18px] tracking-tight">Shop By Brands</h3>
-                    
+
                     <div className="flex flex-wrap items-center justify-center gap-5 w-full">
                       {/* Brand Card: Apple */}
                       <Link href="/shop?search=Apple" className="flex items-center justify-center bg-[#f9f9f9] border border-gray-200 rounded-2xl h-[72px] w-40 lg:w-48 px-6 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-gray-300 transition-all group/brand">
@@ -341,7 +341,7 @@ export default function Header() {
               <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2">
                 <span>Policies</span>
                 <ChevronDown size={14} className="transition-transform duration-200 group-hover:rotate-180" />
-                
+
                 {/* Elegant Dropdown aligned to the right edge */}
                 <div className="absolute top-[85%] right-0 mt-2 w-64 bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-gray-100 py-3 hidden group-hover:flex flex-col text-sm text-gray-800 z-50 font-normal">
                   <Link href="/terms-conditions?tab=terms" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
@@ -382,7 +382,7 @@ export default function Header() {
                 <Heart size={18} />
                 <span className="font-semibold">0</span>
               </button>
-              
+
               <button className="bg-[#374bf9] text-white rounded-full flex items-center px-4 py-2 gap-x-2 relative hover:bg-blue-700 transition-colors ml-2 shadow-sm border border-transparent">
                 <ShoppingCart size={18} />
                 <span className="font-semibold tracking-wide">₹0.00</span>
@@ -409,9 +409,9 @@ export default function Header() {
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-            <img 
-              src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png" 
-              alt="Comsri Corporation Logo" 
+            <img
+              src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png"
+              alt="Comsri Corporation Logo"
               className="h-[32px] w-auto object-contain"
             />
           </Link>
@@ -551,7 +551,7 @@ export default function Header() {
               <span className="text-[13px] text-gray-700 font-semibold truncate max-w-[180px]">
                 Hello, {userEmail.split("@")[0]}!
               </span>
-              <button 
+              <button
                 onClick={() => {
                   localStorage.removeItem("isLoggedIn");
                   localStorage.removeItem("userEmail");
@@ -564,8 +564,8 @@ export default function Header() {
               </button>
             </div>
           ) : (
-            <Link 
-              href="/login" 
+            <Link
+              href="/login"
               onClick={() => setMobileMenuOpen(false)}
               className="block w-full text-center bg-[#374bf9] text-white py-2.5 rounded-full text-[14px] font-semibold hover:bg-blue-700 transition-colors"
             >

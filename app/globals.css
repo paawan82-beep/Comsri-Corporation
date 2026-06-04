@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Albert+Sans:wght@300..900&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -6,22 +6,87 @@
 }
 
 /* Global Font Overrides to guarantee all text/headings across all browsers and devices render with Fredoka */
-*, ::before, ::after {
+*,
+::before,
+::after {
   font-family: "Fredoka", Arial, Helvetica, sans-serif !important;
 }
 
-html, body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea, div, strong, li {
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+button,
+input,
+select,
+textarea,
+div,
+strong,
+li {
   font-family: "Fredoka", Arial, Helvetica, sans-serif !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
+.price-font {
+  font-family: "Albert Sans", Arial, Helvetica, sans-serif !important;
+  font-weight: 600 !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 500 !important;
+}
+
+/* Premium Product Details Table Styling */
+#product-detailed-content table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+#product-detailed-content th {
+  background-color: #faf9f6 !important;
+  color: #111111 !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+#product-detailed-content td {
+  padding: 12px 16px !important;
+  border-bottom: 1px solid #f3f4f6 !important;
+  color: #4b5563 !important;
+}
+
+#product-detailed-content tr:last-child td {
+  border-bottom: none !important;
+}
+
+#product-detailed-content tr:hover td {
+  background-color: #fafafa !important;
 }
 
 @layer utilities {
   .animate-marquee {
     animation: marquee 80s linear infinite;
   }
+
   .animate-marquee-reverse {
     animation: marquee-reverse 80s linear infinite;
   }
@@ -31,6 +96,7 @@ h1, h2, h3, h4, h5, h6 {
   0% {
     transform: translateX(0%);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -40,7 +106,146 @@ h1, h2, h3, h4, h5, h6 {
   0% {
     transform: translateX(-50%);
   }
+
   100% {
     transform: translateX(0%);
   }
+}
+
+/* Premium Product Customizer Animations & Transitions */
+
+@keyframes pricePulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+    color: #2f55f6;
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-price-pulse {
+  display: inline-block;
+  animation: pricePulse 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes shimmer {
+  100% {
+    left: 125%;
+  }
+}
+
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-25deg);
+  transition: none;
+}
+
+.shimmer-btn:hover::after {
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes razorpayGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(250, 186, 90, 0.4);
+    border-color: rgba(250, 186, 90, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 14px 4px rgba(250, 186, 90, 0.25);
+    border-color: rgba(250, 186, 90, 0.8);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(250, 186, 90, 0);
+    border-color: rgba(250, 186, 90, 0.4);
+  }
+}
+
+.razorpay-glow {
+  animation: razorpayGlow 3s infinite ease-in-out;
+  border: 1.5px solid rgba(250, 186, 90, 0.3) !important;
+}
+
+@keyframes heartPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(1.2);
+  }
+
+  60% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hover-pulse {
+  transition: color 0.2s ease;
+}
+
+.hover-pulse:hover {
+  color: #ef4444 !important;
+}
+
+.hover-pulse:hover svg {
+  animation: heartPulse 0.6s ease-in-out infinite;
+  color: #ef4444 !important;
+}
+
+.hover-rotate {
+  transition: color 0.2s ease;
+}
+
+.hover-rotate:hover {
+  color: #3452ef !important;
+}
+
+.hover-rotate:hover svg {
+  transform: rotate(180deg);
+  color: #3452ef !important;
+}
+
+.hover-rotate svg {
+  transition: transform 0.4s ease, color 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
