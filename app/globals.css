@@ -112,7 +112,6 @@ h6 {
   }
 }
 
-<<<<<<< HEAD
 /* Premium Product Customizer Animations & Transitions */
 
 @keyframes pricePulse {
@@ -235,33 +234,36 @@ h6 {
   transition: transform 0.4s ease, color 0.3s ease;
 }
 
-@keyframes fadeInUp {
-=======
 .animate-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
 }
 
 @keyframes fadeIn {
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
   from {
     opacity: 0;
     transform: translateY(12px);
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-<<<<<<< HEAD
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-=======
+
 @keyframes float1 {
   0%, 100% {
     transform: translate3d(0, 0, 0) rotate(0deg);
@@ -330,4 +332,65 @@ h6 {
   }
 }
 
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
+/* Mega Menu Premium UI Classes */
+.mega-menu-glass {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 
+    0 10px 40px -10px rgba(0, 0, 0, 0.08), 
+    0 30px 80px -15px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(240, 242, 245, 0.9);
+}
+
+.mega-menu-link-hover {
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mega-menu-link-hover:hover {
+  transform: translateX(8px);
+  color: #374bf9 !important;
+}
+
+.mega-menu-link-hover::before {
+  content: '→';
+  position: absolute;
+  left: -12px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #374bf9;
+  font-weight: 700;
+}
+
+.mega-menu-link-hover:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mega-menu-gradient-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(55, 75, 249, 0.04) 0%, rgba(250, 186, 90, 0.05) 100%);
+  border: 1.5px dashed rgba(55, 75, 249, 0.15);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mega-menu-gradient-card:hover {
+  border-style: solid;
+  border-color: rgba(55, 75, 249, 0.3);
+  background: linear-gradient(135deg, rgba(55, 75, 249, 0.07) 0%, rgba(250, 186, 90, 0.09) 100%);
+  box-shadow: 
+    0 20px 40px -15px rgba(55, 75, 249, 0.12),
+    0 0 20px 0 rgba(250, 186, 90, 0.05);
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

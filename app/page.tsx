@@ -1,13 +1,198 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, ShieldCheck, Truck, FileText, Headphones, Star, CheckCircle, ArrowRight, Share2, MessageSquare, ArrowUpRight, Package, DollarSign, ArrowDown, MessageCircle, Instagram, Facebook, Twitter, Youtube, Play, Apple, Heart, ShoppingCart } from "lucide-react";
 import Header from "./Header";
+import ProductCard from "./shop/ProductCard";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  // States to fetch real WooCommerce products dynamically
+  const [laptops, setLaptops] = useState<any[]>([
+    {
+      id: 1,
+      name: "Dell Latitude Laptop | 5480 | Intel i5-6th Gen | 14″ FHD | Win 10 Pro | Refurbished",
+      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
+      regular_price: "45000",
+      price: "22499",
+      sale_price: "22499",
+      on_sale: true,
+      featured: true,
+      images: [{ src: "https://comsri.com/wp-content/uploads/2025/12/61d5EQ8j7oS._UF1000_1000_QL80_-removebg-preview.png" }],
+      categories: [{ name: "Refurbished Laptops" }]
+    },
+    {
+      id: 2,
+      name: "Dell Latitude 5480",
+      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
+      regular_price: "32000",
+      price: "14599",
+      sale_price: "14599",
+      on_sale: true,
+      featured: false,
+      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/32-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
+      categories: [{ name: "Refurbished Laptops" }]
+    },
+    {
+      id: 3,
+      name: "Dell Latitude 5500",
+      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
+      regular_price: "55000",
+      price: "20499",
+      sale_price: "20499",
+      on_sale: true,
+      featured: true,
+      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/z6_g5_v3_2x-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
+      categories: [{ name: "Refurbished Laptops" }]
+    },
+    {
+      id: 4,
+      name: "Dell Latitude 7490",
+      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
+      regular_price: "35000",
+      price: "18499",
+      sale_price: "18499",
+      on_sale: true,
+      featured: false,
+      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/7040-micro-1-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
+      categories: [{ name: "Refurbished Laptops" }]
+    }
+  ]);
+
+  const [desktops, setDesktops] = useState<any[]>([
+    {
+      id: 5,
+      name: "Dell Optiplex SFF Desktop | 3046 | Intel i5-6th Gen | Win 11",
+      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
+      regular_price: "45999",
+      price: "14999",
+      sale_price: "14999",
+      on_sale: true,
+      featured: true,
+      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/7040-micro-1-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
+      categories: [{ name: "Refurbished Desktops" }]
+    },
+    {
+      id: 6,
+      name: "Dell Precision Tower Desktop | 3420 | Intel i5-7th Gen | Win 10",
+      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
+      regular_price: "35000",
+      price: "18499",
+      sale_price: "18499",
+      on_sale: true,
+      featured: false,
+      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/32-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
+      categories: [{ name: "Refurbished Desktops" }]
+    },
+    {
+      id: 7,
+      name: "HP ProDesk Micro Tower Desktop | 400 G5 | Intel i5-8th",
+      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
+      regular_price: "45000",
+      price: "17499",
+      sale_price: "17499",
+      on_sale: true,
+      featured: true,
+      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/z6_g5_v3_2x-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
+      categories: [{ name: "Refurbished Desktops" }]
+    },
+    {
+      id: 8,
+      name: "Lenovo ThinkCentre SFF Desktop | M920 | Intel i5-8th",
+      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
+      regular_price: "40000",
+      price: "18499",
+      sale_price: "18499",
+      on_sale: true,
+      featured: false,
+      images: [{ src: "https://comsri.com/wp-content/uploads/2025/12/61d5EQ8j7oS._UF1000_1000_QL80_-removebg-preview.png" }],
+      categories: [{ name: "Refurbished Desktops" }]
+    }
+  ]);
+
+  const laptopSliderRef = useRef<HTMLDivElement>(null);
+  const desktopSliderRef = useRef<HTMLDivElement>(null);
+
+  const [laptopScroll, setLaptopScroll] = useState({ left: 0, width: 20 });
+  const [desktopScroll, setDesktopScroll] = useState({ left: 0, width: 20 });
+
+  const updateScroll = (
+    ref: React.RefObject<HTMLDivElement | null>,
+    setScroll: React.Dispatch<React.SetStateAction<{ left: number; width: number }>>
+  ) => {
+    if (ref.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = ref.current;
+      if (scrollWidth > 0) {
+        const width = (clientWidth / scrollWidth) * 100;
+        const left = (scrollLeft / scrollWidth) * 100;
+        setScroll({ left, width });
+      }
+    }
+  };
+
+  const handleTrackClick = (
+    e: React.MouseEvent<HTMLDivElement>,
+    ref: React.RefObject<HTMLDivElement | null>
+  ) => {
+    if (ref.current) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const percentage = clickX / rect.width;
+      const targetScroll = percentage * ref.current.scrollWidth - ref.current.clientWidth / 2;
+      ref.current.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const scroll = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
+    if (ref.current) {
+      const scrollAmount = ref.current.clientWidth;
+      ref.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const [laptopsRes, desktopsRes] = await Promise.all([
+          fetch("/api/products?category=112&per_page=15").then((r) => r.json()),
+          fetch("/api/products?category=129&per_page=15").then((r) => r.json())
+        ]);
+        if (laptopsRes && laptopsRes.data) {
+          setLaptops(laptopsRes.data);
+        }
+        if (desktopsRes && desktopsRes.data) {
+          setDesktops(desktopsRes.data);
+        }
+      } catch (err) {
+        console.error("Failed to load products on homepage:", err);
+      }
+    }
+    loadProducts();
+  }, []);
+
+  useEffect(() => {
+    updateScroll(laptopSliderRef, setLaptopScroll);
+    updateScroll(desktopSliderRef, setDesktopScroll);
+  }, [laptops, desktops]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      updateScroll(laptopSliderRef, setLaptopScroll);
+      updateScroll(desktopSliderRef, setDesktopScroll);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [laptops, desktops]);
+
 
   // ADD YOUR SLIDER IMAGES HERE:
   // Replace these placeholder URLs with the actual URLs of your images.
@@ -31,15 +216,9 @@ export default function Home() {
         {slides.map((slide, index) => (
           <div
             key={index}
-<<<<<<< HEAD
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-          >
-            <Image
-=======
             className={`transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100 relative z-10' : 'opacity-0 absolute inset-0 z-0'}`}
           >
             <img
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
               src={slide}
               alt={`Slide ${index + 1}`}
               className="w-full h-auto object-contain block"
@@ -114,11 +293,7 @@ export default function Home() {
                   }}
                 />
 
-<<<<<<< HEAD
-                <h3 className="relative z-10 text-[16px] md:text-[18px] lg:text-[20px] font-bold text-[#1f2937] mb-auto text-center tracking-tight">
-=======
                 <h3 className="relative z-10 text-[18px] sm:text-[16px] md:text-[18px] lg:text-[20px] font-bold text-[#1f2937] text-left tracking-tight px-1">
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
                   {cat.title}
                 </h3>
               </div>
@@ -243,19 +418,14 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
             {[
-              { name: 'Acer', src: 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Acer_Logo.svg' },
-              { name: 'Apple', src: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' },
-              { name: 'Dell', src: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Dell_logo_2016.svg' },
-              { name: 'HP', src: 'https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg' },
-              { name: 'Lenovo', src: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/Lenovo_logo_2015.svg' },
-              { name: 'Microsoft', src: 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg' },
+              { name: 'Apple', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/apple.webp' },
+              { name: 'Dell', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/dell.webp' },
+              { name: 'HP', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/hp.webp' },
+              { name: 'Lenovo', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/lenovo.webp' },
+              { name: 'Microsoft', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/microsoft.webp' },
             ].map((brand, idx) => (
-              <div key={idx} className="bg-white rounded-[20px] p-6 flex flex-col items-center justify-center h-[100px] md:h-[120px] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-gray-100">
-<<<<<<< HEAD
-                <img src={brand.src} alt={brand.name} className="w-auto h-auto max-h-[35px] max-w-[90px] object-contain opacity-80 hover:opacity-100 transition-opacity" />
-=======
-                <img loading="lazy" src={brand.src} alt={brand.name} className="w-auto h-auto max-h-[35px] max-w-[90px] object-contain opacity-80 hover:opacity-100 transition-opacity" />
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
+              <div key={idx} className="bg-white rounded-[20px] p-5 flex flex-col items-center justify-center h-[100px] md:h-[120px] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-gray-100">
+                <img loading="lazy" src={brand.src} alt={brand.name} className="w-auto h-auto max-h-[105px] max-w-[90px] object-contain opacity-80 hover:opacity-100 transition-opacity" />
               </div>
             ))}
           </div>
@@ -269,91 +439,46 @@ export default function Home() {
           <div className="flex items-center justify-between mb-6 md:mb-8 gap-3">
             <h2 className="text-[18px] sm:text-[20px] md:text-[28px] font-bold text-gray-900 tracking-tight">Buy Refurbished Laptops Online in India</h2>
             <div className="hidden sm:flex items-center gap-2 shrink-0">
-              <button className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none">
+              <button 
+                onClick={() => scroll(laptopSliderRef, 'left')}
+                className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
+              >
                 <ChevronLeft size={20} />
               </button>
-              <button className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none">
+              <button 
+                onClick={() => scroll(laptopSliderRef, 'right')}
+                className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
+              >
                 <ChevronRight size={20} />
               </button>
             </div>
           </div>
 
-          {/* Cards Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 md:gap-6 mb-8">
-            {[
-              { title: 'Dell Latitude Laptop | 5480 | Intel i5-6th Gen | 14″ FHD | Win 10 Pro | Refurbished', fullTitle: 'Dell Latitude Laptop | 5400 | Intel i5-8th Gen', discount: '50%', originalPrice: '₹45,000', price: '₹22,499', image: 'https://comsri.com/wp-content/uploads/2025/12/61d5EQ8j7oS._UF1000_1000_QL80_-removebg-preview.png', isBestSeller: true },
-              { title: 'Dell Latitude 5480', fullTitle: 'Dell Latitude Laptop | 5480 | Intel i5-6th Gen', discount: '54%', originalPrice: '₹32,000', price: '₹14,599', image: 'https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/32-removebg-preview-1.png.bv.webp?bv_host=comsri.com', isBestSeller: false },
-              { title: 'Dell Latitude 5500', fullTitle: 'Dell Latitude Laptop | 5500 | Intel i5-8th Gen', discount: '63%', originalPrice: '₹55,000', price: '₹20,499', image: 'https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/z6_g5_v3_2x-removebg-preview-1.png.bv.webp?bv_host=comsri.com', isBestSeller: true },
-              { title: 'Dell Latitude 7490', fullTitle: 'Dell Latitude Laptop | 7490 | Intel i5-8th Gen', discount: '47%', originalPrice: '₹35,000', price: '₹18,499', image: 'https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/7040-micro-1-removebg-preview-1.png.bv.webp?bv_host=comsri.com', isBestSeller: false },
-            ].map((prod, idx) => (
-              <div key={idx} className="bg-white rounded-[16px] md:rounded-[24px] p-2.5 md:p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col group cursor-pointer border border-transparent hover:border-gray-100 hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300">
-                {/* Image Area */}
-                <div className="bg-[#f6f6f6] rounded-[12px] md:rounded-[20px] relative h-[150px] sm:h-[180px] md:h-[240px] mb-3 md:mb-4 overflow-hidden flex items-center justify-center">
-                  {/* Top Bar */}
-                  <div className="absolute top-4 inset-x-4 flex justify-between z-20">
-                    {prod.isBestSeller ? (
-                      <span className="bg-white text-black text-[13px] font-semibold px-3 py-1.5 rounded-full shadow-sm">
-                        Best Seller
-                      </span>
-                    ) : (
-                      <span className="bg-white text-black text-[13px] font-semibold px-3 py-1.5 rounded-full shadow-sm">
-                        Just In
-                      </span>
-                    )}
-                    <button className="w-[34px] h-[34px] bg-white rounded-full flex items-center justify-center shadow-sm text-gray-700 hover:text-black hover:scale-105 transition-all focus:outline-none z-20">
-                      <Heart size={16} />
-                    </button>
-                  </div>
-
-                  {/* Image */}
-                  <div
-                    className="absolute inset-0 z-10 bg-no-repeat bg-cover bg-center pointer-events-none transition-transform duration-500 group-hover:scale-105 mix-blend-multiply"
-                    style={{ backgroundImage: `url('${prod.image}')` }}
-                  />
-
-                  {/* Dots */}
-                  <div className="absolute bottom-4 flex gap-1.5 z-20">
-                    <div className="w-3.5 h-1.5 bg-black rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                  </div>
-                </div>
-
-                {/* Content Area */}
-                <div className="flex flex-col flex-1 px-1">
-                  <h3 className="text-[13px] md:text-[17px] font-medium text-[#111] leading-snug mb-1 line-clamp-2 min-h-[36px] md:min-h-[46px]">{prod.title}</h3>
-                  <p className="text-[12px] md:text-[14px] text-gray-500 mb-2 md:mb-3 flex items-center gap-1.5">
-                    Refurbished Laptops
-                  </p>
-
-                  <div className="flex flex-wrap items-center gap-1.5 md:gap-2.5 mb-3 md:mb-5">
-                    <span className="text-[14px] md:text-[17px] font-bold text-[#111] price-font">{prod.price}</span>
-                    <span className="text-[12px] md:text-[15px] text-gray-400 line-through price-font">{prod.originalPrice}</span>
-                    <span className="text-[11px] md:text-[15px] font-semibold text-[#008a00]">{prod.discount} off</span>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-1.5 md:gap-2 mt-auto">
-                    <button className="bg-[#f5f5f5] hover:bg-[#e5e5e5] text-[#111] text-[11px] md:text-[14px] font-semibold py-2 md:py-3 rounded-full transition-colors">
-                      View Details
-                    </button>
-                    <button className="bg-[#3452ef] hover:bg-[#112bb5] text-white text-[11px] md:text-[14px] font-semibold py-2 md:py-3 rounded-full transition-colors flex items-center justify-center gap-1 md:gap-2">
-                      <ShoppingCart size={14} className="md:hidden" />
-                      <ShoppingCart size={16} className="hidden md:block" />
-                      <span className="hidden sm:inline">Add to Cart</span>
-                      <span className="sm:hidden">Add</span>
-                    </button>
-                  </div>
-                </div>
+          {/* Cards Slider */}
+          <div 
+            ref={laptopSliderRef}
+            onScroll={() => updateScroll(laptopSliderRef, setLaptopScroll)}
+            className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
+          >
+            {laptops.map((prod, idx) => (
+              <div key={prod.id || idx} className="w-[calc((100%-16px)/2)] md:w-[calc((100%-32px)/3)] lg:w-[calc((100%-64px)/5)] shrink-0">
+                <ProductCard product={prod} index={idx} />
               </div>
             ))}
           </div>
 
           {/* Progress bar */}
-          <div className="w-full h-1 bg-[#e9ecef] rounded-full overflow-hidden flex">
-            <div className="h-full bg-[#ffb03a] w-[60%]"></div>
-            <div className="h-full bg-[#ffefd8] w-[40%]"></div>
+          <div 
+            onClick={(e) => handleTrackClick(e, laptopSliderRef)}
+            className="w-full h-1.5 bg-[#e9ecef] rounded-full relative overflow-hidden cursor-pointer"
+          >
+            <div 
+              className="h-full bg-[#ffb03a] rounded-full absolute top-0 left-0 transition-transform duration-100 ease-out will-change-transform"
+              style={{ 
+                width: `${laptopScroll.width}%`, 
+                transform: `translate3d(${laptopScroll.width > 0 ? (laptopScroll.left / laptopScroll.width) * 100 : 0}%, 0, 0)`
+              }}
+            ></div>
           </div>
         </div>
       </section>
@@ -365,91 +490,46 @@ export default function Home() {
           <div className="flex items-center justify-between mb-6 md:mb-8 gap-3">
             <h2 className="text-[18px] sm:text-[20px] md:text-[28px] font-bold text-gray-900 tracking-tight">Buy High Quality Refurbished Desktops</h2>
             <div className="hidden sm:flex items-center gap-2 shrink-0">
-              <button className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none">
+              <button 
+                onClick={() => scroll(desktopSliderRef, 'left')}
+                className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
+              >
                 <ChevronLeft size={20} />
               </button>
-              <button className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none">
+              <button 
+                onClick={() => scroll(desktopSliderRef, 'right')}
+                className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
+              >
                 <ChevronRight size={20} />
               </button>
             </div>
           </div>
 
-          {/* Cards Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 md:gap-6 mb-8">
-            {[
-              { title: 'Dell Optiplex SFF Desktop | 3046 | Intel i5-6th Gen | Win 11', discount: '67%', originalPrice: '₹45,999', price: '₹14,999', image: 'https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/7040-micro-1-removebg-preview-1.png.bv.webp?bv_host=comsri.com', isBestSeller: true },
-              { title: 'Dell Precision Tower Desktop | 3420 | Intel i5-7th Gen | Win 10', discount: '47%', originalPrice: '₹35,000', price: '₹18,499', image: 'https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/32-removebg-preview-1.png.bv.webp?bv_host=comsri.com', isBestSeller: false },
-              { title: 'HP ProDesk Micro Tower Desktop | 400 G5 | Intel i5-8th', discount: '61%', originalPrice: '₹45,000', price: '₹17,499', image: 'https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/z6_g5_v3_2x-removebg-preview-1.png.bv.webp?bv_host=comsri.com', isBestSeller: true },
-              { title: 'Lenovo ThinkCentre SFF Desktop | M920 | Intel i5-8th', discount: '54%', originalPrice: '₹40,000', price: '₹18,499', image: 'https://comsri.com/wp-content/uploads/2025/12/61d5EQ8j7oS._UF1000_1000_QL80_-removebg-preview.png', isBestSeller: false },
-            ].map((prod, idx) => (
-              <div key={idx} className="bg-white rounded-[16px] md:rounded-[24px] p-2.5 md:p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col group cursor-pointer border border-transparent hover:border-gray-100 hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300">
-                {/* Image Area */}
-                <div className="bg-[#f6f6f6] rounded-[12px] md:rounded-[20px] relative h-[150px] sm:h-[180px] md:h-[240px] mb-3 md:mb-4 overflow-hidden flex items-center justify-center">
-                  {/* Top Bar */}
-                  <div className="absolute top-4 inset-x-4 flex justify-between z-20">
-                    {prod.isBestSeller ? (
-                      <span className="bg-white text-black text-[13px] font-semibold px-3 py-1.5 rounded-full shadow-sm">
-                        Best Seller
-                      </span>
-                    ) : (
-                      <span className="bg-white text-black text-[13px] font-semibold px-3 py-1.5 rounded-full shadow-sm">
-                        Just In
-                      </span>
-                    )}
-                    <button className="w-[34px] h-[34px] bg-white rounded-full flex items-center justify-center shadow-sm text-gray-700 hover:text-black hover:scale-105 transition-all focus:outline-none z-20">
-                      <Heart size={16} />
-                    </button>
-                  </div>
-
-                  {/* Image */}
-                  <div
-                    className="absolute inset-0 z-10 bg-no-repeat bg-cover bg-center pointer-events-none transition-transform duration-500 group-hover:scale-105 mix-blend-multiply"
-                    style={{ backgroundImage: `url('${prod.image}')` }}
-                  />
-
-                  {/* Dots */}
-                  <div className="absolute bottom-4 flex gap-1.5 z-20">
-                    <div className="w-3.5 h-1.5 bg-black rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                  </div>
-                </div>
-
-                {/* Content Area */}
-                <div className="flex flex-col flex-1 px-1">
-                  <h3 className="text-[13px] md:text-[17px] font-medium text-[#111] leading-snug mb-1 line-clamp-2 min-h-[36px] md:min-h-[46px]">{prod.title}</h3>
-                  <p className="text-[12px] md:text-[14px] text-gray-500 mb-2 md:mb-3 flex items-center gap-1.5">
-                    Refurbished Desktops
-                  </p>
-
-                  <div className="flex flex-wrap items-center gap-1.5 md:gap-2.5 mb-3 md:mb-5">
-                    <span className="text-[14px] md:text-[17px] font-bold text-[#111] price-font">{prod.price}</span>
-                    <span className="text-[12px] md:text-[15px] text-gray-400 line-through price-font">{prod.originalPrice}</span>
-                    <span className="text-[11px] md:text-[15px] font-semibold text-[#008a00]">{prod.discount} off</span>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-1.5 md:gap-2 mt-auto">
-                    <button className="bg-[#f5f5f5] hover:bg-[#e5e5e5] text-[#111] text-[11px] md:text-[14px] font-semibold py-2 md:py-3 rounded-full transition-colors">
-                      View Details
-                    </button>
-                    <button className="bg-[#3452ef] hover:bg-[#112bb5] text-white text-[11px] md:text-[14px] font-semibold py-2 md:py-3 rounded-full transition-colors flex items-center justify-center gap-1 md:gap-2">
-                      <ShoppingCart size={14} className="md:hidden" />
-                      <ShoppingCart size={16} className="hidden md:block" />
-                      <span className="hidden sm:inline">Add to Cart</span>
-                      <span className="sm:hidden">Add</span>
-                    </button>
-                  </div>
-                </div>
+          {/* Cards Slider */}
+          <div 
+            ref={desktopSliderRef}
+            onScroll={() => updateScroll(desktopSliderRef, setDesktopScroll)}
+            className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
+          >
+            {desktops.map((prod, idx) => (
+              <div key={prod.id || idx} className="w-[calc((100%-16px)/2)] md:w-[calc((100%-32px)/3)] lg:w-[calc((100%-64px)/5)] shrink-0">
+                <ProductCard product={prod} index={idx} />
               </div>
             ))}
           </div>
 
           {/* Progress bar */}
-          <div className="w-full h-1 bg-[#e9ecef] rounded-full overflow-hidden flex">
-            <div className="h-full bg-[#ffb03a] w-[60%]"></div>
-            <div className="h-full bg-[#ffefd8] w-[40%]"></div>
+          <div 
+            onClick={(e) => handleTrackClick(e, desktopSliderRef)}
+            className="w-full h-1.5 bg-[#e9ecef] rounded-full relative overflow-hidden cursor-pointer"
+          >
+            <div 
+              className="h-full bg-[#ffb03a] rounded-full absolute top-0 left-0 transition-transform duration-100 ease-out will-change-transform"
+              style={{ 
+                width: `${desktopScroll.width}%`, 
+                transform: `translate3d(${desktopScroll.width > 0 ? (desktopScroll.left / desktopScroll.width) * 100 : 0}%, 0, 0)`
+              }}
+            ></div>
           </div>
         </div>
       </section>
@@ -496,11 +576,7 @@ export default function Home() {
           {/* Right Image */}
           <div className="lg:w-[450px] xl:w-[500px] flex-shrink-0 w-full relative">
             <div className="aspect-[16/10] md:aspect-[4/5] w-full rounded-[16px] md:rounded-[24px] overflow-hidden shadow-2xl">
-<<<<<<< HEAD
-              <img
-=======
               <img loading="lazy"
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
                 src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=1000"
                 alt="Desktop setup with monitor"
                 className="w-full h-full object-cover"
@@ -528,11 +604,7 @@ export default function Home() {
             <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
               {/* Image */}
               <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-<<<<<<< HEAD
-                <img
-=======
                 <img loading="lazy"
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
                   src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=600"
                   alt="Blog cover"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -579,11 +651,7 @@ export default function Home() {
             <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
               {/* Image */}
               <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-<<<<<<< HEAD
-                <img
-=======
                 <img loading="lazy"
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
                   src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600"
                   alt="Blog cover"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -630,11 +698,7 @@ export default function Home() {
             <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
               {/* Image */}
               <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-<<<<<<< HEAD
-                <img
-=======
                 <img loading="lazy"
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
                   src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&q=80&w=600"
                   alt="Blog cover"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -715,11 +779,7 @@ export default function Home() {
               "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-8.jpg",
             ].map((src, index) => (
               <div key={index} className="w-full aspect-square md:rounded-[20px] rounded-[12px] overflow-hidden bg-white shadow-sm group relative">
-<<<<<<< HEAD
-                <img src={src} alt="Instagram post" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-=======
                 <img loading="lazy" src={src} alt="Instagram post" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
               </div>
             ))}
           </div>
@@ -842,21 +902,6 @@ export default function Home() {
             <p className="text-[14px] font-bold text-[#111]">Copyright 2026 by Comsri Corporation All Right Reserved.</p>
             <div className="flex gap-1.5">
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-<<<<<<< HEAD
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
-              </div>
-              <div className="bg-[#1a1f71] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
-              </div>
-              <div className="bg-[#003087] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
-              </div>
-              <div className="bg-[#2d9cdb] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
-              </div>
-              <div className="bg-[#6772e5] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
-=======
                 <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
               </div>
               <div className="bg-[#1a1f71] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
@@ -870,7 +915,6 @@ export default function Home() {
               </div>
               <div className="bg-[#6772e5] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
                 <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
               </div>
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center px-1">
                 <span className="text-white text-[10px]">G</span><span className="text-white text-[12px] font-bold">Pay</span>
@@ -879,11 +923,7 @@ export default function Home() {
                 <Apple size={14} className="fill-white text-white mr-0.5" /><span className="text-white text-[10px] font-semibold mt-[1px]">Pay</span>
               </div>
               <div className="bg-[#004b87] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-<<<<<<< HEAD
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
-=======
                 <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
               </div>
             </div>
           </div>

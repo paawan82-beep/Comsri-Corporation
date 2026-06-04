@@ -51,36 +51,31 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         {/* Top Bar inside Image Area */}
         <div className="absolute top-4 inset-x-4 flex justify-between z-20">
           <div className="flex gap-1.5">
-            {product.featured ? (
+            {product.featured && (
               <span className="bg-[#3452ef] text-white text-[12px] font-semibold px-3 py-1.5 rounded-full shadow-sm tracking-wide">
                 Best Seller
-              </span>
-            ) : (
-              <span className="bg-white text-black text-[12px] font-semibold px-3 py-1.5 rounded-full shadow-sm tracking-wide">
-                Just In
               </span>
             )}
           </div>
 
-          <button 
+          <button
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();
               setIsFavorite(!isFavorite);
             }}
-            className={`w-[36px] h-[36px] rounded-full flex items-center justify-center shadow-md transition-all duration-200 hover:scale-110 active:scale-95 focus:outline-none z-20 ${
-              isFavorite 
-                ? "bg-rose-500 text-white" 
-                : "bg-white text-gray-700 hover:text-black hover:bg-white"
-            }`}
+            className={`w-[36px] h-[36px] rounded-full flex items-center justify-center shadow-md transition-all duration-200 hover:scale-110 active:scale-95 focus:outline-none z-20 ${isFavorite
+              ? "bg-rose-500 text-white"
+              : "bg-white text-gray-700 hover:text-black hover:bg-white"
+              }`}
           >
             <Heart size={16} className={isFavorite ? "fill-white text-white" : ""} />
           </button>
         </div>
-        
+
         {/* Image Frame with Zoom Effect */}
         <Link href={`/products/${product.slug}`} className="absolute inset-0 z-10 block">
-          <div 
+          <div
             className="w-full h-full bg-no-repeat bg-cover bg-center pointer-events-none transition-transform duration-700 group-hover:scale-110 mix-blend-multiply"
             style={{ backgroundImage: `url('${mainImageStr}')` }}
           />
@@ -96,11 +91,10 @@ export default function ProductCard({ product, index }: ProductCardProps) {
                 e.preventDefault();
                 setActiveDot(dotIndex);
               }}
-              className={`h-1.5 rounded-full transition-all duration-300 focus:outline-none ${
-                activeDot === dotIndex 
-                  ? "w-3.5 bg-black" 
-                  : "w-1.5 bg-gray-300 hover:bg-gray-400"
-              }`}
+              className={`h-1.5 rounded-full transition-all duration-300 focus:outline-none ${activeDot === dotIndex
+                ? "w-3.5 bg-black"
+                : "w-1.5 bg-gray-300 hover:bg-gray-400"
+                }`}
             />
           ))}
         </div>
@@ -137,13 +131,13 @@ export default function ProductCard({ product, index }: ProductCardProps) {
 
         {/* Action Buttons with CSS transitions */}
         <div className="grid grid-cols-2 gap-2 mt-auto pt-1">
-          <Link 
-            href={`/products/${product.slug}`} 
+          <Link
+            href={`/products/${product.slug}`}
             className="bg-[#f5f5f5] hover:bg-gray-200 text-[#111] text-[13.5px] font-semibold py-3 rounded-full transition-colors duration-200 text-center flex items-center justify-center hover:shadow-sm focus:outline-none"
           >
             View Details
           </Link>
-          <button 
+          <button
             className="bg-[#3452ef] hover:bg-[#203bca] text-white text-[13.5px] font-semibold py-3 rounded-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.97] flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 hover:shadow-blue-500/20 focus:outline-none"
           >
             <ShoppingCart size={15} />

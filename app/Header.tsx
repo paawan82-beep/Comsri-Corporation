@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Search, ChevronDown, Shuffle, Heart, ShoppingCart, Apple, Menu, X, Home, Info, ShoppingBag, Package, User } from "lucide-react";
+import { Search, ChevronDown, Shuffle, Heart, ShoppingCart, Apple, Menu, X, Home, Info, ShoppingBag, Package, User, Laptop, Monitor, Layers, Cpu, Sparkles, ArrowRight, Tag, Percent } from "lucide-react";
 
 function HeaderSearchForm() {
   const searchParams = useSearchParams();
@@ -124,36 +124,14 @@ export default function Header() {
 
   return (
     <>
-<<<<<<< HEAD
-      {/* -------------------- BRAND HEADER -------------------- */}
-      <header className="bg-white py-3 md:py-4 border-b border-gray-100" id="shop-header">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 flex items-center justify-between w-full gap-3">
-
-          {/* Mobile: Hamburger button */}
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
-            aria-label="Open menu"
-          >
-            <Menu size={24} className="text-gray-800" />
-          </button>
-
-          {/* Logo element */}
-          <Link href="/" className="flex-shrink-0 flex items-center cursor-pointer">
-            <img
-              src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Comsri-Logo.png"
-              alt="Comsri Corporation Logo"
-              className="h-[36px] md:h-[44px] lg:h-[52px] w-auto object-contain"
-=======
       {/* -------------------- DESKTOP HEADER -------------------- */}
       <header className="hidden lg:block bg-white py-3 md:py-4 border-b border-gray-100" id="shop-header">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between w-full gap-3">
           {/* Logo element */}
           <Link href="/" className="flex-shrink-0 flex items-center cursor-pointer">
-            <img loading="lazy" src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png" 
-              alt="Comsri Corporation Logo" 
+            <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Comsri-Logo.png"
+              alt="Comsri Corporation Logo"
               className="h-[52px] w-auto object-contain"
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
             />
           </Link>
 
@@ -179,18 +157,11 @@ export default function Header() {
           {/* Right Actions — desktop */}
           <div className="flex items-center gap-x-6 text-sm font-medium text-gray-800">
             <div className="flex items-center gap-2 cursor-pointer border-r border-gray-350 pr-6 h-5">
-<<<<<<< HEAD
               <img
+                loading="lazy"
                 src="https://comsri.com/wp-content/uploads/2025/10/indian-flag-1-1.jpg"
                 alt="IND"
                 className="w-5 h-[13px] object-cover rounded-[1px]"
-=======
-              <img 
-                loading="lazy"
-                src="https://comsri.com/wp-content/uploads/2025/10/indian-flag-1-1.jpg" 
-                alt="IND" 
-                className="w-5 h-[13px] object-cover rounded-[1px]" 
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
               />
               <span>IND</span>
             </div>
@@ -234,10 +205,10 @@ export default function Header() {
 
           {/* Center: Centered Logo */}
           <Link href="/" className="flex-shrink-0 flex items-center justify-center">
-            <img 
-              loading="lazy" 
-              src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png" 
-              alt="Comsri Corporation Logo" 
+            <img
+              loading="lazy"
+              src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png"
+              alt="Comsri Corporation Logo"
               className="h-[34px] w-auto object-contain"
             />
           </Link>
@@ -291,120 +262,217 @@ export default function Header() {
               </Link>
 
               {/* Mega Menu Dropdown */}
-              <div className="absolute top-full left-0 right-0 w-full bg-white shadow-[0_20px_60px_rgba(0,0,0,0.10)] border-t border-gray-200 py-12 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-out z-50 text-gray-800 font-normal">
+              <div className="absolute top-full left-0 right-0 w-full mega-menu-glass py-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 cubic-bezier(0.16, 1, 0.3, 1) transform translate-y-3 scale-[0.99] z-50 text-gray-800 font-normal rounded-b-[30px]">
                 <div className="max-w-[1600px] mx-auto px-8 lg:px-16">
                   {/* 4 Column Category Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-10 pb-10 border-b border-gray-200">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6 pb-6">
 
                     {/* Column 1: Refurbished Laptops */}
                     <div className="flex flex-col gap-4">
-                      <Link href="/shop?category=112" className="text-[#374bf9] font-bold text-[15px] hover:underline">
-                        Refurbished Laptops
-                      </Link>
-                      <ul className="flex flex-col gap-[10px] text-gray-600 text-[13.5px]">
-                        <li><Link href="/shop?category=112&search=Dell" className="hover:text-[#374bf9] transition-colors">Dell Laptops</Link></li>
-                        <li><Link href="/shop?category=112&search=HP" className="hover:text-[#374bf9] transition-colors">HP Laptops</Link></li>
-                        <li><Link href="/shop?category=112&search=Lenovo" className="hover:text-[#374bf9] transition-colors">Lenovo Laptops</Link></li>
-                        <li><Link href="/shop?category=112&search=Microsoft" className="hover:text-[#374bf9] transition-colors">Microsoft Laptops</Link></li>
-                        <li><Link href="/shop?category=112&search=Apple" className="hover:text-[#374bf9] transition-colors">Apple Macbook</Link></li>
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="p-1.5 rounded-lg bg-blue-50 text-[#374bf9]">
+                          <Laptop size={16} />
+                        </div>
+                        <Link href="/shop?category=112" className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                          Refurbished Laptops
+                        </Link>
+                      </div>
+                      <ul className="flex flex-col gap-[12px] text-gray-500 text-[13px] pl-8">
+                        <li>
+                          <Link href="/shop?category=112&search=Dell" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">Dell Laptops</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Business-grade Latitude series</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=112&search=HP" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">HP Laptops</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Premium EliteBooks & ProBooks</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=112&search=Lenovo" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">Lenovo ThinkPad</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Legendary durability & keyboards</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=112&search=Apple" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">Apple MacBooks</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Sleek, powerful Air & Pro models</span>
+                          </Link>
+                        </li>
                       </ul>
                     </div>
 
                     {/* Column 2: Refurbished Desktops */}
                     <div className="flex flex-col gap-4">
-                      <Link href="/shop?category=129" className="text-[#374bf9] font-bold text-[15px] hover:underline">
-                        Refurbished Desktops
-                      </Link>
-                      <ul className="flex flex-col gap-[10px] text-gray-600 text-[13.5px]">
-                        <li><Link href="/shop?category=129&search=Dell" className="hover:text-[#374bf9] transition-colors">Dell Desktops</Link></li>
-                        <li><Link href="/shop?category=129&search=HP" className="hover:text-[#374bf9] transition-colors">HP Desktops</Link></li>
-                        <li><Link href="/shop?category=129&search=Lenovo" className="hover:text-[#374bf9] transition-colors">Lenovo Desktops</Link></li>
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-600">
+                          <Monitor size={16} />
+                        </div>
+                        <Link href="/shop?category=129" className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                          Refurbished Desktops
+                        </Link>
+                      </div>
+                      <ul className="flex flex-col gap-[12px] text-gray-500 text-[13px] pl-8">
+                        <li>
+                          <Link href="/shop?category=129&search=Dell" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">Dell Desktops</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Standard enterprise micro & SFF</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=129&search=HP" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">HP Desktops</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Highly reliable office towers</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=129&search=Lenovo" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">Lenovo Desktops</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Compact, efficient workstations</span>
+                          </Link>
+                        </li>
                       </ul>
                     </div>
 
-                    {/* Column 3: Refurbished Workstations */}
+                    {/* Column 3: Workstations */}
                     <div className="flex flex-col gap-4">
-                      <Link href="/shop?category=139" className="text-[#374bf9] font-bold text-[15px] hover:underline">
-                        Refurbished Workstations
-                      </Link>
-                      <ul className="flex flex-col gap-[10px] text-gray-600 text-[13.5px]">
-                        <li><Link href="/shop?category=139&search=Dell" className="hover:text-[#374bf9] transition-colors">Dell Workstations</Link></li>
-                        <li><Link href="/shop?category=139&search=HP" className="hover:text-[#374bf9] transition-colors">HP Workstations</Link></li>
-                        <li><Link href="/shop?category=139&search=Lenovo" className="hover:text-[#374bf9] transition-colors">Lenovo Workstations</Link></li>
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="p-1.5 rounded-lg bg-indigo-50 text-[#374bf9]">
+                          <Layers size={16} />
+                        </div>
+                        <Link href="/shop?category=139" className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                          Workstations
+                        </Link>
+                      </div>
+                      <ul className="flex flex-col gap-[12px] text-gray-500 text-[13px] pl-8">
+                        <li>
+                          <Link href="/shop?category=139&search=Dell" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">Dell Workstations</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Precision & Power</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=139&search=HP" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">HP Workstations</span>
+                            <span className="text-[11px] text-gray-400 font-normal">ZBook & Z-series towers</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=139&search=Lenovo" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">Lenovo Workstations</span>
+                            <span className="text-[11px] text-gray-400 font-normal">ThinkStation series</span>
+                          </Link>
+                        </li>
                       </ul>
                     </div>
 
-                    {/* Column 4: Refurbished Mini PCs */}
+                    {/* Column 4: Mini PCs */}
                     <div className="flex flex-col gap-4">
-                      <Link href="/shop?category=137" className="text-[#374bf9] font-bold text-[15px] hover:underline">
-                        Refurbished Mini PCs
-                      </Link>
-                      <ul className="flex flex-col gap-[10px] text-gray-600 text-[13.5px]">
-                        <li><Link href="/shop?category=137&search=Dell" className="hover:text-[#374bf9] transition-colors">Dell Mini PCs</Link></li>
-                        <li><Link href="/shop?category=137&search=HP" className="hover:text-[#374bf9] transition-colors">HP Mini PCs</Link></li>
-                        <li><Link href="/shop?category=137&search=Lenovo" className="hover:text-[#374bf9] transition-colors">Lenovo Mini PCs</Link></li>
-                        <li><Link href="/shop?category=137&search=Apple" className="hover:text-[#374bf9] transition-colors">Apple Mini PCs</Link></li>
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="p-1.5 rounded-lg bg-amber-50 text-[#fca61f]">
+                          <Cpu size={16} />
+                        </div>
+                        <Link href="/shop?category=137" className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                          Mini PCs
+                        </Link>
+                      </div>
+                      <ul className="flex flex-col gap-[12px] text-gray-500 text-[13px] pl-8">
+                        <li>
+                          <Link href="/shop?category=137&search=Dell" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">Dell Mini PCs</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Ultra-compact systems</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=137&search=HP" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">HP Mini PCs</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Ultra-compact systems</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=137&search=Lenovo" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">Lenovo Mini PCs</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Ultra-compact systems</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=137&search=Apple" className="mega-menu-link-hover flex flex-col">
+                            <span className="font-semibold text-gray-850">Apple Mac Mini</span>
+                            <span className="text-[11px] text-gray-400 font-normal">Compact M1/Intel computing</span>
+                          </Link>
+                        </li>
                       </ul>
                     </div>
 
                   </div>
 
                   {/* Shop By Brands Section */}
-                  <div className="flex flex-col items-center gap-5">
-                    <h3 className="text-[#111] font-bold text-[18px] tracking-tight">Shop By Brands</h3>
+                  <div className="border-t border-gray-100/80 pt-6 mt-6 flex flex-col gap-4">
+                    <div className="flex items-center justify-between px-2">
+                      <h5 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                        Shop By Trusted Brands
+                      </h5>
+                      <Link href="/shop" className="text-[12px] text-[#374bf9] font-bold hover:underline flex items-center gap-1 cursor-pointer">
+                        All Brands <ArrowRight size={12} />
+                      </Link>
+                    </div>
 
-                    <div className="flex flex-wrap items-center justify-center gap-5 w-full">
+                    <div className="grid grid-cols-5 gap-4 w-full">
                       {/* Brand Card: Apple */}
-                      <Link href="/shop?search=Apple" className="flex items-center justify-center bg-[#f9f9f9] border border-gray-200 rounded-2xl h-[72px] w-40 lg:w-48 px-6 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-gray-300 transition-all group/brand">
-                        <Apple className="h-7 w-7 text-black fill-black transition-transform duration-300 group-hover/brand:scale-110" />
+                      <Link href="/shop?search=Apple" className="flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-all duration-300 hover:bg-white hover:shadow-md hover:border-black group/brand">
+                        <img
+                          loading="lazy"
+                          src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/apple.webp"
+                          alt="Apple"
+                          className="h-[50px] w-auto object-contain transition-all duration-300 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
+                        />
                       </Link>
 
                       {/* Brand Card: Dell */}
-                      <Link href="/shop?search=Dell" className="flex items-center justify-center bg-[#f9f9f9] border border-gray-200 rounded-2xl h-[72px] w-40 lg:w-48 px-6 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-gray-300 transition-all group/brand">
-                        <span className="text-[#007dbd] font-black text-[24px] tracking-tight transition-transform duration-300 group-hover/brand:scale-110">DELL</span>
+                      <Link href="/shop?search=Dell" className="flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-all duration-300 hover:bg-white hover:shadow-md hover:border-[#007dbd] group/brand">
+                        <img
+                          loading="lazy"
+                          src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/dell.webp"
+                          alt="Dell"
+                          className="h-[50px] w-auto object-contain transition-all duration-300 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
+                        />
                       </Link>
 
                       {/* Brand Card: HP */}
-                      <Link href="/shop?search=HP" className="flex items-center justify-center bg-[#f9f9f9] border border-gray-200 rounded-2xl h-[72px] w-40 lg:w-48 px-6 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-gray-300 transition-all group/brand">
-                        <div className="w-10 h-10 rounded-full bg-[#005B94] flex items-center justify-center text-white font-black italic text-xl tracking-tighter shadow-sm transition-transform duration-300 group-hover/brand:scale-110">
-                          hp
-                        </div>
+                      <Link href="/shop?search=HP" className="flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-all duration-300 hover:bg-white hover:shadow-md hover:border-[#005B94] group/brand">
+                        <img
+                          loading="lazy"
+                          src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/hp.webp"
+                          alt="HP"
+                          className="h-[50px] w-auto object-contain transition-all duration-300 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
+                        />
                       </Link>
 
                       {/* Brand Card: Lenovo */}
-                      <Link href="/shop?search=Lenovo" className="flex items-center justify-center bg-[#f9f9f9] border border-gray-200 rounded-2xl h-[72px] w-40 lg:w-48 px-6 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-gray-300 transition-all group/brand">
-                        <span className="text-[#E21B22] font-black text-[22px] tracking-tight transition-transform duration-300 group-hover/brand:scale-110">Lenovo</span>
+                      <Link href="/shop?search=Lenovo" className="flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-all duration-300 hover:bg-white hover:shadow-md hover:border-[#E21B22] group/brand">
+                        <img
+                          loading="lazy"
+                          src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/lenovo.webp"
+                          alt="Lenovo"
+                          className="h-[50px] w-auto object-contain transition-all duration-300 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
+                        />
                       </Link>
 
                       {/* Brand Card: Microsoft */}
-                      <Link href="/shop?search=Microsoft" className="flex items-center justify-center bg-[#f9f9f9] border border-gray-200 rounded-2xl h-[72px] w-40 lg:w-48 px-6 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-gray-300 transition-all group/brand">
-                        <div className="flex items-center gap-2 transition-transform duration-300 group-hover/brand:scale-110">
-                          <div className="grid grid-cols-2 gap-[2px] shrink-0">
-                            <div className="w-3 h-3 bg-[#f25f22]"></div>
-                            <div className="w-3 h-3 bg-[#7fba00]"></div>
-                            <div className="w-3 h-3 bg-[#00a1f1]"></div>
-                            <div className="w-3 h-3 bg-[#ffb900]"></div>
-                          </div>
-                          <span className="text-[#555] font-semibold text-[14px] tracking-tight">Microsoft</span>
-                        </div>
+                      <Link href="/shop?search=Microsoft" className="flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-all duration-300 hover:bg-white hover:shadow-md hover:border-[#00a1f1] group/brand">
+                        <img
+                          loading="lazy"
+                          src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/microsoft.webp"
+                          alt="Microsoft"
+                          className="h-[50px] w-auto object-contain transition-all duration-300 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
+                        />
                       </Link>
                     </div>
                   </div>
                 </div>
-              </div>
-            </li>
-            <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2">
-              <Link href="/shop" className={`flex items-center gap-1 ${pathname === "/shop" ? "text-[#374bf9] font-bold" : "hover:text-[#374bf9]"}`}>
-                <span>New Products</span>
-                <ChevronDown size={14} className="transition-transform duration-200 group-hover:rotate-180" />
-              </Link>
-              <div className="absolute top-[85%] left-1/2 -translate-x-1/2 mt-2 w-56 bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-gray-100 py-3 hidden group-hover:flex flex-col text-sm text-gray-800 z-50 font-normal">
-                <Link href="/shop" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors">
-                  Explore New Shop
-                </Link>
-                <Link href="/shop" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium transition-colors">
-                  Brand New Hardware
-                </Link>
               </div>
             </li>
             <li>
@@ -498,14 +566,8 @@ export default function Header() {
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-<<<<<<< HEAD
-            <img
-              src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png"
+            <img loading="lazy" src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png"
               alt="Comsri Corporation Logo"
-=======
-            <img loading="lazy" src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png" 
-              alt="Comsri Corporation Logo" 
->>>>>>> 9750d6c967b50dae1b463dbca7885d4abed88df4
               className="h-[32px] w-auto object-contain"
             />
           </Link>
@@ -675,11 +737,10 @@ export default function Header() {
           {/* Home Tab */}
           <Link
             href="/"
-            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${
-              pathname === "/" 
-                ? "bg-[#faba5b] text-black px-4 py-2" 
-                : "text-white/80 hover:text-white p-2"
-            }`}
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/"
+              ? "bg-[#faba5b] text-black px-4 py-2"
+              : "text-white/80 hover:text-white p-2"
+              }`}
           >
             <Home size={20} className="stroke-[2.5]" />
             {pathname === "/" && (
@@ -690,11 +751,10 @@ export default function Header() {
           {/* About Us Tab */}
           <Link
             href="/about"
-            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${
-              pathname === "/about" 
-                ? "bg-[#faba5b] text-black px-4 py-2" 
-                : "text-white/80 hover:text-white p-2"
-            }`}
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/about"
+              ? "bg-[#faba5b] text-black px-4 py-2"
+              : "text-white/80 hover:text-white p-2"
+              }`}
           >
             <Info size={20} className="stroke-[2.5]" />
             {pathname === "/about" && (
@@ -705,11 +765,10 @@ export default function Header() {
           {/* Shop Tab */}
           <Link
             href="/shop"
-            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${
-              pathname === "/shop" 
-                ? "bg-[#faba5b] text-black px-4 py-2" 
-                : "text-white/80 hover:text-white p-2"
-            }`}
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/shop"
+              ? "bg-[#faba5b] text-black px-4 py-2"
+              : "text-white/80 hover:text-white p-2"
+              }`}
           >
             <ShoppingBag size={20} className="stroke-[2.5]" />
             {pathname === "/shop" && (
@@ -720,11 +779,10 @@ export default function Header() {
           {/* Bulk Orders Tab */}
           <Link
             href="/bulk-orders"
-            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${
-              pathname === "/bulk-orders" 
-                ? "bg-[#faba5b] text-black px-4 py-2" 
-                : "text-white/80 hover:text-white p-2"
-            }`}
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/bulk-orders"
+              ? "bg-[#faba5b] text-black px-4 py-2"
+              : "text-white/80 hover:text-white p-2"
+              }`}
           >
             <Package size={20} className="stroke-[2.5]" />
             {pathname === "/bulk-orders" && (
@@ -735,11 +793,10 @@ export default function Header() {
           {/* Cart Tab */}
           <Link
             href="#"
-            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${
-              pathname === "/cart" || pathname === "#cart"
-                ? "bg-[#faba5b] text-black px-4 py-2" 
-                : "text-white/80 hover:text-white p-2"
-            }`}
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/cart" || pathname === "#cart"
+              ? "bg-[#faba5b] text-black px-4 py-2"
+              : "text-white/80 hover:text-white p-2"
+              }`}
           >
             <div className="relative">
               <ShoppingCart size={20} className="stroke-[2.5]" />
