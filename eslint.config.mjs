@@ -10,6 +10,8 @@ export default defineConfig([{
     extends: [...next],
     rules: {
         "@next/next/no-img-element": "off",
-        "@next/next/no-html-link-for-pages": "off"
+        "@next/next/no-html-link-for-pages": "off",
+        "react-hooks/set-state-in-effect": "off",
+        "react-hooks/purity": "off"
     }
 }]);

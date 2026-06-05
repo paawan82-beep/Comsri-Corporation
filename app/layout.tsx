@@ -1,10 +1,49 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import './globals.css'; // Global styles
 import { CartProvider } from "@/context/CartContext";
+import JsonLd from "./components/JsonLd";
+import { getOrganizationSchema, getLocalBusinessSchema, getSearchActionSchema } from "./seo/schemas";
+import { SITE_CONFIG } from "./seo/constants";
 
 export const metadata: Metadata = {
-  title: 'Comsri Hardware E-commerce',
-  description: 'Premium Refurbished Laptops and Desktops Online in India.',
+  metadataBase: new URL(SITE_CONFIG.url),
+  title: {
+    default: `${SITE_CONFIG.name} | Refurbished Laptops & Desktops India`,
+    template: `%s | ${SITE_CONFIG.shortName}`,
+  },
+  description: SITE_CONFIG.description,
+  keywords: ["refurbished laptops", "refurbished desktops", "refurbished computers", "headless e-commerce", "cheap laptops India"],
+  alternates: {
+    canonical: SITE_CONFIG.url,
+    languages: {
+      "en-IN": SITE_CONFIG.url,
+      "x-default": SITE_CONFIG.url,
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    title: `${SITE_CONFIG.name} | Refurbished Laptops & Desktops`,
+    description: SITE_CONFIG.description,
+    url: SITE_CONFIG.url,
+    siteName: SITE_CONFIG.name,
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_CONFIG.name} | Refurbished Laptops & Desktops`,
+    description: SITE_CONFIG.description,
+    creator: "@comsri_corp",
+  },
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
@@ -35,10 +74,18 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     })();
   `;
 
+  // Dynamic schemas for GEO engines
+  const orgSchema = getOrganizationSchema();
+  const localBusinessSchema = getLocalBusinessSchema();
+  const searchActionSchema = getSearchActionSchema();
+
   return (
     <html lang="en" className="bg-[#f6f5f8]">
       <head suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: fetchSetterPolyfill }} suppressHydrationWarning />
+        <JsonLd schema={orgSchema} />
+        <JsonLd schema={localBusinessSchema} />
+        <JsonLd schema={searchActionSchema} />
       </head>
       <body className="font-sans antialiased bg-[#f6f5f8]" suppressHydrationWarning>
         <CartProvider>

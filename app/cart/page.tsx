@@ -377,7 +377,7 @@ export default function CartPage() {
                         value={formData.firstName}
                         onChange={handleInputChange}
                         className="w-full border border-gray-250 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500"
-                        placeholder="John"
+                        placeholder="Enter your first name"
                       />
                     </div>
                     <div>
@@ -389,7 +389,7 @@ export default function CartPage() {
                         value={formData.lastName}
                         onChange={handleInputChange}
                         className="w-full border border-gray-250 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500"
-                        placeholder="Doe"
+                        placeholder="Enter your last name"
                       />
                     </div>
                   </div>
@@ -403,7 +403,7 @@ export default function CartPage() {
                       value={formData.address}
                       onChange={handleInputChange}
                       className="w-full border border-gray-250 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500"
-                      placeholder="Office T-15, Pinnacle Business Park"
+                      placeholder="Enter your address"
                     />
                   </div>
 
@@ -417,7 +417,7 @@ export default function CartPage() {
                         value={formData.city}
                         onChange={handleInputChange}
                         className="w-full border border-gray-250 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500"
-                        placeholder="Mumbai"
+                        placeholder="Enter your city"
                       />
                     </div>
                     <div>
@@ -429,7 +429,7 @@ export default function CartPage() {
                         value={formData.postcode}
                         onChange={handleInputChange}
                         className="w-full border border-gray-250 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500"
-                        placeholder="400093"
+                        placeholder="Enter your pincode"
                       />
                     </div>
                   </div>
@@ -461,7 +461,7 @@ export default function CartPage() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         className="w-full border border-gray-250 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500"
-                        placeholder="9876543210"
+                        placeholder="Enter your phone number"
                       />
                     </div>
                   </div>
@@ -475,7 +475,7 @@ export default function CartPage() {
                       value={formData.email}
                       onChange={handleInputChange}
                       className="w-full border border-gray-250 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500"
-                      placeholder="info@comsri.com"
+                      placeholder="Enter your email"
                     />
                   </div>
 
@@ -498,7 +498,7 @@ export default function CartPage() {
                     {couponDiscount > 0 && (
                       <div className="flex justify-between text-sm text-emerald-600 font-medium animate-fade-in">
                         <span>Discount ({appliedCoupon})</span>
-                        <span className="font-bold price-font">
+                        <span className="font-500 price-font">
                           -₹{couponDiscount.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
                         </span>
                       </div>

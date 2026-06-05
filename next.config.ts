@@ -42,9 +42,20 @@ const nextConfig: NextConfig = {
     ],
   },
   transpilePackages: ['motion'],
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: '/sitemap.xml', destination: '/sitemap' },
+        { source: '/products-sitemap.xml', destination: '/products-sitemap' },
+        { source: '/categories-sitemap.xml', destination: '/categories-sitemap' },
+        { source: '/blog-sitemap.xml', destination: '/blog-sitemap' },
+        { source: '/images-sitemap.xml', destination: '/images-sitemap' },
+      ],
+    };
+  },
   webpack: (config, {dev}) => {
     // HMR is disabled in AI Studio via DISABLE_HMR env var.
-    // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
+    // Do not modify—file watching is disabled to prevent flickering during agent edits.
     if (dev && process.env.DISABLE_HMR === 'true') {
       config.watchOptions = {
         ignored: /.*/,

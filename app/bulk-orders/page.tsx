@@ -31,143 +31,143 @@ export default function BulkOrdersPage() {
 
         {/* Hero Section */}
         <div className="w-full relative overflow-hidden py-10 lg:py-16 bg-[#146ba1]">
-           <div className="absolute inset-0 bg-gradient-to-r from-[#175d8d] to-[#128dc9] opacity-100"></div>
-           
-           <div className="w-full mx-auto px-6 lg:px-12 relative z-10 flex flex-col lg:flex-row items-center gap-10">
-                  <div className="w-full lg:w-[60%] xl:w-[60%] flex flex-col items-start gap-5 text-white pr-4">
-                  <div className="flex flex-wrap gap-2.5 mb-2">
-                     <span className="bg-white/10 border border-white/20 text-white text-[12.5px] font-normal py-1.5 px-3.5 rounded-full flex items-center gap-2 hover:bg-white/20 transition-colors cursor-default backdrop-blur-sm shadow-sm">
-                       <span className="w-2 h-2 rounded-full bg-[#4ade80] shadow-[0_0_8px_rgba(74,222,128,0.6)]"></span> NSE Listed
-                     </span>
-                     <span className="bg-white/10 border border-white/20 text-white text-[12.5px] font-normal py-1.5 px-3.5 rounded-full flex items-center gap-2 hover:bg-white/20 transition-colors cursor-default backdrop-blur-sm shadow-sm">
-                       <span className="w-2 h-2 rounded-full bg-[#4ade80] shadow-[0_0_8px_rgba(74,222,128,0.6)]"></span> 1000+ Enterprise Clients
-                     </span>
-                     <span className="bg-white/10 border border-white/20 text-white text-[12.5px] font-normal py-1.5 px-3.5 rounded-full flex items-center gap-2 hover:bg-white/20 transition-colors cursor-default backdrop-blur-sm shadow-sm">
-                       <span className="w-2 h-2 rounded-full bg-gray-300"></span> IIT/IIM Alumni
-                     </span>
-                  </div>
-                  
-                  <h1 className="text-[42px] font-medium leading-[1.1] tracking-tight mb-2 text-white">
-                    Optimize Your Enterprise IT Infrastructure <br />and Save Up to <span className="text-[#faba5b]">70%</span> on Costs
-                  </h1>
-                  
-                  <p className="text-[18px] text-white/95 leading-relaxed font-normal mb-5 mt-2 max-w-xl shadow-none">
-                    High-performance refurbished laptops, desktops & enterprise IT equipment for businesses across India. Starting from ₹15,000 with easy and flexible payment plans.
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-8 w-full sm:w-auto">
-                     <button className="bg-[#00c2e0] hover:bg-[#00a8c2] text-white font-normal py-3.5 px-7 rounded-[8px] flex items-center justify-center gap-2 transition-colors text-[16px] shadow-lg shadow-cyan-500/20">
-                       Request Custom Quote <ArrowRight size={18} strokeWidth={2.5} />
-                     </button>
-                     <button className="bg-transparent hover:bg-white/10 border border-white/30 text-white font-normal py-3.5 px-7 rounded-[8px] flex items-center justify-center gap-2 transition-colors text-[16px]">
-                       Calculate Your Savings <ArrowDown size={18} strokeWidth={2.5} />
-                     </button>
-                  </div>
-                  
-                  <div className="flex flex-wrap justify-start gap-x-6 gap-y-3 text-[14.5px] font-normal text-white/90 w-full">
-                    <span className="flex items-center gap-1.5"><Check size={18} strokeWidth={3} className="text-[#4ade80]"/> ISO Certified/R2 Certified</span>
-                    <span className="flex items-center gap-1.5"><Check size={18} strokeWidth={3} className="text-[#4ade80]"/> 1-year warranty</span>
-                    <span className="flex items-center gap-1.5"><Check size={18} strokeWidth={3} className="text-[#4ade80]"/> Pan-India delivery</span>
-                    <span className="flex items-center gap-1.5"><Check size={18} strokeWidth={3} className="text-[#4ade80]"/> Priority Support</span>
-                  </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#175d8d] to-[#128dc9] opacity-100"></div>
+
+          <div className="w-full mx-auto px-6 lg:px-12 relative z-10 flex flex-col lg:flex-row items-center gap-10">
+            <div className="w-full lg:w-[60%] xl:w-[60%] flex flex-col items-start gap-5 text-white pr-4">
+              <div className="flex flex-nowrap overflow-x-auto scrollbar-none gap-2 mb-2 w-full pb-1.5 -mx-6 px-6 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible">
+                <span className="shrink-0 bg-white/10 border border-white/20 text-white text-[12.5px] font-normal py-1.5 px-3.5 rounded-full flex items-center gap-2 hover:bg-white/20 transition-colors cursor-default backdrop-blur-sm shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-[#4ade80] shadow-[0_0_8px_rgba(74,222,128,0.6)]"></span> NSE Listed
+                </span>
+                <span className="shrink-0 bg-white/10 border border-white/20 text-white text-[12.5px] font-normal py-1.5 px-3.5 rounded-full flex items-center gap-2 hover:bg-white/20 transition-colors cursor-default backdrop-blur-sm shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-[#4ade80] shadow-[0_0_8px_rgba(74,222,128,0.6)]"></span> 1000+ Enterprise Clients
+                </span>
+                <span className="shrink-0 bg-white/10 border border-white/20 text-white text-[12.5px] font-normal py-1.5 px-3.5 rounded-full flex items-center gap-2 hover:bg-white/20 transition-colors cursor-default backdrop-blur-sm shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-[#4ade80] shadow-[0_0_8px_rgba(74,222,128,0.6)]"></span> IIT/IIM Alumni
+                </span>
               </div>
-              
-              <div className="w-full lg:w-[40%] xl:w-[40%] relative mt-12 lg:mt-0">
-                 <div className="w-[100%] h-[350px] sm:h-[400px] lg:w-[100%] lg:h-[460px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/10 relative rounded-[30px]">
-                     <Image 
-                       src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=1200" 
-                       alt="Enterprise IT Team" 
-                       fill 
-                       className="object-cover object-center rounded-[30px]" 
-                       referrerPolicy="no-referrer" 
-                     />
-                     <div className="absolute inset-0 bg-[#0d7fba]/10 mix-blend-overlay rounded-[30px]"></div>
-                 </div>
+
+              <h1 className="text-[28px] xs:text-[32px] sm:text-[36px] md:text-[42px] font-medium leading-[1.15] sm:leading-[1.1] tracking-tight mb-2 text-white">
+                Cut Enterprise IT Costs by <span className="text-[#faba5b]">70%</span> Without Compromising Performance
+              </h1>
+
+              <p className="text-[15px] sm:text-[16px] md:text-[18px] text-white/95 leading-relaxed font-normal mb-5 mt-2 max-w-xl shadow-none">
+                Enterprise-grade refurbished laptops, desktops & IT equipment for India&apos;s leading companies. From ₹15,000 with flexible payment options.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 mb-8 w-full sm:w-auto">
+                <button className="bg-[#00c2e0] hover:bg-[#00a8c2] text-white font-normal py-3 sm:py-3.5 px-5 sm:px-7 rounded-[8px] flex items-center justify-center gap-2 transition-colors text-[15px] sm:text-[16px] shadow-lg shadow-cyan-500/20 w-full sm:w-auto">
+                  Request Custom Quote <ArrowRight size={18} strokeWidth={2.5} />
+                </button>
+                <button className="bg-transparent hover:bg-white/10 border border-white/30 text-white font-normal py-3 sm:py-3.5 px-5 sm:px-7 rounded-[8px] flex items-center justify-center gap-2 transition-colors text-[15px] sm:text-[16px] w-full sm:w-auto">
+                  Calculate Your Savings <ArrowDown size={18} strokeWidth={2.5} />
+                </button>
               </div>
-           </div>
+
+              <div className="flex flex-wrap justify-start gap-x-4 gap-y-3 text-[13.5px] sm:text-[14.5px] font-normal text-white/90 w-full">
+                <span className="flex items-center gap-1.5"><Check size={18} strokeWidth={3} className="text-[#4ade80]" /> ISO Certified/R2 Certified</span>
+                <span className="flex items-center gap-1.5"><Check size={18} strokeWidth={3} className="text-[#4ade80]" /> 1-year warranty</span>
+                <span className="flex items-center gap-1.5"><Check size={18} strokeWidth={3} className="text-[#4ade80]" /> Pan-India delivery</span>
+                <span className="flex items-center gap-1.5"><Check size={18} strokeWidth={3} className="text-[#4ade80]" /> Priority Support</span>
+              </div>
+            </div>
+
+            <div className="w-full lg:w-[40%] xl:w-[40%] relative mt-12 lg:mt-0">
+              <div className="w-[100%] h-[350px] sm:h-[400px] lg:w-[100%] lg:h-[460px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/10 relative rounded-[30px]">
+                <Image
+                  src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=1200"
+                  alt="Enterprise IT Team"
+                  fill
+                  className="object-cover object-center rounded-[30px]"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-[#0d7fba]/10 mix-blend-overlay rounded-[30px]"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Stats & Trusted By Section */}
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-16 lg:py-20 bg-[#f6f5f8]">
           <div className="flex flex-col lg:flex-row items-center mb-10 gap-8 lg:gap-4 w-full justify-between">
-             <div className="w-full lg:w-[35%] xl:w-[30%]">
-               <div className="flex items-center justify-center lg:justify-start gap-4 text-[11px] font-bold text-gray-400 tracking-[0.2em] relative whitespace-nowrap">
-                  <div className="h-px bg-gray-200 w-12 hidden lg:block"></div>
-                  TRUSTED BY INDIA&apos;S LEADING ENTERPRISES
-                  <div className="h-px bg-gray-200 flex-1 hidden lg:block"></div>
-               </div>
-             </div>
-             
-             <div className="w-full lg:w-[65%] xl:w-[70%] flex flex-wrap justify-center lg:justify-end gap-x-10 sm:gap-x-12 md:gap-x-16 gap-y-6">
-                <div className="flex flex-col items-center">
-                   <h3 className="text-[32px] md:text-[38px] text-[#2563eb] font-bold leading-none mb-1.5">1000+</h3>
-                   <span className="text-[10px] md:text-[11px] text-gray-500 font-bold tracking-widest uppercase">ENTERPRISES</span>
-                </div>
-                <div className="flex flex-col items-center">
-                   <h3 className="text-[32px] md:text-[38px] text-[#2563eb] font-bold leading-none mb-1.5">2.5L+</h3>
-                   <span className="text-[10px] md:text-[11px] text-gray-500 font-bold tracking-widest uppercase">DEVICES</span>
-                </div>
-                <div className="flex flex-col items-center">
-                   <h3 className="text-[32px] md:text-[38px] text-[#2563eb] font-bold leading-none mb-1.5">20k+</h3>
-                   <span className="text-[10px] md:text-[11px] text-gray-500 font-bold tracking-widest uppercase">PINCODES</span>
-                </div>
-                <div className="flex flex-col items-center">
-                   <h3 className="text-[32px] md:text-[38px] text-[#2563eb] font-bold leading-none mb-1.5 flex items-center gap-0.5">4.4<span className="text-[26px]">★</span></h3>
-                   <span className="text-[10px] md:text-[11px] text-gray-500 font-bold tracking-widest uppercase">GOOGLE RATING</span>
-                </div>
-             </div>
-          </div>
-          
-          <div className="flex items-center gap-4 mt-8 max-w-full">
-             <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#3452ef] hover:border-[#3452ef] transition-colors shrink-0 bg-white">
-                <span className="text-xl leading-none">&larr;</span>
-             </button>
-             <div className="flex gap-4 overflow-x-auto pb-4 hide-scrollbar flex-1 snap-x max-w-full">
-               {/* Firstsource */}
-               <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
-                   <h3 className="text-[18px] font-bold text-gray-800 flex items-center gap-2"><div className="flex gap-0.5 text-orange-500"><div className="w-1.5 h-4 bg-orange-500"></div><div className="w-1.5 h-5 bg-orange-500"></div><div className="w-1.5 h-3 bg-red-500"></div></div> Firstsource</h3>
-                   <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">BPO • 1,200+ seats</p>
-               </div>
-               
-               {/* ResultsCX */}
-               <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
-                   <h3 className="text-[18px] font-bold text-gray-800 flex items-center gap-1.5"><div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-serif font-black italic">R</div> ResultsCX</h3>
-                   <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">BPO • Pan-India</p>
-               </div>
-               
-               {/* Muthoot Finance */}
-               <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
-                   <h3 className="text-[16px] font-bold text-gray-800 flex items-center gap-1.5"><div className="w-0 h-0 border-l-[8px] border-r-[8px] border-b-[14px] border-transparent border-b-[#facc15]"></div> Muthoot Finance</h3>
-                   <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">BFSI • 80 Branches</p>
-               </div>
-               
-               {/* Chola MS */}
-               <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
-                   <h3 className="text-[18px] font-bold text-gray-800 flex items-center gap-1.5"><div className="px-1.5 py-0.5 bg-blue-800 text-white text-[10px] font-bold italic">CMS</div> Chola MS</h3>
-                   <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">Insurance • BFSI</p>
-               </div>
-               
-               {/* FiveS Digital */}
-               <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
-                   <h3 className="text-[18px] font-bold text-gray-800 flex items-center gap-1.5"><div className="bg-green-700 text-white w-5 h-5 text-[11px] font-bold flex items-center justify-center rounded">5S</div> FiveS Digital</h3>
-                   <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">BPO • Growing</p>
-               </div>
-               
-               {/* Metropolis */}
-               <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
-                   <h3 className="text-[18px] font-bold text-gray-800 flex items-center gap-1.5"><div className="flex"><div className="w-2.5 h-2.5 rounded-full bg-red-500"></div><div className="w-2.5 h-2.5 rounded-full bg-blue-500 -ml-1 mix-blend-multiply"></div></div> Metropolis</h3>
-                   <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">Healthcare • Diagnostics</p>
-               </div>
+            <div className="w-full lg:w-[35%] xl:w-[30%]">
+              <div className="flex items-center justify-center lg:justify-start gap-4 text-[11px] font-bold text-gray-400 tracking-[0.2em] relative whitespace-nowrap">
+                <div className="h-px bg-gray-200 w-12 hidden lg:block"></div>
+                TRUSTED BY INDIA&apos;S LEADING ENTERPRISES
+                <div className="h-px bg-gray-200 flex-1 hidden lg:block"></div>
+              </div>
+            </div>
 
-               {/* +90 */}
-               <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-[#eef8fe] border border-[#2db1ff]/30 rounded-[12px] flex flex-col items-center justify-center p-3 shadow-sm hover:shadow-md transition-shadow snap-start cursor-pointer hover:bg-[#e0f2fe]">
-                   <h3 className="text-[24px] font-bold text-[#0284c7]">+90</h3>
-                   <p className="text-[10px] font-bold text-[#0284c7] mt-1 tracking-wide text-center">More clients</p>
-               </div>
-             </div>
-             <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#3452ef] hover:border-[#3452ef] transition-colors shrink-0 bg-white">
-                <span className="text-xl leading-none">&rarr;</span>
-             </button>
+            <div className="w-full lg:w-[65%] xl:w-[70%] grid grid-cols-3 sm:flex sm:flex-wrap justify-items-center sm:justify-center lg:justify-end gap-x-6 sm:gap-x-12 md:gap-x-16 gap-y-6">
+              <div className="flex flex-col items-center">
+                <h3 className="text-[32px] md:text-[38px] text-[#2563eb] font-bold leading-none mb-1.5">1000+</h3>
+                <span className="text-[10px] md:text-[11px] text-gray-500 font-bold tracking-widest uppercase">ENTERPRISES</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <h3 className="text-[32px] md:text-[38px] text-[#2563eb] font-bold leading-none mb-1.5">2.5L+</h3>
+                <span className="text-[10px] md:text-[11px] text-gray-500 font-bold tracking-widest uppercase">DEVICES</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <h3 className="text-[32px] md:text-[38px] text-[#2563eb] font-bold leading-none mb-1.5">20k+</h3>
+                <span className="text-[10px] md:text-[11px] text-gray-500 font-bold tracking-widest uppercase">PINCODES</span>
+              </div>
+              <div className="col-start-2 sm:col-auto flex flex-col items-center">
+                <h3 className="text-[32px] md:text-[38px] text-[#2563eb] font-bold leading-none mb-1.5 flex items-center gap-0.5">4.8<span className="text-[26px]">★</span></h3>
+                <span className="text-[10px] md:text-[11px] text-gray-500 font-bold tracking-widest uppercase">GOOGLE RATING</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 mt-8 max-w-full">
+            <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#3452ef] hover:border-[#3452ef] transition-colors shrink-0 bg-white">
+              <span className="text-xl leading-none">&larr;</span>
+            </button>
+            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none flex-1 snap-x max-w-full">
+              {/* Firstsource */}
+              <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
+                <h3 className="text-[18px] font-bold text-gray-800 flex items-center gap-2"><div className="flex gap-0.5 text-orange-500"><div className="w-1.5 h-4 bg-orange-500"></div><div className="w-1.5 h-5 bg-orange-500"></div><div className="w-1.5 h-3 bg-red-500"></div></div> Firstsource</h3>
+                <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">BPO • 1,200+ seats</p>
+              </div>
+
+              {/* ResultsCX */}
+              <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
+                <h3 className="text-[18px] font-bold text-gray-800 flex items-center gap-1.5"><div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-serif font-black italic">R</div> ResultsCX</h3>
+                <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">BPO • Pan-India</p>
+              </div>
+
+              {/* Muthoot Finance */}
+              <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
+                <h3 className="text-[16px] font-bold text-gray-800 flex items-center gap-1.5"><div className="w-0 h-0 border-l-[8px] border-r-[8px] border-b-[14px] border-transparent border-b-[#facc15]"></div> Muthoot Finance</h3>
+                <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">BFSI • 80 Branches</p>
+              </div>
+
+              {/* Chola MS */}
+              <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
+                <h3 className="text-[18px] font-bold text-gray-800 flex items-center gap-1.5"><div className="px-1.5 py-0.5 bg-blue-800 text-white text-[10px] font-bold italic">CMS</div> Chola MS</h3>
+                <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">Insurance • BFSI</p>
+              </div>
+
+              {/* FiveS Digital */}
+              <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
+                <h3 className="text-[18px] font-bold text-gray-800 flex items-center gap-1.5"><div className="bg-green-700 text-white w-5 h-5 text-[11px] font-bold flex items-center justify-center rounded">5S</div> FiveS Digital</h3>
+                <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">BPO • Growing</p>
+              </div>
+
+              {/* Metropolis */}
+              <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-white border border-[#2db1ff]/20 rounded-[12px] flex flex-col items-center justify-center p-3 hover:shadow-[0_8px_20px_rgba(45,177,255,0.15)] transition-shadow snap-start">
+                <h3 className="text-[18px] font-bold text-gray-800 flex items-center gap-1.5"><div className="flex"><div className="w-2.5 h-2.5 rounded-full bg-red-500"></div><div className="w-2.5 h-2.5 rounded-full bg-blue-500 -ml-1 mix-blend-multiply"></div></div> Metropolis</h3>
+                <p className="text-[10px] font-bold text-[#0ea5e9] mt-2 tracking-wide text-center">Healthcare • Diagnostics</p>
+              </div>
+
+              {/* +90 */}
+              <div className="min-w-[180px] md:min-w-[200px] h-[90px] bg-[#eef8fe] border border-[#2db1ff]/30 rounded-[12px] flex flex-col items-center justify-center p-3 shadow-sm hover:shadow-md transition-shadow snap-start cursor-pointer hover:bg-[#e0f2fe]">
+                <h3 className="text-[24px] font-bold text-[#0284c7]">+90</h3>
+                <p className="text-[10px] font-bold text-[#0284c7] mt-1 tracking-wide text-center">More clients</p>
+              </div>
+            </div>
+            <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#3452ef] hover:border-[#3452ef] transition-colors shrink-0 bg-white">
+              <span className="text-xl leading-none">&rarr;</span>
+            </button>
           </div>
         </div>
 
@@ -182,7 +182,7 @@ export default function BulkOrdersPage() {
                 Comsri delivers a closed-loop IT asset lifecycle programme — from procurement through to certified disposal — designed specifically for compliance-intensive environments.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {/* Card 1 */}
               <div className="bg-white border border-gray-100 rounded-[24px] p-8 lg:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group">
@@ -253,7 +253,7 @@ export default function BulkOrdersPage() {
                 The most trusted name in enterprise refurbished IT — quality you can count on, savings you can prove.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {/* Card 1 */}
               <div className="bg-white border border-gray-100 relative overflow-hidden rounded-[20px] p-8 lg:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(13,127,186,0.1)] hover:border-[#0d7fba]/30 hover:-translate-y-2 transition-all duration-300 group z-10">
@@ -342,7 +342,7 @@ export default function BulkOrdersPage() {
           </div>
         </div>
         {/* Contact Form Section */}
-        <div 
+        <div
           className="bg-[#0B1120] pt-12 lg:pt-16 pb-12 lg:pb-16 relative overflow-hidden"
           style={{
             borderRadius: '30px',
@@ -352,179 +352,179 @@ export default function BulkOrdersPage() {
             maxWidth: 'calc(100% - 40px)'
           }}
         >
-            {/* Background elements */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-              <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-white/5 rounded-full blur-[100px]"></div>
-              <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#ffc300]/10 rounded-full blur-[100px]"></div>
-            </div>
+          {/* Background elements */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-white/5 rounded-full blur-[100px]"></div>
+            <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#ffc300]/10 rounded-full blur-[100px]"></div>
+          </div>
 
           <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row relative z-10 px-6 lg:px-12">
-            
+
             {/* Left Column (Text & Contact Info) */}
             <div className="w-full lg:w-[55%] py-8 lg:py-8 lg:pr-16 xl:pr-24 flex flex-col justify-center gap-10 lg:gap-12 relative z-10">
-               <div>
-                  <div className="inline-flex items-center gap-2 border border-[#ffc300]/30 rounded-full py-1.5 px-3 mb-8">
-                     <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center text-black shadow-sm">
-                       <MessageSquare size={14} />
-                     </div>
-                     <span className="text-[#ffc300] font-medium text-[14px] pr-2">Start A Project</span>
+              <div>
+                <div className="inline-flex items-center gap-2 border border-[#ffc300]/30 rounded-full py-1.5 px-3 mb-8">
+                  <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center text-black shadow-sm">
+                    <MessageSquare size={14} />
                   </div>
+                  <span className="text-[#ffc300] font-medium text-[14px] pr-2">Start A Project</span>
+                </div>
 
-                  <h2 className="text-[40px] md:text-[56px] lg:text-[64px] font-bold text-white leading-[1.05] tracking-tight mb-6">
-                    Let&apos;s Build Your<br/>Digital Future
-                  </h2>
+                <h2 className="text-[40px] md:text-[56px] lg:text-[64px] font-bold text-white leading-[1.05] tracking-tight mb-6">
+                  Let&apos;s Build Your<br />Digital Future
+                </h2>
 
-                  <p className="text-[16px] md:text-[18px] text-white/50 leading-relaxed max-w-lg mb-8 font-medium">
-                    Ready to launch your next project? Fill out the form below or reach out directly to start a conversation about your business needs and how we can help you grow.
-                  </p>
-               </div>
+                <p className="text-[16px] md:text-[18px] text-white/50 leading-relaxed max-w-lg mb-8 font-medium">
+                  Ready to launch your next project? Fill out the form below or reach out directly to start a conversation about your business needs and how we can help you grow.
+                </p>
+              </div>
 
-               <div className="flex flex-col sm:flex-row flex-wrap gap-8 lg:gap-x-12 gap-y-6">
-                  <div className="flex items-center gap-4 group">
-                     <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shrink-0 group-hover:scale-110 transition-transform shadow-lg">
-                        <Phone size={20} strokeWidth={2.5} />
-                     </div>
-                     <span className="text-white font-semibold text-[15px] group-hover:text-[#ffc300] transition-colors">+1(555) 123-4567</span>
+              <div className="flex flex-col sm:flex-row flex-wrap gap-8 lg:gap-x-12 gap-y-6">
+                <div className="flex items-center gap-4 group">
+                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                    <Phone size={20} strokeWidth={2.5} />
                   </div>
-                  <div className="flex items-center gap-4 group">
-                     <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shrink-0 group-hover:scale-110 transition-transform shadow-lg">
-                        <MapPin size={20} strokeWidth={2.5} />
-                     </div>
-                     <span className="text-white font-semibold text-[15px] group-hover:text-[#ffc300] transition-colors">San Francisco, CA</span>
+                  <span className="text-white font-semibold text-[15px] group-hover:text-[#ffc300] transition-colors">+1(555) 123-4567</span>
+                </div>
+                <div className="flex items-center gap-4 group">
+                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                    <MapPin size={20} strokeWidth={2.5} />
                   </div>
-                  <div className="flex items-center gap-4 group mt-2 sm:mt-0 xl:mt-2">
-                     <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shrink-0 group-hover:scale-110 transition-transform shadow-lg">
-                        <Mail size={20} strokeWidth={2.5} />
-                     </div>
-                     <span className="text-white font-semibold text-[15px] group-hover:text-[#ffc300] transition-colors">hello@digitalagency.com</span>
+                  <span className="text-white font-semibold text-[15px] group-hover:text-[#ffc300] transition-colors">San Francisco, CA</span>
+                </div>
+                <div className="flex items-center gap-4 group mt-2 sm:mt-0 xl:mt-2">
+                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                    <Mail size={20} strokeWidth={2.5} />
                   </div>
-               </div>
+                  <span className="text-white font-semibold text-[15px] group-hover:text-[#ffc300] transition-colors">hello@digitalagency.com</span>
+                </div>
+              </div>
             </div>
 
-                        {/* Right Column (Form) */}
+            {/* Right Column (Form) */}
             <div className="w-full lg:w-[45%] py-8 lg:py-12 flex items-center">
-               <div className="w-full h-full bg-[#ffc300] rounded-[24px] lg:rounded-[32px] p-8 lg:p-12 shadow-[0_20px_50px_rgba(255,195,0,0.15)] flex flex-col justify-center">
-                  <div className="space-y-6 w-full">
-                     {/* Row 1 */}
-                     <div className="flex flex-col md:flex-row gap-6 w-full">
-                       <div className="w-full md:w-1/2">
-                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Your Name</label>
-                         <input 
-                           type="text" 
-                           placeholder="Full Name" 
-                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
-                         />
-                       </div>
-                       <div className="w-full md:w-1/2">
-                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Organization Name</label>
-                         <input 
-                           type="text" 
-                           placeholder="Organization" 
-                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
-                         />
-                       </div>
-                         {/* Row 2 */}
-                     <div className="flex flex-col md:flex-row gap-6 w-full">
-                       <div className="w-full md:w-1/2">
-                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Organization Mail</label>
-                         <input 
-                           type="email" 
-                           placeholder="Email Address" 
-                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
-                         />
-                       </div>
-                       <div className="w-full md:w-1/2">
-                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Phone Number</label>
-                         <input 
-                           type="tel" 
-                           placeholder="Phone Number" 
-                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
-                         />
-                       </div>
-                     </div>
+              <div className="w-full h-full bg-[#ffc300] rounded-[24px] lg:rounded-[32px] p-8 lg:p-12 shadow-[0_20px_50px_rgba(255,195,0,0.15)] flex flex-col justify-center">
+                <div className="space-y-6 w-full">
+                  {/* Row 1 */}
+                  <div className="flex flex-col md:flex-row gap-6 w-full">
+                    <div className="w-full md:w-1/2">
+                      <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Your Name</label>
+                      <input
+                        type="text"
+                        placeholder="Full Name"
+                        className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
+                      />
+                    </div>
+                    <div className="w-full md:w-1/2">
+                      <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Organization Name</label>
+                      <input
+                        type="text"
+                        placeholder="Organization"
+                        className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
+                      />
+                    </div>
+                    {/* Row 2 */}
+                    <div className="flex flex-col md:flex-row gap-6 w-full">
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Organization Mail</label>
+                        <input
+                          type="email"
+                          placeholder="Email Address"
+                          className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
+                        />
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Phone Number</label>
+                        <input
+                          type="tel"
+                          placeholder="Phone Number"
+                          className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
+                        />
+                      </div>
+                    </div>
 
-                     {/* Row 3 */}
-                     <div className="flex flex-col md:flex-row gap-6 w-full">
-                       <div className="w-full md:w-1/2">
-                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Device Category</label>
-                         <div className="relative">
-                           <select defaultValue="" className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] text-[16px] outline-none focus:bg-white/50 transition-all font-medium appearance-none cursor-pointer shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300">
-                             <option value="" disabled className="text-[#131212]/50 bg-white">Select Category</option>
-                             <option value="desktop" className="text-[#131212] bg-white">Laptops & Desktops</option>
-                             <option value="mobile" className="text-[#131212] bg-white">Mobiles & Tablets</option>
-                             <option value="workstation" className="text-[#131212] bg-white">Workstations</option>
-                             <option value="other" className="text-[#131212] bg-white">Other Devices</option>
-                           </select>
-                           <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-[#131212]/50">
-                             <ChevronDown size={20} />
-                           </div>
-                         </div>
-                       </div>
-                       <div className="w-full md:w-1/2">
-                         <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Quantity</label>
-                         <input 
-                           type="number" 
-                           placeholder="Quantity" 
-                           min="1"
-                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
-                         />
-                       </div>
-                     </div>
-
-                     {/* Row 4 */}
-                     <div>
-                       <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Additional Information</label>
-                       <textarea 
-                           placeholder="Write your message or requirements here..." 
-                           rows={4}
-                           className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300 resize-none"
-                       ></textarea>
-                     </div>
-
-                     <div className="pt-4">
-                       <button className="bg-[#0B1120] hover:bg-[#1e293b] text-white rounded-full py-4 px-8 inline-flex items-center gap-3 transition-colors group shadow-lg hover:shadow-xl">
-                          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black group-hover:scale-110 transition-transform">
-                             <Send size={14} className="ml-[-2px] mt-[1px]" />
+                    {/* Row 3 */}
+                    <div className="flex flex-col md:flex-row gap-6 w-full">
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Device Category</label>
+                        <div className="relative">
+                          <select defaultValue="" className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] text-[16px] outline-none focus:bg-white/50 transition-all font-medium appearance-none cursor-pointer shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300">
+                            <option value="" disabled className="text-[#131212]/50 bg-white">Select Category</option>
+                            <option value="desktop" className="text-[#131212] bg-white">Laptops & Desktops</option>
+                            <option value="mobile" className="text-[#131212] bg-white">Mobiles & Tablets</option>
+                            <option value="workstation" className="text-[#131212] bg-white">Workstations</option>
+                            <option value="other" className="text-[#131212] bg-white">Other Devices</option>
+                          </select>
+                          <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-[#131212]/50">
+                            <ChevronDown size={20} />
                           </div>
-                          <span className="font-bold text-[16px] pr-2 group-hover:translate-x-1 transition-transform">Submit Request</span>
-                       </button>
-                     </div>
+                        </div>
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Quantity</label>
+                        <input
+                          type="number"
+                          placeholder="Quantity"
+                          min="1"
+                          className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Row 4 */}
+                    <div>
+                      <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Additional Information</label>
+                      <textarea
+                        placeholder="Write your message or requirements here..."
+                        rows={4}
+                        className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transform-gpu hover:-translate-y-1 duration-300 resize-none"
+                      ></textarea>
+                    </div>
+
+                    <div className="pt-4">
+                      <button className="bg-[#0B1120] hover:bg-[#1e293b] text-white rounded-full py-4 px-8 inline-flex items-center gap-3 transition-colors group shadow-lg hover:shadow-xl">
+                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black group-hover:scale-110 transition-transform">
+                          <Send size={14} className="ml-[-2px] mt-[1px]" />
+                        </div>
+                        <span className="font-bold text-[16px] pr-2 group-hover:translate-x-1 transition-transform">Submit Request</span>
+                      </button>
+                    </div>
                   </div>
-               </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        </div>
 
-        
+
         {/* FAQs Section */}
         <div className="w-full bg-[#f6f5f8] py-20 lg:py-24 border-t border-gray-100">
           <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row gap-16">
             {/* Left Content */}
             <div className="w-full lg:w-[40%] flex flex-col items-start pt-4">
-               <div className="inline-flex items-center gap-2 border border-[#0d7fba]/20 bg-[#eef8fe] rounded-full py-1.5 px-3 mb-6">
-                 <MessageCircle size={14} className="text-[#0d7fba]" />
-                 <span className="text-[#0d7fba] font-medium text-[13px] tracking-wide uppercase">Common Questions</span>
-               </div>
-               <h2 className="text-[36px] md:text-[45px] lg:text-[50px] font-bold text-[#111] leading-[1.1] tracking-tight mb-6">
-                 Everything you need to know about bulk orders.
-               </h2>
-               <p className="text-[17px] text-[#666] leading-relaxed mb-10 max-w-md">
-                 Find answers to common questions about our bulk ordering process, organizational discounts, and post-sales support.
-               </p>
-               
-               <div className="p-6 bg-white rounded-[24px] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-md">
-                 <div className="w-12 h-12 bg-[#fff5eb] rounded-full flex items-center justify-center mb-4">
-                   <Phone size={20} className="text-orange-500" />
-                 </div>
-                 <h4 className="text-[18px] font-bold text-[#111] mb-2">Still have questions?</h4>
-                 <p className="text-[15px] text-[#666] mb-4">Can&apos;t find the answer you&apos;re looking for? Please chat to our friendly team.</p>
-                 <button className="text-[#0d7fba] font-bold text-[15px] flex items-center gap-2 hover:gap-3 transition-all">
-                   Get in touch <ArrowRight size={16} />
-                 </button>
-               </div>
+              <div className="inline-flex items-center gap-2 border border-[#0d7fba]/20 bg-[#eef8fe] rounded-full py-1.5 px-3 mb-6">
+                <MessageCircle size={14} className="text-[#0d7fba]" />
+                <span className="text-[#0d7fba] font-medium text-[13px] tracking-wide uppercase">Common Questions</span>
+              </div>
+              <h2 className="text-[36px] md:text-[45px] lg:text-[50px] font-bold text-[#111] leading-[1.1] tracking-tight mb-6">
+                Everything you need to know about bulk orders.
+              </h2>
+              <p className="text-[17px] text-[#666] leading-relaxed mb-10 max-w-md">
+                Find answers to common questions about our bulk ordering process, organizational discounts, and post-sales support.
+              </p>
+
+              <div className="p-6 bg-white rounded-[24px] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-md">
+                <div className="w-12 h-12 bg-[#fff5eb] rounded-full flex items-center justify-center mb-4">
+                  <Phone size={20} className="text-orange-500" />
+                </div>
+                <h4 className="text-[18px] font-bold text-[#111] mb-2">Still have questions?</h4>
+                <p className="text-[15px] text-[#666] mb-4">Can&apos;t find the answer you&apos;re looking for? Please chat to our friendly team.</p>
+                <button className="text-[#0d7fba] font-bold text-[15px] flex items-center gap-2 hover:gap-3 transition-all">
+                  Get in touch <ArrowRight size={16} />
+                </button>
+              </div>
             </div>
-            
+
             {/* Right Accordion */}
             <div className="w-full lg:w-[60%] flex flex-col gap-4">
               {faqs.map((faq, index) => {
@@ -534,25 +534,24 @@ export default function BulkOrdersPage() {
                     key={index}
                     className={`bg-white rounded-[24px] border ${isOpen ? 'border-[#0d7fba]/30 shadow-[0_10px_40px_rgba(13,127,186,0.1)]' : 'border-gray-100 shadow-sm hover:border-[#0d7fba]/20'} overflow-hidden transition-all duration-500`}
                   >
-                    <button 
+                    <button
                       onClick={() => setOpenFaqIndex(isOpen ? null : index)}
                       className="w-full text-left px-8 py-6 flex items-center justify-between focus:outline-none group"
                     >
-                       <span className={`text-[17px] md:text-[19px] font-bold pr-8 ${isOpen ? 'text-[#0d7fba]' : 'text-[#111] group-hover:text-[#0d7fba]'} transition-colors`}>{faq.q}</span>
-                       <span className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-500 ${isOpen ? 'bg-[#0d7fba] text-white rotate-180' : 'bg-[#f6f5f8] text-[#111] group-hover:bg-[#eef8fe] group-hover:text-[#0d7fba]'}`}>
-                         <ChevronDown size={20} />
-                       </span>
+                      <span className={`text-[17px] md:text-[19px] font-bold pr-8 ${isOpen ? 'text-[#0d7fba]' : 'text-[#111] group-hover:text-[#0d7fba]'} transition-colors`}>{faq.q}</span>
+                      <span className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-500 ${isOpen ? 'bg-[#0d7fba] text-white rotate-180' : 'bg-[#f6f5f8] text-[#111] group-hover:bg-[#eef8fe] group-hover:text-[#0d7fba]'}`}>
+                        <ChevronDown size={20} />
+                      </span>
                     </button>
-                    
+
                     <div
-                      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
-                        isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                      }`}
+                      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                        }`}
                     >
                       <div className="overflow-hidden">
-                         <div className="px-8 pb-8 pt-0 text-[16px] text-[#666] leading-relaxed">
-                           {faq.a}
-                         </div>
+                        <div className="px-8 pb-8 pt-0 text-[16px] text-[#666] leading-relaxed">
+                          {faq.a}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -662,9 +661,9 @@ export default function BulkOrdersPage() {
               <p className="text-[14px] text-white/90 font-medium">Be the First to Know. Sign up to newsletter today</p>
             </div>
             <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-4 items-center">
-              <input 
-                type="email" 
-                placeholder="Your email address" 
+              <input
+                type="email"
+                placeholder="Your email address"
                 className="px-6 py-3.5 rounded-full text-[14px] focus:outline-none font-medium h-[48px] text-black w-full min-w-[280px] md:w-[340px]"
               />
               <button className="bg-[#fcb643] hover:bg-[#fca61f] text-[#111] px-8 h-[48px] rounded-full font-bold text-[15px] transition-colors whitespace-nowrap shadow-sm">

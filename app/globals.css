@@ -332,7 +332,14 @@ h6 {
   }
 }
 
-/* Mega Menu Premium UI Classes */
+/* Mega Menu Premium UI Classes & Optimization */
+.mega-menu-dropdown {
+  will-change: opacity, transform;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .mega-menu-glass {
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(20px);
@@ -344,9 +351,18 @@ h6 {
   border: 1px solid rgba(240, 242, 245, 0.9);
 }
 
+/* Fallback style for low-end devices: completely solid background, no heavy blur, simple shadow */
+.mega-menu-low-end {
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
 .mega-menu-link-hover {
   position: relative;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mega-menu-link-hover:hover {
@@ -360,7 +376,7 @@ h6 {
   left: -12px;
   opacity: 0;
   transform: translateX(-4px);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   color: #374bf9;
   font-weight: 700;
 }
@@ -374,7 +390,7 @@ h6 {
   position: relative;
   background: linear-gradient(135deg, rgba(55, 75, 249, 0.04) 0%, rgba(250, 186, 90, 0.05) 100%);
   border: 1.5px dashed rgba(55, 75, 249, 0.15);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.3s ease, border-style 0.3s ease, background-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .mega-menu-gradient-card:hover {
@@ -385,6 +401,37 @@ h6 {
     0 20px 40px -15px rgba(55, 75, 249, 0.12),
     0 0 20px 0 rgba(250, 186, 90, 0.05);
 }
+
+/* Low-end device overrides to guarantee 60fps */
+.low-end-device .mega-menu-dropdown {
+  will-change: auto !important;
+  transform: none !important;
+  transition: opacity 0.15s ease-out, visibility 0.15s ease-out !important;
+}
+
+.low-end-device .mega-menu-link-hover {
+  transform: none !important;
+  transition: color 0.15s ease-out !important;
+}
+
+.low-end-device .mega-menu-link-hover::before {
+  display: none !important; /* Remove moving arrow entirely on low-end */
+}
+
+.low-end-device .mega-menu-gradient-card {
+  transition: background-color 0.15s ease-out !important;
+}
+
+.low-end-device .brand-card-hover {
+  transform: none !important;
+  transition: opacity 0.15s ease-out !important;
+}
+
+.low-end-device .brand-img-hover {
+  transform: none !important;
+  transition: opacity 0.15s ease-out !important;
+}
+
 
 .scrollbar-none::-webkit-scrollbar {
   display: none;

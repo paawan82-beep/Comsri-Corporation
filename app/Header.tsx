@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Search, ChevronDown, Shuffle, Heart, ShoppingCart, Apple, Menu, X, Home, Info, ShoppingBag, Package, User, Laptop, Monitor, Layers, Cpu, Sparkles, ArrowRight, Tag, Percent } from "lucide-react";
@@ -324,6 +324,106 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  // Low-end device optimization state
+  const [isLowEnd, setIsLowEnd] = useState(false);
+
+  // Hardware specs and network quality check on mount
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    
+    // Check system memory (RAM) and CPU cores
+    const ram = (navigator as any).deviceMemory;
+    const cores = navigator.hardwareConcurrency;
+    
+    const isLowRam = ram !== undefined && ram <= 4;
+    const isLowCores = cores !== undefined && cores <= 4;
+    
+    // Check network speed and data saving mode
+    const conn = (navigator as any).connection;
+    const isSlowConn = conn && (conn.saveData || /2g|3g/.test(conn.effectiveType));
+    
+    if (isLowRam || isLowCores || isSlowConn) {
+      setTimeout(() => {
+        setIsLowEnd(true);
+      }, 0);
+      console.log("[MegaMenu] Low-end hardware or slow connection detected. Enabled 60 FPS optimizations.");
+    }
+  }, []);
+
+  // Dynamic frame-time performance tracker during hover transition
+  const frameTimesRef = useRef<number[]>([]);
+  const animationFrameIdRef = useRef<number | null>(null);
+  const isTrackingRef = useRef(false);
+
+  const handleMouseEnter = () => {
+    if (isLowEnd || isTrackingRef.current) return;
+    
+    isTrackingRef.current = true;
+    frameTimesRef.current = [];
+    
+    // Pure setup: initialize timing variables to null. They will be populated
+    // by the browser's high-res timestamp passed to requestAnimationFrame.
+    let lastTime: number | null = null;
+    let startTime: number | null = null;
+    
+    const trackFrames = (now: number) => {
+      if (startTime === null) startTime = now;
+      if (lastTime === null) {
+        lastTime = now;
+        animationFrameIdRef.current = requestAnimationFrame(trackFrames);
+        return;
+      }
+      
+      const delta = now - lastTime;
+      lastTime = now;
+      
+      frameTimesRef.current.push(delta);
+      
+      // Track frames for 400ms (covers the 300ms hover transition plus buffer)
+      if (now - startTime < 400) {
+        animationFrameIdRef.current = requestAnimationFrame(trackFrames);
+      } else {
+        analyzePerformance();
+      }
+    };
+    
+    animationFrameIdRef.current = requestAnimationFrame(trackFrames);
+  };
+
+  const handleMouseLeave = () => {
+    if (animationFrameIdRef.current) {
+      cancelAnimationFrame(animationFrameIdRef.current);
+      animationFrameIdRef.current = null;
+    }
+    isTrackingRef.current = false;
+  };
+
+  const analyzePerformance = () => {
+    const times = frameTimesRef.current;
+    if (times.length < 5) return;
+    
+    // Check if any frames lagged significantly (>24ms budget, i.e. < 40fps)
+    // or if the average frame duration is above 18ms (i.e. < 55fps average)
+    const laggyFrames = times.filter(t => t > 24).length;
+    const avgTime = times.reduce((sum, val) => sum + val, 0) / times.length;
+    
+    if (laggyFrames > 1 || avgTime > 18) {
+      console.warn(`[MegaMenu] Performance stutter detected (Avg frame: ${avgTime.toFixed(1)}ms, Laggy frames: ${laggyFrames}). Enabling dynamic 60 FPS fallback styling.`);
+      setTimeout(() => {
+        setIsLowEnd(true);
+      }, 0);
+    }
+    isTrackingRef.current = false;
+  };
+
+  useEffect(() => {
+    return () => {
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const logged = localStorage.getItem("isLoggedIn") === "true";
     if (logged) {
@@ -481,14 +581,18 @@ export default function Header() {
                 About Us
               </Link>
             </li>
-            <li className="group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2">
+            <li 
+              className="group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <Link href="/shop" className={`flex items-center gap-1 ${pathname === "/shop" ? "text-[#374bf9] font-bold" : "hover:text-[#374bf9]"}`}>
                 <span>Refurbished Products</span>
                 <ChevronDown size={14} className="transition-transform duration-200 group-hover:rotate-180" />
               </Link>
 
               {/* Mega Menu Dropdown */}
-              <div className="absolute top-full left-0 right-0 w-full mega-menu-glass py-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 cubic-bezier(0.16, 1, 0.3, 1) transform translate-y-3 scale-[0.99] z-50 text-gray-800 font-normal rounded-b-[30px]">
+              <div className={`absolute top-full left-0 right-0 w-full mega-menu-dropdown ${isLowEnd ? "mega-menu-low-end low-end-device" : "mega-menu-glass"} py-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible z-50 text-gray-800 font-normal rounded-b-[30px] ${isLowEnd ? "" : "transform translate-y-3 scale-[0.99]"}`}>
                 <div className="max-w-[1600px] mx-auto px-8 lg:px-16">
                   {/* 4 Column Category Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6 pb-6">
@@ -499,31 +603,31 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-blue-50 text-[#374bf9]">
                           <Laptop size={16} />
                         </div>
-                        <Link href="/shop?category=112" className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/shop?category=112" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
                           Refurbished Laptops
                         </Link>
                       </div>
                       <ul className="flex flex-col gap-[12px] text-gray-500 text-[13px] pl-8">
                         <li>
-                          <Link href="/shop?category=112&search=Dell" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=112&search=Dell" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Dell Laptops</span>
                             <span className="text-[11px] text-gray-400 font-normal">Business-grade Latitude series</span>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop?category=112&search=HP" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=112&search=HP" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">HP Laptops</span>
                             <span className="text-[11px] text-gray-400 font-normal">Premium EliteBooks & ProBooks</span>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop?category=112&search=Lenovo" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=112&search=Lenovo" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Lenovo ThinkPad</span>
                             <span className="text-[11px] text-gray-400 font-normal">Legendary durability & keyboards</span>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop?category=112&search=Apple" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=112&search=Apple" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Apple MacBooks</span>
                             <span className="text-[11px] text-gray-400 font-normal">Sleek, powerful Air & Pro models</span>
                           </Link>
@@ -537,25 +641,25 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-600">
                           <Monitor size={16} />
                         </div>
-                        <Link href="/shop?category=129" className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/shop?category=129" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
                           Refurbished Desktops
                         </Link>
                       </div>
                       <ul className="flex flex-col gap-[12px] text-gray-500 text-[13px] pl-8">
                         <li>
-                          <Link href="/shop?category=129&search=Dell" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=129&search=Dell" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Dell Desktops</span>
                             <span className="text-[11px] text-gray-400 font-normal">Standard enterprise micro & SFF</span>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop?category=129&search=HP" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=129&search=HP" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">HP Desktops</span>
                             <span className="text-[11px] text-gray-400 font-normal">Highly reliable office towers</span>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop?category=129&search=Lenovo" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=129&search=Lenovo" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Lenovo Desktops</span>
                             <span className="text-[11px] text-gray-400 font-normal">Compact, efficient workstations</span>
                           </Link>
@@ -569,25 +673,25 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-indigo-50 text-[#374bf9]">
                           <Layers size={16} />
                         </div>
-                        <Link href="/shop?category=139" className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/shop?category=139" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
                           Workstations
                         </Link>
                       </div>
                       <ul className="flex flex-col gap-[12px] text-gray-500 text-[13px] pl-8">
                         <li>
-                          <Link href="/shop?category=139&search=Dell" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=139&search=Dell" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Dell Workstations</span>
                             <span className="text-[11px] text-gray-400 font-normal">Precision & Power</span>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop?category=139&search=HP" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=139&search=HP" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">HP Workstations</span>
                             <span className="text-[11px] text-gray-400 font-normal">ZBook & Z-series towers</span>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop?category=139&search=Lenovo" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=139&search=Lenovo" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Lenovo Workstations</span>
                             <span className="text-[11px] text-gray-400 font-normal">ThinkStation series</span>
                           </Link>
@@ -601,31 +705,31 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-amber-50 text-[#fca61f]">
                           <Cpu size={16} />
                         </div>
-                        <Link href="/shop?category=137" className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/shop?category=137" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
                           Mini PCs
                         </Link>
                       </div>
                       <ul className="flex flex-col gap-[12px] text-gray-500 text-[13px] pl-8">
                         <li>
-                          <Link href="/shop?category=137&search=Dell" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=137&search=Dell" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Dell Mini PCs</span>
                             <span className="text-[11px] text-gray-400 font-normal">Ultra-compact systems</span>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop?category=137&search=HP" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=137&search=HP" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">HP Mini PCs</span>
                             <span className="text-[11px] text-gray-400 font-normal">Ultra-compact systems</span>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop?category=137&search=Lenovo" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=137&search=Lenovo" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Lenovo Mini PCs</span>
                             <span className="text-[11px] text-gray-400 font-normal">Ultra-compact systems</span>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/shop?category=137&search=Apple" className="mega-menu-link-hover flex flex-col">
+                          <Link href="/shop?category=137&search=Apple" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Apple Mac Mini</span>
                             <span className="text-[11px] text-gray-400 font-normal">Compact M1/Intel computing</span>
                           </Link>
@@ -641,59 +745,59 @@ export default function Header() {
                       <h5 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
                         Shop By Trusted Brands
                       </h5>
-                      <Link href="/shop" className="text-[12px] text-[#374bf9] font-bold hover:underline flex items-center gap-1 cursor-pointer">
+                      <Link href="/shop" prefetch={false} className="text-[12px] text-[#374bf9] font-bold hover:underline flex items-center gap-1 cursor-pointer">
                         All Brands <ArrowRight size={12} />
                       </Link>
                     </div>
 
                     <div className="grid grid-cols-5 gap-4 w-full">
                       {/* Brand Card: Apple */}
-                      <Link href="/shop?search=Apple" className="flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-all duration-300 hover:bg-white hover:shadow-md hover:border-black group/brand">
+                      <Link href="/shop?search=Apple" prefetch={false} className="brand-card-hover flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-[border-color,background-color,box-shadow] duration-200 hover:bg-white hover:shadow-md hover:border-black group/brand">
                         <img
                           loading="lazy"
                           src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/apple.webp"
                           alt="Apple"
-                          className="h-[50px] w-auto object-contain transition-all duration-300 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
+                          className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
                       </Link>
 
                       {/* Brand Card: Dell */}
-                      <Link href="/shop?search=Dell" className="flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-all duration-300 hover:bg-white hover:shadow-md hover:border-[#007dbd] group/brand">
+                      <Link href="/shop?search=Dell" prefetch={false} className="brand-card-hover flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-[border-color,background-color,box-shadow] duration-200 hover:bg-white hover:shadow-md hover:border-[#007dbd] group/brand">
                         <img
                           loading="lazy"
                           src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/dell.webp"
                           alt="Dell"
-                          className="h-[50px] w-auto object-contain transition-all duration-300 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
+                          className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
                       </Link>
 
                       {/* Brand Card: HP */}
-                      <Link href="/shop?search=HP" className="flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-all duration-300 hover:bg-white hover:shadow-md hover:border-[#005B94] group/brand">
+                      <Link href="/shop?search=HP" prefetch={false} className="brand-card-hover flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-[border-color,background-color,box-shadow] duration-200 hover:bg-white hover:shadow-md hover:border-[#005B94] group/brand">
                         <img
                           loading="lazy"
                           src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/hp.webp"
                           alt="HP"
-                          className="h-[50px] w-auto object-contain transition-all duration-300 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
+                          className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
                       </Link>
 
                       {/* Brand Card: Lenovo */}
-                      <Link href="/shop?search=Lenovo" className="flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-all duration-300 hover:bg-white hover:shadow-md hover:border-[#E21B22] group/brand">
+                      <Link href="/shop?search=Lenovo" prefetch={false} className="brand-card-hover flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-[border-color,background-color,box-shadow] duration-200 hover:bg-white hover:shadow-md hover:border-[#E21B22] group/brand">
                         <img
                           loading="lazy"
                           src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/lenovo.webp"
                           alt="Lenovo"
-                          className="h-[50px] w-auto object-contain transition-all duration-300 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
+                          className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
                       </Link>
 
                       {/* Brand Card: Microsoft */}
-                      <Link href="/shop?search=Microsoft" className="flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-all duration-300 hover:bg-white hover:shadow-md hover:border-[#00a1f1] group/brand">
+                      <Link href="/shop?search=Microsoft" prefetch={false} className="brand-card-hover flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-[border-color,background-color,box-shadow] duration-200 hover:bg-white hover:shadow-md hover:border-[#00a1f1] group/brand">
                         <img
                           loading="lazy"
                           src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/microsoft.webp"
                           alt="Microsoft"
-                          className="h-[50px] w-auto object-contain transition-all duration-300 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
+                          className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
                       </Link>
                     </div>
@@ -750,7 +854,7 @@ export default function Header() {
                 </div>
               </li>
               <li>
-                <Link href="#" className="hover:text-[#374bf9] transition">
+                <Link href="/faq" className="hover:text-[#374bf9] transition">
                   FAQs
                 </Link>
               </li>
@@ -903,7 +1007,7 @@ export default function Header() {
             </div>
           </MobileAccordion>
 
-          <Link href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-3.5 text-[15px] font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-50 transition-colors">
+          <Link href="/faq" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-3.5 text-[15px] font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-50 transition-colors">
             FAQs
           </Link>
         </div>

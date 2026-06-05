@@ -187,9 +187,9 @@ export default function ShopCatalogClient({
         <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
 
           {/* Active Filter Chips & Mobile Toggle */}
-          <div className="flex flex-wrap items-center gap-2.5 text-xs font-semibold text-slate-500 self-stretch md:self-auto justify-between md:justify-start w-full md:w-auto">
+          <div className="flex flex-row items-center justify-between w-full md:w-auto gap-4 border-b border-slate-100 pb-3.5 md:border-none md:pb-0 text-xs font-semibold text-slate-500 self-stretch md:self-auto">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-slate-400 flex items-center gap-1">
+              <span className="text-slate-400 flex items-center gap-1 select-none">
                 <SlidersHorizontal size={13} />
                 Active Filters:
               </span>
@@ -249,14 +249,17 @@ export default function ShopCatalogClient({
                   )}
                 </>
               ) : (
-                <span className="text-slate-400 font-mono text-[11px]">None (Showing complete catalog)</span>
+                <>
+                  <span className="text-slate-400 font-mono text-[11px] hidden sm:inline-block">None (Showing complete catalog)</span>
+                  <span className="text-slate-400 font-mono text-[11px] sm:hidden">None</span>
+                </>
               )}
             </div>
 
             {/* Mobile/Tablet Filter Drawer Trigger */}
             <button
               onClick={() => setIsFilterDrawerOpen(true)}
-              className="lg:hidden flex items-center gap-1.5 bg-[#374bf9] text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 transition cursor-pointer shadow-sm ml-auto md:ml-0"
+              className="lg:hidden flex items-center gap-1.5 bg-[#374bf9] text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 transition cursor-pointer shadow-sm shrink-0"
             >
               <SlidersHorizontal size={14} />
               <span>Filters</span>
@@ -264,12 +267,12 @@ export default function ShopCatalogClient({
           </div>
 
           {/* Quick Sort Options */}
-          <div className="flex items-center gap-2 self-stretch md:self-auto shrink-0 font-medium">
-            <span className="text-xs text-slate-400 font-bold tracking-tight uppercase flex items-center gap-1 shrink-0">
+          <div className="flex items-center justify-between md:justify-start gap-2.5 w-full md:w-auto self-stretch md:self-auto shrink-0 font-medium">
+            <span className="text-xs text-slate-400 font-bold tracking-tight uppercase flex items-center gap-1 shrink-0 select-none">
               <ArrowUpDown size={13} />
               Sort By:
             </span>
-            <div className="flex bg-slate-50 border border-slate-150 p-1 rounded-xl text-xs flex-1 md:flex-initial">
+            <div className="flex bg-slate-50 border border-slate-150 p-1 rounded-xl text-xs overflow-x-auto scrollbar-none whitespace-nowrap flex-1 md:flex-initial">
               {[
                 { label: "Newest", value: "date" },
                 { label: "Price: Low to High", value: "price" },
@@ -280,8 +283,8 @@ export default function ShopCatalogClient({
                   <button
                     key={sortItem.value}
                     onClick={() => handleFilterChange({ orderby: sortItem.value })}
-                    className={`px-3 py-1.5 rounded-lg font-bold transition text-center flex-1 md:flex-initial cursor-pointer ${isActive
-                        ? "bg-indigo-600 text-white shadow-sm"
+                    className={`px-3 py-1.5 rounded-lg font-bold transition text-center whitespace-nowrap cursor-pointer flex-1 md:flex-initial ${isActive
+                        ? "bg-[#374bf9] text-white shadow-sm"
                         : "text-slate-650 hover:text-slate-900"
                       }`}
                   >
