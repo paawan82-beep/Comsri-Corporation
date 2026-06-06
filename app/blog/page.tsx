@@ -1,7 +1,16 @@
+import { Metadata } from "next";
 import Header from "../Header";
 import BlogClient from "./BlogClient";
+import { constructMetadata } from "../seo/metadata";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = constructMetadata({
+  title: "Refurbished IT Hardware Blog & Industry Insights",
+  description: "Stay updated with the latest trends, guides, and insights on refurbished IT hardware, corporate laptop deals, and sustainable tech solutions.",
+  path: "/blog",
+  keywords: ["refurbished laptop blog", "IT hardware guides", "refurbished desktops advice", "Comsri news", "sustainable computing"],
+});
 
 export default async function BlogPage() {
   let posts = [];

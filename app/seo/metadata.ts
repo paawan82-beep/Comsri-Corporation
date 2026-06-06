@@ -11,6 +11,14 @@ interface PageMetaInput {
   ogImage?: string;
   category?: string;
   noIndex?: boolean;
+  canonical?: string;
+  productDetails?: {
+    price?: string;
+    currency?: string;
+    availability?: string;
+    brand?: string;
+    sku?: string;
+  };
 }
 
 export function constructMetadata({
@@ -22,14 +30,31 @@ export function constructMetadata({
   ogImage = SITE_CONFIG.ogImage,
   category = SITE_CONFIG.defaultCategory,
   noIndex = false,
+  canonical,
+  productDetails,
 }: PageMetaInput): Metadata {
-  const canonicalUrl = getAbsoluteUrl(path);
-  const formattedDescription = cleanText(description, 155);
+  const safeTitle = title || "Refurbished Laptops & Desktops | Comsri Corporation";
+  const safeDescription = description || "High-performance certified refurbished laptops, desktops, and workstations in India with 1-year warranty.";
+  const safeOgImage = ogImage || SITE_CONFIG.ogImage;
+
+  const canonicalUrl = canonical
+    ? (canonical.startsWith("http") ? canonical : getAbsoluteUrl(canonical))
+    : getAbsoluteUrl(path);
+  const formattedDescription = cleanText(safeDescription, 155);
+
+  const extraMeta: Record<string, string> = {};
+  if (productDetails) {
+    if (productDetails.price) extraMeta["product:price:amount"] = productDetails.price;
+    if (productDetails.currency) extraMeta["product:price:currency"] = productDetails.currency;
+    if (productDetails.availability) extraMeta["product:availability"] = productDetails.availability;
+    if (productDetails.brand) extraMeta["product:brand"] = productDetails.brand;
+    if (productDetails.sku) extraMeta["product:retailer_item_id"] = productDetails.sku;
+  }
 
   return {
     metadataBase: new URL(SITE_CONFIG.url),
     title: {
-      default: `${title} | ${SITE_CONFIG.shortName}`,
+      default: `${safeTitle} | ${SITE_CONFIG.shortName}`,
       template: `%s | ${SITE_CONFIG.shortName}`,
     },
     description: formattedDescription,
@@ -53,33 +78,35 @@ export function constructMetadata({
       },
     },
     openGraph: {
-      title: `${title} | ${SITE_CONFIG.shortName}`,
+      title: `${safeTitle} | ${SITE_CONFIG.shortName}`,
       description: formattedDescription,
       url: canonicalUrl,
       siteName: SITE_CONFIG.name,
       images: [
         {
-          url: ogImage.startsWith("http") ? ogImage : getAbsoluteUrl(ogImage),
+          url: safeOgImage.startsWith("http") ? safeOgImage : getAbsoluteUrl(safeOgImage),
           width: 1200,
           height: 630,
-          alt: title,
+          alt: safeTitle,
         },
       ],
       type: ogType,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | ${SITE_CONFIG.shortName}`,
+      title: `${safeTitle} | ${SITE_CONFIG.shortName}`,
       description: formattedDescription,
-      images: [ogImage.startsWith("http") ? ogImage : getAbsoluteUrl(ogImage)],
+      images: [safeOgImage.startsWith("http") ? safeOgImage : getAbsoluteUrl(safeOgImage)],
       creator: "@comsri_corp",
     },
     category: category,
     authors: [{ name: SITE_CONFIG.name }],
+    other: extraMeta,
   };
 }
 
 export function getProductMetadata(product: {
+  id?: string | number;
   name: string;
   description?: string;
   short_description?: string;
@@ -88,6 +115,7 @@ export function getProductMetadata(product: {
   categories?: { name: string }[];
   images?: { src: string }[];
   sku?: string;
+  stock_status?: string;
 }): Metadata {
   const categoryName = product.categories?.[0]?.name || SITE_CONFIG.defaultCategory;
   const descriptionText = product.short_description || product.description || "";
@@ -102,6 +130,13 @@ export function getProductMetadata(product: {
     keywords,
     ogImage: imageUrl,
     category: categoryName,
+    productDetails: {
+      price: product.price,
+      currency: SITE_CONFIG.defaultCurrency,
+      availability: product.stock_status === "instock" ? "instock" : "outofstock",
+      brand: "Comsri Certified",
+      sku: product.sku || `SKU-${product.id}`,
+    },
   });
 }
 

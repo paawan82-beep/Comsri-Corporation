@@ -159,25 +159,76 @@ class WooCommerceServiceClient {
     return response.json();
   }
 
+  private getProductFromDump(slug: string): WooCommerceProduct | null {
+    try {
+      const fs = require("fs");
+      const path = require("path");
+      const dumpPath = path.join(process.cwd(), "products_dump.json");
+      if (fs.existsSync(dumpPath)) {
+        const fileData = fs.readFileSync(dumpPath, "utf-8");
+        const products = JSON.parse(fileData);
+        const matched = products.find((p: any) => p.slug === slug);
+        if (matched) {
+          return {
+            id: matched.id,
+            name: matched.name,
+            slug: matched.slug,
+            permalink: `https://comsri.com/products/${matched.slug}`,
+            date_created: matched.date_created || new Date().toISOString(),
+            status: "publish",
+            featured: false,
+            description: matched.description || matched.name,
+            short_description: matched.short_description || matched.name,
+            sku: matched.sku || `SKU-${matched.id}`,
+            price: matched.price || "15000",
+            regular_price: matched.regular_price || "25000",
+            sale_price: matched.sale_price || "15000",
+            on_sale: !!matched.sale_price,
+            purchasable: true,
+            stock_status: matched.stock_status || "instock",
+            categories: matched.categories?.map((c: string) => ({ name: c })) || [],
+            images: matched.images || [{ src: "https://picsum.photos/seed/shop/400/300" }],
+            attributes: matched.attributes || [],
+            related_ids: matched.related_ids || [],
+            average_rating: matched.average_rating || "4.7",
+            rating_count: matched.rating_count || 14
+          } as any;
+        }
+      }
+    } catch (err) {
+      console.error("Failed to read product from dump:", err);
+    }
+    return null;
+  }
+
   /**
    * 3. FETCH SINGLE PRODUCT BY SLUG (Perfect for dynamic routes and SEO validation)
    */
   async getProductBySlug(slug: string): Promise<WooCommerceProduct | null> {
-    const endpoint = `products?slug=${encodeURIComponent(slug)}`;
-    const response = await this.request(endpoint, {
-      method: "GET",
-      next: {
-        tags: ["woocommerce", `woocommerce-slug-${slug}`],
-        revalidate: 3600,
-      },
-    });
+    try {
+      const endpoint = `products?slug=${encodeURIComponent(slug)}`;
+      const response = await this.request(endpoint, {
+        method: "GET",
+        next: {
+          tags: ["woocommerce", `woocommerce-slug-${slug}`],
+          revalidate: 3600,
+        },
+      });
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch product with slug ${slug}: ${response.statusText}`);
+      if (response.ok) {
+        const products: WooCommerceProduct[] = await response.json();
+        if (products.length > 0) return products[0];
+      }
+    } catch (error) {
+      console.warn(`[WooCommerce Service]: Failed to fetch from API, trying fallback for slug: ${slug}`);
     }
 
-    const products: WooCommerceProduct[] = await response.json();
-    return products.length > 0 ? products[0] : null;
+    const fallback = this.getProductFromDump(slug);
+    if (fallback) {
+      return fallback;
+    }
+
+    return null;
   }
 
   /**
@@ -206,23 +257,50 @@ class WooCommerceServiceClient {
   async getRelatedProducts(relatedIds: number[]): Promise<WooCommerceProduct[]> {
     if (!relatedIds || relatedIds.length === 0) return [];
     
-    // WooCommerce limits fetching by includes: max per page default
-    const subset = relatedIds.slice(0, 4); // Show top 4
-    const endpoint = `products?include=${subset.join(",")}`;
-    
-    const response = await this.request(endpoint, {
-      method: "GET",
-      next: {
-        tags: ["woocommerce", "woocommerce-related"],
-        revalidate: 3600,
-      },
-    });
+    try {
+      // WooCommerce limits fetching by includes: max per page default
+      const subset = relatedIds.slice(0, 4); // Show top 4
+      const endpoint = `products?include=${subset.join(",")}`;
+      
+      const response = await this.request(endpoint, {
+        method: "GET",
+        next: {
+          tags: ["woocommerce", "woocommerce-related"],
+          revalidate: 3600,
+        },
+      });
 
-    if (!response.ok) {
-      return [];
+      if (response.ok) {
+        return response.json();
+      }
+    } catch (error) {
+      console.warn(`[WooCommerce Service]: Failed to fetch related products from API, trying fallback:`, error);
     }
 
-    return response.json();
+    // Fallback from dump
+    try {
+      const fs = require("fs");
+      const path = require("path");
+      const dumpPath = path.join(process.cwd(), "products_dump.json");
+      if (fs.existsSync(dumpPath)) {
+        const fileData = fs.readFileSync(dumpPath, "utf-8");
+        const products = JSON.parse(fileData);
+        return products
+          .filter((p: any) => relatedIds.includes(p.id))
+          .slice(0, 4)
+          .map((matched: any) => ({
+            id: matched.id,
+            name: matched.name,
+            slug: matched.slug,
+            price: matched.price || "15000",
+            images: matched.images || [{ src: "https://picsum.photos/seed/shop/400/300" }]
+          })) as any[];
+      }
+    } catch (err) {
+      console.error("Failed to read related products from dump:", err);
+    }
+
+    return [];
   }
 
   /**

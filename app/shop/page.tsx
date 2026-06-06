@@ -26,12 +26,14 @@ import {
   Apple,
   MessageCircle
 } from "lucide-react";
+import { Metadata } from "next";
 import { woocommerce } from "@/lib/services/woocommerce";
 import { getFilteredCatalog } from "@/lib/services/catalog";
 import Header from "../Header";
 import ShopCatalogClient from "./ShopCatalogClient";
+import { constructMetadata, getCategoryMetadata } from "../seo/metadata";
 
-export const dynamic = "force-dynamic"; // Ensure runtime dynamic evaluation for URL search/filter updates
+export const dynamic = "force-dynamic";
 
 interface ShopPageProps {
   searchParams: Promise<{
@@ -43,6 +45,52 @@ interface ShopPageProps {
     on_sale?: string;
     orderby?: string;
   }>;
+}
+
+export async function generateMetadata({ searchParams }: ShopPageProps): Promise<Metadata> {
+  const resolvedParams = await searchParams;
+  const currentCategory = resolvedParams.category || "";
+  const hasSortingOrFilters = resolvedParams.orderby || resolvedParams.min_price || resolvedParams.max_price || resolvedParams.on_sale || resolvedParams.search || resolvedParams.page;
+  const noIndex = !!hasSortingOrFilters;
+
+  if (currentCategory) {
+    try {
+      const categoriesData = await woocommerce.getCategories();
+      const activeCategory = (categoriesData || []).find((c: any) => c.id.toString() === currentCategory);
+      if (activeCategory) {
+        const baseMeta = getCategoryMetadata({
+          name: activeCategory.name,
+          description: activeCategory.description,
+          slug: activeCategory.slug,
+        });
+        return {
+          ...baseMeta,
+          alternates: {
+            canonical: `https://comsri.com/shop?category=${currentCategory}`,
+            languages: {
+              "en-IN": `https://comsri.com/shop?category=${currentCategory}`,
+              "x-default": `https://comsri.com/shop?category=${currentCategory}`,
+            },
+          },
+          robots: {
+            index: !noIndex,
+            follow: true,
+          },
+        };
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  return constructMetadata({
+    title: "Buy Refurbished Laptops & Desktops Online in India | Comsri Shop",
+    description: "Browse our commercial catalog of premium refurbished and new corporate IT hardware in India. 40+ point quality checklist with 1-year replacement warranty.",
+    path: "/shop",
+    canonical: "/shop",
+    keywords: ["refurbished store", "buy refurbished laptop india", "refurbished desktop catalog", "Comsri shop"],
+    noIndex,
+  });
 }
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {

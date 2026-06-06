@@ -15,7 +15,7 @@ import { Play, Apple, Facebook, Instagram, Youtube, MessageCircle } from "lucide
 import Breadcrumbs from "../../components/Breadcrumbs";
 import SummaryBlock from "../../components/SummaryBlock";
 import JsonLd from "../../components/JsonLd";
-import { getProductSchema } from "../../seo/schemas";
+import { getProductSchema, getBreadcrumbSchema } from "../../seo/schemas";
 import { getProductMetadata } from "../../seo/metadata";
 
 // Lazy-load heavy, non-critical interactive components with SSR enabled for SEO crawler crawlability
@@ -167,6 +167,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       
       {/* Dynamic Google Structured Search Schema Injection */}
       <JsonLd schema={productSchema} />
+      <JsonLd schema={getBreadcrumbSchema(breadcrumbItems)} />
 
       {/* Main product detail container */}
       <main className="flex-1 bg-[#f6f5f8] pb-12">

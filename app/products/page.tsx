@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Metadata } from "next";
 import { woocommerce } from "@/lib/services/woocommerce";
 import { getFilteredCatalog } from "@/lib/services/catalog";
+import { constructMetadata, getCategoryMetadata } from "../seo/metadata";
 
 interface CatalogPageProps {
   searchParams: Promise<{
@@ -12,6 +14,52 @@ interface CatalogPageProps {
 }
 
 export const revalidate = 3600; // Cache index static for up to 1hr (ISR protected by webhook purges)
+
+export async function generateMetadata({ searchParams }: CatalogPageProps): Promise<Metadata> {
+  const resolvedParams = await searchParams;
+  const currentCategory = resolvedParams.category || "";
+  const hasFilters = resolvedParams.search || resolvedParams.page;
+  const noIndex = !!hasFilters;
+
+  if (currentCategory) {
+    try {
+      const categoriesData = await woocommerce.getCategories();
+      const activeCategory = (categoriesData || []).find((c: any) => c.id.toString() === currentCategory);
+      if (activeCategory) {
+        const baseMeta = getCategoryMetadata({
+          name: activeCategory.name,
+          description: activeCategory.description,
+          slug: activeCategory.slug,
+        });
+        return {
+          ...baseMeta,
+          alternates: {
+            canonical: `https://comsri.com/products?category=${currentCategory}`,
+            languages: {
+              "en-IN": `https://comsri.com/products?category=${currentCategory}`,
+              "x-default": `https://comsri.com/products?category=${currentCategory}`,
+            },
+          },
+          robots: {
+            index: !noIndex,
+            follow: true,
+          },
+        };
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  return constructMetadata({
+    title: "Refurbished IT Hardware Catalog & Inventory",
+    description: "Browse our commercial inventory of certified refurbished enterprise hardware in India. Guaranteed quality with 1-year product warranty.",
+    path: "/products",
+    canonical: "/products",
+    keywords: ["refurbished computer inventory", "refurbished IT catalog", "cheap corporate hardware"],
+    noIndex,
+  });
+}
 
 export default async function ProductsCatalogPage({ searchParams }: CatalogPageProps) {
   const resolvedParams = await searchParams;
