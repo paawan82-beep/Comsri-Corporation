@@ -2,15 +2,16 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Apple, Play, Facebook, Instagram, Youtube, MessageCircle, RefreshCw, Target, Briefcase, Clock, HeartPulse, IndianRupee, ClipboardCheck, Rocket, Shield, ChartColumn, Leaf, Phone, MapPin, Mail, Send, ChevronDown, ArrowRight } from "lucide-react";
+import { Apple, Play, Facebook, Instagram, Youtube, MessageCircle, RefreshCw, Target, Briefcase, Clock, HeartPulse, IndianRupee, ClipboardCheck, Rocket, Shield, ChartColumn, Leaf, Phone, MapPin, Mail, Send, ChevronDown, ArrowRight, Trash2 } from "lucide-react";
 import Header from "../Header";
 
 const faqs = [
-  { q: "What is the minimum quantity required to qualify as a bulk order?", a: "To qualify for bulk pricing and specialized organizational support, a minimum order quantity of 10 devices is required." },
-  { q: "Do you offer custom configurations matching our IT policies?", a: "Yes, we can pre-configure laptops and desktops with custom OS images, required software, and hardware configurations per your IT specifications before shipping." },
-  { q: "How long does the delivery take for Pan-India bulk orders?", a: "Our typical delivery timeframe is 3-7 business days across India. For large custom orders, a delivery schedule will be shared during the quote process." },
-  { q: "What kind of warranty and post-sales support do you provide?", a: "We provide comprehensive 1-year hardware warranty on all refurbished and new systems, along with priority helpdesk support and options for specialized AMC covering your entire inventory." },
-  { q: "Are your refurbished systems certified and secure?", a: "Absolutely. We follow stringent 6-stage quality checks. Data from previous usage is wiped securely to DoD standards, and every component undergoes rigorous stress-testing." }
+  { q: "Where can I buy bulk laptops in India for my business?", a: "Comsri helps businesses buy bulk laptops in India with competitive pricing, enterprise support, and nationwide delivery. We supply quality-tested refurbished laptops, desktops, and mini PCs for startups, SMEs, educational institutions, and large enterprises." },
+  { q: "Is Comsri a trusted bulk computer supplier in India?", a: "Yes. Comsri is a trusted bulk computer supplier in India, providing refurbished laptops, bulk desktops, mini PCs, and enterprise IT equipment. Every device undergoes rigorous testing before deployment and is backed by warranty support." },
+  { q: "Do you offer refurbished laptops in India for enterprises?", a: "Yes. We provide enterprise-grade refurbished laptops in India from leading brands such as Dell, HP, and Lenovo. Our refurbishment process ensures reliable performance, quality assurance, and significant cost savings compared to new devices." },
+  { q: "Can I order bulk desktops in India for office deployments?", a: "Absolutely. Comsri supplies bulk desktops in India for corporate offices, educational institutions, call centers, government projects, and large-scale workforce deployments. We can fulfill both small and high-volume requirements." },
+  { q: "Do you supply mini PCs in India for business use?", a: "Yes. We offer mini PCs in India that are ideal for modern offices, reception areas, remote work setups, educational labs, and space-constrained environments. Mini PCs deliver enterprise performance while reducing space and power consumption." },
+  { q: "What kind of warranty and after-sales support do you provide for bulk orders?", a: "We provide comprehensive 1-year warranty on all refurbished systems, along with priority helpdesk support and options for specialized AMC covering your entire inventory." },
 ];
 
 export default function BulkOrdersClient() {
@@ -24,7 +25,7 @@ export default function BulkOrdersClient() {
         {/* Breadcrumb Header */}
         <div className="bg-[#f2ece4] w-full py-2.5 border-b border-gray-200/50">
           <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-start gap-4">
-            <h1 className="text-[28px] font-medium text-[#111] tracking-tight">Bulk Orders</h1>
+            <span className="text-[28px] font-medium text-[#111] tracking-tight">Bulk Orders</span>
             <p className="text-[15px] text-[#777] font-medium mt-1">Home <span className="mx-1.5 text-gray-400">/</span> <span className="text-[#111] font-bold">Bulk Orders</span></p>
           </div>
         </div>
@@ -48,11 +49,11 @@ export default function BulkOrdersClient() {
               </div>
 
               <h1 className="text-[28px] xs:text-[32px] sm:text-[36px] md:text-[42px] font-medium leading-[1.15] sm:leading-[1.1] tracking-tight mb-2 text-white">
-                Cut Enterprise IT Costs by <span className="text-[#faba5b]">70%</span> Without Compromising Performance
+                Cut Enterprise IT Costs by <span className="text-[#faba5b]">70%</span> <br />with Bulk Laptops, Desktops & Mini PCs
               </h1>
 
               <p className="text-[15px] sm:text-[16px] md:text-[18px] text-white/95 leading-relaxed font-normal mb-5 mt-2 max-w-xl shadow-none">
-                Enterprise-grade refurbished laptops, desktops & IT equipment for India&apos;s leading companies. From ₹15,000 with flexible payment options.
+                Buy enterprise-grade refurbished laptops, bulk laptops, desktops, mini PCs, and IT equipment in India for businesses and enterprises. Starting from ₹15,000 with bulk pricing, flexible payment options, and fast nationwide delivery.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8 w-full sm:w-auto">
@@ -176,10 +177,10 @@ export default function BulkOrdersClient() {
           <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
             <div className="mb-14 max-w-4xl">
               <h2 className="text-[32px] md:text-[40px] font-medium text-[#111] mb-4 tracking-tight">
-                What <span className="text-[#0d7fba] font-bold">Comsri</span> Does : <span className="text-[#0d7fba]">Full Asset Lifecycle Management</span>
+                What <span className="text-[#0d7fba] font-bold">Comsri</span> Does : <span className="text-[#0d7fba]">Bulk Laptops, Desktops & Mini PCs Solutions for Businesses in India</span>
               </h2>
               <p className="text-[17px] text-[#555] leading-relaxed max-w-3xl font-medium">
-                Comsri delivers a closed-loop IT asset lifecycle programme — from procurement through to certified disposal — designed specifically for compliance-intensive environments.
+                Comsri delivers a closed-loop IT asset lifecycle programme from bulk laptop procurement and refurbished desktops to deployment and certified disposal designed for compliance intensive businesses across India.
               </p>
             </div>
 
@@ -191,7 +192,7 @@ export default function BulkOrdersClient() {
                 </div>
                 <h3 className="text-[20px] font-bold text-[#111] mb-3">Buyback of Old Assets</h3>
                 <p className="text-[15px] text-[#666] leading-relaxed">
-                  Structured buyback of your existing devices to immediately recover residual value and reduce write-off exposure — with certified documentation for every asset collected.
+                  Structured buyback solutions for your existing devices that help recover residual value quickly while minimizing write-off risks  backed by certified documentation for every collected asset.
                 </p>
               </div>
 
@@ -202,7 +203,7 @@ export default function BulkOrdersClient() {
                 </div>
                 <h3 className="text-[20px] font-bold text-[#111] mb-3">Refurbish & Redeploy</h3>
                 <p className="text-[15px] text-[#666] leading-relaxed">
-                  Certified refurbishment and internal redeployment ensures assets reach full potential before end-of-life consideration — with a 72+ point QC checklist on every device.
+                  Our certified refurbishment and redeployment process extends asset usability before end-of-life consideration, with every device undergoing a rigorous 72+ point QC assessment.
                 </p>
               </div>
 
@@ -213,7 +214,7 @@ export default function BulkOrdersClient() {
                 </div>
                 <h3 className="text-[20px] font-bold text-[#111] mb-3">Refurbished Device Supply</h3>
                 <p className="text-[15px] text-[#666] leading-relaxed">
-                  Grade-A refurbished devices supplied with full QC documentation, warranty coverage, and traceability records — ready for deployment the moment they arrive.
+                  Supply of A+ Grade refurbished devices backed by comprehensive QC documentation, warranty coverage, and full traceability ensuring immediate deployment upon delivery.
                 </p>
               </div>
 
@@ -235,7 +236,18 @@ export default function BulkOrdersClient() {
                 </div>
                 <h3 className="text-[20px] font-bold text-[#111] mb-3">CSR Redeployment</h3>
                 <p className="text-[15px] text-[#666] leading-relaxed">
-                  End-of-life assets redirected through verified CSR channels with full visibility reporting for ESG disclosures — CPCB/EPR certified disposal included.
+                  Ensure responsible end-of-life asset management through verified CSR channels, supported by full visibility reporting for ESG compliance and CPCB/EPR-certified disposal.
+                </p>
+              </div>
+
+              {/* Card 6 */}
+              <div className="bg-white border border-gray-100 rounded-[24px] p-8 lg:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group">
+                <div className="w-14 h-14 bg-[#eef8fe] rounded-2xl flex items-center justify-center mb-6 text-[#0d7fba] group-hover:bg-[#0d7fba] group-hover:text-white transition-colors">
+                  <Trash2 size={28} strokeWidth={2} />
+                </div>
+                <h3 className="text-[20px] font-bold text-[#111] mb-3">E-Waste Recycling</h3>
+                <p className="text-[15px] text-[#666] leading-relaxed">
+                  Ensure secure and responsible e-waste recycling through certified processes, complete traceability reporting, and CPCB/EPR-compliant disposal for sustainable end-of-life asset management.
                 </p>
               </div>
             </div>
@@ -247,10 +259,10 @@ export default function BulkOrdersClient() {
           <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
             <div className="mb-14 max-w-4xl">
               <h2 className="text-[32px] md:text-[38px] font-medium text-[#0d7fba] mb-4 tracking-tight">
-                Why India&apos;s Leading Enterprises Choose Comsri
+                Why Businesses Across India Choose Comsri for Bulk Laptops and Desktops
               </h2>
               <p className="text-[17px] text-[#666] leading-relaxed max-w-3xl font-medium">
-                The most trusted name in enterprise refurbished IT — quality you can count on, savings you can prove.
+                As a leading corporate laptop supplier in India, Comsri provides bulk laptops, bulk desktops, mini PCs, and refurbished laptops for enterprises nationwide. Our quality tested systems, flexible procurement options, and dedicated support help businesses reduce IT costs without compromising performance.
               </p>
             </div>
 
@@ -265,7 +277,7 @@ export default function BulkOrdersClient() {
                   Save Up to 70%
                 </h3>
                 <p className="text-[15px] text-[#666] leading-relaxed">
-                  Get enterprise-grade ThinkPad, Latitude & EliteBook devices at a fraction of the new price.
+                  Buy bulk laptops from leading business series including ThinkPad, Latitude, and EliteBook ideal for enterprises seeking reliable, cost-effective IT solutions.
                 </p>
               </div>
 
@@ -279,7 +291,7 @@ export default function BulkOrdersClient() {
                   72+ Quality Checks
                 </h3>
                 <p className="text-[15px] text-[#666] leading-relaxed">
-                  Every device goes through rigorous multi-point inspection before it reaches your team.
+                  Every refurbished laptop, desktop, and mini PC undergoes rigorous multi-point testing to ensure reliable performance, quality, and enterprise ready deployment.
                 </p>
               </div>
 
@@ -293,7 +305,7 @@ export default function BulkOrdersClient() {
                   Fast Deployment
                 </h3>
                 <p className="text-[15px] text-[#666] leading-relaxed">
-                  From order to your desk in 3-7 days anywhere in India. 500 devices, no problem.
+                  Get bulk laptops, desktops, and mini PCs delivered across India in 6–7 days, backed by reliable inventory and enterprise scale fulfillment.
                 </p>
               </div>
 
@@ -307,7 +319,7 @@ export default function BulkOrdersClient() {
                   1-3 Year Warranty
                 </h3>
                 <p className="text-[15px] text-[#666] leading-relaxed">
-                  Comprehensive warranty with pan-India service network. Extended plans available.
+                  Comprehensive warranty coverage backed by a pan-India service network, with extended protection plans available for enterprise deployments.
                 </p>
               </div>
 
@@ -321,7 +333,7 @@ export default function BulkOrdersClient() {
                   Flexible Payments
                 </h3>
                 <p className="text-[15px] text-[#666] leading-relaxed">
-                  Lease, rent, or buy. OpEx-friendly models to protect your cash flow and balance sheet.
+                  Flexible payment options and bulk pricing designed to help businesses optimize IT budgets without compromising on quality.
                 </p>
               </div>
 
@@ -335,7 +347,7 @@ export default function BulkOrdersClient() {
                   ESG Compliant
                 </h3>
                 <p className="text-[15px] text-[#666] leading-relaxed">
-                  Reduce e-waste by 65%. Meet sustainability targets and CSR commitments effortlessly.
+                  Reduce IT waste with refurbished laptops, desktops, and mini PCs that deliver enterprise performance while supporting sustainable business practices.
                 </p>
               </div>
             </div>
@@ -344,32 +356,30 @@ export default function BulkOrdersClient() {
 
         {/* Contact Form Section */}
         <div
-          className="bg-[#0B1120] pt-12 lg:pt-16 pb-12 lg:pb-16 relative overflow-hidden"
+          className="bg-[#0B1120] pt-12 lg:pt-16 pb-12 lg:pb-16 relative overflow-hidden mx-5 lg:mx-auto rounded-[30px]"
           style={{
-            borderRadius: '30px',
-            marginLeft: '20px',
-            marginRight: '20px',
-            width: '100%',
-            maxWidth: 'calc(100% - 40px)'
+            maxWidth: '1520px',
+            width: 'calc(100% - 40px)'
           }}
         >
+          {/* Background elements */}
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
             <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-white/5 rounded-full blur-[100px]"></div>
             <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#ffc300]/10 rounded-full blur-[100px]"></div>
           </div>
 
-          <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row relative z-10 px-6 lg:px-12">
+          <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row relative z-10 px-6 lg:px-12 gap-8 lg:gap-12">
             {/* Left Column */}
-            <div className="w-full lg:w-[55%] py-8 lg:py-8 lg:pr-16 xl:pr-24 flex flex-col justify-center gap-10 lg:gap-12 relative z-10 text-white">
+            <div className="w-full lg:w-[55%] py-8 lg:py-12 lg:pr-8 xl:pr-16 flex flex-col justify-between gap-10 relative z-10 text-white">
               <div>
                 <div className="inline-flex items-center gap-2 border border-[#ffc300]/30 rounded-full py-1.5 px-3 mb-8">
-                  <span className="text-[#ffc300] font-medium text-[14px]">Start A Project</span>
+                  <span className="text-[#ffc300] font-medium text-[14px]">Get Your Custom Bulk IT Quote Today</span>
                 </div>
                 <h2 className="text-[40px] md:text-[56px] lg:text-[64px] font-bold leading-[1.05] tracking-tight mb-6">
-                  Let&apos;s Build Your<br />Digital Future
+                  Request a Bulk Laptop & IT Equipment Quote
                 </h2>
-                <p className="text-[16px] md:text-[18px] text-white/50 leading-relaxed max-w-lg mb-8 font-medium">
-                  Ready to launch your next project? Fill out the form below or reach out directly to start a conversation about your business needs.
+                <p className="text-[16px] md:text-[18px] text-white/50 leading-relaxed max-w-2xl font-medium">
+                  Partner with one of India's trusted corporate laptop suppliers for bulk IT procurement. From bulk laptops in India and bulk desktops in India to refurbished laptops in India and mini PCs for enterprise deployments, Comsri delivers quality-tested devices backed by warranty support, flexible payment options, and nationwide logistics. Whether you're looking to buy bulk laptops, source wholesale laptops in India, wholesale computers in India, or purchase used laptops in bulk, our team is ready to provide a customized quote for your business.
                 </p>
               </div>
 
@@ -387,7 +397,7 @@ export default function BulkOrdersClient() {
             </div>
 
             {/* Right Column */}
-            <div className="w-full lg:w-[45%] py-8 lg:py-12 flex items-center">
+            <div className="w-full lg:w-[45%] py-8 lg:py-12 flex items-stretch">
               <div className="w-full h-full bg-[#ffc300] rounded-[24px] lg:rounded-[32px] p-8 lg:p-12 shadow-[0_20px_50px_rgba(255,195,0,0.15)] flex flex-col justify-center">
                 <div className="space-y-6 w-full">
                   <div className="flex flex-col md:flex-row gap-6 w-full">
@@ -431,12 +441,17 @@ export default function BulkOrdersClient() {
                   <div className="flex flex-col md:flex-row gap-6 w-full">
                     <div className="w-full md:w-1/2">
                       <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Device Category</label>
-                      <select defaultValue="" className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] text-[16px] outline-none focus:bg-white/50 transition-all font-medium">
-                        <option value="" disabled className="text-[#131212]/50 bg-white">Select Category</option>
-                        <option value="desktop" className="text-[#131212] bg-white">Laptops & Desktops</option>
-                        <option value="workstation" className="text-[#131212] bg-white">Workstations</option>
-                        <option value="other" className="text-[#131212] bg-white">Other Devices</option>
-                      </select>
+                      <div className="relative w-full">
+                        <select defaultValue="" className="w-full bg-white/30 border-none rounded-[16px] py-4 pl-6 pr-12 text-[#131212] text-[16px] outline-none focus:bg-white/50 transition-all font-medium appearance-none cursor-pointer">
+                          <option value="" disabled className="text-[#131212]/50 bg-white">Select Category</option>
+                          <option value="desktop" className="text-[#131212] bg-white">Laptops & Desktops</option>
+                          <option value="workstation" className="text-[#131212] bg-white">Workstations</option>
+                          <option value="other" className="text-[#131212] bg-white">Other Devices</option>
+                        </select>
+                        <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-[#131212]/60">
+                          <ChevronDown size={18} />
+                        </div>
+                      </div>
                     </div>
                     <div className="w-full md:w-1/2">
                       <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Quantity</label>
@@ -479,10 +494,10 @@ export default function BulkOrdersClient() {
                 <span className="text-[#0d7fba] font-medium text-[13px] tracking-wide uppercase">Common Questions</span>
               </div>
               <h2 className="text-[36px] md:text-[45px] lg:text-[50px] font-bold text-[#111] leading-[1.1] tracking-tight mb-6">
-                Everything you need to know about bulk orders.
+                Questions About Buying Bulk Laptops in India?
               </h2>
               <p className="text-[17px] text-[#666] leading-relaxed mb-10 max-w-md">
-                Find answers to common questions about our bulk ordering process, organizational discounts, and post-sales support.
+                Get answers to common questions about buying bulk laptops, desktops, mini PCs, pricing, delivery, warranties, and enterprise IT procurement across India.
               </p>
 
               <div className="p-6 bg-white rounded-[24px] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-md">

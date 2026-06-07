@@ -131,7 +131,7 @@ export default function AboutClient() {
         {/* Breadcrumb Header */}
         <div className="bg-[#f2ece4] w-full py-2.5">
           <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-start gap-4">
-            <h1 className="text-[28px] font-medium text-[#111] tracking-tight">About us</h1>
+            <span className="text-[28px] font-medium text-[#111] tracking-tight">About us</span>
             <p className="text-[15px] text-[#777] font-medium mt-1">Home <span className="mx-1.5 text-gray-400">/</span> <span className="text-[#111] font-bold">About us</span></p>
           </div>
         </div>
@@ -142,7 +142,7 @@ export default function AboutClient() {
             {/* Left Image */}
             <div className="w-full lg:w-1/2 relative bg-gray-100 min-h-[400px] lg:min-h-[auto] rounded-t-[24px] lg:rounded-tr-none lg:rounded-l-[24px] overflow-hidden">
               <Image 
-                src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200" 
+                src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Comsri-Office-Reception-1.jpeg" 
                 alt="Comsri Corporation Office" 
                 fill 
                 referrerPolicy="no-referrer"
@@ -152,18 +152,18 @@ export default function AboutClient() {
             
             {/* Right Content */}
             <div className="w-full lg:w-1/2 bg-[#3452ef] p-10 lg:p-14 xl:p-16 flex flex-col gap-5 text-white rounded-b-[24px] lg:rounded-bl-none lg:rounded-r-[24px]">
-              <h2 className="text-[28px] md:text-[34px] font-medium tracking-tight mb-2 leading-tight">About Comsri Corporation — Trusted Name in New & Refurbished Computers</h2>
+              <h1 className="text-[28px] md:text-[34px] font-medium tracking-tight mb-2 leading-tight">About Comsri Corporation — Trusted Online Store for Refurbished Computers</h1>
               
               <p className="text-[14px] md:text-[15px] font-medium leading-relaxed text-white/95">
-                <strong>About Comsri Corporation</strong> was founded in 2020 with a clear vision to make reliable and affordable computing accessible across India. What started as a focused initiative has grown into a <strong>trusted computer seller in India</strong> and a well-recognized <strong>refurbished computer online store in India</strong>, serving individuals, professionals, startups, and enterprises with dependable technology solutions.
+                Founded in 2020, Comsri Corporation was established with a vision to make reliable, affordable, and high-performance computing accessible across India. Over the years, we have grown into a trusted online store for refurbished computers in India, serving individuals, professionals, startups, educational institutions, resellers, and businesses with dependable IT hardware solutions.
               </p>
               
               <p className="text-[14px] md:text-[15px] font-medium leading-relaxed text-white/95">
-                We specialize in supplying both new and refurbished laptops, desktops, workstations, and mini PCs that meet modern performance standards. As an established <strong>IT hardware solutions company in India</strong>, Comsri Corporation ensures every system is carefully sourced, thoroughly tested, and quality-checked for durability, performance, and long-term value—making technology more accessible without compromising on reliability.
+                Comsri Corporation specializes in new and refurbished laptops, desktops, workstations, and mini PCs sourced from leading global brands. Every device undergoes rigorous testing, quality control, and performance verification to ensure reliability, durability, and long-term value. Our commitment to quality has positioned us as a trusted destination for refurbished laptops and desktops in India, helping customers access business-grade technology at cost-effective prices.
               </p>
               
               <p className="text-[14px] md:text-[15px] font-medium leading-relaxed text-white/95">
-                Built on transparency, quality assurance, and customer satisfaction, Comsri Corporation continues to support retail and bulk requirements nationwide. As a reliable <strong>computer wholesaler in India</strong>, we help businesses and resellers access high-quality computing systems at competitive prices while delivering consistent support and trusted after-sales service.
+                Beyond retail sales, we support bulk orders for organizations, resellers, and enterprises seeking scalable IT procurement solutions. Whether you need refurbished laptops for employees, desktops for educational institutions, workstations for professional workloads, or mini PCs for compact deployments, Comsri Corporation delivers quality-tested systems backed by responsive customer support and transparent service standards.
               </p>
 
               <h3 className="text-[22px] md:text-[24px] font-bold tracking-tight mt-3">Our Mission</h3>

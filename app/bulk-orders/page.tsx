@@ -3,10 +3,10 @@ import BulkOrdersClient from "./BulkOrdersClient";
 import { constructMetadata } from "../seo/metadata";
 
 export const metadata: Metadata = constructMetadata({
-  title: "Bulk Refurbished Laptops & Desktops for Corporate Offices",
-  description: "Enterprise-grade refurbished laptops, desktops, and IT hardware for India's leading companies. High quality with 1-year warranty and flexible bulk plans.",
+  title: "Buy Bulk Laptops, Desktops & Mini PCs in India | Comsri Corporation",
+  description: "Buy bulk laptops, desktops, and mini PCs in India from Comsri Corporation. Quality-tested systems, competitive pricing, bulk deals, and fast nationwide delivery.",
   path: "/bulk-orders",
-  keywords: ["bulk refurbished laptops", "corporate IT procurement", "wholesale desktops India", "office laptops bulk"],
+  keywords: ["bulk laptops India", "buy bulk laptops", "bulk desktops India", "mini PCs India", "wholesale laptops India", "refurbished laptops India", "bulk computer supplier India", "corporate laptop supplier India", "wholesale computers India", "used laptops in bulk"],
 });
 
 export default function BulkOrdersPage() {
