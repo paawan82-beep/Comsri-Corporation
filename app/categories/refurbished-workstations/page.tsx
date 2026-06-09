@@ -168,7 +168,7 @@ export default async function RefurbishedWorkstationsPage({ searchParams }: Cate
               <span className="text-xs text-slate-400 font-medium self-center mr-1">Popular Categories:</span>
               {[
                 { label: "Refurbished Laptops", path: "/categories/buy-refurbished-laptops-online-in-india" },
-                { label: "Refurbished Desktops", path: "/categories/refurbished-desktops" },
+                { label: "Refurbished Desktops", path: "/categories/buy-high-quality-refurbished-desktops" },
                 { label: "Workstations", path: "/categories/refurbished-workstations" },
                 { label: "Mini PCs", path: "/categories/refurbished-mini-pcs" }
               ].map((cat) => (
@@ -242,7 +242,7 @@ export default async function RefurbishedWorkstationsPage({ searchParams }: Cate
               <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Refurbished Products</h3>
               <div className="flex flex-col gap-3">
                 {[
-                  { label: "Refurbished Desktops", path: "/categories/refurbished-desktops" },
+                  { label: "Refurbished Desktops", path: "/categories/buy-high-quality-refurbished-desktops" },
                   { label: "Refurbished Laptops", path: "/categories/buy-refurbished-laptops-online-in-india" },
                   { label: "Refurbished Workstations", path: "/categories/refurbished-workstations" },
                   { label: "Refurbished Macbooks", path: "/categories/buy-refurbished-laptops-online-in-india" },

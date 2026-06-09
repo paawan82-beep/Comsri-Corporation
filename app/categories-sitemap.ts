@@ -20,7 +20,7 @@ export async function GET() {
     "/categories/new-laptops",
     "/categories/new-all-in-one",
     "/categories/buy-refurbished-laptops-online-in-india",
-    "/categories/refurbished-desktops",
+    "/categories/buy-high-quality-refurbished-desktops",
     "/categories/refurbished-workstations",
     "/categories/refurbished-mini-pcs",
     // Brands

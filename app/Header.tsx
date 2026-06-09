@@ -641,7 +641,7 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-600">
                           <Monitor size={16} />
                         </div>
-                        <Link href="/shop?category=129" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/categories/buy-high-quality-refurbished-desktops" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
                           Refurbished Desktops
                         </Link>
                       </div>
