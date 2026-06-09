@@ -19,12 +19,39 @@ const getRazorpayInstance = (): Razorpay => {
   });
 };
 
+// Simple in-memory rate limiter store to protect API from flooding
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const LIMIT = 5; // Allow max 5 checkout requests
+const WINDOW_MS = 60 * 1000; // per 1 minute window
+
 /**
  * Checkout Transaction Initiator
  * Generates WooCommerce Order and corresponding Razorpay Transaction securely on the server.
  */
 export async function POST(req: NextRequest) {
   try {
+    // 1. Enforce API Rate Limiting
+    const ip = req.headers.get("x-forwarded-for") || "127.0.0.1";
+    const now = Date.now();
+    const clientLimit = rateLimitStore.get(ip);
+
+    if (clientLimit) {
+      if (now > clientLimit.resetTime) {
+        // Window expired, reset limit
+        rateLimitStore.set(ip, { count: 1, resetTime: now + WINDOW_MS });
+      } else if (clientLimit.count >= LIMIT) {
+        // Limit exceeded
+        return NextResponse.json(
+          { error: "Too many checkout requests. Please try again after 60 seconds." },
+          { status: 429 }
+        );
+      } else {
+        clientLimit.count++;
+      }
+    } else {
+      rateLimitStore.set(ip, { count: 1, resetTime: now + WINDOW_MS });
+    }
+
     const { items, productId, quantity = 1, billing, shipping, couponCode } = await req.json();
 
     let orderItems: { product_id: number; quantity: number }[] = [];
@@ -83,21 +110,28 @@ export async function POST(req: NextRequest) {
       descriptionNote = `${product.name} (x${qty})`;
     }
 
-    // Apply Coupon Code Validation and Discount calculation server-side
+    // Apply Coupon Code Validation and Discount calculation server-side dynamically from WooCommerce
     let discountAmount = 0;
     if (couponCode) {
-      const code = couponCode.toUpperCase();
-      if (code === "WELCOME10") {
-        discountAmount = totalLinePrice * 0.1;
-      } else if (code === "COMSRI70") {
-        discountAmount = totalLinePrice * 0.7;
-      } else if (code === "DEAL1500") {
-        discountAmount = Math.min(1500, totalLinePrice);
-      } else {
-        return NextResponse.json({ error: "Invalid coupon code applied." }, { status: 400 });
+      const activeCoupon = await woocommerce.getCoupon(couponCode);
+      if (!activeCoupon) {
+        return NextResponse.json({ error: "Invalid or expired coupon code applied." }, { status: 400 });
       }
+
+      const couponType = activeCoupon.discount_type; // e.g. 'percent' or 'fixed_cart'
+      const amount = parseFloat(activeCoupon.amount || "0");
+
+      if (couponType === "percent") {
+        discountAmount = totalLinePrice * (amount / 100);
+      } else if (couponType === "fixed_cart" || couponType === "fixed_product") {
+        discountAmount = Math.min(amount, totalLinePrice);
+      } else {
+        // Fallback for custom percentage calculations
+        discountAmount = totalLinePrice * (amount / 100);
+      }
+      
       totalLinePrice = Math.max(0, totalLinePrice - discountAmount);
-      descriptionNote += ` [Discount Coupon: ${code}]`;
+      descriptionNote += ` [Discount Coupon: ${couponCode.toUpperCase()}]`;
     }
 
     if (totalLinePrice <= 0 && discountAmount === 0) {

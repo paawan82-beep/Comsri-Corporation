@@ -3,7 +3,7 @@ import PolicyClient from "@/app/components/PolicyClient";
 
 export const metadata = constructMetadata({
   title: "Terms & Conditions",
-  description: "Review Comsri Corporation's user agreements, service terms, purchase policies, and transaction terms.",
+  description: "Read the Terms & Conditions of Comsri for using our website and purchasing refurbished IT products and recycling services in India.",
   path: "/terms-conditions",
 });
 

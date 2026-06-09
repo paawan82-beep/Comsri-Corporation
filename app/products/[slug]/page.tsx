@@ -127,13 +127,13 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     { name: product.name, item: `/products/${product.slug}` }
   ];
 
-  // AEO Summary Block Data
-  const summaryDefinition = `The ${product.name} is a high-performance, business-grade device thoroughly tested and optimized for professional deployment, remote schooling, office databases, and developer workloads. Certified Grade-A refurbished with verified hardware consistency.`;
+  // AEO Summary Block Data - Company trust building overview
+  const summaryDefinition = `About Comsri Corporation was founded in 2020 with a clear vision to make reliable and affordable computing accessible across India. What started as a focused initiative has grown into a trusted computer seller in India and a well-recognized refurbished computer online store in India, serving individuals, professionals, startups, and enterprises with dependable technology solutions.`;
   const summaryTakeaways = [
-    "Comprehensive 40+ point hardware diagnostics validation.",
-    "Includes fully compatible charger and original preloaded OS.",
-    "Protected by Comsri's 1-Year hardware replacement warranty.",
-    "Free insured PAN-India shipping with real-time tracking updates."
+    "40+ Point Diagnostic QC: Every machine undergoes multi-level hardware inspections, stress tests, and fresh thermal compound repasting.",
+    "1-Year Free Warranty: Direct, hassle-free warranty covered fully by Comsri Corporation.",
+    "Insured PAN-India Shipping: Completely free, secure transit with real-time tracking updates directly to your doorstep.",
+    "Original OS & Charger: Ships with preloaded licensed operating systems and matching, load-tested power adapters."
   ];
 
   // AEO FAQ Block Data
@@ -164,24 +164,21 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   return (
     <div className="min-h-screen bg-[#f6f5f8] flex flex-col font-sans">
       <Header />
-      
+
       {/* Dynamic Google Structured Search Schema Injection */}
       <JsonLd schema={productSchema} />
       <JsonLd schema={getBreadcrumbSchema(breadcrumbItems)} />
 
       {/* Main product detail container */}
       <main className="flex-1 bg-[#f6f5f8] pb-12">
-        {/* Structural Breadcrumbs Trail */}
-        <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 pt-6">
-          <Breadcrumbs items={breadcrumbItems} />
-        </div>
+
 
         <ProductDetailClient product={product} />
 
         {/* AEO Summary definition block */}
         <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 py-8">
           <SummaryBlock
-            title={product.name}
+            title="Comsri Corporation"
             definition={summaryDefinition}
             takeaways={summaryTakeaways}
           />
@@ -190,7 +187,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         {/* Dynamic specifications comparison table */}
         {specsRows.length > 0 && (
           <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 pb-12">
-            <h2 className="text-xl font-extrabold text-slate-900 mb-4">Detailed Technical Specifications</h2>
+            <span className="text-[#3452ef] text-xs font-extrabold uppercase tracking-wider block mb-2">Verified Parameters</span>
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mb-5">Detailed Technical Specifications</h2>
             <ComparisonTable
               headers={["Hardware Attribute", "Configuration Details", "Quality Standard"]}
               rows={specsRows}
@@ -203,25 +201,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           <ProductTabsClient product={product} />
         </div>
 
-        {/* Customer Review section showing star ratings and AggregateRating schema */}
-        <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 pb-12">
-          <ReviewSection
-            productId={product.id}
-            productName={product.name}
-            slug={product.slug}
-            sku={product.sku}
-            price={product.price}
-            stockStatus={product.stock_status}
-            brand="Comsri Certified"
-            reviews={mockReviews}
-            ratingValue={ratingValue}
-            ratingCount={ratingCount}
-          />
-        </div>
-
         {/* AEO Frequently Asked Questions Accordion */}
         <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 pb-12">
-          <FAQ items={productFaqs} title={`Frequently Asked Questions for ${product.name}`} />
+          <FAQ items={productFaqs} title="Frequently Asked Questions" />
         </div>
 
         {/* Recommended Related products listing */}
@@ -268,7 +250,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         <div className="max-w-[1600px] mx-auto flex flex-col items-center w-full px-4 lg:px-6">
           <div className="mb-8 text-center flex flex-col items-center w-full">
             <div className="mb-[18px] text-[#111] bg-transparent border-[1.5px] border-[#111] rounded-[8px] p-1.5 inline-flex">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
             </div>
             <h2 className="text-[28px] md:text-[36px] font-bold text-[#111] tracking-tight mb-2">Comsri Corporation</h2>
             <p className="text-[16px] md:text-[18px] text-[#333] font-medium">
@@ -299,7 +281,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       {/* Footer Section */}
       <footer className="bg-[#fcb643] pt-10 md:pt-16 pb-8 md:pb-12 w-full relative">
         <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 flex flex-col gap-8 md:gap-12">
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 justify-between">
             {/* Address */}
             <div className="flex flex-col pr-4">

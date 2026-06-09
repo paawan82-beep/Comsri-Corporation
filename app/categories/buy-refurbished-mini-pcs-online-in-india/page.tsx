@@ -26,11 +26,11 @@ import { SITE_CONFIG } from "../../seo/constants";
 
 export const dynamic = "force-dynamic";
 
-const CATEGORY_ID = "129"; // Refurbished Desktops Category ID
-const PAGE_TITLE = "Buy High Quality Refurbished Desktops";
+const CATEGORY_ID = "137"; // Refurbished Mini PCs Category ID
+const PAGE_TITLE = "Buy Refurbished Mini PCs Online in India";
 const PAGE_DESCRIPTION =
-  "Buy high quality refurbished desktops online in India with warranty. Get top brands, fully tested PCs, best prices, and fast delivery. Upgrade your workspace today.";
-const PAGE_PATH = "/categories/buy-high-quality-refurbished-desktops";
+  "Buy refurbished Mini PCs online in India from Comsri. Affordable Mini PCs, professionally tested with warranty. Perfect for office, business & home use.";
+const PAGE_PATH = "/categories/buy-refurbished-mini-pcs-online-in-india";
 
 interface CategoryPageProps {
   searchParams: Promise<{
@@ -60,25 +60,25 @@ export async function generateMetadata({ searchParams }: CategoryPageProps): Pro
     path: PAGE_PATH,
     canonical: PAGE_PATH,
     keywords: [
-      "Buy High Quality Refurbished Desktops",
-      "refurbished desktops online",
-      "buy refurbished desktops in India",
-      "refurbished PCs with warranty",
-      "refurbished desktop computers",
-      "where to buy refurbished desktops in India",
-      "refurbished computers in India",
-      "certified refurbished desktops",
-      "refurbished Dell desktops India",
-      "refurbished HP desktops India",
-      "refurbished Lenovo desktops India",
-      "cheap computers India",
-      "used desktops with warranty",
+      "Buy Refurbished Mini PCs Online",
+      "Buy Refurbished Mini PCs Online in India",
+      "best refurbished mini PCs in India",
+      "buy used mini computers online",
+      "where to buy refurbished mini PCs in India",
+      "refurbished micro computers in India",
+      "certified refurbished mini PCs",
+      "refurbished Dell micro PC India",
+      "refurbished HP mini PC India",
+      "refurbished Lenovo tiny PC India",
+      "refurbished Mac Mini India",
+      "cheap tiny computers India",
+      "used micro PCs with warranty",
     ],
     noIndex,
   });
 }
 
-export default async function RefurbishedDesktopsPage({ searchParams }: CategoryPageProps) {
+export default async function RefurbishedMiniPCsPage({ searchParams }: CategoryPageProps) {
   const resolvedParams = await searchParams;
   const currentQuery = resolvedParams.search || "";
   const currentPage = parseInt(resolvedParams.page || "1", 10);
@@ -113,7 +113,7 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
         cat.name.toLowerCase() !== "refurbished products"
     );
   } catch (err: any) {
-    console.error("[Desktops Category Server Loading Error]:", err);
+    console.error("[Mini PCs Category Server Loading Error]:", err);
     fetchError = err.message || "Could not synchronize with the WordPress catalog database.";
   }
 
@@ -126,7 +126,190 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_CONFIG.url },
       { "@type": "ListItem", "position": 2, "name": "Shop", "item": `${SITE_CONFIG.url}/shop` },
-      { "@type": "ListItem", "position": 3, "name": "Refurbished Desktops", "item": `${SITE_CONFIG.url}${PAGE_PATH}` },
+      { "@type": "ListItem", "position": 3, "name": "Refurbished Mini PCs", "item": `${SITE_CONFIG.url}${PAGE_PATH}` },
+    ],
+  };
+
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#webpage`,
+    "name": PAGE_TITLE,
+    "description": PAGE_DESCRIPTION,
+    "url": `${SITE_CONFIG.url}${PAGE_PATH}`,
+    "isPartOf": { "@id": `${SITE_CONFIG.url}/#website` },
+    "about": [
+      { "@type": "Thing", "name": "Refurbished Mini PCs" },
+      { "@type": "Thing", "name": "Certified Pre-owned Tiny Computers" },
+    ],
+    "breadcrumb": { "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#breadcrumb` },
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["#page-h1", "#page-intro", "#faq-section"],
+    },
+    "dateModified": new Date().toISOString().split("T")[0],
+    "inLanguage": "en-IN",
+    "publisher": {
+      "@type": "Organization",
+      "@id": `${SITE_CONFIG.url}/#organization`,
+    },
+  };
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#article`,
+    "headline": "Buy Refurbished Mini PCs Online in India – Complete Buyer's Guide",
+    "description": "A comprehensive guide to buying certified refurbished mini PCs and micro factor computers online in India. Covers space savings, brands, reliability, and costs.",
+    "author": {
+      "@type": "Organization",
+      "@id": `${SITE_CONFIG.url}/#organization`,
+      "name": SITE_CONFIG.name,
+    },
+    "publisher": {
+      "@type": "Organization",
+      "@id": `${SITE_CONFIG.url}/#organization`,
+      "name": SITE_CONFIG.name,
+      "logo": { "@type": "ImageObject", "url": `${SITE_CONFIG.url}/images/logo.png` },
+    },
+    "datePublished": "2024-01-01",
+    "dateModified": new Date().toISOString().split("T")[0],
+    "mainEntityOfPage": { "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#webpage` },
+    "image": `${SITE_CONFIG.url}/images/og-default.jpg`,
+    "about": { "@type": "Thing", "name": "Refurbished Mini PCs" },
+    "mentions": [
+      { "@type": "Brand", "name": "Dell" },
+      { "@type": "Brand", "name": "HP" },
+      { "@type": "Brand", "name": "Lenovo" },
+      { "@type": "Brand", "name": "Apple" }
+    ],
+    "keywords": "refurbished mini PC, buy micro computer India, certified tiny PC",
+    "articleSection": "Buyer's Guide",
+  };
+
+  const offerCatalogSchema = {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#catalog`,
+    "name": "Refurbished Mini PCs Catalog – India",
+    "description": "Certified refurbished commercial-grade mini PCs and tiny factor computers available online in India with 1-year warranty.",
+    "numberOfItems": productsResult.totalItems || productsResult.data?.length || 0,
+    "url": `${SITE_CONFIG.url}${PAGE_PATH}`,
+    "itemListElement": (productsResult.data || []).map((prod: any, idx: number) => ({
+      "@type": "Offer",
+      "position": idx + 1,
+      "name": prod.name,
+      "url": `${SITE_CONFIG.url}/products/${prod.slug}`,
+      "image": prod.images?.[0]?.src || `${SITE_CONFIG.url}/images/og-default.jpg`,
+      "priceCurrency": "INR",
+      "price": prod.price || "0",
+      "itemCondition": "https://schema.org/RefurbishedCondition",
+      "availability": prod.stock_status === "instock"
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      "seller": {
+        "@type": "Organization",
+        "name": SITE_CONFIG.name,
+        "url": SITE_CONFIG.url,
+      },
+    })),
+  };
+
+  const faqItems = [
+    {
+      q: "Where to buy refurbished mini PCs in India?",
+      a: "Comsri Corporation is a leading provider of certified refurbished mini PCs, ultra-small form factor (USFF) computers, and tiny PCs in India. Every device passes 40+ point diagnostic checks, includes a 1-year replacement warranty, and comes with free shipping pan-India. Browse and buy online at comsri.com.",
+    },
+    {
+      q: "What is a mini PC or tiny computer?",
+      a: "A mini PC (also known as a Micro PC, Tiny PC, or Ultra-Small Form Factor PC) is a full-fledged computer built into an extremely compact chassis (typically around 1 liter in volume). Models like Dell OptiPlex Micro, HP Desktop Mini (DM), and Lenovo ThinkCentre Tiny offer desktop-grade performance while consuming very little power and space.",
+    },
+    {
+      q: "Are refurbished mini PCs good for office work and coding?",
+      a: "Yes, they are excellent. Sourced from corporate environments, these commercial-grade machines (equipped with Intel Core i5/i7 or AMD Ryzen processors, fast SSDs, and expandable RAM) easily handle productivity tools, MS Office, accounting software (like Tally), web browsing, software development, and 24/7 server tasks.",
+    },
+    {
+      q: "Can I upgrade the RAM and storage in a refurbished mini PC?",
+      a: "Yes. Despite their small size, commercial mini PCs from Dell, HP, and Lenovo are highly modular. You can easily open the tool-less chassis to upgrade or replace the DDR4/DDR5 SO-DIMM RAM and M.2 NVMe SSD storage, ensuring long-term usability.",
+    },
+    {
+      q: "What is the warranty on refurbished mini PCs at Comsri?",
+      a: "All certified refurbished mini PCs from Comsri Corporation are covered by a 1-year replacement warranty. If any hardware component or functional defect arises post-purchase, we will replace the unit or components quickly, giving you complete peace of mind.",
+    },
+    {
+      q: "How much power does a mini PC consume?",
+      a: "Mini PCs are highly energy-efficient. They typically run on low-voltage processors (T-series or mobile chips) and consume between 15W to 65W of power under load. This is significantly lower than a standard desktop tower (which often draws 150W to 300W+), resulting in massive electricity savings.",
+    },
+    {
+      q: "Do refurbished mini PCs come with Wi-Fi and Bluetooth?",
+      a: "Most commercial-grade mini PCs include built-in Wi-Fi and Bluetooth cards or come bundled with external USB Wi-Fi dongles. Please check the specific product specifications page or options under each model to confirm exact connectivity.",
+    },
+    {
+      q: "How does a refurbished mini PC compare to a second-hand mini PC?",
+      a: "Certified refurbished mini PCs from Comsri undergo a thorough 40+ point diagnostic test (RAM, storage health, CPU stress, ports, cooling fans), are deep cleaned, reloaded with a fresh Windows OS, and backed by a 1-year replacement warranty. Standard second-hand PCs are sold as-is with no verification, carrying a high risk of failure.",
+    },
+    {
+      q: "Can a mini PC be mounted behind a monitor?",
+      a: "Yes, most mini PCs feature standard VESA mounting holes or are compatible with VESA brackets. This allows you to mount the CPU directly to the back of your monitor or underneath your desk, creating a clean, wire-free workspace similar to an All-in-One (AIO) desktop.",
+    },
+    {
+      q: "What operating system comes pre-installed?",
+      a: "All Comsri refurbished mini PCs are shipped with a clean, fresh installation of Windows 10 Pro or Windows 11 Pro (depending on system compatibility), including all standard system drivers. Apple Mac Minis are shipped with the latest compatible macOS version.",
+    },
+  ];
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#faqpage`,
+    "mainEntity": faqItems.map((faq) => ({
+      "@type": "Question",
+      "name": faq.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.a,
+      },
+    })),
+  };
+
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#howto`,
+    "name": "How to Buy a Refurbished Mini PC Online in India",
+    "description": "Step-by-step guide to safely purchasing a certified refurbished mini PC online.",
+    "totalTime": "PT10M",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Define Your Use Case",
+        "text": "Determine if you need a mini PC for basic home/office use, programming, media streaming, or continuous server tasks.",
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Select Your Preferred Brand",
+        "text": "Choose from top enterprise line-ups such as Dell OptiPlex Micro, HP EliteDesk/ProDesk Mini, Lenovo ThinkCentre Tiny, or Apple Mac Mini.",
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Choose Processor & RAM",
+        "text": "Pick the processor generation (e.g., Intel 6th to 10th Gen Core i5/i7) and memory (8GB or 16GB RAM) to suit your speed requirements.",
+      },
+      {
+        "@type": "HowToStep",
+        "position": 4,
+        "name": "Confirm Storage Needs",
+        "text": "Verify SSD size (256GB or 512GB NVMe SSD) to ensure enough high-speed storage space for your apps and files.",
+      },
+      {
+        "@type": "HowToStep",
+        "position": 5,
+        "name": "Place Order with Warranty",
+        "text": "Complete your secure purchase online at comsri.com to enjoy free pan-India shipping and our standard 1-year replacement warranty.",
+      },
     ],
   };
 
@@ -155,7 +338,7 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
         "opens": "10:00",
         "closes": "19:00"
       }
@@ -176,212 +359,29 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
     "priceRange": "₹₹"
   };
 
-  const webPageSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#webpage`,
-    "name": PAGE_TITLE,
-    "description": PAGE_DESCRIPTION,
-    "url": `${SITE_CONFIG.url}${PAGE_PATH}`,
-    "isPartOf": { "@id": `${SITE_CONFIG.url}/#website` },
-    "about": [
-      { "@type": "Thing", "name": "Refurbished Desktops" },
-      { "@type": "Thing", "name": "Certified Pre-owned Computers" },
-    ],
-    "breadcrumb": { "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#breadcrumb` },
-    "speakable": {
-      "@type": "SpeakableSpecification",
-      "cssSelector": ["#page-h1", "#page-intro", "#faq-section"],
-    },
-    "dateModified": new Date().toISOString().split("T")[0],
-    "inLanguage": "en-IN",
-    "publisher": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-    },
-  };
-
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#article`,
-    "headline": "Buy Refurbished Desktops Online in India – Complete Buyer's Guide",
-    "description": "A comprehensive guide to buying certified refurbished desktops and computers online in India. Covers specs, E-E-A-T, and top desktop brands.",
-    "image": `${SITE_CONFIG.url}/images/og-default.jpg`,
-    "author": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-    },
-    "publisher": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-      "logo": { "@type": "ImageObject", "url": `${SITE_CONFIG.url}/images/logo.png` },
-    },
-    "datePublished": "2024-01-01",
-    "dateModified": new Date().toISOString().split("T")[0],
-    "mainEntityOfPage": { "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#webpage` },
-    "about": { "@type": "Thing", "name": "Refurbished Desktops" },
-    "mentions": [
-      { "@type": "Brand", "name": "Dell" },
-      { "@type": "Brand", "name": "HP" },
-      { "@type": "Brand", "name": "Lenovo" },
-      { "@type": "Brand", "name": "Apple" }
-    ],
-    "keywords": "refurbished desktops, buy refurbished desktops India, certified used computers",
-    "articleSection": "Buyer's Guide",
-  };
-
-  const offerCatalogSchema = {
-    "@context": "https://schema.org",
-    "@type": "OfferCatalog",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#catalog`,
-    "name": "Refurbished Desktops Catalog – India",
-    "description": "Certified refurbished commercial-grade desktops, towers and mini PCs available for purchase online in India with warranty.",
-    "numberOfItems": productsResult.totalItems || productsResult.data?.length || 0,
-    "url": `${SITE_CONFIG.url}${PAGE_PATH}`,
-    "itemListElement": (productsResult.data || []).map((prod: any, idx: number) => ({
-      "@type": "Offer",
-      "position": idx + 1,
-      "name": prod.name,
-      "url": `${SITE_CONFIG.url}/products/${prod.slug}`,
-      "image": prod.images?.[0]?.src || `${SITE_CONFIG.url}/images/og-default.jpg`,
-      "priceCurrency": "INR",
-      "price": prod.price || "0",
-      "itemCondition": "https://schema.org/RefurbishedCondition",
-      "availability": prod.stock_status === "instock"
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
-      "seller": {
-        "@type": "Organization",
-        "name": SITE_CONFIG.name,
-        "url": SITE_CONFIG.url,
-      },
-    })),
-  };
-
-  const faqItems = [
-    {
-      q: "Where to buy refurbished desktops in India?",
-      a: "Comsri Corporation is India's premier online store for certified refurbished desktops and IT hardware. All computers pass 40+ point quality audits, include a 1-year replacement warranty, and come with free nationwide shipping. View products online at comsri.com.",
-    },
-    {
-      q: "Are refurbished desktops reliable for business use?",
-      a: "Absolutely. Professionally refurbished desktops from Comsri are sourced from enterprise leases (commercial ranges like Dell OptiPlex, HP ProDesk/EliteDesk, Lenovo ThinkCentre). They are built with high-durability components, fully tested, and reloaded with clean operating systems, ensuring reliable business performance.",
-    },
-    {
-      q: "What is the difference between refurbished and second-hand computers?",
-      a: "Refurbished computers are audited, repaired, tested, cleaned, and certified by professional technicians, and backed by a warranty. Second-hand computers are sold directly by previous owners as-is, carrying significant risk of failure without any warranty protection.",
-    },
-    {
-      q: "Which are the best brands for refurbished desktops?",
-      a: "The most robust and repairable refurbished options are business-grade systems: Dell OptiPlex, HP EliteDesk/ProDesk, Lenovo ThinkCentre, and Apple Mac Mini. These systems offer superior longevity and easy hardware upgrade paths.",
-    },
-    {
-      q: "Does Comsri offer a warranty on refurbished desktops?",
-      a: "Yes. All certified refurbished desktops purchased from Comsri come with our standard 1-year free replacement warranty. This covers hardware component defects and functional issues.",
-    },
-    {
-      q: "How much money can I save by choosing refurbished PCs?",
-      a: "By choosing certified refurbished desktops from Comsri, you can save 40% to 70% compared to purchasing equivalent brand-new commercial desktop systems.",
-    },
-    {
-      q: "Do refurbished desktops come with keyboard and mouse?",
-      a: "Unless specifically marked as a bundle package or an 'All-in-One' PC, our standard desktop catalog lists the CPU tower/unit alone. Monitors, keyboards, and mice can be added to your order separately.",
-    },
-    {
-      q: "Do refurbished computers come with pre-installed operating systems?",
-      a: "Yes. Comsri refurbished desktops are shipped with a fresh, clean installation of Windows 10 Pro or Windows 11 Pro (depending on system compatibility), including all required drivers. Apple systems come with the latest compatible macOS.",
-    },
-    {
-      q: "Is it safe to buy refurbished desktops online in India?",
-      a: "Yes, provided you buy from a verified company like Comsri that offers secure checkouts, transparent condition grading, dedicated warranties, and customer support. Avoid purchasing from direct individual local sellers without return options.",
-    },
-    {
-      q: "What does the 40+ point diagnostic check include?",
-      a: "Our thorough checklist includes motherboard inspection, CPU stress testing, RAM diagnostics, SSD speed and sector health tests, power supply unit (PSU) stability audits, cooling fan functionality, port verification, and complete cosmetic cleaning.",
-    },
-  ];
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#faqpage`,
-    "mainEntity": faqItems.map((faq) => ({
-      "@type": "Question",
-      "name": faq.q,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.a,
-      },
-    })),
-  };
-
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#howto`,
-    "name": "How to Buy a Refurbished Desktop Online in India",
-    "description": "Step-by-step guide to purchasing a reliable certified refurbished desktop online.",
-    "totalTime": "PT10M",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Select Form Factor",
-        "text": "Pick from Tower PCs, Space-saving Mini PCs, or integrated All-in-One systems.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Choose Core Specs",
-        "text": "Verify required processor levels, RAM size (8GB/16GB), and SSD storage volumes.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "Verify Warranty details",
-        "text": "Confirm the product includes a 1-year replacement warranty for peace of mind.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "name": "Review Accessories",
-        "text": "Add matching monitors, keyboard sets, and Wi-Fi dongles to complete your setup.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 5,
-        "name": "Secure Nationwide Shipping",
-        "text": "Place your order for secure pan-India shipping with tracked logistics handlers.",
-      },
-    ],
-  };
-
   return (
     <div className="min-h-screen bg-[#F6F5F8] flex flex-col font-sans">
       {/* ─── ALL JSON-LD SCHEMAS ─────────────────────────────────────── */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
 
       <Header />
 
       {/* ─── VISIBLE BREADCRUMB ──────────────────────────────────────── */}
       <div className="bg-[#f2ece4] w-full py-2.5">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-start gap-4">
-          <span className="text-[28px] font-medium text-[#111] tracking-tight">Refurbished Desktops</span>
+          <span className="text-[28px] font-medium text-[#111] tracking-tight">Refurbished Mini PCs</span>
           <p className="text-[15px] text-[#777] font-medium mt-1">
             <Link href="/" className="hover:text-[#3452ef] transition-colors">Home</Link>
             <span className="mx-1.5 text-gray-400">/</span>
             <Link href="/shop" className="hover:text-[#3452ef] transition-colors">Shop</Link>
             <span className="mx-1.5 text-gray-400">/</span>
-            <span className="text-[#111] font-bold">Refurbished Desktops</span>
+            <span className="text-[#111] font-bold">Refurbished Mini PCs</span>
           </p>
         </div>
       </div>
@@ -406,17 +406,17 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
                 1-Year Free Warranty
               </span>
               <span className="text-[10px] font-mono font-medium uppercase tracking-widest text-sky-400 bg-sky-400/10 px-3.5 py-1.5 rounded-full border border-sky-400/20 inline-block">
-                Nationwide Delivery
+                Space-Saving Efficiency
               </span>
             </div>
 
             <h1 id="page-h1" className="text-3xl md:text-5xl font-bold tracking-tight leading-tight mb-2">
-              Buy High Quality Refurbished Desktops
+              Buy Refurbished Mini PCs<br className="hidden md:block" /> Online in India
             </h1>
-            <p className="text-sm text-slate-400 font-medium mb-5 tracking-wide">Starting from <strong className="text-[#faba5b] text-base">₹8,999</strong> · Stocks updated daily</p>
+            <p className="text-sm text-slate-400 font-medium mb-5 tracking-wide">Starting from <strong className="text-[#faba5b] text-base">₹7,999</strong> · Free Pan-India Shipping</p>
 
             <p id="page-intro" className="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl speakable">
-              Certified refurbished desktops are professionally audited, repaired, and warranty-backed computers sold at 40% to 70% savings compared to new PCs, available online across India at Comsri Corporation. Explore second hand computers, certified used desktops, and refurbished towers in India with a 1-year warranty and fast pan-India delivery.
+              Buy refurbished mini PCs online in India from certified brands at unbeatable prices. Sourced from high-grade corporate leases, our second hand mini PCs and tiny factor computers undergo a 40+ point certification check, come with 1-year replacement warranty, and feature clean OS setups.
             </p>
 
             {/* Trust Bar */}
@@ -425,7 +425,7 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
                 { icon: <ShieldCheck size={13} className="text-emerald-400" />, label: "1-Year Warranty" },
                 { icon: <CheckCircle2 size={13} className="text-blue-400" />, label: "40+ Point Inspection" },
                 { icon: <Star size={13} className="text-[#faba5b]" />, label: "4.8★ Customer Rating" },
-                { icon: <TrendingUp size={13} className="text-purple-400" />, label: "Save up to 70%" },
+                { icon: <TrendingUp size={13} className="text-purple-400" />, label: "Ultra-Small Factor" },
                 { icon: <Award size={13} className="text-rose-400" />, label: "Certified Refurbished" },
               ].map((item, i) => (
                 <span key={i} className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
@@ -464,7 +464,7 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
       <main
         id="products-section"
         className="flex-1 max-w-[1600px] mx-auto px-6 lg:px-12 py-10 w-full"
-        aria-label="Refurbished Desktops Product Catalog"
+        aria-label="Refurbished Mini PCs Product Catalog"
       >
         {fetchError ? (
           <div className="bg-rose-50 border border-rose-100 text-rose-800 p-8 rounded-3xl text-center shadow-sm">
@@ -502,7 +502,7 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
       {/* ─── BUYER'S GUIDE + CONTENT SECTION ────────────────────────── */}
       <article
         id="buyers-guide"
-        aria-label="Complete Buyer's Guide for Refurbished Desktops in India"
+        aria-label="Complete Buyer's Guide for Refurbished Mini PCs in India"
         className="bg-white border border-slate-100 rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.015)] max-w-[1600px] mx-auto px-8 md:px-12 py-12 w-[calc(100%-3rem)] mb-12"
       >
         {/* Section Header */}
@@ -511,7 +511,7 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
             Comprehensive Buyer's Guide
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-            Buy High Quality Refurbished Desktops
+            Buy Refurbished Mini PCs Online in India
           </h2>
           <div className="h-1 w-20 bg-[#374bf9] rounded-full mx-auto mt-4" />
         </header>
@@ -520,12 +520,12 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <div className="bg-slate-50 p-6 md:p-8 rounded-[24px] hover:translate-y-[-2px] transition-transform duration-300 border border-slate-100/50">
             <p className="text-sm text-slate-600 leading-relaxed">
-              In today's fast-moving business and educational landscape, having access to a high-speed, durable computer is an absolute standard requirement. Whether setup for intensive office tasks, programming, educational projects, or daily home management, desktops remain the gold standard for long-term work endurance. However, rising retail prices of new enterprise computers have led smart buyers to seek quality alternatives. Choosing to <strong>buy refurbished desktops in India</strong> allows you to acquire enterprise-grade desktop performance at a fraction of standard market costs. Browse and <strong>Buy High Quality Refurbished Desktops</strong> online today.
+              In modern computing, bulk towers are no longer the default option. For home offices, business desks, IT hubs, and retail outlets, space is at a premium. This shift has accelerated the popularity of ultra-compact computing. If you are looking to save space and reduce utility costs while keeping performance high, choosing to <strong>Buy Refurbished Mini PCs Online in India</strong> is the smartest decision you can make. If you want to <strong>Buy Refurbished Mini PCs Online</strong>, our catalog offers the best configurations ready for delivery.
             </p>
           </div>
           <div className="bg-slate-50 p-6 md:p-8 rounded-[24px] hover:translate-y-[-2px] transition-transform duration-300 border border-slate-100/50">
             <p className="text-sm text-slate-600 leading-relaxed">
-              Our <strong>certified refurbished desktops</strong> undergo strict factory audit processes, replacement repairs, physical cleaning, and multi-stage testing before being approved for distribution. Core components like the motherboard, RAM, power supply unit (PSU), and storage sectors are certified functionally optimal. A clean, licensed copy of the operating system is freshly loaded, delivering a setup and usage experience matching that of a brand-new desktop computer system with massive savings.
+              Our <strong>certified refurbished mini PCs</strong> and <strong>refurbished micro computers in India</strong> undergo exhaustive testing, motherboard diagnostics, memory stress audits, storage health verification, and dynamic cleaning. This rigorous refurbishing process ensures that every device meets strict functionality criteria. You get a reliable, high-speed computer loaded with a licensed, fresh operating system, matching the performance of a new machine at a much lower cost.
             </p>
           </div>
         </div>
@@ -533,14 +533,14 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
         {/* ── Large Collection Section ── */}
         <div className="mb-12">
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-            <span className="text-[#374bf9]">■</span> Diverse Range of Refurbished Desktop Computers
+            <span className="text-[#374bf9]">■</span> Large Collection of Refurbished Mini PCs
           </h3>
           <div className="text-sm text-slate-600 leading-relaxed space-y-4">
             <p>
-              When searching for the best <strong>refurbished desktop computers</strong>, you can select from top-tier corporate collections including <strong>Dell OptiPlex, HP ProDesk/EliteDesk, Lenovo ThinkCentre, and Apple Mac Mini/iMac</strong>. These models represent high-grade business ranges built for reliable, continuous performance and seamless hardware expandability.
+              We stock a wide variety of the <strong>best refurbished mini PCs in India</strong>, sourced from premium enterprise deployments. If you are researching <strong>where to buy refurbished mini PCs in India</strong>, you have come to the right place. You can choose from leading corporate families like a <strong>refurbished Dell micro PC India</strong>, a <strong>refurbished HP mini PC India</strong>, a <strong>refurbished Lenovo tiny PC India</strong>, or a <strong>refurbished Mac Mini India</strong> depending on your platform preference.
             </p>
             <p>
-              For customers aiming to order <strong>refurbished desktops online</strong>, purchasing professionally audited refurbished computers from Comsri Corporation offers verified reliability far superior to ordinary peer-to-peer second-hand sales. All devices are securely dispatched nationwide, making finding certified <strong>refurbished computers in India</strong> highly convenient and risk-free.
+              If you want to <strong>buy used mini computers online</strong>, certified pre-owned units from Comsri Corporation offer a much safer option than dealing with random peer-to-peer <strong>second hand mini PC</strong> sales. Every tiny computer is thoroughly inspected, certified, and dispatched securely with tracking numbers, ensuring a reliable shopping experience across India.
             </p>
           </div>
         </div>
@@ -548,7 +548,7 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
         {/* ── Comparison Table ── */}
         <div className="mb-12">
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-            <span className="text-[#374bf9]">■</span> Certified Refurbished Desktops vs New vs Second-Hand Desktops
+            <span className="text-[#374bf9]">■</span> Refurbished vs New vs Second-Hand — Which is Best?
           </h3>
           <div className="overflow-x-auto rounded-2xl border border-slate-200">
             <table className="w-full text-sm text-left border-collapse">
@@ -562,12 +562,12 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
               </thead>
               <tbody>
                 {[
-                  ["Price Range", "₹8,999 – ₹45,000", "₹35,000 – ₹1,20,000+", "₹4,000 – ₹25,000"],
-                  ["Diagnostic Check", "✅ 40+ point audit", "✅ Factory checked", "❌ No verification"],
+                  ["Price Range", "₹7,999 – ₹35,000", "₹25,000 – ₹90,000+", "₹5,000 – ₹20,000"],
+                  ["Quality Check", "✅ 40+ point audit", "✅ Factory checked", "❌ No verification"],
                   ["Warranty Protection", "✅ 1-Year free warranty", "✅ 1–3 Year brand warranty", "❌ None"],
-                  ["Clean OS Setup", "✅ Yes (Fresh installation)", "✅ Yes", "⚠️ Not guaranteed"],
+                  ["Fresh OS Setup", "✅ Yes (Fresh installation)", "✅ Yes", "⚠️ Not guaranteed"],
                   ["Average Price Savings", "40% – 70% savings", "—", "50% – 80% (high risk)"],
-                  ["Electronic Waste Impact", "✅ Positive (Reduces waste)", "❌ High resources used", "⚠️ Partial benefit"],
+                  ["Power & Space Efficiency", "✅ Exceptional (1 liter size)", "✅ High", "⚠️ May vary"],
                   ["Reliability Index", "✅ High – technician approved", "✅ Excellent", "⚠️ Low – unknown usage history"],
                 ].map(([feature, refurb, newItem, secondHand], i) => (
                   <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}>
@@ -585,16 +585,16 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
         {/* ── Top Reasons Cards ── */}
         <div className="mb-12">
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-8 text-center">
-            Top Reasons to Choose Refurbished PCs with Warranty
+            Top Reasons to Choose Certified Refurbished Mini PCs
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: <ShieldCheck size={20} />, title: "Certified Performance", desc: "Each refurbished desktop unit undergoes diagnostic testing covering motherboard cap, memory modules, and processing cores." },
-              { icon: <CheckCircle2 size={20} />, title: "Detailed Audits", desc: "Transparent system grading levels and structural information are provided to help you pick the right PC for your setup." },
-              { icon: <TrendingUp size={20} />, title: "Outstanding Savings", desc: "Save 40%–70% relative to buying new computers, freeing up budget space for higher memory configurations or monitor size upgrades." },
-              { icon: <Leaf size={20} />, title: "Ecological Choice", desc: "Opting for refurbished hardware actively redirects functional parts away from e-waste landfills, lowering your carbon footprint." },
-              { icon: <Headphones size={20} />, title: "1-Year Comsri Warranty", desc: "All Comsri refurbished desktops are covered by our 1-year replacement warranty, accompanied by active online support." },
-              { icon: <Zap size={20} />, title: "Corporate Durability", desc: "Sourced from premier commercial lease setups, ensuring rugged build chassis designs made to run safely for years." },
+              { icon: <ShieldCheck size={20} />, title: "Ultra-Compact Footprint", desc: "Weighing around 1-1.5kg and under 1.5 liters in volume, these systems can sit neatly on any desk or mount behind VESA-compatible monitors." },
+              { icon: <CheckCircle2 size={20} />, title: "Exceptional Energy Efficiency", desc: "Mini PCs use energy-optimized components that consume between 15W to 65W of power under load, saving up to 80% on electricity compared to full desktop towers." },
+              { icon: <TrendingUp size={20} />, title: "Massive Cost Savings", desc: "Enjoy savings of 40%–70% compared to brand-new units, allowing you to afford faster processors, extra RAM, or high-capacity solid-state storage." },
+              { icon: <Leaf size={20} />, title: "Eco-Friendly Computing", desc: "Opting for refurbished hardware keeps functional electronic components out of landfills, significantly lowering carbon emissions and electronic waste." },
+              { icon: <Headphones size={20} />, title: "1-Year Comsri Warranty", desc: "All certified refurbished mini PCs come with a 1-year replacement warranty, dedicated customer support, and secure packaging." },
+              { icon: <Zap size={20} />, title: "Enterprise Durability", desc: "Built with commercial-grade motherboards, metal chassis casings, and premium cooling fans designed to run reliably 24/7." },
             ].map((reason, i) => (
               <div
                 key={i}
@@ -613,15 +613,15 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
         {/* ── How to Buy Section ── */}
         <div className="mb-12">
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-8 flex items-center gap-2">
-            <span className="text-[#374bf9]">■</span> How to Buy Refurbished Desktop Computers Online in India
+            <span className="text-[#374bf9]">■</span> How to Buy a Refurbished Mini PC Online in India
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
             {[
-              { step: "01", title: "Select Form Factor", desc: "Pick from Tower PCs, Space-saving Mini PCs, or integrated All-in-One systems." },
-              { step: "02", title: "Choose Core Specs", desc: "Verify required processor levels, RAM size (8GB/16GB), and SSD storage volumes." },
-              { step: "03", title: "Verify Warranty details", desc: "Confirm the product includes a 1-year replacement warranty for peace of mind." },
-              { step: "04", title: "Review Accessories", desc: "Add matching monitors, keyboard sets, and Wi-Fi dongles to complete your setup." },
-              { step: "05", title: "Secure Nationwide Shipping", desc: "Place your order for secure pan-India shipping with tracked logistics handlers." },
+              { step: "01", title: "Define Your Use Case", desc: "Identify if you need it for office work, media server deployment, student homework, or 24/7 operation." },
+              { step: "02", title: "Select Core Brands", desc: "Pick from top enterprise families: Dell OptiPlex Micro, HP ProDesk Mini, Lenovo Tiny, or Apple Mac Mini." },
+              { step: "03", title: "Configure RAM & SSD", desc: "Pick your configuration. 8GB or 16GB RAM is recommended, coupled with a fast M.2 NVMe SSD." },
+              { step: "04", title: "Verify Warranty details", desc: "Ensure your selected PC is certified refurbished and covered by a 1-year replacement warranty." },
+              { step: "05", title: "Order Pan-India", desc: "Securely checkout online. We deliver securely with tracked logistics across India." },
             ].map((s, i) => (
               <div key={i} className="relative flex flex-col gap-3 bg-slate-50 p-5 rounded-2xl border border-slate-100 hover:border-blue-200 hover:shadow-sm transition-all group">
                 <span className="text-4xl font-black text-[#374bf9]/10 group-hover:text-[#374bf9]/20 transition-colors leading-none">{s.step}</span>
@@ -635,17 +635,17 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
         {/* ── Why Refurbished > Second-Hand ── */}
         <div className="mb-12">
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-            <span className="text-[#374bf9]">■</span> Why Certified Refurbished Desktops Outperform Second-Hand Computers
+            <span className="text-[#374bf9]">■</span> Why Refurbished Mini PCs Are Better Than Ordinary Second-Hand Devices
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-600 leading-relaxed">
             <div className="bg-slate-50 p-6 rounded-2xl hover:shadow-sm transition-shadow">
-              <p>Buying direct <strong>second hand computers</strong> carries high uncertainty. Local retail listings offer no hardware health history, and hidden flaws in the power supply or motherboard capacitors can quickly lead to complete system failures shortly after purchase.</p>
+              <p>Buying direct <strong>second hand mini PCs</strong> is highly risky. Since mini PCs feature densely packed internal motherboards, poor thermal management or micro-fissures from previous usage can cause unexpected component failure shortly after purchase, with zero recourse.</p>
             </div>
             <div className="bg-slate-50 p-6 rounded-2xl hover:shadow-sm transition-shadow">
-              <p>Choosing <strong>refurbished PCs with warranty</strong> resolves these safety issues. Professionals replace thermal pastes, clean chassis corridors, and run heavy read-write stress tests on storage chips, making the system run like a brand-new unit.</p>
+              <p>Certified refurbished units eliminate these concerns. Specialists replace worn thermal compounds, run complex memory diagnostics, inspect capacitors under magnification, and test internal fan speeds, ensuring the system runs smoothly and cool.</p>
             </div>
             <div className="bg-slate-50 p-6 rounded-2xl hover:shadow-sm transition-shadow">
-              <p>When analyzing second hand computers vs refurbished models, the availability of a <strong>1-year replacement warranty</strong> from Comsri provides unmatched transactional security and product support value.</p>
+              <p>When comparing second hand mini PCs vs refurbished micro computers, getting <strong>used micro PCs with warranty</strong> and choosing <strong>cheap tiny computers India</strong> from Comsri Corporation offers unmatched transactional safety, longevity, and support.</p>
             </div>
           </div>
         </div>
@@ -678,20 +678,20 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
           <div className="relative z-10 max-w-3xl">
             <h3 className="text-lg font-bold text-[#fcb643] mb-4">Conclusion</h3>
             <p className="text-sm text-slate-300 leading-relaxed mb-6">
-              Deciding to <strong>buy refurbished desktops in India</strong> represents a highly economical, logical path to acquiring high-grade, durable computing systems without overspending. Whether selecting mini PCs, business tower models, or integrated setups, refurbished models deliver reliability, speed, and warranty coverage at budget-friendly levels.
+              Acquiring a certified <strong>refurbished mini PC</strong> is a smart, forward-thinking decision for both home and business setups. It delivers all the processing power, reliability, and expandability of a standard desktop computer in a form factor that fits in the palm of your hand, saving both electricity and desk space.
             </p>
             <p className="text-sm text-slate-200 leading-relaxed font-semibold">
-              If you are researching <em>where to buy refurbished desktops in India</em>, Comsri Corporation offers professional build configurations, robust warranties, and full post-purchase support.
+              If you are researching <em>where to buy refurbished mini PCs in India</em>, Comsri Corporation offers professional configurations, full 1-year replacement warranties, and complete post-purchase support.
             </p>
           </div>
         </div>
 
         {/* ── FAQ Accordion ── */}
-        <div id="faq-section" className="mb-4" aria-label="Frequently Asked Questions about Refurbished Desktops">
+        <div id="faq-section" className="mb-4" aria-label="Frequently Asked Questions about Refurbished Mini PCs">
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-2 text-center">
             Frequently Asked Questions
           </h3>
-          <p className="text-sm text-slate-500 text-center mb-8">Everything you need to know before buying a refurbished desktop computer online in India.</p>
+          <p className="text-sm text-slate-500 text-center mb-8">Everything you need to know before buying a refurbished mini PC computer online in India.</p>
           <div className="space-y-3 max-w-4xl mx-auto">
             {faqItems.map((faq, i) => (
               <details
@@ -799,10 +799,10 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
                   <span className="text-white font-bold text-[14px] italic pr-0.5 leading-none mt-0.5">X</span>
                 </a>
                 <a href={SITE_CONFIG.social.instagram} aria-label="Instagram" className="w-[32px] h-[32px] rounded-full bg-[#833ab4] flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] rounded-full" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] rounded-full"></div>
                   <Instagram size={16} className="text-white relative z-10" />
                 </a>
-                <a href={SITE_CONFIG.social.youtube} aria-label="YouTube" className="w-[32px] h-[32px] rounded-full bg-[#ff0000] text-white flex items-center justify-center hover:bg-[#cc0000] transition-colors shadow-sm">
+                <a href={SITE_CONFIG.social.youtube} aria-label="Youtube" className="w-[32px] h-[32px] rounded-full bg-[#ff0000] text-white flex items-center justify-center hover:bg-[#cc0000] transition-colors shadow-sm">
                   <Youtube size={14} className="fill-white" strokeWidth={0} />
                 </a>
               </div>
@@ -811,7 +811,7 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
 
           <div className="bg-[#3452ef] rounded-[24px] px-8 md:px-12 py-10 flex flex-col lg:flex-row items-center justify-between gap-8 mt-2 w-full">
             <div className="flex flex-col text-white flex-1 text-center lg:text-left">
-              <h2 className="text-[28px] md:text-[32px] font-bold mb-1.5 tracking-tight">Sign Up to us Newsletter</h2>
+              <h2 className="text-[28px] md:text-[32px] font-bold mb-1.5 tracking-tight">Sign Up to our Newsletter</h2>
               <p className="text-[14px] text-white/90 font-medium">Be the First to Know. Sign up to newsletter today</p>
             </div>
             <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-4 items-center">

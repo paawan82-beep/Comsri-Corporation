@@ -21,8 +21,8 @@ export async function GET() {
     "/categories/new-all-in-one",
     "/categories/buy-refurbished-laptops-online-in-india",
     "/categories/buy-high-quality-refurbished-desktops",
-    "/categories/refurbished-workstations",
-    "/categories/refurbished-mini-pcs",
+    "/categories/buy-refurbished-workstations-online-in-india",
+    "/categories/buy-refurbished-mini-pcs-online-in-india",
     // Brands
     "/brands/dell",
     "/brands/hp",

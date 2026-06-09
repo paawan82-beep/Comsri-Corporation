@@ -388,8 +388,8 @@ export default async function RefurbishedLaptopsPage({ searchParams }: CategoryP
               {[
                 { label: "Refurbished Laptops", path: "/categories/buy-refurbished-laptops-online-in-india" },
                 { label: "Refurbished Desktops", path: "/categories/buy-high-quality-refurbished-desktops" },
-                { label: "Workstations", path: "/categories/refurbished-workstations" },
-                { label: "Mini PCs", path: "/categories/refurbished-mini-pcs" },
+                { label: "Workstations", path: "/categories/buy-refurbished-workstations-online-in-india" },
+                { label: "Mini PCs", path: "/categories/buy-refurbished-mini-pcs-online-in-india" },
               ].map((cat) => (
                 <Link
                   key={cat.path}
@@ -678,9 +678,9 @@ export default async function RefurbishedLaptopsPage({ searchParams }: CategoryP
                 {[
                   { label: "Refurbished Desktops", path: "/categories/buy-high-quality-refurbished-desktops" },
                   { label: "Refurbished Laptops", path: "/categories/buy-refurbished-laptops-online-in-india" },
-                  { label: "Refurbished Workstations", path: "/categories/refurbished-workstations" },
+                  { label: "Refurbished Workstations", path: "/categories/buy-refurbished-workstations-online-in-india" },
                   { label: "Refurbished Macbooks", path: "/categories/buy-refurbished-laptops-online-in-india" },
-                  { label: "Refurbished Mini PCs", path: "/categories/refurbished-mini-pcs" },
+                  { label: "Refurbished Mini PCs", path: "/categories/buy-refurbished-mini-pcs-online-in-india" },
                 ].map((item, i) => (
                   <Link key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item.label}</Link>
                 ))}

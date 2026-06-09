@@ -39,73 +39,97 @@ export async function POST(req: NextRequest) {
     const payload = JSON.parse(rawBody);
     const event = payload.event;
 
-    console.log(`[Razorpay Webhook]: Verified Event "${event}" received.`);
+      console.log(`[Razorpay Webhook]: Verified Event "${event}" received.`);
+ 
+     // 1. Handle Payment Failure Alerts
+     if (event === "payment.failed") {
+       const paymentEntity = payload.payload?.payment?.entity;
+       const paymentId = paymentEntity?.id;
+       const errorCode = paymentEntity?.error_code;
+       const errorDescription = paymentEntity?.error_description;
+       const wooCommerceOrderIdRaw = paymentEntity?.notes?.woocommerce_order_id || paymentEntity?.description;
 
-    // We process "payment.captured" for successful payment confirmation
-    if (event === "payment.captured") {
-      const paymentEntity = payload.payload?.payment?.entity;
-      const paymentId = paymentEntity?.id;
-      const razorpayOrderId = paymentEntity?.order_id;
-      
-      // Extract WooCommerce Order ID from the Razorpay Order Notes or Receipt
-      const wooCommerceOrderIdRaw = 
-        paymentEntity?.notes?.woocommerce_order_id || 
-        paymentEntity?.description || // fallback
-        paymentEntity?.notes?.order_id;
+       console.error(
+         `[SECURITY ALERT - FAILED PAYMENT]: Razorpay Payment ${paymentId} failed for WooCommerce Order Ref: ${wooCommerceOrderIdRaw}. Error Code: ${errorCode}, Description: ${errorDescription}`
+       );
 
-      if (!wooCommerceOrderIdRaw) {
-        console.warn("[Razorpay Webhook]: Payment captured but no WooCommerce Order ID discovered in notes.");
-        return NextResponse.json({ message: "No associate order found - skipping." }, { status: 200 });
-      }
+       if (wooCommerceOrderIdRaw) {
+         const orderId = parseInt(wooCommerceOrderIdRaw, 10);
+         try {
+           await woocommerce.updateOrderStatus(orderId, "failed", "", [
+             { key: "_payment_failed_at", value: new Date().toISOString() },
+             { key: "_payment_failure_reason", value: `${errorCode}: ${errorDescription}` }
+           ]);
+           console.log(`[Razorpay Webhook]: Updated WooCommerce order ${orderId} status to "failed".`);
+         } catch (err) {
+           console.error(`[Razorpay Webhook Error]: Failed to update WooCommerce order ${orderId} status to failed`, err);
+         }
+       }
+       return NextResponse.json({ received: true, status: "logged_failure" }, { status: 200 });
+     }
 
-      const orderId = parseInt(wooCommerceOrderIdRaw, 10);
+     // 2. We process "payment.captured" for successful payment confirmation
+     if (event === "payment.captured") {
+       const paymentEntity = payload.payload?.payment?.entity;
+       const paymentId = paymentEntity?.id;
+       const razorpayOrderId = paymentEntity?.order_id;
+       
+       // Extract WooCommerce Order ID from the Razorpay Order Notes or Receipt
+       const wooCommerceOrderIdRaw = 
+         paymentEntity?.notes?.woocommerce_order_id || 
+         paymentEntity?.description || // fallback
+         paymentEntity?.notes?.order_id;
 
-      // --- CRITICAL IDEMPOTENCY LOCK AND DUPLICATE DETECTION PATTERN ---
-      // Fetch the target WooCommerce Order first to read its real-time transaction state.
-      // This acts as a highly resilient single-source-of-truth lock.
-      let order;
-      try {
-        order = await woocommerce.getOrderById(orderId);
-      } catch (err) {
-        console.error(`[Razorpay Webhook Error]: Failed retrieving WooCommerce order ${orderId}`, err);
-        return NextResponse.json({ error: "WooCommerce order lookup failed." }, { status: 404 });
-      }
+       if (!wooCommerceOrderIdRaw) {
+         console.warn("[Razorpay Webhook]: Payment captured but no WooCommerce Order ID discovered in notes.");
+         return NextResponse.json({ message: "No associate order found - skipping." }, { status: 200 });
+       }
 
-      // Let's fetch using a direct fetch query or let's inspect the order payload. 
-      // Wait, let's update woocommerce client to have `getOrder(id: number)` if needed, but we can do it directly or verify status.
-      // Let's implement full robustness:
-      const currentStatus = (order as any).status;
-      const currentTxId = (order as any).transaction_id;
+       const orderId = parseInt(wooCommerceOrderIdRaw, 10);
 
-      // Check if order is already completed or processing. If so, return immediately.
-      // This prevents double warehouse fulfillment, multiple emails, and duplicated stats.
-      if (["processing", "completed"].includes(currentStatus) || currentTxId === paymentId) {
-        console.info(`[Razorpay Webhook Idempotency]: Order ${orderId} already marked paid (status: ${currentStatus}, txId: ${currentTxId}). Skipping duplicate update.`);
-        return NextResponse.json(
-          { 
-            status: "success", 
-            message: "Order already complete. Idempotently bypassed.", 
-            woo_order_id: orderId 
-          }, 
-          { status: 200 }
-        );
-      }
+       // --- CRITICAL IDEMPOTENCY LOCK AND DUPLICATE DETECTION PATTERN ---
+       // Fetch the target WooCommerce Order first to read its real-time transaction state.
+       // This acts as a highly resilient single-source-of-truth lock.
+       let order;
+       try {
+         order = await woocommerce.getOrderById(orderId);
+       } catch (err) {
+         console.error(`[Razorpay Webhook Error]: Failed retrieving WooCommerce order ${orderId}`, err);
+         return NextResponse.json({ error: "WooCommerce order lookup failed." }, { status: 404 });
+       }
 
-      // Complete the payment transaction!
-      // This updates status to 'processing' (standard WooCommerce status for successful payments)
-      // and sets transaction ID. 
-      // Also write metadata markers to block any concurrent webhook double-run.
-      await woocommerce.updateOrderStatus(orderId, "processing", paymentId, [
-        { key: "_razorpay_payment_id", value: paymentId },
-        { key: "_razorpay_order_id", value: razorpayOrderId },
-        { key: "_payment_completed_at", value: new Date().toISOString() },
-        { key: "_webhook_idempotency_marker", value: "processed" }
-      ]);
+       const currentStatus = (order as any).status;
+       const currentTxId = (order as any).transaction_id;
 
-      console.log(`[Razorpay Webhook]: Securely updated WooCommerce order ${orderId} status to "processing" with Tx: ${paymentId}`);
-    }
+       // Check if order is already completed or processing. If so, return immediately.
+       // This prevents double warehouse fulfillment, multiple emails, and duplicated stats.
+       if (["processing", "completed"].includes(currentStatus) || currentTxId === paymentId) {
+         console.info(`[Razorpay Webhook Idempotency]: Order ${orderId} already marked paid (status: ${currentStatus}, txId: ${currentTxId}). Skipping duplicate update.`);
+         return NextResponse.json(
+           { 
+             status: "success", 
+             message: "Order already complete. Idempotently bypassed.", 
+             woo_order_id: orderId 
+           }, 
+           { status: 200 }
+         );
+       }
 
-    return NextResponse.json({ received: true, status: "processed" }, { status: 200 });
+       // Complete the payment transaction!
+       // This updates status to 'processing' (standard WooCommerce status for successful payments)
+       // and sets transaction ID. 
+       // Also write metadata markers to block any concurrent webhook double-run.
+       await woocommerce.updateOrderStatus(orderId, "processing", paymentId, [
+         { key: "_razorpay_payment_id", value: paymentId },
+         { key: "_razorpay_order_id", value: razorpayOrderId },
+         { key: "_payment_completed_at", value: new Date().toISOString() },
+         { key: "_webhook_idempotency_marker", value: "processed" }
+       ]);
+
+       console.log(`[Razorpay Webhook]: Securely updated WooCommerce order ${orderId} status to "processing" with Tx: ${paymentId}`);
+     }
+
+     return NextResponse.json({ received: true, status: "processed" }, { status: 200 });
   } catch (error: any) {
     console.error("[Razorpay Webhook Exception]:", error);
     return NextResponse.json(

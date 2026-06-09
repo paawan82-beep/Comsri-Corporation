@@ -3,7 +3,7 @@ import PolicyClient from "@/app/components/PolicyClient";
 
 export const metadata = constructMetadata({
   title: "Return & Refund Policy",
-  description: "Understand Comsri Corporation's 14-day return framework, buyback terms, and hardware warranty policies.",
+  description: "Read Comsri Corporation’s Return & Refund Policy to learn about order cancellations, returns, refunds, and non-returnable sealed products. Transparent policies, fair timelines, and customer-first support across India.",
   path: "/return-refund",
 });
 

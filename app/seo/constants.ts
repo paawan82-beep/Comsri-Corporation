@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
   name: "Comsri Corporation",
-  shortName: "Comsri",
+  shortName: "Comsri Corporation",
   description: "Premium refurbished laptops, desktops, workstations, and corporate IT hardware online in India. Fully tested 40+ points quality certified with 1-year warranty.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://comsri.com",
   ogImage: "/images/og-default.jpg",

@@ -4,6 +4,11 @@ import { woocommerce } from "@/lib/services/woocommerce";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
+  const token = req.nextUrl.searchParams.get("token");
+  if (!token || token !== process.env.REVALIDATION_TOKEN) {
+    return NextResponse.json({ error: "Unauthorized diagnostic handshake." }, { status: 401 });
+  }
+
   const startTime = Date.now();
 
   const configCheck = {

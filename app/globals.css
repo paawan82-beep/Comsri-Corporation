@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Albert+Sans:wght@300..900&display=swap');
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --font-sans: "Fredoka", Arial, Helvetica, sans-serif;
@@ -439,5 +440,59 @@ h6 {
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Premium Product Details Description Formatting */
+#product-detailed-content h1,
+#product-detailed-content h2,
+#product-detailed-content h3,
+#product-detailed-content h4 {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  margin-top: 1.75rem !important;
+  margin-bottom: 0.75rem !important;
+  font-family: "Fredoka", Arial, sans-serif !important;
+}
+
+#product-detailed-content h1 {
+  font-size: 1.6rem !important;
+}
+
+#product-detailed-content h2 {
+  font-size: 1.35rem !important;
+}
+
+#product-detailed-content h3 {
+  font-size: 1.15rem !important;
+}
+
+#product-detailed-content p {
+  color: #475569 !important;
+  line-height: 1.8 !important;
+  margin-bottom: 1.25rem !important;
+  font-weight: 550 !important;
+}
+
+#product-detailed-content ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+#product-detailed-content ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+#product-detailed-content li {
+  margin-bottom: 0.5rem !important;
+  color: #475569 !important;
+  font-weight: 550 !important;
+}
+
+#product-detailed-content strong {
+  color: #0f172a !important;
+  font-weight: 700 !important;
 }
 

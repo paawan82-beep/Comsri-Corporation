@@ -673,7 +673,7 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-indigo-50 text-[#374bf9]">
                           <Layers size={16} />
                         </div>
-                        <Link href="/shop?category=139" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/categories/buy-refurbished-workstations-online-in-india" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
                           Workstations
                         </Link>
                       </div>
@@ -705,7 +705,7 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-amber-50 text-[#fca61f]">
                           <Cpu size={16} />
                         </div>
-                        <Link href="/shop?category=137" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/categories/buy-refurbished-mini-pcs-online-in-india" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
                           Mini PCs
                         </Link>
                       </div>

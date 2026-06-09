@@ -392,6 +392,31 @@ class WooCommerceServiceClient {
 
     return response.json();
   }
+
+  /**
+   * 10. GET COUPON BY CODE (Fetches active WooCommerce coupons to compute valid server-side discounts)
+   */
+  async getCoupon(code: string): Promise<any | null> {
+    try {
+      const endpoint = `coupons?code=${encodeURIComponent(code.toLowerCase())}`;
+      const response = await this.request(endpoint, {
+        method: "GET",
+        next: {
+          revalidate: 300, // Cache coupon details for 5 minutes
+        },
+      });
+
+      if (response.ok) {
+        const coupons = await response.json();
+        if (Array.isArray(coupons) && coupons.length > 0) {
+          return coupons[0];
+        }
+      }
+    } catch (error) {
+      console.warn(`[WooCommerce Service]: Failed to query coupon: ${code}`, error);
+    }
+    return null;
+  }
 }
 
 export const woocommerce = new WooCommerceServiceClient();
