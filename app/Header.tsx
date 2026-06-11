@@ -583,21 +583,21 @@ export default function Header() {
           {/* Left navigation links */}
           <ul className="flex flex-wrap items-center gap-y-2 gap-x-6">
             <li>
-              <Link href="/" className={`transition ${pathname === "/" ? "text-[#374bf9] font-bold" : "hover:text-[#374bf9]"}`}>
+              <Link href="/" className={`transition ${pathname === "/" ? "text-[#121e42] font-bold" : "hover:text-[#121e42]"}`}>
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/about" className={`transition ${pathname === "/about" ? "text-[#374bf9] font-bold" : "hover:text-[#374bf9]"}`}>
+              <Link href="/about" className={`transition ${pathname === "/about" ? "text-[#121e42] font-bold" : "hover:text-[#121e42]"}`}>
                 About Us
               </Link>
             </li>
             <li
-              className="group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2"
+              className="group flex items-center gap-1 cursor-pointer hover:text-[#121e42] transition-all py-2"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <Link href="/shop" className={`flex items-center gap-1 ${pathname === "/shop" ? "text-[#374bf9] font-bold" : "hover:text-[#374bf9]"}`}>
+              <Link href="/shop" className={`flex items-center gap-1 ${pathname === "/shop" ? "text-[#121e42] font-bold" : "hover:text-[#121e42]"}`}>
                 <span>Refurbished Products</span>
                 <ChevronDown size={14} className="transition-transform duration-200 group-hover:rotate-180" />
               </Link>
@@ -822,17 +822,17 @@ export default function Header() {
               </div>
             </li>
             <li>
-              <Link href="/bulk-orders" className={`transition ${pathname === "/bulk-orders" ? "text-[#374bf9] font-bold" : "hover:text-[#374bf9]"}`}>
+              <Link href="/bulk-orders" className={`transition ${pathname === "/bulk-orders" ? "text-[#121e42] font-bold" : "hover:text-[#121e42]"}`}>
                 Bulk Orders
               </Link>
             </li>
             <li>
-              <Link href="/blog" className={`transition ${pathname === "/blog" ? "text-[#374bf9] font-bold" : "hover:text-[#374bf9]"}`}>
+              <Link href="/blog" className={`transition ${pathname === "/blog" ? "text-[#121e42] font-bold" : "hover:text-[#121e42]"}`}>
                 Blog
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-[#374bf9] transition">
+              <Link href="#" className="hover:text-[#121e42] transition">
                 Contact Us
               </Link>
             </li>
@@ -841,7 +841,7 @@ export default function Header() {
           {/* Right navigation links and utility icons */}
           <div className="flex items-center gap-x-6 shrink-0">
             <ul className="flex items-center gap-x-6">
-              <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#374bf9] transition-all py-2">
+              <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#121e42] transition-all py-2">
                 <span>Policies</span>
                 <ChevronDown size={14} className="transition-transform duration-200 group-hover:rotate-180" />
 
@@ -870,18 +870,18 @@ export default function Header() {
                 </div>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-[#374bf9] transition">
+                <Link href="/faq" className="hover:text-[#121e42] transition">
                   FAQs
                 </Link>
               </li>
             </ul>
 
             <div className="flex items-center gap-x-5 pl-5 border-l border-black/10">
-              <button className="flex items-center gap-1.5 hover:text-[#374bf9] transition">
+              <button className="flex items-center gap-1.5 hover:text-[#121e42] transition">
                 <Shuffle size={18} />
                 <span className="font-semibold">0</span>
               </button>
-              <button className="flex items-center gap-1.5 hover:text-[#374bf9] transition">
+              <button className="flex items-center gap-1.5 hover:text-[#121e42] transition">
                 <Heart size={18} />
                 <span className="font-semibold">0</span>
               </button>

@@ -78,6 +78,9 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
   };
 
   useEffect(() => {
+    if (initialLaptops.length > 0 || initialDesktops.length > 0) {
+      return;
+    }
     async function loadProducts() {
       try {
         const [laptopsRes, desktopsRes] = await Promise.all([
@@ -95,7 +98,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
       }
     }
     loadProducts();
-  }, []);
+  }, [initialLaptops, initialDesktops]);
 
   useEffect(() => {
     updateScroll(laptopSliderRef, setLaptopScroll, "laptop");
@@ -277,7 +280,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
               <div className="flex-1 p-8 flex flex-col justify-end items-start text-white relative">
                 <div className="absolute inset-0 bg-white/0 transition-colors duration-500 group-hover:bg-white/10 pointer-events-none"></div>
                 <h3 className="text-2xl md:text-3xl font-bold mb-1 tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">Refurbished Desktops</h3>
-                <p className="text-xs text-emerald-100 mb-3 leading-relaxed transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">
+                <p className="text-xs text-slate-100 mb-3 leading-relaxed transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">
                   Starting from ₹10,499 – Reliable & Scalable Desktop Systems for Offices and Classrooms.
                 </p>
                 <div className="flex items-center gap-2 text-base font-bold transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">
@@ -508,7 +511,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
               <Link href="/shop" className="bg-[#ffb03a] hover:bg-[#faa129] text-gray-900 font-bold px-8 py-3 rounded-full transition-colors shadow-sm focus:outline-none text-center">
                 Shop Now!
               </Link>
-              <Link href="/about" className="bg-transparent border-2 border-white/60 hover:border-white hover:bg-white/10 text-white font-bold px-8 py-3 rounded-full transition-all focus:outline-none text-center">
+              <Link href="/about" aria-label="Learn more about Comsri Corporation" className="bg-transparent border-2 border-white/60 hover:border-white hover:bg-white/10 text-white font-bold px-8 py-3 rounded-full transition-all focus:outline-none text-center">
                 Learn More
               </Link>
             </div>
@@ -753,28 +756,28 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 justify-between">
             {/* Address */}
             <div className="flex flex-col pr-4">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Address</h3>
+              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Address</h3>
               <p className="text-[14px] font-semibold text-[#2d2d2d] leading-relaxed mb-6">
                 Office No.-T-15 Pinnacle Business Park MC Rd Shanti Nagar Andheri East Mumbai Maharastra – 400093
               </p>
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Contact Us</h3>
+              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Contact Us</h3>
               <p className="text-[14px] font-semibold text-[#2d2d2d] mb-1.5">+91 8601-899-899</p>
               <p className="text-[14px] font-semibold text-[#2d2d2d]">Email: info@comsri.com</p>
             </div>
 
             {/* Refurbished Products */}
             <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Refurbished Products</h3>
+              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Refurbished Products</h3>
               <div className="flex flex-col gap-3">
                 {["Refurbished Desktops", "Refurbished Laptops", "Refurbished Workstations", "Refurbished Macbooks", "Refurbished Mini PCs"].map((item, i) => (
-                  <Link key={i} href="/shop" className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item}</Link>
+                  <Link key={i} href="/shop" className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#121e42] transition-colors">{item}</Link>
                 ))}
               </div>
             </div>
 
             {/* Useful Links */}
             <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Useful Links</h3>
+              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Useful Links</h3>
               <div className="flex flex-col gap-3">
                 {[
                   { label: "Terms & Conditions", path: "/terms-conditions?tab=terms" },
@@ -783,24 +786,24 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
                   { label: "Warranty Policy", path: "/privacy-policy?tab=warranty" },
                   { label: "Shipping Policy", path: "/privacy-policy?tab=shipping" }
                 ].map((item, i) => (
-                  <Link key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item.label}</Link>
+                  <Link key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#121e42] transition-colors">{item.label}</Link>
                 ))}
               </div>
             </div>
 
             {/* Get to Know Us */}
             <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Get to Know Us</h3>
+              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Get to Know Us</h3>
               <div className="flex flex-col gap-3">
                 {["About Us", "FAQS", "Contact Us", "Blogs", "Bulk Orders"].map((item, i) => (
-                  <Link key={i} href="/about" className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item}</Link>
+                  <Link key={i} href="/about" className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#121e42] transition-colors">{item}</Link>
                 ))}
               </div>
             </div>
 
             {/* Available On & Social Links */}
             <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Available On:</h3>
+              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Available On:</h3>
               <div className="flex flex-wrap xl:flex-nowrap gap-3 mb-8 items-center">
                 <a href="#" className="inline-block transition-transform hover:scale-[1.02] active:scale-95">
                   <Image src="/google-play-badge.svg" alt="Get it on Google Play" width={142} height={42} className="h-[42px] w-auto" />
@@ -810,7 +813,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
                 </a>
               </div>
 
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Social links:</h3>
+              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Social links:</h3>
               <div className="flex gap-3">
                 <a href="https://www.facebook.com/comsri.store" aria-label="Facebook" className="w-[36px] h-[36px] rounded-full bg-[#3b5998] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z" /></svg>
