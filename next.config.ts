@@ -1,6 +1,6 @@
 import type {NextConfig} from 'next';
 
-const nextConfig: NextConfig = {
+const nextConfig: any = {
   reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: false,
@@ -72,7 +72,7 @@ const nextConfig: NextConfig = {
       ],
     };
   },
-  webpack: (config, {dev}) => {
+  webpack: (config: any, {dev}: any) => {
     // HMR is disabled in AI Studio via DISABLE_HMR env var.
     // Do not modify—file watching is disabled to prevent flickering during agent edits.
     if (dev && process.env.DISABLE_HMR === 'true') {
