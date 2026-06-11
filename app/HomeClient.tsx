@@ -38,17 +38,19 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
     if (scrollTicksRef.current[key]) return;
 
     scrollTicksRef.current[key] = true;
-    requestAnimationFrame(() => {
-      if (ref.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = ref.current;
-        if (scrollWidth > 0) {
-          const width = (clientWidth / scrollWidth) * 100;
-          const left = (scrollLeft / scrollWidth) * 100;
-          setScroll({ left, width });
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        if (ref.current) {
+          const { scrollLeft, scrollWidth, clientWidth } = ref.current;
+          if (scrollWidth > 0) {
+            const width = (clientWidth / scrollWidth) * 100;
+            const left = (scrollLeft / scrollWidth) * 100;
+            setScroll({ left, width });
+          }
         }
-      }
-      scrollTicksRef.current[key] = false;
-    });
+        scrollTicksRef.current[key] = false;
+      });
+    }, 50);
   };
 
   const handleTrackClick = (
@@ -145,6 +147,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
               height={686}
               sizes="100vw"
               priority={index === 0}
+              fetchPriority={index === 0 ? "high" : undefined}
               className="w-full h-auto object-contain block"
             />
           </div>
@@ -218,6 +221,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     priority={idx === 0}
+                    fetchPriority={idx === 0 ? "high" : undefined}
                     className="object-cover"
                   />
                 </div>
