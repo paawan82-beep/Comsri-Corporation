@@ -61,7 +61,7 @@ export const metadata: Metadata = {
   },
 };
 
-import ChatBot from "./components/ChatBot";
+import ChatBotWrapper from "./components/ChatBotWrapper";
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   const fetchSetterPolyfill = `
@@ -108,7 +108,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body className={`${fredoka.variable} ${albertSans.variable} font-sans antialiased bg-[#f6f5f8]`} suppressHydrationWarning>
         <CartProvider>
           {children}
-          <ChatBot />
+          <ChatBotWrapper />
         </CartProvider>
       </body>
     </html>

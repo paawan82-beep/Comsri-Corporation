@@ -795,8 +795,14 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             <div className="flex flex-col">
               <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Get to Know Us</h3>
               <div className="flex flex-col gap-3">
-                {["About Us", "FAQS", "Contact Us", "Blogs", "Bulk Orders"].map((item, i) => (
-                  <Link key={i} href="/about" className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#121e42] transition-colors">{item}</Link>
+                {[
+                  { label: "About Us", path: "/about" },
+                  { label: "FAQS", path: "/faq" },
+                  { label: "Contact Us", path: "/contact" },
+                  { label: "Blogs", path: "/blog" },
+                  { label: "Bulk Orders", path: "/bulk-orders" },
+                ].map((item, i) => (
+                  <Link key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#121e42] transition-colors">{item.label}</Link>
                 ))}
               </div>
             </div>

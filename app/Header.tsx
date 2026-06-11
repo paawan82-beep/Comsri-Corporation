@@ -832,7 +832,7 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-[#121e42] transition">
+              <Link href="/contact" className="hover:text-[#121e42] transition">
                 Contact Us
               </Link>
             </li>
@@ -1001,7 +1001,7 @@ export default function Header() {
           <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-3.5 text-[15px] font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-50 transition-colors">
             Blog
           </Link>
-          <Link href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-3.5 text-[15px] font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-50 transition-colors">
+          <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-3.5 text-[15px] font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-50 transition-colors">
             Contact Us
           </Link>
 
