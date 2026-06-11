@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Heart, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
@@ -110,10 +111,16 @@ export default function ProductCard({ product, index }: ProductCardProps) {
 
         {/* Image Frame with Zoom Effect */}
         <Link href={`/products/${product.slug}`} className="absolute inset-0 z-10 block">
-          <div
-            className="w-full h-full bg-no-repeat bg-cover bg-center pointer-events-none transition-transform duration-700 group-hover:scale-110 mix-blend-multiply"
-            style={{ backgroundImage: `url('${mainImageStr}')` }}
-          />
+          <div className="relative w-full h-full pointer-events-none transition-transform duration-700 group-hover:scale-110 mix-blend-multiply">
+            <Image
+              src={mainImageStr}
+              alt={product.name}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
+              className="object-contain p-2"
+              priority={index < 4}
+            />
+          </div>
         </Link>
 
         {/* Dynamic Interactive Dot Indicators */}

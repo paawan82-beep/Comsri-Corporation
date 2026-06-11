@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Search, ChevronDown, Shuffle, Heart, ShoppingCart, Apple, Menu, X, Home, Info, ShoppingBag, Package, User, Laptop, Monitor, Layers, Cpu, Sparkles, ArrowRight, Tag, Percent } from "lucide-react";
 import { useCart } from "@/context/CartContext";
@@ -455,8 +456,12 @@ export default function Header() {
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex items-center justify-between w-full gap-3">
           {/* Logo element */}
           <Link href="/" className="flex-shrink-0 flex items-center cursor-pointer">
-            <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Comsri-Logo.png"
+            <Image
+              src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Comsri-Logo.png"
               alt="Comsri Corporation Logo"
+              width={177}
+              height={52}
+              priority
               className="h-[52px] w-auto object-contain"
             />
           </Link>
@@ -533,10 +538,12 @@ export default function Header() {
 
           {/* Center: Centered Logo */}
           <Link href="/" className="flex-shrink-0 flex items-center justify-center">
-            <img
-              loading="lazy"
+            <Image
               src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png"
               alt="Comsri Corporation Logo"
+              width={116}
+              height={34}
+              priority
               className="h-[34px] w-auto object-contain"
             />
           </Link>
@@ -898,8 +905,11 @@ export default function Header() {
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-            <img loading="lazy" src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png"
+            <Image
+              src="https://comsri.com/wp-content/uploads/2025/10/Comsri-Logo-2-1.png"
               alt="Comsri Corporation Logo"
+              width={109}
+              height={32}
               className="h-[32px] w-auto object-contain"
             />
           </Link>

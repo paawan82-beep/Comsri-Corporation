@@ -125,11 +125,14 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             key={index}
             className={`transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100 relative z-10' : 'opacity-0 absolute inset-0 z-0'}`}
           >
-            <img
+            <Image
               src={slide}
               alt={`Slide ${index + 1}`}
+              width={1920}
+              height={686}
+              sizes="100vw"
+              priority={index === 0}
               className="w-full h-auto object-contain block"
-              referrerPolicy="no-referrer"
             />
           </div>
         ))}
@@ -495,11 +498,13 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
 
           {/* Right Image */}
           <div className="lg:w-[450px] xl:w-[500px] flex-shrink-0 w-full relative">
-            <div className="aspect-[16/10] md:aspect-[4/5] w-full rounded-[16px] md:rounded-[24px] overflow-hidden shadow-2xl">
-              <img loading="lazy"
+            <div className="aspect-[16/10] md:aspect-[4/5] w-full rounded-[16px] md:rounded-[24px] overflow-hidden shadow-2xl relative">
+              <Image
                 src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/hp-envy-34.jpg-1.webp"
                 alt="Desktop setup with monitor"
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 1024px) 100vw, 500px"
+                className="object-cover"
               />
             </div>
           </div>
