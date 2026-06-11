@@ -198,9 +198,10 @@ export default function HomeClient() {
   }, [laptops, desktops]);
 
   const slides = [
+    "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Comsri-Banner%202.png",
     "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Apple-Macbook-sale-Banner.jpg",
-    "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/comsri_banner%20(1).png",
-    "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Happy-Custommer-Banner-scaled.png"
+    "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/comsri_banner%20(2).png",
+    "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Happy-Custommer-Banner-scaled%20(1).png"
   ];
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -262,23 +263,28 @@ export default function HomeClient() {
             {[
               {
                 title: "Refurbished Laptops",
-                bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/510uTHyDqGL-removebg-preview-1.png.bv_resized_desktop.png.bv.webp?bv_host=comsri.com"
+                bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/510uTHyDqGL-removebg-preview-1.png.bv_resized_desktop.png.bv.webp?bv_host=comsri.com",
+                link: "/categories/buy-refurbished-laptops-online-in-india"
               },
               {
                 title: "Refurbished Desktops",
-                bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/32-removebg-preview-1.png.bv.webp?bv_host=comsri.com"
+                bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/32-removebg-preview-1.png.bv.webp?bv_host=comsri.com",
+                link: "/categories/buy-high-quality-refurbished-desktops"
               },
               {
                 title: "Refurbished Workstations",
-                bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/z6_g5_v3_2x-removebg-preview-1.png.bv.webp?bv_host=comsri.com"
+                bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/z6_g5_v3_2x-removebg-preview-1.png.bv.webp?bv_host=comsri.com",
+                link: "/categories/buy-refurbished-workstations-online-in-india"
               },
               {
                 title: "Refurbished Mini PCs",
-                bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/7040-micro-1-removebg-preview-1.png.bv.webp?bv_host=comsri.com"
+                bgImage: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/7040-micro-1-removebg-preview-1.png.bv.webp?bv_host=comsri.com",
+                link: "/categories/buy-refurbished-mini-pcs-online-in-india"
               }
             ].map((cat, idx) => (
-              <div
+              <Link
                 key={idx}
+                href={cat.link}
                 className="relative rounded-[16px] md:rounded-[20px] overflow-hidden cursor-pointer group pt-6 px-5 h-[380px] sm:h-[260px] md:h-[300px] lg:h-[340px] flex flex-col items-start bg-[#fac656] shadow-sm transform transition-all duration-300 hover:shadow-md hover:-translate-y-1"
               >
                 <div
@@ -293,7 +299,7 @@ export default function HomeClient() {
                 <h3 className="relative z-10 text-[18px] sm:text-[16px] md:text-[18px] lg:text-[20px] font-bold text-[#1f2937] text-left tracking-tight px-1">
                   {cat.title}
                 </h3>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -305,65 +311,77 @@ export default function HomeClient() {
 
           {/* Top Row: 2 items */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 h-auto">
-            {/* New Mini PCs */}
-            <div className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
+            {/* Refurbished Mini PCs */}
+            <Link href="/categories/buy-refurbished-mini-pcs-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
               <Image src="https://comsri.com/wp-content/uploads/2025/10/mini-pc-showcase-1.jpg" alt="New Mini PCs" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
-                <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">New Mini PCs</h3>
+                <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-1 md:mb-2 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">Refurbished Mini PCs</h3>
+                <p className="text-xs sm:text-sm text-slate-200 mb-3 md:mb-5 max-w-[80%] leading-relaxed drop-shadow-sm transform transition-transform duration-500 group-hover:-translate-y-2">
+                  Starting from ₹10,499 – Ultra-Compact, Space-Saving Corporate Powerhouses.
+                </p>
                 <div className="flex items-center gap-2 text-sm md:text-base lg:text-lg font-bold transform transition-transform duration-500 group-hover:-translate-y-2">
                   <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
                   <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                 </div>
               </div>
-            </div>
+            </Link>
 
-            {/* New All-In-One PCs */}
-            <div className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
+            {/* Refurbished Workstations */}
+            <Link href="/categories/buy-refurbished-workstations-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
               <Image src="https://comsri.com/wp-content/uploads/2025/10/dark-desk-setup-img.jpg-1.webp" alt="New All-In-One PCs" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
-                <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 max-w-[70%] leading-tight drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">New All-In-One PCs</h3>
+                <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-1 md:mb-2 max-w-[70%] leading-tight drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">Refurbished Workstations</h3>
+                <p className="text-xs sm:text-sm text-slate-200 mb-3 md:mb-5 max-w-[70%] leading-relaxed drop-shadow-sm transform transition-transform duration-500 group-hover:-translate-y-2">
+                  Starting from ₹48,499 – Heavy-Duty Performance Built for Complex Business Tasks.
+                </p>
                 <div className="flex items-center gap-2 text-sm md:text-base lg:text-lg font-bold transform transition-transform duration-500 group-hover:-translate-y-2">
                   <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
                   <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
 
           {/* Bottom Row: 3 items */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 h-auto md:h-[450px]">
-            {/* New Desktops */}
-            <div className="bg-[#529b71] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 flex flex-col min-h-[280px] md:min-h-0">
+            {/* Refurbished Desktops */}
+            <Link href="/categories/buy-high-quality-refurbished-desktops" className="bg-[#529b71] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 flex flex-col min-h-[280px] md:min-h-0">
               <div className="h-[65%] relative overflow-hidden">
                 <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Desktop-Showcase.png" alt="New Desktops" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               </div>
               <div className="flex-1 p-8 flex flex-col justify-end items-start text-white relative">
                 <div className="absolute inset-0 bg-white/0 transition-colors duration-500 group-hover:bg-white/10 pointer-events-none"></div>
-                <h3 className="text-2xl md:text-3xl font-bold mb-3 tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">New Desktops</h3>
+                <h3 className="text-2xl md:text-3xl font-bold mb-1 tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">Refurbished Desktops</h3>
+                <p className="text-xs text-emerald-100 mb-3 leading-relaxed transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">
+                  Starting from ₹10,499 – Reliable & Scalable Desktop Systems for Offices and Classrooms.
+                </p>
                 <div className="flex items-center gap-2 text-base font-bold transform transition-transform duration-500 group-hover:-translate-y-1 relative z-10">
                   <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
                   <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                 </div>
               </div>
-            </div>
+            </Link>
 
-            {/* New Laptops */}
-            <div className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 min-h-[250px] md:min-h-0 md:h-full">
+            {/* Refurbished Laptops */}
+            <Link href="/categories/buy-refurbished-laptops-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 min-h-[250px] md:min-h-0 md:h-full">
               <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Laptop-Showcase.webp" alt="New Laptops" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-end items-start text-white">
-                <h3 className="text-2xl md:text-4xl font-bold mb-3 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1">New Laptops</h3>
+                <h3 className="text-2xl md:text-4xl font-bold mb-1 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1">Refurbished Laptops</h3>
+                <p className="text-xs sm:text-sm text-slate-200 mb-3 leading-relaxed drop-shadow-sm transform transition-transform duration-500 group-hover:-translate-y-1">
+                  Starting from ₹14,499 – Premium business notebooks certified for productivity on the go.
+                </p>
                 <div className="flex items-center gap-2 text-base font-bold transform transition-transform duration-500 group-hover:-translate-y-1">
                   <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
                   <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* Get Upto 70% off */}
-            <div className="bg-[#5a80d8] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col relative min-h-[280px] md:min-h-0">
+            <Link href="/shop" className="bg-[#5a80d8] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col relative min-h-[280px] md:min-h-0">
               <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500 pointer-events-none z-10"></div>
               <div className="h-[50%] relative overflow-hidden">
                 <Image src="https://picsum.photos/seed/promo/600/400" alt="Promo" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
@@ -372,13 +390,13 @@ export default function HomeClient() {
                 <span className="bg-[#ff5b4f] text-white px-4 md:px-5 py-1.5 md:py-2 rounded-full text-lg md:text-2xl font-bold mb-3 md:mb-4 tracking-tight shadow-sm inline-block transform transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-2">
                   Get Upto 70% off
                 </span>
-                <h3 className="text-[20px] md:text-[26px] font-bold mb-4 md:mb-6 leading-snug tracking-tight">On All New / Refurbished Products</h3>
+                <h3 className="text-[20px] md:text-[26px] font-bold mb-4 md:mb-6 leading-snug tracking-tight">On All The Refurbished Products</h3>
                 <div className="flex items-center gap-2 text-base font-bold">
                   <span className="border-b-2 border-transparent group-hover:border-white pb-0.5 transition-colors duration-300">Shop Now</span>
                   <ArrowRight size={18} className="transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -435,13 +453,13 @@ export default function HomeClient() {
           <div className="flex items-center justify-between mb-6 md:mb-8 gap-3">
             <h2 className="text-[18px] sm:text-[20px] md:text-[28px] font-bold text-gray-900 tracking-tight">Buy Refurbished Laptops Online in India</h2>
             <div className="hidden sm:flex items-center gap-2 shrink-0">
-              <button 
+              <button
                 onClick={() => scroll(laptopSliderRef, 'left')}
                 className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
               >
                 <ChevronLeft size={20} />
               </button>
-              <button 
+              <button
                 onClick={() => scroll(laptopSliderRef, 'right')}
                 className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
               >
@@ -451,7 +469,7 @@ export default function HomeClient() {
           </div>
 
           {/* Cards Slider */}
-          <div 
+          <div
             ref={laptopSliderRef}
             onScroll={() => updateScroll(laptopSliderRef, setLaptopScroll)}
             className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
@@ -464,14 +482,14 @@ export default function HomeClient() {
           </div>
 
           {/* Progress bar */}
-          <div 
+          <div
             onClick={(e) => handleTrackClick(e, laptopSliderRef)}
             className="w-full h-1.5 bg-[#e9ecef] rounded-full relative overflow-hidden cursor-pointer"
           >
-            <div 
+            <div
               className="h-full bg-[#ffb03a] rounded-full absolute top-0 left-0 transition-transform duration-100 ease-out will-change-transform"
-              style={{ 
-                width: `${laptopScroll.width}%`, 
+              style={{
+                width: `${laptopScroll.width}%`,
                 transform: `translate3d(${laptopScroll.width > 0 ? (laptopScroll.left / laptopScroll.width) * 100 : 0}%, 0, 0)`
               }}
             ></div>
@@ -486,13 +504,13 @@ export default function HomeClient() {
           <div className="flex items-center justify-between mb-6 md:mb-8 gap-3">
             <h2 className="text-[18px] sm:text-[20px] md:text-[28px] font-bold text-gray-900 tracking-tight">Buy High Quality Refurbished Desktops</h2>
             <div className="hidden sm:flex items-center gap-2 shrink-0">
-              <button 
+              <button
                 onClick={() => scroll(desktopSliderRef, 'left')}
                 className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
               >
                 <ChevronLeft size={20} />
               </button>
-              <button 
+              <button
                 onClick={() => scroll(desktopSliderRef, 'right')}
                 className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
               >
@@ -502,7 +520,7 @@ export default function HomeClient() {
           </div>
 
           {/* Cards Slider */}
-          <div 
+          <div
             ref={desktopSliderRef}
             onScroll={() => updateScroll(desktopSliderRef, setDesktopScroll)}
             className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
@@ -515,14 +533,14 @@ export default function HomeClient() {
           </div>
 
           {/* Progress bar */}
-          <div 
+          <div
             onClick={(e) => handleTrackClick(e, desktopSliderRef)}
             className="w-full h-1.5 bg-[#e9ecef] rounded-full relative overflow-hidden cursor-pointer"
           >
-            <div 
+            <div
               className="h-full bg-[#ffb03a] rounded-full absolute top-0 left-0 transition-transform duration-100 ease-out will-change-transform"
-              style={{ 
-                width: `${desktopScroll.width}%`, 
+              style={{
+                width: `${desktopScroll.width}%`,
                 transform: `translate3d(${desktopScroll.width > 0 ? (desktopScroll.left / desktopScroll.width) * 100 : 0}%, 0, 0)`
               }}
             ></div>
@@ -560,12 +578,12 @@ export default function HomeClient() {
             </div>
 
             <div className="flex flex-wrap items-center gap-4">
-              <button className="bg-[#ffb03a] hover:bg-[#faa129] text-gray-900 font-bold px-8 py-3 rounded-full transition-colors shadow-sm focus:outline-none">
+              <Link href="/shop" className="bg-[#ffb03a] hover:bg-[#faa129] text-gray-900 font-bold px-8 py-3 rounded-full transition-colors shadow-sm focus:outline-none text-center">
                 Shop Now!
-              </button>
-              <button className="bg-transparent border-2 border-white/60 hover:border-white hover:bg-white/10 text-white font-bold px-8 py-3 rounded-full transition-all focus:outline-none">
+              </Link>
+              <Link href="/about" className="bg-transparent border-2 border-white/60 hover:border-white hover:bg-white/10 text-white font-bold px-8 py-3 rounded-full transition-all focus:outline-none text-center">
                 Learn More
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -573,7 +591,7 @@ export default function HomeClient() {
           <div className="lg:w-[450px] xl:w-[500px] flex-shrink-0 w-full relative">
             <div className="aspect-[16/10] md:aspect-[4/5] w-full rounded-[16px] md:rounded-[24px] overflow-hidden shadow-2xl">
               <img loading="lazy"
-                src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=1000"
+                src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/hp-envy-34.jpg-1.webp"
                 alt="Desktop setup with monitor"
                 className="w-full h-full object-cover"
               />
@@ -595,7 +613,7 @@ export default function HomeClient() {
           </div>
 
           {/* Cards Slider */}
-          <div 
+          <div
             ref={blogSliderRef}
             onScroll={() => updateScroll(blogSliderRef, setBlogScroll)}
             className="flex flex-nowrap gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
@@ -750,14 +768,14 @@ export default function HomeClient() {
           </div>
 
           {/* Progress bar */}
-          <div 
+          <div
             onClick={(e) => handleTrackClick(e, blogSliderRef)}
             className="w-full h-1.5 bg-[#e9ecef] rounded-full relative overflow-hidden cursor-pointer mt-12"
           >
-            <div 
+            <div
               className="h-full bg-[#ffb03a] rounded-full absolute top-0 left-0 transition-transform duration-100 ease-out will-change-transform"
-              style={{ 
-                width: `${blogScroll.width}%`, 
+              style={{
+                width: `${blogScroll.width}%`,
                 transform: `translate3d(${blogScroll.width > 0 ? (blogScroll.left / blogScroll.width) * 100 : 0}%, 0, 0)`
               }}
             ></div>
@@ -825,22 +843,11 @@ export default function HomeClient() {
               </div>
             </div>
 
-            {/* New Products */}
-            <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">New Products</h3>
-              <div className="flex flex-col gap-3">
-                {["New Laptops", "New Desktops", "New Macbooks", "New All in One", "New Mini PCs"].map((item, i) => (
-                  <Link key={i} href="/shop" className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item}</Link>
-                ))}
-              </div>
-            </div>
-
             {/* Useful Links */}
             <div className="flex flex-col">
               <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Useful Links</h3>
               <div className="flex flex-col gap-3">
                 {[
-                  { label: "Contact Us", path: "/about" },
                   { label: "Terms & Conditions", path: "/terms-conditions?tab=terms" },
                   { label: "Privacy Policy", path: "/privacy-policy?tab=privacy" },
                   { label: "Return & Refund Policy", path: "/return-refund?tab=refund" },
@@ -852,40 +859,41 @@ export default function HomeClient() {
               </div>
             </div>
 
+            {/* Get to Know Us */}
+            <div className="flex flex-col">
+              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Get to Know Us</h3>
+              <div className="flex flex-col gap-3">
+                {["About Us", "FAQS", "Contact Us", "Blogs", "Bulk Orders"].map((item, i) => (
+                  <Link key={i} href="/about" className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item}</Link>
+                ))}
+              </div>
+            </div>
+
             {/* Available On & Social Links */}
             <div className="flex flex-col">
               <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Available On:</h3>
-              <div className="flex flex-wrap xl:flex-nowrap gap-3 mb-8">
-                <a href="#" className="bg-black text-white px-3 py-1.5 rounded-[6px] flex items-center gap-2 hover:bg-gray-800 transition-colors border border-black min-w-[130px] justify-center">
-                  <Play size={18} className="fill-white" />
-                  <div className="flex flex-col items-start justify-center">
-                    <span className="text-[8px] font-medium leading-none mb-0.5">GET IT ON</span>
-                    <span className="text-[13px] font-semibold leading-none tracking-tight">Google Play</span>
-                  </div>
+              <div className="flex flex-wrap xl:flex-nowrap gap-3 mb-8 items-center">
+                <a href="#" className="inline-block transition-transform hover:scale-[1.02] active:scale-95">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-[42px] w-auto" />
                 </a>
-                <a href="#" className="bg-white text-black px-3 py-1.5 rounded-[6px] flex items-center gap-2 border border-black hover:bg-gray-50 transition-colors min-w-[130px] justify-center">
-                  <Apple size={20} className="fill-black" />
-                  <div className="flex flex-col items-start justify-center">
-                    <span className="text-[8px] font-medium leading-none mb-0.5 mt-0.5">Download on the</span>
-                    <span className="text-[13px] font-semibold leading-none tracking-tight">App Store</span>
-                  </div>
+                <a href="#" className="inline-block transition-transform hover:scale-[1.02] active:scale-95 border border-black rounded-[6px]">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" className="h-[40px] w-auto block" />
                 </a>
               </div>
 
               <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Social links:</h3>
-              <div className="flex gap-2">
-                <a href="#" className="w-[32px] h-[32px] rounded-full bg-[#3b5998] text-white flex items-center justify-center hover:bg-[#2b4170] transition-colors shadow-sm">
-                  <Facebook size={16} className="fill-white" strokeWidth={0} />
+              <div className="flex gap-3">
+                <a href="https://www.facebook.com/comsri.store" className="w-[36px] h-[36px] rounded-full bg-[#3b5998] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z" /></svg>
                 </a>
-                <a href="#" className="w-[32px] h-[32px] rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-colors shadow-sm">
-                  <span className="text-white font-bold text-[14px] italic pr-0.5 leading-none mt-0.5">X</span>
+                <a href="https://twitter.com/comsricorp" className="w-[36px] h-[36px] rounded-full bg-black text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
                 </a>
-                <a href="#" className="w-[32px] h-[32px] rounded-full bg-[#833ab4] text-[#833ab4] flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] rounded-full"></div>
-                  <Instagram size={16} className="text-white relative z-10" />
+                <a href="https://www.instagram.com/comsricorporation/" className="w-[36px] h-[36px] rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
                 </a>
-                <a href="#" className="w-[32px] h-[32px] rounded-full bg-[#ff0000] text-white flex items-center justify-center hover:bg-[#cc0000] transition-colors shadow-sm">
-                  <Youtube size={14} className="fill-white" strokeWidth={0} />
+                <a href="https://www.youtube.com/@ComsriCorporation" className="w-[36px] h-[36px] rounded-full bg-[#ff0000] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.53 3.5 12 3.5 12 3.5s-7.53 0-9.388.555A3.002 3.002 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108C4.47 20.5 12 20.5 12 20.5s7.53 0 9.388-.555a3.003 3.003 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
                 </a>
               </div>
             </div>
@@ -914,29 +922,21 @@ export default function HomeClient() {
             <p className="text-[14px] font-bold text-[#111]">Copyright 2026 by Comsri Corporation All Rights Reserved.</p>
             <div className="flex gap-1.5">
               <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" className="h-full object-contain" alt="Mastercard" />
+                <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Mastercard_2019_logo.svg" className="h-full object-contain" alt="Mastercard" />
               </div>
               <div className="bg-[#1a1f71] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" className="h-[75%] object-contain mt-[1px]" alt="Visa" />
+                <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Visa_White.png" className="h-[70%] object-contain mt-[0.5px]" alt="Visa" />
               </div>
               <div className="bg-[#003087] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" className="h-[12px] object-contain" alt="PayPal" />
+                <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Paypal-logo-white.svg.png" className="h-[55%] object-contain" alt="PayPal" />
               </div>
               <div className="bg-[#2d9cdb] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" className="h-[80%] object-contain" alt="Amex" />
+                <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/1685814419stripe-logo-white.png" className="h-[75%] object-contain" alt="Amex" />
               </div>
-              <div className="bg-[#6772e5] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" className="h-[14px] object-contain invert hue-rotate-[180deg] brightness-200" alt="Stripe" />
+              <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
+                <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Google_Pay_Logo.svg.webp" className="h-[55%] object-contain" alt="Google Pay" />
               </div>
-              <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center px-1">
-                <span className="text-white text-[10px]">G</span><span className="text-white text-[12px] font-bold">Pay</span>
-              </div>
-              <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center px-1 border border-gray-700">
-                <Apple size={14} className="fill-white text-white mr-0.5" /><span className="text-white text-[10px] font-semibold mt-[1px]">Pay</span>
-              </div>
-              <div className="bg-[#004b87] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1280px-UnionPay_logo.svg.png" className="h-[80%] object-contain" alt="UnionPay" />
-              </div>
+
             </div>
           </div>
 

@@ -493,14 +493,16 @@ export default function Header() {
             </div>
             {isLoggedIn ? (
               <div className="flex items-center gap-3 animate-fade-in">
-                <span className="text-slate-700 font-bold max-w-[140px] truncate select-none">
-                  Hello, {userEmail.split("@")[0]}!
-                </span>
+                <Link href="/dashboard" className="text-slate-700 hover:text-[#374bf9] font-bold max-w-[140px] truncate select-none flex items-center gap-1.5 transition-colors">
+                  <User size={16} className="text-slate-650" />
+                  <span>Dashboard</span>
+                </Link>
                 <button
                   onClick={() => {
                     localStorage.removeItem("isLoggedIn");
                     localStorage.removeItem("userEmail");
                     setIsLoggedIn(false);
+                    window.location.href = "/";
                   }}
                   className="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full font-bold transition-all active:scale-95 cursor-pointer"
                 >
@@ -540,8 +542,8 @@ export default function Header() {
           </Link>
 
           {/* Right: Profile User Icon */}
-          <Link href="/login" className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-50 transition-colors">
-            <User size={24} className="text-gray-800" />
+          <Link href={isLoggedIn ? "/dashboard" : "/login"} className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-50 transition-colors">
+            <User size={24} className={isLoggedIn ? "text-[#374bf9]" : "text-gray-800"} />
           </Link>
         </div>
 

@@ -8,9 +8,10 @@ import { WooCommerceProduct } from "@/lib/types/woocommerce";
 
 interface ProductDetailClientProps {
   product: WooCommerceProduct;
+  variations?: any[];
 }
 
-export default function ProductDetailClient({ product }: ProductDetailClientProps) {
+export default function ProductDetailClient({ product, variations = [] }: ProductDetailClientProps) {
   // Brand resolution
   const getBrand = () => {
     const brandAttr = product.attributes?.find(a => a.name.toLowerCase() === "brand");
@@ -58,8 +59,19 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   };
 
   const getBaseRegularPrice = () => {
+    // 1. Check parent product
     const r = parseFloat(product.regular_price || "0");
     if (!isNaN(r) && r > 0) return r;
+
+    // 2. Check variations
+    if (variations && variations.length > 0) {
+      for (const v of variations) {
+        const vr = parseFloat(v.regular_price || "0");
+        if (!isNaN(vr) && vr > 0) return vr;
+      }
+    }
+
+    // 3. Fallback
     const p = getBasePrice();
     return p * 2; // fallback to 50% discount if not set
   };
@@ -67,39 +79,194 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const basePrice = getBasePrice();
   const baseRegularPrice = getBaseRegularPrice();
 
-  // Add costs for options
-  const getOptionAdditions = () => {
-    let added = 0;
-    if (selectedRam.includes("16")) added += 4000;
-    if (selectedSsd.includes("512")) added += 3000;
-    if (selectedWarranty.toLowerCase().includes("additional 1")) added += 1500;
-    if (selectedWarranty.toLowerCase().includes("additional 2")) added += 2800;
-    return added;
+  // Match active variation based on swatches selection
+  const getActiveVariation = (checkWarranty: boolean = true) => {
+    if (!variations || variations.length === 0) return null;
+    return variations.find(v => {
+      return v.attributes?.every((attr: any) => {
+        const name = attr.name.toLowerCase();
+        const option = attr.option.toLowerCase();
+        
+        if (name === "ram") {
+          return selectedRam.toLowerCase().includes(option) || option.includes(selectedRam.toLowerCase());
+        }
+        if (name === "hard disk size" || name === "storage" || name === "ssd") {
+          return selectedSsd.toLowerCase().includes(option) || option.includes(selectedSsd.toLowerCase());
+        }
+        if (checkWarranty && name === "warranty") {
+          return selectedWarranty.toLowerCase().includes(option) || option.includes(selectedWarranty.toLowerCase());
+        }
+        return true;
+      });
+    });
   };
 
-  const optionCost = getOptionAdditions();
-  const activePrice = basePrice + optionCost;
-  const activeRegularPrice = baseRegularPrice + optionCost;
+  const getDisplayPrices = () => {
+    // 1. Try to match variation with warranty
+    let activeVar = getActiveVariation(true);
+    let basePriceVal = basePrice;
+    let hasVariation = false;
+    let variationHasWarranty = false;
+
+    if (activeVar) {
+      const p = parseFloat(activeVar.price || "0");
+      if (!isNaN(p) && p > 0) {
+        basePriceVal = p;
+        hasVariation = true;
+        variationHasWarranty = true;
+      }
+    } else {
+      // 2. Try to match variation without warranty (RAM and SSD only)
+      activeVar = getActiveVariation(false);
+      if (activeVar) {
+        const p = parseFloat(activeVar.price || "0");
+        if (!isNaN(p) && p > 0) {
+          basePriceVal = p;
+          hasVariation = true;
+          variationHasWarranty = false;
+        }
+      }
+    }
+
+    let extraCost = 0;
+    // If no variation was matched at all, add hardcoded fallback additions
+    if (!hasVariation) {
+      if (selectedRam.includes("16")) extraCost += 4000;
+      if (selectedSsd.includes("512")) extraCost += 3000;
+    }
+
+    // Warranty addition adds to sale price only, not the regular price.
+    // WooCommerce database variations (e.g. for 8GB) already have the warranty sale price included.
+    let warrantyCostForSale = 0;
+    if (!variationHasWarranty) {
+      if (selectedWarranty.toLowerCase().includes("additional 1")) warrantyCostForSale = 1500;
+      if (selectedWarranty.toLowerCase().includes("additional 2")) warrantyCostForSale = 2800;
+    }
+
+    return {
+      price: basePriceVal + extraCost + warrantyCostForSale,
+      regularPrice: baseRegularPrice
+    };
+  };
+
+  const { price: activePrice, regularPrice: activeRegularPrice } = getDisplayPrices();
+
+  const getVariationPriceForCombo = (ram: string, ssd: string) => {
+    if (!variations || variations.length === 0) return null;
+    
+    // Try matching with warranty first
+    let matched = variations.find(v => {
+      return v.attributes?.every((attr: any) => {
+        const name = attr.name.toLowerCase();
+        const option = attr.option.toLowerCase();
+        
+        if (name === "ram") {
+          return ram.toLowerCase().includes(option) || option.includes(ram.toLowerCase());
+        }
+        if (name === "hard disk size" || name === "storage" || name === "ssd") {
+          return ssd.toLowerCase().includes(option) || option.includes(ssd.toLowerCase());
+        }
+        if (name === "warranty") {
+          return selectedWarranty.toLowerCase().includes(option) || option.includes(selectedWarranty.toLowerCase());
+        }
+        return true;
+      });
+    });
+    
+    if (matched) {
+      const p = parseFloat(matched.price || "0");
+      if (!isNaN(p) && p > 0) return p;
+    }
+    
+    // Try matching without warranty
+    matched = variations.find(v => {
+      return v.attributes?.every((attr: any) => {
+        const name = attr.name.toLowerCase();
+        const option = attr.option.toLowerCase();
+        
+        if (name === "ram") {
+          return ram.toLowerCase().includes(option) || option.includes(ram.toLowerCase());
+        }
+        if (name === "hard disk size" || name === "storage" || name === "ssd") {
+          return ssd.toLowerCase().includes(option) || option.includes(ssd.toLowerCase());
+        }
+        return true;
+      });
+    });
+    
+    if (matched) {
+      const p = parseFloat(matched.price || "0");
+      if (!isNaN(p) && p > 0) {
+        let extra = 0;
+        if (selectedWarranty.toLowerCase().includes("additional 1")) extra += 1500;
+        if (selectedWarranty.toLowerCase().includes("additional 2")) extra += 2800;
+        return p + extra;
+      }
+    }
+    return null;
+  };
 
   // Calculate option difference relative to the baseline (first option)
   const getOptionPriceDiff = (optType: "ram" | "ssd" | "warranty", optValue: string) => {
+    // 1. If warranty, it's always hardcoded
+    if (optType === "warranty") {
+      let baseAdded = 0;
+      let optAdded = 0;
+      
+      const wBase = warrantyOptions[0]?.toLowerCase() || "";
+      const wOpt = optValue.toLowerCase();
+      
+      if (wBase.includes("additional 1")) baseAdded = 1500;
+      else if (wBase.includes("additional 2")) baseAdded = 2800;
+      
+      if (wOpt.includes("additional 1")) optAdded = 1500;
+      else if (wOpt.includes("additional 2")) optAdded = 2800;
+      
+      return optAdded - baseAdded;
+    }
+
+    // 2. If RAM or SSD, try to get from variations first
+    if (variations && variations.length > 0) {
+      const ramBase = ramOptions[0];
+      const ssdBase = ssdOptions[0];
+      
+      const targetRam = optType === "ram" ? optValue : selectedRam;
+      const targetSsd = optType === "ssd" ? optValue : selectedSsd;
+      
+      const baseRam = optType === "ram" ? ramBase : selectedRam;
+      const baseSsd = optType === "ssd" ? ssdBase : selectedSsd;
+      
+      const targetPrice = getVariationPriceForCombo(targetRam, targetSsd);
+      const basePriceVal = getVariationPriceForCombo(baseRam, baseSsd);
+      
+      if (targetPrice !== null && basePriceVal !== null) {
+        return targetPrice - basePriceVal;
+      }
+    }
+
+    // 3. Fallback to hardcoded differences
     let baseAdded = 0;
     if (ramOptions[0]?.includes("16")) baseAdded += 4000;
     if (ssdOptions[0]?.includes("512")) baseAdded += 3000;
-    if (warrantyOptions[0]?.toLowerCase().includes("additional 1")) baseAdded += 1500;
-    if (warrantyOptions[0]?.toLowerCase().includes("additional 2")) baseAdded += 2800;
 
     let optAdded = 0;
     const r = optType === "ram" ? optValue : ramOptions[0];
     const s = optType === "ssd" ? optValue : ssdOptions[0];
-    const w = optType === "warranty" ? optValue : warrantyOptions[0];
 
     if (r?.includes("16")) optAdded += 4000;
     if (s?.includes("512")) optAdded += 3000;
-    if (w?.toLowerCase().includes("additional 1")) optAdded += 1500;
-    if (w?.toLowerCase().includes("additional 2")) optAdded += 2800;
 
     return optAdded - baseAdded;
+  };
+
+  const formatPriceDiff = (value: number) => {
+    const absValue = Math.abs(value);
+    const formatted = new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0
+    }).format(absValue);
+    return `${value >= 0 ? "+" : "-"} ${formatted}`;
   };
 
   // Format price helper

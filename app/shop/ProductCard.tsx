@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Heart, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
@@ -32,6 +33,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, index }: ProductCardProps) {
+  const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeDot, setActiveDot] = useState(0);
   const { addToCart } = useCart();
@@ -49,9 +51,31 @@ export default function ProductCard({ product, index }: ProductCardProps) {
 
   const catName = product.categories?.[0]?.name || "Corporate Hardware";
 
+  const getDisplayPrices = () => {
+    const salePriceVal = parseFloat(product.sale_price || product.price || "0");
+    let regularPriceVal = parseFloat(product.regular_price || "0");
+    
+    if (isNaN(regularPriceVal) || regularPriceVal <= 0) {
+      regularPriceVal = salePriceVal * 2; // fallback to 50% discount if not configured
+    }
+    
+    const discount = regularPriceVal > 0 
+      ? Math.round(((regularPriceVal - salePriceVal) / regularPriceVal) * 100)
+      : 50;
+
+    return {
+      salePrice: salePriceVal,
+      regularPrice: regularPriceVal,
+      discountPercent: discount
+    };
+  };
+
+  const { salePrice, regularPrice, discountPercent } = getDisplayPrices();
+
   return (
     <div
       style={{ animationDelay: `${Math.min(index * 50, 400)}ms` }}
+      onClick={() => router.push(`/products/${product.slug}`)}
       className="bg-white rounded-[24px] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col group cursor-pointer border border-transparent hover:border-gray-100 hover:shadow-[0_12px_40px_rgb(0,0,0,0.12)] transition-all duration-300 ease-out hover:-translate-y-2 relative overflow-hidden animate-fade-in"
     >
       {/* Glow Effect Background inside the card on hover */}
@@ -123,21 +147,11 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         </p>
 
         <div className="flex items-center gap-2.5 mb-5 mt-1">
-          {product.on_sale && product.regular_price ? (
-            <>
-              <span className="text-[18px] font-bold text-[#111] price-font">₹{product.sale_price}</span>
-              <span className="text-[14px] text-gray-400 line-through font-medium price-font">₹{product.regular_price}</span>
-              {product.regular_price && product.sale_price && (
-                <span className="text-[14.5px] font-semibold text-[#008a00] bg-emerald-50 px-2 py-0.5 rounded-md">
-                  {Math.round(((parseFloat(product.regular_price) - parseFloat(product.sale_price)) / parseFloat(product.regular_price)) * 100)}% off
-                </span>
-              )}
-            </>
-          ) : (
-            <span className="text-[18px] font-bold text-[#111] price-font">
-              ₹{product.price || "Check Price"}
-            </span>
-          )}
+          <span className="text-[18px] font-bold text-[#111] price-font">₹{salePrice}</span>
+          <span className="text-[14px] text-gray-400 line-through font-medium price-font">₹{regularPrice}</span>
+          <span className="text-[14.5px] font-semibold text-[#008a00] bg-emerald-50 px-2 py-0.5 rounded-md">
+            {discountPercent}% off
+          </span>
         </div>
 
         {/* Action Buttons with CSS transitions */}
