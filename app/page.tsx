@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import HomeClient from "./HomeClient";
 import { constructMetadata } from "./seo/metadata";
+import { getFilteredCatalog } from "@/lib/services/catalog";
 
 export const metadata: Metadata = constructMetadata({
   title: "Buy Refurbished Laptops & Desktops Online in India",
@@ -9,6 +10,25 @@ export const metadata: Metadata = constructMetadata({
   keywords: ["refurbished laptops", "refurbished desktops", "refurbished computers", "headless e-commerce", "cheap laptops India"],
 });
 
-export default function Home() {
-  return <HomeClient />;
+export default async function Home() {
+  let initialLaptops: any[] = [];
+  let initialDesktops: any[] = [];
+
+  try {
+    const [laptopsData, desktopsData] = await Promise.all([
+      getFilteredCatalog({ category: "112", per_page: 15 }),
+      getFilteredCatalog({ category: "129", per_page: 15 })
+    ]);
+    initialLaptops = laptopsData?.data || [];
+    initialDesktops = desktopsData?.data || [];
+  } catch (error) {
+    console.error("Failed to load server-side catalog on page mount:", error);
+  }
+
+  return (
+    <HomeClient 
+      initialLaptops={initialLaptops} 
+      initialDesktops={initialDesktops} 
+    />
+  );
 }

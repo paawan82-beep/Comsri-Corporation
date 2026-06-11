@@ -36,6 +36,15 @@ async function dumpProducts() {
       regular_price: p.regular_price,
       sale_price: p.sale_price,
       on_sale: p.on_sale,
+      description: p.description || "",
+      short_description: p.short_description || "",
+      sku: p.sku || "",
+      stock_status: p.stock_status || "instock",
+      images: p.images ? p.images.map((img: any) => ({ src: img.src })) : [],
+      related_ids: p.related_ids || [],
+      average_rating: p.average_rating || "4.7",
+      rating_count: p.rating_count || 10,
+      type: p.type || "simple",
       categories: p.categories.map(c => c.name),
       attributes: p.attributes.map(a => ({
         name: a.name,
@@ -44,7 +53,7 @@ async function dumpProducts() {
     }));
     
     fs.writeFileSync("products_dump.json", JSON.stringify(summary, null, 2));
-    console.log("Saved dump to products_dump.json");
+    console.log("Saved high-fidelity dump to products_dump.json");
   } catch (err) {
     console.error("Error:", err);
   }

@@ -7,111 +7,17 @@ import { ChevronLeft, ChevronRight, ArrowRight, ArrowUpRight, MessageCircle, Ins
 import Header from "./Header";
 import ProductCard from "./shop/ProductCard";
 
-export default function HomeClient() {
+interface HomeClientProps {
+  initialLaptops?: any[];
+  initialDesktops?: any[];
+}
+
+export default function HomeClient({ initialLaptops = [], initialDesktops = [] }: HomeClientProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // States to fetch real WooCommerce products dynamically
-  const [laptops, setLaptops] = useState<any[]>([
-    {
-      id: 1,
-      name: "Dell Latitude Laptop | 5480 | Intel i5-6th Gen | 14″ FHD | Win 10 Pro | Refurbished",
-      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
-      regular_price: "45000",
-      price: "22499",
-      sale_price: "22499",
-      on_sale: true,
-      featured: true,
-      images: [{ src: "https://comsri.com/wp-content/uploads/2025/12/61d5EQ8j7oS._UF1000_1000_QL80_-removebg-preview.png" }],
-      categories: [{ name: "Refurbished Laptops" }]
-    },
-    {
-      id: 2,
-      name: "Dell Latitude 5480",
-      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
-      regular_price: "32000",
-      price: "14599",
-      sale_price: "14599",
-      on_sale: true,
-      featured: false,
-      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/32-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
-      categories: [{ name: "Refurbished Laptops" }]
-    },
-    {
-      id: 3,
-      name: "Dell Latitude 5500",
-      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
-      regular_price: "55000",
-      price: "20499",
-      sale_price: "20499",
-      on_sale: true,
-      featured: true,
-      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/z6_g5_v3_2x-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
-      categories: [{ name: "Refurbished Laptops" }]
-    },
-    {
-      id: 4,
-      name: "Dell Latitude 7490",
-      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
-      regular_price: "35000",
-      price: "18499",
-      sale_price: "18499",
-      on_sale: true,
-      featured: false,
-      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/7040-micro-1-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
-      categories: [{ name: "Refurbished Laptops" }]
-    }
-  ]);
-
-  const [desktops, setDesktops] = useState<any[]>([
-    {
-      id: 5,
-      name: "Dell Optiplex SFF Desktop | 3046 | Intel i5-6th Gen | Win 11",
-      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
-      regular_price: "45999",
-      price: "14999",
-      sale_price: "14999",
-      on_sale: true,
-      featured: true,
-      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/7040-micro-1-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
-      categories: [{ name: "Refurbished Desktops" }]
-    },
-    {
-      id: 6,
-      name: "Dell Precision Tower Desktop | 3420 | Intel i5-7th Gen | Win 10",
-      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
-      regular_price: "35000",
-      price: "18499",
-      sale_price: "18499",
-      on_sale: true,
-      featured: false,
-      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/32-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
-      categories: [{ name: "Refurbished Desktops" }]
-    },
-    {
-      id: 7,
-      name: "HP ProDesk Micro Tower Desktop | 400 G5 | Intel i5-8th",
-      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
-      regular_price: "45000",
-      price: "17499",
-      sale_price: "17499",
-      on_sale: true,
-      featured: true,
-      images: [{ src: "https://comsri.com/wp-content/uploads/al_opt_content/IMAGE/comsri.com/wp-content/uploads/2025/10/z6_g5_v3_2x-removebg-preview-1.png.bv.webp?bv_host=comsri.com" }],
-      categories: [{ name: "Refurbished Desktops" }]
-    },
-    {
-      id: 8,
-      name: "Lenovo ThinkCentre SFF Desktop | M920 | Intel i5-8th",
-      slug: "dell-latitude-laptop-5480-intel-i5-6th-gen-14-fhd-win-10-pro-refurbished",
-      regular_price: "40000",
-      price: "18499",
-      sale_price: "18499",
-      on_sale: true,
-      featured: false,
-      images: [{ src: "https://comsri.com/wp-content/uploads/2025/12/61d5EQ8j7oS._UF1000_1000_QL80_-removebg-preview.png" }],
-      categories: [{ name: "Refurbished Desktops" }]
-    }
-  ]);
+  // States to fetch real WooCommerce products dynamically, initialized with server-rendered props
+  const [laptops, setLaptops] = useState<any[]>(initialLaptops);
+  const [desktops, setDesktops] = useState<any[]>(initialDesktops);
 
   const laptopSliderRef = useRef<HTMLDivElement>(null);
   const desktopSliderRef = useRef<HTMLDivElement>(null);
