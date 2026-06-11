@@ -106,7 +106,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <JsonLd schema={localBusinessSchema} />
         <JsonLd schema={searchActionSchema} />
       </head>
-      <body className={`${fredoka.className} ${albertSans.variable} antialiased bg-[#f6f5f8]`} suppressHydrationWarning>
+      <body className={`${fredoka.className} ${fredoka.variable} ${albertSans.variable} antialiased bg-[#f6f5f8]`} suppressHydrationWarning>
         <CartProvider>
           {children}
           <ChatBotWrapper />

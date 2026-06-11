@@ -551,7 +551,11 @@ export default function Header() {
           </Link>
 
           {/* Right: Profile User Icon */}
-          <Link href={isLoggedIn ? "/dashboard" : "/login"} className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-50 transition-colors">
+          <Link
+            href={isLoggedIn ? "/dashboard" : "/login"}
+            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-50 transition-colors"
+            aria-label={isLoggedIn ? "My Dashboard" : "Login or Register"}
+          >
             <User size={24} className={isLoggedIn ? "text-[#374bf9]" : "text-gray-800"} />
           </Link>
         </div>
@@ -1086,6 +1090,7 @@ export default function Header() {
           {/* Home Tab */}
           <Link
             href="/"
+            aria-label="Home"
             className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/"
               ? "bg-[#faba5b] text-black px-4 py-2"
               : "text-white/80 hover:text-white p-2"
@@ -1100,6 +1105,7 @@ export default function Header() {
           {/* About Us Tab */}
           <Link
             href="/about"
+            aria-label="About Us"
             className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/about"
               ? "bg-[#faba5b] text-black px-4 py-2"
               : "text-white/80 hover:text-white p-2"
@@ -1114,6 +1120,7 @@ export default function Header() {
           {/* Shop Tab */}
           <Link
             href="/shop"
+            aria-label="Shop Catalog"
             className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/shop"
               ? "bg-[#faba5b] text-black px-4 py-2"
               : "text-white/80 hover:text-white p-2"
@@ -1128,6 +1135,7 @@ export default function Header() {
           {/* Bulk Orders Tab */}
           <Link
             href="/bulk-orders"
+            aria-label="Bulk Orders"
             className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/bulk-orders"
               ? "bg-[#faba5b] text-black px-4 py-2"
               : "text-white/80 hover:text-white p-2"
@@ -1142,6 +1150,7 @@ export default function Header() {
           {/* Cart Tab */}
           <Link
             href="/cart"
+            aria-label="Shopping Cart"
             className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/cart"
               ? "bg-[#faba5b] text-black px-4 py-2"
               : "text-white/80 hover:text-white p-2"
