@@ -124,7 +124,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         </Link>
 
         {/* Dynamic Interactive Dot Indicators */}
-        <div className="absolute bottom-4 flex gap-1.5 z-20">
+        <div className="absolute bottom-4 flex gap-2 z-20">
           {[0, 1, 2, 3, 4].map((dotIndex) => (
             <button
               key={dotIndex}
@@ -133,11 +133,16 @@ export default function ProductCard({ product, index }: ProductCardProps) {
                 e.preventDefault();
                 setActiveDot(dotIndex);
               }}
-              className={`h-1.5 rounded-full transition-all duration-300 focus:outline-none ${activeDot === dotIndex
-                ? "w-3.5 bg-black"
-                : "w-1.5 bg-gray-300 hover:bg-gray-400"
-                }`}
-            />
+              className="w-4 h-4 flex items-center justify-center focus:outline-none"
+              aria-label={`Go to image slide ${dotIndex + 1}`}
+            >
+              <span
+                className={`h-1.5 rounded-full transition-all duration-300 ${activeDot === dotIndex
+                  ? "w-3.5 bg-black"
+                  : "w-1.5 bg-gray-400 hover:bg-gray-500"
+                  }`}
+              />
+            </button>
           ))}
         </div>
       </div>
@@ -149,14 +154,14 @@ export default function ProductCard({ product, index }: ProductCardProps) {
             {product.name}
           </h3>
         </Link>
-        <p className="text-[13px] text-gray-500 font-medium mb-3 flex items-center gap-1.5">
+        <p className="text-[13px] text-gray-600 font-semibold mb-3 flex items-center gap-1.5">
           {catName}
         </p>
 
         <div className="flex items-center gap-2.5 mb-5 mt-1">
           <span className="text-[18px] font-bold text-[#111] price-font">₹{salePrice}</span>
-          <span className="text-[14px] text-gray-400 line-through font-medium price-font">₹{regularPrice}</span>
-          <span className="text-[14.5px] font-semibold text-[#008a00] bg-emerald-50 px-2 py-0.5 rounded-md">
+          <span className="text-[14px] text-gray-600 line-through font-medium price-font">₹{regularPrice}</span>
+          <span className="text-[14.5px] font-bold text-[#005c00] bg-emerald-50 px-2 py-0.5 rounded-md">
             {discountPercent}% off
           </span>
         </div>

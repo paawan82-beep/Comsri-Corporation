@@ -150,6 +150,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
         {/* Left and Right Nav Arrows */}
         <button
           onClick={prevSlide}
+          aria-label="Previous slide"
           className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/80 rounded-full flex items-center justify-center shadow-md hover:bg-white z-30 transition-colors"
         >
           <ChevronLeft size={20} className="text-gray-800 md:hidden" />
@@ -157,6 +158,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
         </button>
         <button
           onClick={nextSlide}
+          aria-label="Next slide"
           className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/80 rounded-full flex items-center justify-center shadow-md hover:bg-white z-30 transition-colors"
         >
           <ChevronRight size={20} className="text-gray-800 md:hidden" />
@@ -374,12 +376,14 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             <div className="hidden sm:flex items-center gap-2 shrink-0">
               <button
                 onClick={() => scroll(laptopSliderRef, 'left')}
+                aria-label="Scroll laptops left"
                 className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
               >
                 <ChevronLeft size={20} />
               </button>
               <button
                 onClick={() => scroll(laptopSliderRef, 'right')}
+                aria-label="Scroll laptops right"
                 className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
               >
                 <ChevronRight size={20} />
@@ -425,12 +429,14 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             <div className="hidden sm:flex items-center gap-2 shrink-0">
               <button
                 onClick={() => scroll(desktopSliderRef, 'left')}
+                aria-label="Scroll desktops left"
                 className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
               >
                 <ChevronLeft size={20} />
               </button>
               <button
                 onClick={() => scroll(desktopSliderRef, 'right')}
+                aria-label="Scroll desktops right"
                 className="w-10 h-10 rounded-full bg-[#4169e1] text-white flex items-center justify-center hover:bg-[#345bc5] transition-colors shadow-sm focus:outline-none"
               >
                 <ChevronRight size={20} />
@@ -804,16 +810,16 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
 
               <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Social links:</h3>
               <div className="flex gap-3">
-                <a href="https://www.facebook.com/comsri.store" className="w-[36px] h-[36px] rounded-full bg-[#3b5998] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
+                <a href="https://www.facebook.com/comsri.store" aria-label="Facebook" className="w-[36px] h-[36px] rounded-full bg-[#3b5998] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z" /></svg>
                 </a>
-                <a href="https://twitter.com/comsricorp" className="w-[36px] h-[36px] rounded-full bg-black text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
+                <a href="https://twitter.com/comsricorp" aria-label="Twitter (X)" className="w-[36px] h-[36px] rounded-full bg-black text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
                 </a>
-                <a href="https://www.instagram.com/comsricorporation/" className="w-[36px] h-[36px] rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
+                <a href="https://www.instagram.com/comsricorporation/" aria-label="Instagram" className="w-[36px] h-[36px] rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
                 </a>
-                <a href="https://www.youtube.com/@ComsriCorporation" className="w-[36px] h-[36px] rounded-full bg-[#ff0000] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
+                <a href="https://www.youtube.com/@ComsriCorporation" aria-label="YouTube" className="w-[36px] h-[36px] rounded-full bg-[#ff0000] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.53 3.5 12 3.5 12 3.5s-7.53 0-9.388.555A3.002 3.002 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108C4.47 20.5 12 20.5 12 20.5s7.53 0 9.388-.555a3.003 3.003 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
                 </a>
               </div>

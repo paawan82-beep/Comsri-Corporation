@@ -88,6 +88,7 @@ function HeaderSearchForm() {
         />
         <button
           type="submit"
+          aria-label="Search"
           className="absolute right-1 top-1 bottom-1 w-[38px] h-[38px] bg-[#374bf9] rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
         >
           <Search size={18} />
@@ -117,13 +118,13 @@ function HeaderSearchForm() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-xs font-bold text-slate-800 truncate group-hover:text-indigo-600 transition-colors">{p.name}</h4>
-                      <p className="text-[10px] text-slate-400 font-medium mt-0.5">{p.categories?.[0]?.name || "Catalog"}</p>
+                      <p className="text-[10px] text-slate-600 font-medium mt-0.5">{p.categories?.[0]?.name || "Catalog"}</p>
                     </div>
                     <div className="text-right shrink-0">
                       {p.on_sale && p.sale_price ? (
                         <>
                           <div className="text-xs font-extrabold text-[#374bf9]">₹{p.sale_price}</div>
-                          <div className="text-[10px] text-slate-400 line-through">₹{p.regular_price}</div>
+                          <div className="text-[10px] text-slate-600 line-through">₹{p.regular_price}</div>
                         </>
                       ) : (
                         <div className="text-xs font-extrabold text-slate-800">₹{p.price || "Check Price"}</div>
@@ -234,6 +235,7 @@ function MobileSearchForm() {
         />
         <button
           type="submit"
+          aria-label="Search"
           className="absolute right-1 top-[4px] w-9 h-9 bg-[#374bf9] rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
         >
           <Search size={16} />
@@ -263,13 +265,13 @@ function MobileSearchForm() {
                     </div>
                     <div className="flex-1 min-w-0 text-left">
                       <h4 className="text-xs font-bold text-slate-800 truncate">{p.name}</h4>
-                      <p className="text-[9.5px] text-slate-400 font-semibold mt-0.5">{p.categories?.[0]?.name || "Catalog"}</p>
+                      <p className="text-[9.5px] text-slate-600 font-semibold mt-0.5">{p.categories?.[0]?.name || "Catalog"}</p>
                     </div>
                     <div className="text-right shrink-0">
                       {p.on_sale && p.sale_price ? (
                         <>
                           <div className="text-xs font-black text-[#374bf9]">₹{p.sale_price}</div>
-                          <div className="text-[9px] text-slate-400 line-through">₹{p.regular_price}</div>
+                          <div className="text-[9px] text-slate-600 line-through">₹{p.regular_price}</div>
                         </>
                       ) : (
                         <div className="text-xs font-black text-slate-800">₹{p.price || "Check"}</div>
@@ -620,25 +622,25 @@ export default function Header() {
                         <li>
                           <Link href="/shop?category=112&search=Dell" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Dell Laptops</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Business-grade Latitude series</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Business-grade Latitude series</span>
                           </Link>
                         </li>
                         <li>
                           <Link href="/shop?category=112&search=HP" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">HP Laptops</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Premium EliteBooks & ProBooks</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Premium EliteBooks & ProBooks</span>
                           </Link>
                         </li>
                         <li>
                           <Link href="/shop?category=112&search=Lenovo" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Lenovo ThinkPad</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Legendary durability & keyboards</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Legendary durability & keyboards</span>
                           </Link>
                         </li>
                         <li>
                           <Link href="/shop?category=112&search=Apple" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Apple MacBooks</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Sleek, powerful Air & Pro models</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Sleek, powerful Air & Pro models</span>
                           </Link>
                         </li>
                       </ul>
@@ -658,19 +660,19 @@ export default function Header() {
                         <li>
                           <Link href="/shop?category=129&search=Dell" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Dell Desktops</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Standard enterprise micro & SFF</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Standard enterprise micro & SFF</span>
                           </Link>
                         </li>
                         <li>
                           <Link href="/shop?category=129&search=HP" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">HP Desktops</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Highly reliable office towers</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Highly reliable office towers</span>
                           </Link>
                         </li>
                         <li>
                           <Link href="/shop?category=129&search=Lenovo" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Lenovo Desktops</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Compact, efficient workstations</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Compact, efficient workstations</span>
                           </Link>
                         </li>
                       </ul>
@@ -690,19 +692,19 @@ export default function Header() {
                         <li>
                           <Link href="/shop?category=139&search=Dell" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Dell Workstations</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Precision & Power</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Precision & Power</span>
                           </Link>
                         </li>
                         <li>
                           <Link href="/shop?category=139&search=HP" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">HP Workstations</span>
-                            <span className="text-[11px] text-gray-400 font-normal">ZBook & Z-series towers</span>
+                            <span className="text-[11px] text-gray-600 font-medium">ZBook & Z-series towers</span>
                           </Link>
                         </li>
                         <li>
                           <Link href="/shop?category=139&search=Lenovo" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Lenovo Workstations</span>
-                            <span className="text-[11px] text-gray-400 font-normal">ThinkStation series</span>
+                            <span className="text-[11px] text-gray-600 font-medium">ThinkStation series</span>
                           </Link>
                         </li>
                       </ul>
@@ -722,25 +724,25 @@ export default function Header() {
                         <li>
                           <Link href="/shop?category=137&search=Dell" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Dell Mini PCs</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Ultra-compact systems</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Ultra-compact systems</span>
                           </Link>
                         </li>
                         <li>
                           <Link href="/shop?category=137&search=HP" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">HP Mini PCs</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Ultra-compact systems</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Ultra-compact systems</span>
                           </Link>
                         </li>
                         <li>
                           <Link href="/shop?category=137&search=Lenovo" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Lenovo Mini PCs</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Ultra-compact systems</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Ultra-compact systems</span>
                           </Link>
                         </li>
                         <li>
                           <Link href="/shop?category=137&search=Apple" prefetch={false} className="mega-menu-link-hover flex flex-col">
                             <span className="font-semibold text-gray-850">Apple Mac Mini</span>
-                            <span className="text-[11px] text-gray-400 font-normal">Compact M1/Intel computing</span>
+                            <span className="text-[11px] text-gray-600 font-medium">Compact M1/Intel computing</span>
                           </Link>
                         </li>
                       </ul>
