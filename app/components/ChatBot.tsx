@@ -345,7 +345,7 @@ export default function ChatBot() {
               <div className="flex-grow flex flex-col justify-center p-6 bg-slate-50/50 dark:bg-slate-950/20 overflow-y-auto">
                 <div className="text-center mb-6">
                   <h4 className="text-lg font-bold text-slate-800 dark:text-white flex items-center justify-center gap-2">
-                    <Sparkles className="w-5 h-5 text-indigo-500 animate-pulse" /> Let's Connect
+                    <Sparkles className="w-5 h-5 text-indigo-500 animate-pulse" /> {"Let's Connect"}
                   </h4>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                     Please fill in your details to start chatting with our AI assistant.
