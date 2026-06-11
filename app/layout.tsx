@@ -1,9 +1,24 @@
 import type { Metadata } from 'next';
+import { Fredoka, Albert_Sans } from 'next/font/google';
 import './globals.css'; // Global styles
 import { CartProvider } from "@/context/CartContext";
 import JsonLd from "./components/JsonLd";
 import { getOrganizationSchema, getLocalBusinessSchema, getSearchActionSchema } from "./seo/schemas";
 import { SITE_CONFIG } from "./seo/constants";
+
+const fredoka = Fredoka({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-fredoka',
+  weight: ['300', '400', '500', '600', '700'],
+});
+
+const albertSans = Albert_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-albert-sans',
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
@@ -84,12 +99,13 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className="bg-[#f6f5f8]">
       <head suppressHydrationWarning>
+        <link rel="preconnect" href="https://hglntgfpbilqvdcazjsv.supabase.co" crossOrigin="anonymous" />
         <script dangerouslySetInnerHTML={{ __html: fetchSetterPolyfill }} suppressHydrationWarning />
         <JsonLd schema={orgSchema} />
         <JsonLd schema={localBusinessSchema} />
         <JsonLd schema={searchActionSchema} />
       </head>
-      <body className="font-sans antialiased bg-[#f6f5f8]" suppressHydrationWarning>
+      <body className={`${fredoka.variable} ${albertSans.variable} font-sans antialiased bg-[#f6f5f8]`} suppressHydrationWarning>
         <CartProvider>
           {children}
           <ChatBot />

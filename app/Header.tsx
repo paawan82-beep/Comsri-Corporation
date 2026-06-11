@@ -762,50 +762,55 @@ export default function Header() {
                     <div className="grid grid-cols-5 gap-4 w-full">
                       {/* Brand Card: Apple */}
                       <Link href="/shop?search=Apple" prefetch={false} className="brand-card-hover flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-[border-color,background-color,box-shadow] duration-200 hover:bg-white hover:shadow-md hover:border-black group/brand">
-                        <img
-                          loading="lazy"
-                          src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/apple.webp"
+                        <Image
+                          src="/brands/apple.webp"
                           alt="Apple"
+                          width={50}
+                          height={50}
                           className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
                       </Link>
 
                       {/* Brand Card: Dell */}
                       <Link href="/shop?search=Dell" prefetch={false} className="brand-card-hover flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-[border-color,background-color,box-shadow] duration-200 hover:bg-white hover:shadow-md hover:border-[#007dbd] group/brand">
-                        <img
-                          loading="lazy"
-                          src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/dell.webp"
+                        <Image
+                          src="/brands/dell.webp"
                           alt="Dell"
+                          width={50}
+                          height={50}
                           className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
                       </Link>
 
                       {/* Brand Card: HP */}
                       <Link href="/shop?search=HP" prefetch={false} className="brand-card-hover flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-[border-color,background-color,box-shadow] duration-200 hover:bg-white hover:shadow-md hover:border-[#005B94] group/brand">
-                        <img
-                          loading="lazy"
-                          src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/hp.webp"
+                        <Image
+                          src="/brands/hp.webp"
                           alt="HP"
+                          width={50}
+                          height={50}
                           className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
                       </Link>
 
                       {/* Brand Card: Lenovo */}
                       <Link href="/shop?search=Lenovo" prefetch={false} className="brand-card-hover flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-[border-color,background-color,box-shadow] duration-200 hover:bg-white hover:shadow-md hover:border-[#E21B22] group/brand">
-                        <img
-                          loading="lazy"
-                          src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/lenovo.webp"
+                        <Image
+                          src="/brands/lenovo.webp"
                           alt="Lenovo"
+                          width={50}
+                          height={50}
                           className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
                       </Link>
 
                       {/* Brand Card: Microsoft */}
                       <Link href="/shop?search=Microsoft" prefetch={false} className="brand-card-hover flex items-center justify-center bg-[#fff]/50 border border-gray-200/80 rounded-xl h-[70px] p-3.5 transition-[border-color,background-color,box-shadow] duration-200 hover:bg-white hover:shadow-md hover:border-[#00a1f1] group/brand">
-                        <img
-                          loading="lazy"
-                          src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/microsoft.webp"
+                        <Image
+                          src="/brands/microsoft.webp"
                           alt="Microsoft"
+                          width={50}
+                          height={50}
                           className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
                       </Link>

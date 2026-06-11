@@ -27,18 +27,28 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
   const [desktopScroll, setDesktopScroll] = useState({ left: 0, width: 20 });
   const [blogScroll, setBlogScroll] = useState({ left: 0, width: 20 });
 
+  const scrollTicksRef = useRef<{ [key: string]: boolean }>({});
+
   const updateScroll = (
     ref: React.RefObject<HTMLDivElement | null>,
-    setScroll: React.Dispatch<React.SetStateAction<{ left: number; width: number }>>
+    setScroll: React.Dispatch<React.SetStateAction<{ left: number; width: number }>>,
+    key: string = "default"
   ) => {
-    if (ref.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = ref.current;
-      if (scrollWidth > 0) {
-        const width = (clientWidth / scrollWidth) * 100;
-        const left = (scrollLeft / scrollWidth) * 100;
-        setScroll({ left, width });
+    if (!ref.current) return;
+    if (scrollTicksRef.current[key]) return;
+
+    scrollTicksRef.current[key] = true;
+    requestAnimationFrame(() => {
+      if (ref.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = ref.current;
+        if (scrollWidth > 0) {
+          const width = (clientWidth / scrollWidth) * 100;
+          const left = (scrollLeft / scrollWidth) * 100;
+          setScroll({ left, width });
+        }
       }
-    }
+      scrollTicksRef.current[key] = false;
+    });
   };
 
   const handleTrackClick = (
@@ -88,16 +98,16 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
   }, []);
 
   useEffect(() => {
-    updateScroll(laptopSliderRef, setLaptopScroll);
-    updateScroll(desktopSliderRef, setDesktopScroll);
-    updateScroll(blogSliderRef, setBlogScroll);
+    updateScroll(laptopSliderRef, setLaptopScroll, "laptop");
+    updateScroll(desktopSliderRef, setDesktopScroll, "desktop");
+    updateScroll(blogSliderRef, setBlogScroll, "blog");
   }, [laptops, desktops]);
 
   useEffect(() => {
     const handleResize = () => {
-      updateScroll(laptopSliderRef, setLaptopScroll);
-      updateScroll(desktopSliderRef, setDesktopScroll);
-      updateScroll(blogSliderRef, setBlogScroll);
+      updateScroll(laptopSliderRef, setLaptopScroll, "laptop");
+      updateScroll(desktopSliderRef, setDesktopScroll, "desktop");
+      updateScroll(blogSliderRef, setBlogScroll, "blog");
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -380,7 +390,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           {/* Cards Slider */}
           <div
             ref={laptopSliderRef}
-            onScroll={() => updateScroll(laptopSliderRef, setLaptopScroll)}
+            onScroll={() => updateScroll(laptopSliderRef, setLaptopScroll, "laptop")}
             className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
           >
             {laptops.map((prod, idx) => (
@@ -431,7 +441,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           {/* Cards Slider */}
           <div
             ref={desktopSliderRef}
-            onScroll={() => updateScroll(desktopSliderRef, setDesktopScroll)}
+            onScroll={() => updateScroll(desktopSliderRef, setDesktopScroll, "desktop")}
             className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
           >
             {desktops.map((prod, idx) => (
@@ -526,7 +536,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           {/* Cards Slider */}
           <div
             ref={blogSliderRef}
-            onScroll={() => updateScroll(blogSliderRef, setBlogScroll)}
+            onScroll={() => updateScroll(blogSliderRef, setBlogScroll, "blog")}
             className="flex flex-nowrap gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
           >
             {/* Card 1 */}
@@ -785,10 +795,10 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
               <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Available On:</h3>
               <div className="flex flex-wrap xl:flex-nowrap gap-3 mb-8 items-center">
                 <a href="#" className="inline-block transition-transform hover:scale-[1.02] active:scale-95">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-[42px] w-auto" />
+                  <Image src="/google-play-badge.svg" alt="Get it on Google Play" width={142} height={42} className="h-[42px] w-auto" />
                 </a>
                 <a href="#" className="inline-block transition-transform hover:scale-[1.02] active:scale-95 border border-black rounded-[6px]">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" className="h-[40px] w-auto block" />
+                  <Image src="/app-store-badge.svg" alt="Download on the App Store" width={135} height={40} className="h-[40px] w-auto block" />
                 </a>
               </div>
 
