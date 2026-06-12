@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingCart, ArrowRight, ShieldCheck, Truck, Headphones, Check, Maximize2, X, Plus, Minus, Grid, ChevronLeft, ChevronRight, Shuffle } from "lucide-react";
 import { WooCommerceProduct } from "@/lib/types/woocommerce";
+import { useCart } from "@/context/CartContext";
 
 interface ProductDetailClientProps {
   product: WooCommerceProduct;
@@ -12,6 +13,7 @@ interface ProductDetailClientProps {
 }
 
 export default function ProductDetailClient({ product, variations = [] }: ProductDetailClientProps) {
+  const { addToCart } = useCart();
   // Brand resolution
   const getBrand = () => {
     const brandAttr = product.attributes?.find(a => a.name.toLowerCase() === "brand");
@@ -562,10 +564,14 @@ export default function ProductDetailClient({ product, variations = [] }: Produc
                 </div>
 
                 {/* Add To Cart button */}
-                <button className="flex-1 bg-gradient-to-r from-[#2f55f6] to-[#1131c4] text-white font-bold h-[48px] rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-[0_6px_20px_rgba(47,85,246,0.35)] active:scale-[0.97] text-[15px] shadow-[0_4px_15px_rgba(47,85,246,0.2)] shimmer-btn group gap-2">
+                <Link
+                  href="/cart"
+                  onClick={() => addToCart(product, quantity)}
+                  className="flex-1 bg-gradient-to-r from-[#2f55f6] to-[#1131c4] text-white font-bold h-[48px] rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-[0_6px_20px_rgba(47,85,246,0.35)] active:scale-[0.97] text-[15px] shadow-[0_4px_15px_rgba(47,85,246,0.2)] shimmer-btn group gap-2"
+                >
                   <ShoppingCart size={18} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110" />
                   <span>Add To Cart</span>
-                </button>
+                </Link>
               </div>
 
               {/* Compare & Wishlist Links */}

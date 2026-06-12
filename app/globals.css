@@ -5,35 +5,22 @@
   --font-sans: var(--font-fredoka), Arial, Helvetica, sans-serif;
 }
 
-/* Global Font Overrides to guarantee all text/headings across all browsers and devices render with Fredoka */
-*,
-::before,
-::after {
-  font-family: var(--font-fredoka), Arial, Helvetica, sans-serif !important;
-}
-
+/* Global Font Overrides to guarantee all text/headings across all browsers and devices render with Fredoka using style inheritance */
 html,
 body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span,
-a,
 button,
 input,
 select,
-textarea,
-div,
-strong,
-li {
+textarea {
   font-family: var(--font-fredoka), Arial, Helvetica, sans-serif !important;
+  font-weight: 500;
 }
 
-.price-font {
+.price-font,
+[class*="price-font"],
+[style*="albert-sans"],
+[style*="Helvetica"],
+[style*="Arial"] {
   font-family: var(--font-albert-sans), Arial, Helvetica, sans-serif !important;
   font-weight: 600 !important;
 }
@@ -85,10 +72,14 @@ h6 {
 @layer utilities {
   .animate-marquee {
     animation: marquee 80s linear infinite;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .animate-marquee-reverse {
     animation: marquee-reverse 80s linear infinite;
+    will-change: transform;
+    transform: translateZ(0);
   }
 }
 
@@ -439,6 +430,97 @@ h6 {
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* ============================================================
+   60 FPS / LOW-END DEVICE GLOBAL OPTIMIZATIONS
+   `.low-end-device` is toggled on <html> by the Header after
+   detecting low RAM / few CPU cores / slow network / runtime
+   frame stutter. These rules disable continuously-running and
+   non-composited (paint-heavy) effects site-wide so weak GPUs
+   stay above the 16.6ms frame budget.
+   ============================================================ */
+
+/* Paint-heavy box-shadow/border animations repaint every frame —
+   kill them entirely on low-end hardware. */
+.low-end-device .razorpay-glow {
+  animation: none !important;
+}
+.low-end-device .shimmer-btn:hover::after {
+  animation: none !important;
+}
+.low-end-device .animate-scan {
+  animation: none !important;
+}
+
+/* Transform-based floats are composited but still wake the GPU
+   constantly; pause them on low-end devices. */
+.low-end-device .animate-float-1,
+.low-end-device .animate-float-2,
+.low-end-device .animate-float-3,
+.low-end-device .animate-float-4 {
+  animation: none !important;
+  will-change: auto !important;
+}
+
+/* Pause the marquee while it is scrolled out of view is handled by
+   the browser, but on low-end devices halve the work by removing the
+   GPU layer promotion hint when idle. */
+.low-end-device .animate-marquee,
+.low-end-device .animate-marquee-reverse {
+  will-change: auto !important;
+}
+
+/* backdrop-filter (blur) is one of the most expensive paint ops on
+   mobile GPUs — flatten any glass surface to a solid fill. */
+.low-end-device .mega-menu-glass,
+.low-end-device [class*="backdrop-blur"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* blend modes (multiply/overlay) break the fast compositor path: the
+   element is re-blended with its backdrop on every frame anything
+   behind it moves — i.e. on every scroll frame. Neutralise them. */
+.low-end-device [class*="mix-blend"] {
+  mix-blend-mode: normal !important;
+}
+
+/* Restrict what may animate to cheap/composited properties only.
+   This removes box-shadow, filter, width/height etc. from every
+   transition so hovers snap those instantly instead of repainting
+   large blurred shadows each frame. transform/opacity/color stay
+   smooth. Also caps duration so interactions resolve fast. */
+.low-end-device * {
+  transition-property: transform, opacity, color, background-color, border-color !important;
+  transition-duration: 0.15s !important;
+}
+
+/* ============================================================
+   prefers-reduced-motion — respect the OS accessibility setting.
+   Disables every decorative/infinite animation regardless of
+   hardware class.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-marquee,
+  .animate-marquee-reverse,
+  .animate-float-1,
+  .animate-float-2,
+  .animate-float-3,
+  .animate-float-4,
+  .animate-scan,
+  .razorpay-glow {
+    animation: none !important;
+  }
 }
 
 /* Premium Product Details Description Formatting */

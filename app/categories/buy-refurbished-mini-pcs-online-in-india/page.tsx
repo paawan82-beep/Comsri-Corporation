@@ -759,7 +759,7 @@ export default async function RefurbishedMiniPCsPage({ searchParams }: CategoryP
               <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Useful Links</h3>
               <div className="flex flex-col gap-3">
                 {[
-                  { label: "Contact Us", path: "/contact-us" },
+                  { label: "Contact Us", path: "/contact" },
                   { label: "Terms & Conditions", path: "/terms-conditions?tab=terms" },
                   { label: "Privacy Policy", path: "/privacy-policy?tab=privacy" },
                   { label: "Return & Refund Policy", path: "/return-refund?tab=refund" },

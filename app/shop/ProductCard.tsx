@@ -77,7 +77,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
     <div
       style={{ animationDelay: `${Math.min(index * 50, 400)}ms` }}
       onClick={() => router.push(`/products/${product.slug}`)}
-      className="bg-white rounded-[24px] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col group cursor-pointer border border-transparent hover:border-gray-100 hover:shadow-[0_12px_40px_rgb(0,0,0,0.12)] transition-all duration-300 ease-out hover:-translate-y-2 relative overflow-hidden animate-fade-in"
+      className="bg-white rounded-[24px] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col group cursor-pointer border border-transparent hover:border-gray-100 hover:shadow-[0_12px_40px_rgb(0,0,0,0.12)] transition-transform duration-300 ease-out hover:-translate-y-2 relative overflow-hidden animate-fade-in [contain:layout_paint]"
     >
       {/* Glow Effect Background inside the card on hover */}
       <div className="absolute inset-0 bg-radial-gradient from-blue-50/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -112,14 +112,15 @@ export default function ProductCard({ product, index }: ProductCardProps) {
 
         {/* Image Frame with Zoom Effect */}
         <Link href={`/products/${product.slug}`} className="absolute inset-0 z-10 block">
-          <div className="relative w-full h-full pointer-events-none transition-transform duration-700 group-hover:scale-110 mix-blend-multiply">
+          <div className="relative w-full h-full pointer-events-none transition-transform duration-500 group-hover:scale-105">
             <Image
               src={mainImageStr}
               alt={product.name}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
               className="object-cover"
-              priority={index < 4}
+              loading={index < 2 ? "eager" : "lazy"}
+              priority={index < 2}
             />
           </div>
         </Link>

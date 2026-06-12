@@ -269,7 +269,7 @@ export default function AboutClient() {
                   <img loading="lazy" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150" alt="Avatar 2" className="w-[46px] h-[46px] rounded-full border-2 border-[#fcf9f4] object-cover" />
                   <img loading="lazy" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=150&h=150" alt="Avatar 3" className="w-[46px] h-[46px] rounded-full border-2 border-[#fcf9f4] object-cover" />
                 </div>
-                <Link href="/contact-us">
+                <Link href="/contact">
                   <button className="bg-[#3452ef] text-white px-7 py-3 rounded-full text-[15px] font-medium hover:bg-[#263ec4] transition-colors shadow-sm">Contact With An Expert</button>
                 </Link>
               </div>
@@ -435,7 +435,7 @@ export default function AboutClient() {
               <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Useful Links</h3>
               <div className="flex flex-col gap-3">
                 {[
-                  { label: "Contact Us", path: "/contact-us" },
+                  { label: "Contact Us", path: "/contact" },
                   { label: "Terms & Conditions", path: "/terms-conditions?tab=terms" },
                   { label: "Privacy Policy", path: "/privacy-policy?tab=privacy" },
                   { label: "Return & Refund Policy", path: "/return-refund?tab=refund" },

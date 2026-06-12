@@ -345,13 +345,23 @@ export default function Header() {
     const conn = (navigator as any).connection;
     const isSlowConn = conn && (conn.saveData || /2g|3g/.test(conn.effectiveType));
 
-    if (isLowRam || isLowCores || isSlowConn) {
+    // Respect the OS-level reduced-motion accessibility preference
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    if (isLowRam || isLowCores || isSlowConn || prefersReducedMotion) {
       setTimeout(() => {
         setIsLowEnd(true);
       }, 0);
-      console.log("[MegaMenu] Low-end hardware or slow connection detected. Enabled 60 FPS optimizations.");
+      console.log("[Perf] Low-end hardware / slow connection / reduced-motion detected. Enabled 60 FPS optimizations.");
     }
   }, []);
+
+  // Toggle the global `.low-end-device` class on <html> so the CSS
+  // fallbacks in globals.css apply site-wide (not just the mega menu).
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.documentElement.classList.toggle("low-end-device", isLowEnd);
+  }, [isLowEnd]);
 
   // Dynamic frame-time performance tracker during hover transition
   const frameTimesRef = useRef<number[]>([]);
@@ -689,7 +699,7 @@ export default function Header() {
                           <Layers size={16} />
                         </div>
                         <Link href="/categories/buy-refurbished-workstations-online-in-india" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
-                          Workstations
+                          Refurbished Workstations
                         </Link>
                       </div>
                       <ul className="flex flex-col gap-[12px] text-gray-500 text-[13px] pl-8">
@@ -721,7 +731,7 @@ export default function Header() {
                           <Cpu size={16} />
                         </div>
                         <Link href="/categories/buy-refurbished-mini-pcs-online-in-india" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
-                          Mini PCs
+                          Refurbished Mini PCs
                         </Link>
                       </div>
                       <ul className="flex flex-col gap-[12px] text-gray-500 text-[13px] pl-8">
@@ -1085,7 +1095,7 @@ export default function Header() {
       </div>
 
       {/* ================== MOBILE BOTTOM NAVIGATION ================== */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[90] lg:hidden bg-[#374bf9]/95 backdrop-blur-md border border-[#2539db] shadow-[0_8px_35px_rgba(55,75,249,0.35)] px-3 py-1.5 w-[92%] max-w-[420px] rounded-full">
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[90] lg:hidden bg-[#2b3fe6] border border-[#2539db] shadow-[0_8px_35px_rgba(55,75,249,0.35)] px-3 py-1.5 w-[92%] max-w-[420px] rounded-full">
         <div className="flex items-center justify-around h-11 w-full mx-auto">
           {/* Home Tab */}
           <Link

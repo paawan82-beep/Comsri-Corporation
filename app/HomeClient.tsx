@@ -23,34 +23,32 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
   const desktopSliderRef = useRef<HTMLDivElement>(null);
   const blogSliderRef = useRef<HTMLDivElement>(null);
 
-  const [laptopScroll, setLaptopScroll] = useState({ left: 0, width: 20 });
-  const [desktopScroll, setDesktopScroll] = useState({ left: 0, width: 20 });
-  const [blogScroll, setBlogScroll] = useState({ left: 0, width: 20 });
+  const laptopIndicatorRef = useRef<HTMLDivElement>(null);
+  const desktopIndicatorRef = useRef<HTMLDivElement>(null);
+  const blogIndicatorRef = useRef<HTMLDivElement>(null);
 
   const scrollTicksRef = useRef<{ [key: string]: boolean }>({});
 
-  const updateScroll = (
-    ref: React.RefObject<HTMLDivElement | null>,
-    setScroll: React.Dispatch<React.SetStateAction<{ left: number; width: number }>>,
+  const updateScrollDirect = (
+    container: HTMLDivElement | null,
+    indicator: HTMLDivElement | null,
     key: string = "default"
   ) => {
-    if (!ref.current) return;
+    if (!container || !indicator) return;
     if (scrollTicksRef.current[key]) return;
 
     scrollTicksRef.current[key] = true;
-    setTimeout(() => {
-      requestAnimationFrame(() => {
-        if (ref.current) {
-          const { scrollLeft, scrollWidth, clientWidth } = ref.current;
-          if (scrollWidth > 0) {
-            const width = (clientWidth / scrollWidth) * 100;
-            const left = (scrollLeft / scrollWidth) * 100;
-            setScroll({ left, width });
-          }
-        }
-        scrollTicksRef.current[key] = false;
-      });
-    }, 50);
+    requestAnimationFrame(() => {
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      if (scrollWidth > 0) {
+        const width = (clientWidth / scrollWidth) * 100;
+        const left = (scrollLeft / scrollWidth) * 100;
+        const translate = width > 0 ? (left / width) * 100 : 0;
+        indicator.style.width = `${width}%`;
+        indicator.style.transform = `translate3d(${translate}%, 0, 0)`;
+      }
+      scrollTicksRef.current[key] = false;
+    });
   };
 
   const handleTrackClick = (
@@ -103,16 +101,16 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
   }, [initialLaptops, initialDesktops]);
 
   useEffect(() => {
-    updateScroll(laptopSliderRef, setLaptopScroll, "laptop");
-    updateScroll(desktopSliderRef, setDesktopScroll, "desktop");
-    updateScroll(blogSliderRef, setBlogScroll, "blog");
+    updateScrollDirect(laptopSliderRef.current, laptopIndicatorRef.current, "laptop");
+    updateScrollDirect(desktopSliderRef.current, desktopIndicatorRef.current, "desktop");
+    updateScrollDirect(blogSliderRef.current, blogIndicatorRef.current, "blog");
   }, [laptops, desktops]);
 
   useEffect(() => {
     const handleResize = () => {
-      updateScroll(laptopSliderRef, setLaptopScroll, "laptop");
-      updateScroll(desktopSliderRef, setDesktopScroll, "desktop");
-      updateScroll(blogSliderRef, setBlogScroll, "blog");
+      updateScrollDirect(laptopSliderRef.current, laptopIndicatorRef.current, "laptop");
+      updateScrollDirect(desktopSliderRef.current, desktopIndicatorRef.current, "desktop");
+      updateScrollDirect(blogSliderRef.current, blogIndicatorRef.current, "blog");
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -212,7 +210,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
               <Link
                 key={idx}
                 href={cat.link}
-                className="relative rounded-[16px] md:rounded-[20px] overflow-hidden cursor-pointer group pt-6 px-5 h-[380px] sm:h-[260px] md:h-[300px] lg:h-[340px] flex flex-col items-start bg-[#fac656] shadow-sm transform transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+                className="relative rounded-[16px] md:rounded-[20px] overflow-hidden cursor-pointer group pt-6 px-5 h-[380px] sm:h-[260px] md:h-[300px] lg:h-[340px] flex flex-col items-start bg-[#fac656] shadow-sm transform transition-transform duration-300 hover:shadow-md hover:-translate-y-1"
               >
                 <div className="absolute inset-0 opacity-100 z-0 pointer-events-none transform transition-transform duration-300 group-hover:scale-105">
                   <Image
@@ -242,7 +240,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           {/* Top Row: 2 items */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 h-auto">
             {/* Refurbished Mini PCs */}
-            <Link href="/categories/buy-refurbished-mini-pcs-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
+            <Link href="/categories/buy-refurbished-mini-pcs-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
               <Image src="https://comsri.com/wp-content/uploads/2025/10/mini-pc-showcase-1.jpg" alt="New Mini PCs" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
@@ -258,7 +256,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             </Link>
 
             {/* Refurbished Workstations */}
-            <Link href="/categories/buy-refurbished-workstations-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
+            <Link href="/categories/buy-refurbished-workstations-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
               <Image src="https://comsri.com/wp-content/uploads/2025/10/dark-desk-setup-img.jpg-1.webp" alt="New All-In-One PCs" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
@@ -277,7 +275,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           {/* Bottom Row: 3 items */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 h-auto md:h-[450px]">
             {/* Refurbished Desktops */}
-            <Link href="/categories/buy-high-quality-refurbished-desktops" className="bg-[#143f29] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 flex flex-col min-h-[280px] md:min-h-0">
+            <Link href="/categories/buy-high-quality-refurbished-desktops" className="bg-[#143f29] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 flex flex-col min-h-[280px] md:min-h-0">
               <div className="h-[65%] relative overflow-hidden">
                 <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Desktop-Showcase.png" alt="New Desktops" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               </div>
@@ -295,7 +293,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             </Link>
 
             {/* Refurbished Laptops */}
-            <Link href="/categories/buy-refurbished-laptops-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 min-h-[250px] md:min-h-0 md:h-full">
+            <Link href="/categories/buy-refurbished-laptops-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 min-h-[250px] md:min-h-0 md:h-full">
               <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Laptop-Showcase.webp" alt="New Laptops" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-end items-start text-white">
@@ -311,7 +309,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             </Link>
 
             {/* Get Upto 70% off */}
-            <Link href="/shop" className="bg-[#1a3575] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col relative min-h-[280px] md:min-h-0">
+            <Link href="/shop" className="bg-[#1a3575] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-transform duration-500 hover:-translate-y-1 flex flex-col relative min-h-[280px] md:min-h-0">
               <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500 pointer-events-none z-10"></div>
               <div className="h-[50%] relative overflow-hidden">
                 <Image src="https://picsum.photos/seed/promo/600/400" alt="Promo" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
@@ -368,7 +366,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
               { name: 'Lenovo', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/lenovo.webp' },
               { name: 'Microsoft', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/microsoft.webp' },
             ].map((brand, idx) => (
-              <div key={idx} className="bg-white rounded-[20px] p-5 flex flex-col items-center justify-center h-[100px] md:h-[120px] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-gray-100">
+              <div key={idx} className="bg-white rounded-[20px] p-5 flex flex-col items-center justify-center h-[100px] md:h-[120px] shadow-sm hover:shadow-md transition-transform duration-300 hover:-translate-y-1 cursor-pointer border border-gray-100">
                 <img loading="lazy" src={brand.src} alt={brand.name} className="w-auto h-auto max-h-[105px] max-w-[90px] object-contain opacity-80 hover:opacity-100 transition-opacity" />
               </div>
             ))}
@@ -403,7 +401,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           {/* Cards Slider */}
           <div
             ref={laptopSliderRef}
-            onScroll={() => updateScroll(laptopSliderRef, setLaptopScroll, "laptop")}
+            onScroll={() => updateScrollDirect(laptopSliderRef.current, laptopIndicatorRef.current, "laptop")}
             className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
           >
             {laptops.map((prod, idx) => (
@@ -419,10 +417,11 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             className="w-full h-1.5 bg-[#e9ecef] rounded-full relative overflow-hidden cursor-pointer"
           >
             <div
+              ref={laptopIndicatorRef}
               className="h-full bg-[#ffb03a] rounded-full absolute top-0 left-0 transition-transform duration-100 ease-out will-change-transform"
               style={{
-                width: `${laptopScroll.width}%`,
-                transform: `translate3d(${laptopScroll.width > 0 ? (laptopScroll.left / laptopScroll.width) * 100 : 0}%, 0, 0)`
+                width: '0%',
+                transform: 'translate3d(0, 0, 0)'
               }}
             ></div>
           </div>
@@ -456,7 +455,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           {/* Cards Slider */}
           <div
             ref={desktopSliderRef}
-            onScroll={() => updateScroll(desktopSliderRef, setDesktopScroll, "desktop")}
+            onScroll={() => updateScrollDirect(desktopSliderRef.current, desktopIndicatorRef.current, "desktop")}
             className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
           >
             {desktops.map((prod, idx) => (
@@ -472,10 +471,11 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             className="w-full h-1.5 bg-[#e9ecef] rounded-full relative overflow-hidden cursor-pointer"
           >
             <div
+              ref={desktopIndicatorRef}
               className="h-full bg-[#ffb03a] rounded-full absolute top-0 left-0 transition-transform duration-100 ease-out will-change-transform"
               style={{
-                width: `${desktopScroll.width}%`,
-                transform: `translate3d(${desktopScroll.width > 0 ? (desktopScroll.left / desktopScroll.width) * 100 : 0}%, 0, 0)`
+                width: '0%',
+                transform: 'translate3d(0, 0, 0)'
               }}
             ></div>
           </div>
@@ -551,12 +551,12 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           {/* Cards Slider */}
           <div
             ref={blogSliderRef}
-            onScroll={() => updateScroll(blogSliderRef, setBlogScroll, "blog")}
+            onScroll={() => updateScrollDirect(blogSliderRef.current, blogIndicatorRef.current, "blog")}
             className="flex flex-nowrap gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
           >
             {/* Card 1 */}
             <div className="w-full md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] shrink-0">
-              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
+              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-transform duration-300 border border-transparent hover:border-gray-100">
                 {/* Image */}
                 <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
                   <img loading="lazy"
@@ -605,7 +605,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
 
             {/* Card 2 */}
             <div className="w-full md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] shrink-0">
-              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
+              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-transform duration-300 border border-transparent hover:border-gray-100">
                 {/* Image */}
                 <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
                   <img loading="lazy"
@@ -654,7 +654,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
 
             {/* Card 3 */}
             <div className="w-full md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] shrink-0">
-              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-all duration-300 border border-transparent hover:border-gray-100">
+              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-transform duration-300 border border-transparent hover:border-gray-100">
                 {/* Image */}
                 <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
                   <img loading="lazy"
@@ -709,10 +709,11 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             className="w-full h-1.5 bg-[#e9ecef] rounded-full relative overflow-hidden cursor-pointer mt-12"
           >
             <div
+              ref={blogIndicatorRef}
               className="h-full bg-[#ffb03a] rounded-full absolute top-0 left-0 transition-transform duration-100 ease-out will-change-transform"
               style={{
-                width: `${blogScroll.width}%`,
-                transform: `translate3d(${blogScroll.width > 0 ? (blogScroll.left / blogScroll.width) * 100 : 0}%, 0, 0)`
+                width: '0%',
+                transform: 'translate3d(0, 0, 0)'
               }}
             ></div>
           </div>
