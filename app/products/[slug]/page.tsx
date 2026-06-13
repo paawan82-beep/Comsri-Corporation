@@ -17,6 +17,7 @@ import SummaryBlock from "../../components/SummaryBlock";
 import JsonLd from "../../components/JsonLd";
 import { getProductSchema, getBreadcrumbSchema } from "../../seo/schemas";
 import { getProductMetadata } from "../../seo/metadata";
+import ProductCard from "../../shop/ProductCard";
 
 // Lazy-load heavy, non-critical interactive components with SSR enabled for SEO crawler crawlability
 const FAQ = dynamic(() => import("../../components/FAQ"), { ssr: true });
@@ -219,37 +220,11 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         {/* Recommended Related products listing */}
         {relatedProducts.length > 0 && (
           <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 pb-16" id="related-products-section">
-            <h2 className="text-2xl font-extrabold text-slate-900 mb-6">Frequently Viewed Together</h2>
+            <h2 className="text-2xl font-extrabold text-slate-900 mb-6">You may Also Like</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {relatedProducts.map((rel) => {
-                const relImage = rel.images[0]?.src || "https://picsum.photos/seed/shop/400/300";
-                return (
-                  <Link
-                    key={rel.id}
-                    href={`/products/${rel.slug}`}
-                    className="bg-white rounded-2xl p-4 border border-slate-100 hover:shadow-[0_12px_30px_rgba(0,0,0,0.04)] hover:border-slate-200 transition-all flex flex-col justify-between group animate-fade-in"
-                  >
-                    <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-slate-50 mb-3">
-                      <Image
-                        src={relImage}
-                        alt={rel.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        sizes="300px"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-extrabold text-slate-800 line-clamp-1 group-hover:text-indigo-600 transition">
-                        {rel.name}
-                      </h3>
-                      <span className="text-sm font-black text-slate-950 mt-1 block price-font">
-                        ₹{rel.price}
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
+              {relatedProducts.map((rel, idx) => (
+                <ProductCard key={rel.id} product={rel} index={idx} />
+              ))}
             </div>
           </div>
         )}

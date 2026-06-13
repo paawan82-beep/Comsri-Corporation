@@ -781,7 +781,7 @@ export default function Header() {
                         <Image
                           src="/brands/apple.webp"
                           alt="Apple"
-                          width={50}
+                          width={100}
                           height={50}
                           className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
@@ -792,7 +792,7 @@ export default function Header() {
                         <Image
                           src="/brands/dell.webp"
                           alt="Dell"
-                          width={50}
+                          width={100}
                           height={50}
                           className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
@@ -803,7 +803,7 @@ export default function Header() {
                         <Image
                           src="/brands/hp.webp"
                           alt="HP"
-                          width={50}
+                          width={100}
                           height={50}
                           className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
@@ -814,7 +814,7 @@ export default function Header() {
                         <Image
                           src="/brands/lenovo.webp"
                           alt="Lenovo"
-                          width={50}
+                          width={100}
                           height={50}
                           className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />
@@ -825,7 +825,7 @@ export default function Header() {
                         <Image
                           src="/brands/microsoft.webp"
                           alt="Microsoft"
-                          width={50}
+                          width={100}
                           height={50}
                           className="brand-img-hover h-[50px] w-auto object-contain transition-[opacity,transform] duration-200 opacity-80 group-hover/brand:opacity-100 group-hover/brand:scale-105"
                         />

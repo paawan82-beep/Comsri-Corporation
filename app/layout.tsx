@@ -98,7 +98,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   const searchActionSchema = getSearchActionSchema();
 
   return (
-    <html lang="en" className="bg-[#f6f5f8]">
+    <html lang="en" className="bg-[#f5f6f8]">
       <head suppressHydrationWarning>
         <link rel="preconnect" href="https://hglntgfpbilqvdcazjsv.supabase.co" />
         <link rel="preconnect" href="https://comsri.com" />
@@ -107,7 +107,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <JsonLd schema={localBusinessSchema} />
         <JsonLd schema={searchActionSchema} />
       </head>
-      <body className={`${fredoka.className} ${fredoka.variable} ${albertSans.variable} antialiased bg-[#f6f5f8]`} suppressHydrationWarning>
+      <body className={`${fredoka.className} ${fredoka.variable} ${albertSans.variable} antialiased bg-[#f5f6f8]`} suppressHydrationWarning>
         <CartProvider>
           {children}
           <ChatBotWrapper />

@@ -13,22 +13,30 @@ export const metadata: Metadata = constructMetadata({
 export default async function Home() {
   let initialLaptops: any[] = [];
   let initialDesktops: any[] = [];
+  let latestPosts: any[] = [];
 
   try {
-    const [laptopsData, desktopsData] = await Promise.all([
+    const [laptopsData, desktopsData, postsRes] = await Promise.all([
       getFilteredCatalog({ category: "112", per_page: 15 }),
-      getFilteredCatalog({ category: "129", per_page: 15 })
+      getFilteredCatalog({ category: "129", per_page: 15 }),
+      fetch("https://comsri.com/wp-json/wp/v2/posts?_embed=true&per_page=6", {
+        next: { revalidate: 3600 },
+      })
     ]);
     initialLaptops = laptopsData?.data || [];
     initialDesktops = desktopsData?.data || [];
+    if (postsRes.ok) {
+      latestPosts = await postsRes.json();
+    }
   } catch (error) {
-    console.error("Failed to load server-side catalog on page mount:", error);
+    console.error("Failed to load server-side catalog/posts on page mount:", error);
   }
 
   return (
     <HomeClient 
       initialLaptops={initialLaptops} 
       initialDesktops={initialDesktops} 
+      latestPosts={latestPosts}
     />
   );
 }

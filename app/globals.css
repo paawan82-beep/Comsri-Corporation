@@ -424,6 +424,81 @@ h6 {
 }
 
 
+/* ============================================================
+   BLOG CARD — buttery hover.
+   Lift uses transform (composited). The deeper hover shadow is
+   pre-rendered on a ::after pseudo-element and faded in via
+   opacity (also composited) — NEVER animate box-shadow directly,
+   it repaints every frame and causes the stutter.
+   ============================================================ */
+.blog-card {
+  position: relative;
+  transform: translateZ(0);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 0.06);
+}
+
+.blog-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 18px 45px rgb(0 0 0 / 0.13);
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+}
+
+.blog-card:hover::after {
+  opacity: 1;
+}
+
+/* Low-end / reduced-motion: drop the lift, keep it instant. */
+.low-end-device .blog-card {
+  transform: none !important;
+  transition: none !important;
+}
+.low-end-device .blog-card:hover {
+  transform: none !important;
+}
+
+/* ============================================================
+   PRODUCT CARD — same buttery technique as .blog-card.
+   Lift = transform (Tailwind), deeper shadow = ::after opacity
+   fade. Card must NOT have overflow/paint containment or the
+   pseudo shadow gets clipped (handled in ProductCard.tsx).
+   ============================================================ */
+.product-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 20px 48px rgb(0 0 0 / 0.14);
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.product-card:hover::after {
+  opacity: 1;
+}
+
+.low-end-device .product-card {
+  transform: none !important;
+  transition: none !important;
+}
+.low-end-device .product-card:hover {
+  transform: none !important;
+}
+.low-end-device .product-card::after {
+  display: none !important;
+}
+
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
@@ -575,5 +650,175 @@ h6 {
 #product-detailed-content strong {
   color: #0f172a !important;
   font-weight: 700 !important;
+}
+
+/* ============================================================
+   BLOG ARTICLE BODY — reading-optimised typography
+   Applied to WordPress rendered HTML on /blog/[slug].
+   ============================================================ */
+.blog-content {
+  color: #334155;
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  font-weight: 450;
+}
+
+.blog-content > *:first-child {
+  margin-top: 0;
+}
+
+.blog-content p {
+  margin: 0 0 1.4rem;
+}
+
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4 {
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  scroll-margin-top: 90px;
+}
+
+.blog-content h2 {
+  font-size: 1.6rem;
+  margin: 2.4rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.blog-content h3 {
+  font-size: 1.3rem;
+  margin: 2rem 0 0.85rem;
+}
+
+.blog-content h4 {
+  font-size: 1.1rem;
+  margin: 1.6rem 0 0.7rem;
+}
+
+.blog-content a {
+  color: #3452ef;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(52, 82, 239, 0.3);
+  transition: text-decoration-color 0.2s ease;
+}
+
+.blog-content a:hover {
+  text-decoration-color: #3452ef;
+}
+
+.blog-content strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.blog-content ul,
+.blog-content ol {
+  margin: 0 0 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.blog-content ul {
+  list-style-type: disc;
+}
+
+.blog-content ol {
+  list-style-type: decimal;
+}
+
+.blog-content li {
+  margin-bottom: 0.6rem;
+  padding-left: 0.25rem;
+}
+
+.blog-content li::marker {
+  color: #3452ef;
+}
+
+.blog-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  margin: 2rem 0;
+  box-shadow: 0 12px 36px rgba(30, 41, 59, 0.08);
+}
+
+.blog-content blockquote {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  background: #f6f8ff;
+  border-left: 4px solid #3452ef;
+  border-radius: 0 14px 14px 0;
+  color: #1e293b;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.blog-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.blog-content figure {
+  margin: 2rem 0;
+}
+
+.blog-content figure img {
+  margin: 0;
+}
+
+.blog-content figcaption {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: 0.6rem;
+}
+
+.blog-content table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+}
+
+.blog-content th {
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 700;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.blog-content td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.blog-content tr:last-child td {
+  border-bottom: none;
+}
+
+.blog-content iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border-radius: 18px;
+  margin: 2rem 0;
+  border: none;
+}
+
+.blog-content hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 2.5rem 0;
 }
 

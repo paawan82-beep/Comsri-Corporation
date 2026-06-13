@@ -426,7 +426,12 @@ class WooCommerceServiceClient {
       if (response.ok) {
         const data: WooCommerceProduct[] = await response.json();
 
-        // Resolve regular_price for variable products from variations
+        // Resolve regular_price for variable products from variations.
+        // This is a best-effort price enhancement: if the upstream
+        // variations endpoint is unavailable (e.g. returns 500), the
+        // product simply keeps its existing price and the UI falls back
+        // to its own discount estimate — so we degrade silently here
+        // instead of spamming the error log for every variable product.
         await Promise.all(data.map(async (product) => {
           if (product.type === "variable" && (!product.regular_price || parseFloat(product.regular_price) === 0)) {
             try {
@@ -440,8 +445,8 @@ class WooCommerceServiceClient {
                   }
                 }
               }
-            } catch (err) {
-              console.error(`Failed to resolve regular price for variable product ${product.id}:`, err);
+            } catch {
+              // Non-critical: ignore and keep the product's existing price.
             }
           }
         }));

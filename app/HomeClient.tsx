@@ -10,14 +10,53 @@ import ProductCard from "./shop/ProductCard";
 interface HomeClientProps {
   initialLaptops?: any[];
   initialDesktops?: any[];
+  latestPosts?: any[];
 }
 
-export default function HomeClient({ initialLaptops = [], initialDesktops = [] }: HomeClientProps) {
+export default function HomeClient({ initialLaptops = [], initialDesktops = [], latestPosts = [] }: HomeClientProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // States to fetch real WooCommerce products dynamically, initialized with server-rendered props
   const [laptops, setLaptops] = useState<any[]>(initialLaptops);
   const [desktops, setDesktops] = useState<any[]>(initialDesktops);
+
+  const fallbackPosts = [
+    {
+      id: 1,
+      slug: "bulk-refurbished-computers-dealers-smart-it-solutions-for-businesses",
+      title: { rendered: "Bulk Refurbished Computers Dealers: Smart IT Solutions for Businesses" },
+      date: "2026-01-25T00:00:00",
+      excerpt: { rendered: "In an era where technology upgrades are frequent and budgets are closely monitored, businesses acro..." },
+      _embedded: {
+        "wp:featuredmedia": [{ source_url: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=600" }],
+        "wp:term": [[{ name: "Refurbished Products", id: 1 }]]
+      }
+    },
+    {
+      id: 2,
+      slug: "bulk-refurbished-laptops-for-offices-cost-vs-performance",
+      title: { rendered: "Bulk Refurbished Laptops for Offices: Cost vs Performance" },
+      date: "2026-01-07T00:00:00",
+      excerpt: { rendered: "In today's competitive business environment, organizations are under constant pressure to reduce op..." },
+      _embedded: {
+        "wp:featuredmedia": [{ source_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" }],
+        "wp:term": [[{ name: "Refurbished Products", id: 2 }]]
+      }
+    },
+    {
+      id: 3,
+      slug: "e-waste-recycling-explained-the-first-step-to-affordable-refurbished-technology",
+      title: { rendered: "E-Waste Recycling Explained: The First Step to Affordable Refurbished Technology" },
+      date: "2026-01-06T00:00:00",
+      excerpt: { rendered: "The rapid growth of technology has transformed how India works, studies, and does business. However..." },
+      _embedded: {
+        "wp:featuredmedia": [{ source_url: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&q=80&w=600" }],
+        "wp:term": [[{ name: "Uncategorized", id: 3 }]]
+      }
+    }
+  ];
+
+  const displayPosts = latestPosts.length > 0 ? latestPosts : fallbackPosts;
 
   const laptopSliderRef = useRef<HTMLDivElement>(null);
   const desktopSliderRef = useRef<HTMLDivElement>(null);
@@ -241,7 +280,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 h-auto">
             {/* Refurbished Mini PCs */}
             <Link href="/categories/buy-refurbished-mini-pcs-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
-              <Image src="https://comsri.com/wp-content/uploads/2025/10/mini-pc-showcase-1.jpg" alt="New Mini PCs" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              <Image src="https://comsri.com/wp-content/uploads/2025/10/mini-pc-showcase-1.jpg" alt="New Mini PCs" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
                 <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-1 md:mb-2 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">Refurbished Mini PCs</h3>
@@ -257,7 +296,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
 
             {/* Refurbished Workstations */}
             <Link href="/categories/buy-refurbished-workstations-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
-              <Image src="https://comsri.com/wp-content/uploads/2025/10/dark-desk-setup-img.jpg-1.webp" alt="New All-In-One PCs" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              <Image src="https://comsri.com/wp-content/uploads/2025/10/dark-desk-setup-img.jpg-1.webp" alt="New All-In-One PCs" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
                 <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-1 md:mb-2 max-w-[70%] leading-tight drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">Refurbished Workstations</h3>
@@ -277,7 +316,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             {/* Refurbished Desktops */}
             <Link href="/categories/buy-high-quality-refurbished-desktops" className="bg-[#143f29] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 flex flex-col min-h-[280px] md:min-h-0">
               <div className="h-[65%] relative overflow-hidden">
-                <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Desktop-Showcase.png" alt="New Desktops" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+                <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Desktop-Showcase.png" alt="New Desktops" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               </div>
               <div className="flex-1 p-8 flex flex-col justify-end items-start text-white relative">
                 <div className="absolute inset-0 bg-white/0 transition-colors duration-500 group-hover:bg-white/10 pointer-events-none"></div>
@@ -294,7 +333,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
 
             {/* Refurbished Laptops */}
             <Link href="/categories/buy-refurbished-laptops-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 min-h-[250px] md:min-h-0 md:h-full">
-              <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Laptop-Showcase.webp" alt="New Laptops" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Laptop-Showcase.webp" alt="New Laptops" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-end items-start text-white">
                 <h3 className="text-2xl md:text-4xl font-bold mb-1 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1">Refurbished Laptops</h3>
@@ -312,7 +351,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             <Link href="/shop" className="bg-[#1a3575] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-transform duration-500 hover:-translate-y-1 flex flex-col relative min-h-[280px] md:min-h-0">
               <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500 pointer-events-none z-10"></div>
               <div className="h-[50%] relative overflow-hidden">
-                <Image src="https://picsum.photos/seed/promo/600/400" alt="Promo" fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+                <Image src="https://picsum.photos/seed/promo/600/400" alt="Promo" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               </div>
               <div className="flex-1 p-8 flex flex-col justify-center items-start text-white relative z-20">
                 <span className="bg-[#b81d06] text-white px-4 md:px-5 py-1.5 md:py-2 rounded-full text-lg md:text-2xl font-bold mb-3 md:mb-4 tracking-tight shadow-sm inline-block transform transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-2">
@@ -543,9 +582,9 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
           {/* Header */}
           <div className="flex flex-col items-start mb-8 gap-4">
             <h2 className="text-[28px] md:text-3xl font-bold text-[#111] tracking-tight">Latest from The Blog</h2>
-            <button className="bg-[#3452ef] hover:bg-[#203bca] text-white px-8 py-3 rounded-full font-bold text-sm transition-all duration-200 active:scale-[0.98] shadow-md shadow-blue-500/10 focus:outline-none">
+            <Link href="/blog" className="bg-[#3452ef] hover:bg-[#203bca] text-white px-8 py-3 rounded-full font-bold text-sm transition-all duration-200 active:scale-[0.98] shadow-md shadow-blue-500/10 focus:outline-none text-center">
               More Articles
-            </button>
+            </Link>
           </div>
 
           {/* Cards Slider */}
@@ -554,153 +593,65 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [] }
             onScroll={() => updateScrollDirect(blogSliderRef.current, blogIndicatorRef.current, "blog")}
             className="flex flex-nowrap gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
           >
-            {/* Card 1 */}
-            <div className="w-full md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] shrink-0">
-              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-transform duration-300 border border-transparent hover:border-gray-100">
-                {/* Image */}
-                <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                  <img loading="lazy"
-                    src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=600"
-                    alt="Blog cover"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+            {displayPosts.map((post: any) => {
+              const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800";
+              const categoryName = post._embedded?.["wp:term"]?.[0]?.[0]?.name || "Refurbished Products";
+              const dateStr = new Date(post.date).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+              const cleanExcerpt = post.excerpt.rendered.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").trim();
+
+              return (
+                <div key={post.id} className="w-full md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] shrink-0">
+                  <Link href={`/blog/${post.slug}`} className="block h-full">
+                    <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-transform duration-300 border border-transparent hover:border-gray-100">
+                      {/* Image */}
+                      <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
+                        <img loading="lazy"
+                          src={featuredImage}
+                          alt="Blog cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+
+                      {/* Content */}
+                      <div className="px-2 pb-2 flex flex-col flex-1">
+                        {/* Author and Read Time */}
+                        <div className="text-[13px] text-gray-500 mb-2 font-medium flex items-center gap-2">
+                          <span>Comsri Corporation</span>
+                          <span className="w-1 h-1 rounded-full bg-gray-400"></span>
+                          <span>5 min read</span>
+                        </div>
+
+                        {/* Title and Icon */}
+                        <div className="flex items-start justify-between gap-4 mb-2">
+                          <h3 
+                            className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2"
+                            dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                          />
+                          <button aria-label="Read article" className="text-gray-400 group-hover:text-black transition-colors focus:outline-none flex-shrink-0 mt-1">
+                            <ArrowUpRight size={20} />
+                          </button>
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
+                          {cleanExcerpt}
+                        </p>
+
+                        {/* Footer (Tag and Date) */}
+                        <div className="flex items-center gap-4 mt-auto">
+                          <span className="bg-[#f6f6f9] text-[#111] text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
+                            {categoryName}
+                          </span>
+                          <span className="text-[13px] text-gray-500 font-medium whitespace-nowrap">
+                            {dateStr}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
                 </div>
-
-                {/* Content */}
-                <div className="px-2 pb-2 flex flex-col flex-1">
-                  {/* Author and Read Time */}
-                  <div className="text-[13px] text-gray-500 mb-2 font-medium flex items-center gap-2">
-                    <span>Comsri Corporation</span>
-                    <span className="w-1 h-1 rounded-full bg-gray-400"></span>
-                    <span>5 min read</span>
-                  </div>
-
-                  {/* Title and Icon */}
-                  <div className="flex items-start justify-between gap-4 mb-2">
-                    <h3 className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2">
-                      Bulk Refurbished Computers Dealers: Smart IT Solutions for Businesses
-                    </h3>
-                    <button aria-label="Read article" className="text-gray-400 group-hover:text-black transition-colors focus:outline-none flex-shrink-0 mt-1">
-                      <ArrowUpRight size={20} />
-                    </button>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
-                    In an era where technology upgrades are frequent and budgets are closely monitored, businesses acro...
-                  </p>
-
-                  {/* Footer (Tag and Date) */}
-                  <div className="flex items-center gap-4 mt-auto">
-                    <span className="bg-[#f6f6f9] text-[#111] text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
-                      Refurbished Products
-                    </span>
-                    <span className="text-[13px] text-gray-500 font-medium whitespace-nowrap">
-                      25 Jan 2026
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="w-full md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] shrink-0">
-              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-transform duration-300 border border-transparent hover:border-gray-100">
-                {/* Image */}
-                <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                  <img loading="lazy"
-                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600"
-                    alt="Blog cover"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="px-2 pb-2 flex flex-col flex-1">
-                  {/* Author and Read Time */}
-                  <div className="text-[13px] text-gray-500 mb-2 font-medium flex items-center gap-2">
-                    <span>Comsri Corporation</span>
-                    <span className="w-1 h-1 rounded-full bg-gray-400"></span>
-                    <span>4 min read</span>
-                  </div>
-
-                  {/* Title and Icon */}
-                  <div className="flex items-start justify-between gap-4 mb-2">
-                    <h3 className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2">
-                      Bulk Refurbished Laptops for Offices: Cost vs Performance
-                    </h3>
-                    <button aria-label="Read article" className="text-gray-400 group-hover:text-black transition-colors focus:outline-none flex-shrink-0 mt-1">
-                      <ArrowUpRight size={20} />
-                    </button>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
-                    In today&apos;s competitive business environment, organizations are under constant pressure to reduce op...
-                  </p>
-
-                  {/* Footer (Tag and Date) */}
-                  <div className="flex items-center gap-4 mt-auto">
-                    <span className="bg-[#f6f6f9] text-[#111] text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
-                      Refurbished Products
-                    </span>
-                    <span className="text-[13px] text-gray-500 font-medium whitespace-nowrap">
-                      07 Jan 2026
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="w-full md:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] shrink-0">
-              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-3 h-full flex flex-col group cursor-pointer hover:shadow-[0_8px_35px_rgb(0,0,0,0.1)] transition-transform duration-300 border border-transparent hover:border-gray-100">
-                {/* Image */}
-                <div className="relative aspect-[16/10] w-full bg-[#f4f5f7] rounded-[16px] overflow-hidden mb-4">
-                  <img loading="lazy"
-                    src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&q=80&w=600"
-                    alt="Blog cover"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="px-2 pb-2 flex flex-col flex-1">
-                  {/* Author and Read Time */}
-                  <div className="text-[13px] text-gray-500 mb-2 font-medium flex items-center gap-2">
-                    <span>Comsri Corporation</span>
-                    <span className="w-1 h-1 rounded-full bg-gray-400"></span>
-                    <span>7 min read</span>
-                  </div>
-
-                  {/* Title and Icon */}
-                  <div className="flex items-start justify-between gap-4 mb-2">
-                    <h3 className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2">
-                      E-Waste Recycling Explained: The First Step to Affordable Refurbished Technology
-                    </h3>
-                    <button aria-label="Read article" className="text-gray-400 group-hover:text-black transition-colors focus:outline-none flex-shrink-0 mt-1">
-                      <ArrowUpRight size={20} />
-                    </button>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-[15px] text-gray-500 mb-6 line-clamp-2 leading-relaxed">
-                    The rapid growth of technology has transformed how India works, studies, and does business. However...
-                  </p>
-
-                  {/* Footer (Tag and Date) */}
-                  <div className="flex items-center gap-4 mt-auto">
-                    <span className="bg-[#f6f6f9] text-[#111] text-[13px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
-                      Uncategorized
-                    </span>
-                    <span className="text-[13px] text-gray-500 font-medium whitespace-nowrap">
-                      06 Jan 2026
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+              );
+            })}
           </div>
 
           {/* Progress bar */}
