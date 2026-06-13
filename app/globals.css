@@ -822,3 +822,10 @@ h6 {
   margin: 2.5rem 0;
 }
 
+/* Bypass low-end device transition overrides specifically for product cards to keep hover animations smooth */
+.low-end-device .product-card-container,
+.product-card-container {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+

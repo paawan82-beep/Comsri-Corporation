@@ -83,7 +83,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
         }}
         onClick={() => router.push(`/products/${product.slug}`)}
-        className="bg-white rounded-[24px] p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col group cursor-pointer border border-slate-100 hover:border-blue-500/20 hover:shadow-[0_20px_40px_rgba(52,82,239,0.08)] hover:-translate-y-2 hover:scale-[1.02] relative overflow-hidden will-change-transform h-full"
+        className="product-card-container bg-white rounded-[24px] p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col group cursor-pointer border border-slate-100 hover:border-blue-500/20 hover:shadow-[0_20px_40px_rgba(52,82,239,0.08)] hover:-translate-y-2 hover:scale-[1.02] relative overflow-hidden will-change-transform h-full"
       >
         {/* Glow Effect Background inside the card on hover */}
         <div className="absolute inset-0 bg-radial-gradient from-blue-50/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
