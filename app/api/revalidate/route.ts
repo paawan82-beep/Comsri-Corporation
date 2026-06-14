@@ -27,8 +27,9 @@ export async function POST(req: NextRequest) {
     const signature = req.headers.get("x-wc-webhook-signature") || "";
     const topic = req.headers.get("x-wc-webhook-topic") || "";
     const secret = process.env.WOOCOMMERCE_WEBHOOK_SECRET;
+    const cleanedSecret = cleanToken(secret);
 
-    if (!secret) {
+    if (!cleanedSecret) {
       console.error("[Revalidate API Error]: WOOCOMMERCE_WEBHOOK_SECRET is not configured.");
       return NextResponse.json({ error: "Webhook secret is empty on the server." }, { status: 500 });
     }
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
 
     // Verify raw body HMAC signature from WooCommerce
     const expectedSignature = crypto
-      .createHmac("sha256", secret)
+      .createHmac("sha256", cleanedSecret)
       .update(rawBody)
       .digest("base64");
 
