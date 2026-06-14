@@ -987,17 +987,7 @@ export default function Header() {
             </div>
           </MobileAccordion>
 
-          {/* New Products Accordion */}
-          <MobileAccordion title="New Products">
-            <div className="px-5 space-y-1">
-              <Link href="/shop" onClick={() => setMobileMenuOpen(false)} className="block py-1.5 text-[13.5px] text-gray-600 hover:text-[#374bf9] transition-colors font-medium">
-                Explore New Shop
-              </Link>
-              <Link href="/shop" onClick={() => setMobileMenuOpen(false)} className="block py-1.5 text-[13.5px] text-gray-600 hover:text-[#374bf9] transition-colors font-medium">
-                Brand New Hardware
-              </Link>
-            </div>
-          </MobileAccordion>
+
 
           <Link href="/bulk-orders" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-3.5 text-[15px] font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-50 transition-colors">
             Bulk Orders
