@@ -1,8 +1,8 @@
 const https = require("https");
 
-const url = "https://cms.comsri.com";
-const key = "ck_a9810a7936cbebf7e972f9aff5179cf2bddd9daf";
-const secret = "cs_df27545c1062a4436c6acb22b86874553d869ebd";
+const url = process.env.WOOCOMMERCE_URL || "https://cms.comsri.com";
+const key = process.env.WOOCOMMERCE_CONSUMER_KEY || "";
+const secret = process.env.WOOCOMMERCE_CONSUMER_SECRET || "";
 
 const authHeader = "Basic " + Buffer.from(key + ":" + secret).toString("base64");
 
