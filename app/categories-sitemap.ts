@@ -3,7 +3,7 @@ import { getAbsoluteUrl } from "./seo/seo-utils";
 
 export async function GET() {
   const currentDate = new Date().toISOString();
-  
+
   const urls = [
     // Static Pages
     "",
@@ -17,8 +17,6 @@ export async function GET() {
     "/cart",
     "/shop",
     // Categories
-    "/categories/new-laptops",
-    "/categories/new-all-in-one",
     "/categories/buy-refurbished-laptops-online-in-india",
     "/categories/buy-high-quality-refurbished-desktops",
     "/categories/buy-refurbished-workstations-online-in-india",
@@ -29,9 +27,7 @@ export async function GET() {
     "/brands/apple",
     "/brands/lenovo",
     "/brands/microsoft",
-    // Collections
-    "/collections/business-laptops",
-    "/collections/student-laptops",
+
   ];
 
   let urlEntries = "";
