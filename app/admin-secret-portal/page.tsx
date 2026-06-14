@@ -91,7 +91,7 @@ export default function AdminSecretPortal() {
               Revalidation Authorization Token
             </label>
             <input
-              type="password"
+              type="text"
               value={token}
               onChange={(e) => setToken(e.target.value)}
               placeholder="Enter server environment REVALIDATION_TOKEN..."
