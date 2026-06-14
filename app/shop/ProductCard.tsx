@@ -55,12 +55,12 @@ export default function ProductCard({ product, index }: ProductCardProps) {
   const getDisplayPrices = () => {
     const salePriceVal = parseFloat(product.sale_price || product.price || "0");
     let regularPriceVal = parseFloat(product.regular_price || "0");
-    
+
     if (isNaN(regularPriceVal) || regularPriceVal <= 0) {
       regularPriceVal = salePriceVal * 2; // fallback to 50% discount if not configured
     }
-    
-    const discount = regularPriceVal > 0 
+
+    const discount = regularPriceVal > 0
       ? Math.round(((regularPriceVal - salePriceVal) / regularPriceVal) * 100)
       : 50;
 
@@ -76,14 +76,11 @@ export default function ProductCard({ product, index }: ProductCardProps) {
   return (
     <div
       style={{ animationDelay: `${Math.min(index * 50, 400)}ms` }}
-      className="animate-fade-in h-full"
+      className="animate-zoom-in-entrance h-full"
     >
       <div
-        style={{
-          transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
-        }}
         onClick={() => router.push(`/products/${product.slug}`)}
-        className="product-card-container bg-white rounded-[24px] p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col group cursor-pointer border border-slate-100 hover:border-blue-500/20 hover:shadow-[0_20px_40px_rgba(52,82,239,0.08)] hover:-translate-y-2 hover:scale-[1.02] relative overflow-hidden will-change-transform h-full"
+        className="product-card-container bg-white rounded-[24px] p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col group cursor-pointer border border-slate-100 hover:border-blue-500/20 hover:shadow-[0_20px_40px_rgba(52,82,239,0.08)] hover:-translate-y-2 hover:scale-[1.04] relative overflow-hidden will-change-transform h-full"
       >
         {/* Glow Effect Background inside the card on hover */}
         <div className="absolute inset-0 bg-radial-gradient from-blue-50/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -164,9 +161,8 @@ export default function ProductCard({ product, index }: ProductCardProps) {
             </Link>
             <button
               onClick={handleAddToCart}
-              className={`${
-                added ? "bg-emerald-600 hover:bg-emerald-700" : "bg-[#3452ef] hover:bg-[#203bca]"
-              } text-white text-[11px] sm:text-[13px] font-semibold py-2.5 sm:py-3 rounded-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.97] flex items-center justify-center gap-1 sm:gap-2 cursor-pointer shadow-md shadow-blue-500/10 hover:shadow-blue-500/20 focus:outline-none`}
+              className={`${added ? "bg-emerald-600 hover:bg-emerald-700" : "bg-[#3452ef] hover:bg-[#203bca]"
+                } text-white text-[11px] sm:text-[13px] font-semibold py-2.5 sm:py-3 rounded-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.97] flex items-center justify-center gap-1 sm:gap-2 cursor-pointer shadow-md shadow-blue-500/10 hover:shadow-blue-500/20 focus:outline-none`}
             >
               {added ? (
                 <>

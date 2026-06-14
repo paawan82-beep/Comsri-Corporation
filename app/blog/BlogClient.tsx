@@ -9,6 +9,7 @@ import {
   X,
   ArrowUpRight
 } from "lucide-react";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 interface WPPost {
   id: number;
@@ -171,7 +172,7 @@ export default function BlogClient({ initialPosts, categories }: BlogClientProps
                 <Link href={`/blog/${featuredPost.slug}`}>
                   <h3 
                     className="text-2xl sm:text-3xl lg:text-[36px] font-extrabold text-slate-950 leading-tight hover:text-[#2f55f6] cursor-pointer transition-colors"
-                    dangerouslySetInnerHTML={{ __html: featuredPost.title.rendered }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(featuredPost.title.rendered) }}
                   />
                 </Link>
 
@@ -232,7 +233,7 @@ export default function BlogClient({ initialPosts, categories }: BlogClientProps
                       <div className="flex items-start justify-between gap-4 mb-2">
                         <h3
                           className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2 group-hover:text-[#2f55f6] transition-colors duration-300"
-                          dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                          dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.title.rendered) }}
                         />
                         <span className="text-gray-400 group-hover:text-[#2f55f6] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 flex-shrink-0 mt-1">
                           <ArrowUpRight size={20} />

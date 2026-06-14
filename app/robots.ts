@@ -9,6 +9,8 @@ export default function robots(): MetadataRoute.Robots {
       disallow: [
         "/checkout/",
         "/api/",
+        "/admin-secret-portal",
+        "/dashboard",
       ],
     },
     sitemap: `${SITE_CONFIG.url}/sitemap.xml`,

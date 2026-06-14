@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { FileText, Info, MessageSquare, Star, User, Calendar, ShieldCheck, CheckCircle, RefreshCcw, Truck } from "lucide-react";
 import { WooCommerceProduct } from "@/lib/types/woocommerce";
 import { supabase } from "@/lib/supabase";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 interface ProductTabsClientProps {
   product: WooCommerceProduct;
@@ -208,7 +209,7 @@ export default function ProductTabsClient({ product }: ProductTabsClientProps) {
               <div 
                 id="product-detailed-content" 
                 className="description-content"
-                dangerouslySetInnerHTML={{ __html: cleanDescription }} 
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(cleanDescription) }}
               />
             </div>
           </div>

@@ -15,6 +15,7 @@ import {
   getAuthor,
 } from "../blog-utils";
 import { ReadingProgress, ShareBar, ArticleBodyWithTOC } from "./ArticleClient";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 export const dynamic = "force-dynamic";
 
@@ -112,7 +113,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
             <h1
               className="mt-5 text-[28px] md:text-[40px] lg:text-[46px] font-extrabold text-[#111] leading-[1.12] tracking-tight max-w-[1000px]"
-              dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.title.rendered) }}
             />
 
             {/* Meta row */}
@@ -250,7 +251,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       <div className="flex items-start justify-between gap-4 mb-2">
                         <h3 
                           className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2"
-                          dangerouslySetInnerHTML={{ __html: rp.title.rendered }}
+                          dangerouslySetInnerHTML={{ __html: sanitizeHtml(rp.title.rendered) }}
                         />
                         <span className="text-gray-400 group-hover:text-black transition-colors flex-shrink-0 mt-1">
                           <ArrowUpRight size={20} />

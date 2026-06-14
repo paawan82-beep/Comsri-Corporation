@@ -1,11 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
+import crypto from "crypto";
 import { woocommerce } from "@/lib/services/woocommerce";
 
 export const dynamic = "force-dynamic";
 
+/** Constant-time string compare to avoid timing attacks on the diagnostic token. */
+function safeEqual(a: string, b: string): boolean {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) return false;
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
 export async function GET(req: NextRequest) {
   const token = req.nextUrl.searchParams.get("token");
-  if (!token || token !== process.env.REVALIDATION_TOKEN) {
+  const revalToken = process.env.REVALIDATION_TOKEN;
+  if (!token || !revalToken || !safeEqual(token, revalToken)) {
     return NextResponse.json({ error: "Unauthorized diagnostic handshake." }, { status: 401 });
   }
 

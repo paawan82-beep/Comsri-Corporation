@@ -17,7 +17,7 @@ export function getSearchActionSchema() {
     "name": SITE_CONFIG.name,
     "potentialAction": {
       "@type": "SearchAction",
-      "target": `${SITE_CONFIG.url}/search?q={search_term_string}`,
+      "target": `${SITE_CONFIG.url}/shop?search={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };
@@ -30,7 +30,7 @@ export function getOrganizationSchema() {
     "@id": `${SITE_CONFIG.url}/#organization`,
     "name": SITE_CONFIG.name,
     "url": SITE_CONFIG.url,
-    "logo": `${SITE_CONFIG.url}/images/logo.png`,
+    "logo": getAbsoluteUrl(SITE_CONFIG.logo),
     "telephone": SITE_CONFIG.telephone,
     "email": SITE_CONFIG.email,
     "address": {
@@ -214,7 +214,7 @@ export function getLocalBusinessSchema() {
     "@type": "LocalBusiness",
     "@id": `${SITE_CONFIG.url}/#localbusiness`,
     "name": SITE_CONFIG.name,
-    "image": `${SITE_CONFIG.url}/images/business-hero.jpg`,
+    "image": getAbsoluteUrl(SITE_CONFIG.ogImage),
     "telephone": SITE_CONFIG.telephone,
     "email": SITE_CONFIG.email,
     "url": SITE_CONFIG.url,

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight, ArrowRight, ArrowUpRight, MessageCircle, Instagram, Facebook, Youtube, Play, Apple } from "lucide-react";
 import Header from "./Header";
 import ProductCard from "./shop/ProductCard";
+import Footer from "./Footer";
 
 interface HomeClientProps {
   initialLaptops?: any[];
@@ -165,6 +166,13 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 10000); // transition slide every 10 seconds
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
   return (
     <div className="min-h-screen bg-[#f6f5f8] flex flex-col font-sans">
       <Header />
@@ -208,10 +216,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
           <ChevronRight size={24} className="text-gray-800 hidden md:block" />
         </button>
 
-        {/* Banner with a gear icon on the right edge */}
-        <div className="absolute right-0 top-1/3 bg-gray-800 text-yellow-400 p-2 rounded-l-md z-30 cursor-pointer shadow-lg blur-[0.5px] hidden md:block">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-        </div>
+
       </main>
 
       {/* Shop By Categories Section */}
@@ -251,7 +256,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
                 href={cat.link}
                 className="relative rounded-[16px] md:rounded-[20px] overflow-hidden cursor-pointer group pt-6 px-5 h-[380px] sm:h-[260px] md:h-[300px] lg:h-[340px] flex flex-col items-start bg-[#fac656] shadow-sm transform transition-transform duration-300 hover:shadow-md hover:-translate-y-1"
               >
-                <div className="absolute inset-0 opacity-100 z-0 pointer-events-none transform transition-transform duration-300 group-hover:scale-105">
+                <div className="absolute inset-0 opacity-100 z-0 pointer-events-none transform transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]">
                   <Image
                     src={cat.bgImage}
                     alt={cat.title}
@@ -263,9 +268,14 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
                   />
                 </div>
 
-                <h3 className="relative z-10 text-[18px] sm:text-[16px] md:text-[18px] lg:text-[20px] font-bold text-[#1f2937] text-left tracking-tight px-1">
+                <h3 className="relative z-10 text-[18px] sm:text-[16px] md:text-[18px] lg:text-[20px] font-bold text-[#1f2937] text-left tracking-tight px-1 transform transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1">
                   {cat.title}
                 </h3>
+
+                <div className="relative z-10 mt-2 px-1 flex items-center gap-1.5 text-[14px] font-bold text-[#1f2937] opacity-0 -translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-y-0">
+                  <span>Shop Now</span>
+                  <ArrowRight size={16} />
+                </div>
               </Link>
             ))}
           </div>
@@ -389,7 +399,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
       </section>
 
       {/* Shop by Brands */}
-      <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] py-12 md:py-16 px-6 lg:px-12 w-full">
+      <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] py-12 md:py-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto">
           <div className="flex items-center justify-between mb-8 md:mb-10">
             <h2 className="text-[28px] md:text-3xl font-bold text-gray-900 tracking-tight">Shop by Brands</h2>
@@ -397,7 +407,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
               All Brands
             </button>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-5 gap-4 md:gap-6">
             {[
               { name: 'Apple', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/apple.webp' },
               { name: 'Dell', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/dell.webp' },
@@ -405,8 +415,8 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
               { name: 'Lenovo', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/lenovo.webp' },
               { name: 'Microsoft', src: 'https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/microsoft.webp' },
             ].map((brand, idx) => (
-              <div key={idx} className="bg-white rounded-[20px] p-5 flex flex-col items-center justify-center h-[100px] md:h-[120px] shadow-sm hover:shadow-md transition-transform duration-300 hover:-translate-y-1 cursor-pointer border border-gray-100">
-                <img loading="lazy" src={brand.src} alt={brand.name} className="w-auto h-auto max-h-[105px] max-w-[90px] object-contain opacity-80 hover:opacity-100 transition-opacity" />
+              <div key={idx} className="group bg-white rounded-[20px] p-5 flex flex-col items-center justify-center h-[100px] md:h-[120px] shadow-sm hover:shadow-md transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 cursor-pointer border border-gray-100 hover:border-[#4169e1]/30">
+                <img loading="lazy" src={brand.src} alt={brand.name} className="w-auto h-auto max-h-[145px] max-w-[110px] object-contain opacity-80 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:scale-[1.06]" />
               </div>
             ))}
           </div>
@@ -417,7 +427,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
       <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto">
           {/* Header */}
-          <div className="flex items-center justify-between mb-6 md:mb-8 gap-3">
+          <div className="flex items-center justify-between mb-0 gap-3">
             <h2 className="text-[18px] sm:text-[20px] md:text-[28px] font-bold text-gray-900 tracking-tight">Buy Refurbished Laptops Online in India</h2>
             <div className="hidden sm:flex items-center gap-2 shrink-0">
               <button
@@ -441,7 +451,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
           <div
             ref={laptopSliderRef}
             onScroll={() => updateScrollDirect(laptopSliderRef.current, laptopIndicatorRef.current, "laptop")}
-            className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
+            className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pt-12 pb-10 px-6"
           >
             {laptops.map((prod, idx) => (
               <div key={prod.id || idx} className="w-full md:w-[calc((100%-32px)/3)] lg:w-[calc((100%-64px)/5)] shrink-0">
@@ -471,7 +481,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
       <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto">
           {/* Header */}
-          <div className="flex items-center justify-between mb-6 md:mb-8 gap-3">
+          <div className="flex items-center justify-between mb-0 gap-3">
             <h2 className="text-[18px] sm:text-[20px] md:text-[28px] font-bold text-gray-900 tracking-tight">Buy High Quality Refurbished Desktops</h2>
             <div className="hidden sm:flex items-center gap-2 shrink-0">
               <button
@@ -495,7 +505,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
           <div
             ref={desktopSliderRef}
             onScroll={() => updateScrollDirect(desktopSliderRef.current, desktopIndicatorRef.current, "desktop")}
-            className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
+            className="flex flex-nowrap gap-4 overflow-x-auto scrollbar-none scroll-smooth pt-12 pb-10 px-6"
           >
             {desktops.map((prod, idx) => (
               <div key={prod.id || idx} className="w-full md:w-[calc((100%-32px)/3)] lg:w-[calc((100%-64px)/5)] shrink-0">
@@ -580,7 +590,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
       <section className="max-w-[1600px] mx-auto bg-[#f6f5f8] pb-8 md:pb-12 lg:pb-16 px-4 md:px-6 lg:px-12 w-full">
         <div className="max-w-[1600px] mx-auto flex flex-col pt-8 border-t-2 border-[#ffb03a]">
           {/* Header */}
-          <div className="flex flex-col items-start mb-8 gap-4">
+          <div className="flex flex-col items-start mb-0 gap-4">
             <h2 className="text-[28px] md:text-3xl font-bold text-[#111] tracking-tight">Latest from The Blog</h2>
             <Link href="/blog" className="bg-[#3452ef] hover:bg-[#203bca] text-white px-8 py-3 rounded-full font-bold text-sm transition-all duration-200 active:scale-[0.98] shadow-md shadow-blue-500/10 focus:outline-none text-center">
               More Articles
@@ -591,7 +601,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
           <div
             ref={blogSliderRef}
             onScroll={() => updateScrollDirect(blogSliderRef.current, blogIndicatorRef.current, "blog")}
-            className="flex flex-nowrap gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-8 px-1"
+            className="flex flex-nowrap gap-6 overflow-x-auto scrollbar-none scroll-smooth pt-12 pb-10 px-6"
           >
             {displayPosts.map((post: any) => {
               const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800";
@@ -623,7 +633,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
 
                         {/* Title and Icon */}
                         <div className="flex items-start justify-between gap-4 mb-2">
-                          <h3 
+                          <h3
                             className="text-[18px] font-bold text-[#111] leading-snug line-clamp-2"
                             dangerouslySetInnerHTML={{ __html: post.title.rendered }}
                           />
@@ -696,8 +706,11 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
               "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-7.jpg",
               "https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/instagram-8.jpg",
             ].map((src, index) => (
-              <div key={index} className="w-full aspect-square md:rounded-[20px] rounded-[12px] overflow-hidden bg-white shadow-sm group relative">
-                <img loading="lazy" src={src} alt="Instagram post" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div key={index} className="w-full aspect-square md:rounded-[20px] rounded-[12px] overflow-hidden bg-white shadow-sm group relative cursor-pointer">
+                <img loading="lazy" src={src} alt="Instagram post" className="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center">
+                  <Instagram size={26} strokeWidth={1.75} className="text-white transform scale-90 group-hover:scale-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                </div>
               </div>
             ))}
           </div>
@@ -705,142 +718,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
       </section>
 
       {/* Footer Section */}
-      <footer className="bg-[#fcb643] pt-10 md:pt-16 pb-8 md:pb-12 w-full relative">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-12 flex flex-col gap-8 md:gap-12">
-
-          {/* Top Columns */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 justify-between">
-            {/* Address */}
-            <div className="flex flex-col pr-4">
-              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Address</h3>
-              <p className="text-[14px] font-semibold text-[#2d2d2d] leading-relaxed mb-6">
-                Office No.-T-15 Pinnacle Business Park MC Rd Shanti Nagar Andheri East Mumbai Maharastra – 400093
-              </p>
-              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Contact Us</h3>
-              <p className="text-[14px] font-semibold text-[#2d2d2d] mb-1.5">+91 8601-899-899</p>
-              <p className="text-[14px] font-semibold text-[#2d2d2d]">Email: info@comsri.com</p>
-            </div>
-
-            {/* Refurbished Products */}
-            <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Refurbished Products</h3>
-              <div className="flex flex-col gap-3">
-                {["Refurbished Desktops", "Refurbished Laptops", "Refurbished Workstations", "Refurbished Macbooks", "Refurbished Mini PCs"].map((item, i) => (
-                  <Link key={i} href="/shop" className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#121e42] transition-colors">{item}</Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Useful Links */}
-            <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Useful Links</h3>
-              <div className="flex flex-col gap-3">
-                {[
-                  { label: "Terms & Conditions", path: "/terms-conditions?tab=terms" },
-                  { label: "Privacy Policy", path: "/privacy-policy?tab=privacy" },
-                  { label: "Return & Refund Policy", path: "/return-refund?tab=refund" },
-                  { label: "Warranty Policy", path: "/privacy-policy?tab=warranty" },
-                  { label: "Shipping Policy", path: "/privacy-policy?tab=shipping" }
-                ].map((item, i) => (
-                  <Link key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#121e42] transition-colors">{item.label}</Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Get to Know Us */}
-            <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Get to Know Us</h3>
-              <div className="flex flex-col gap-3">
-                {[
-                  { label: "About Us", path: "/about" },
-                  { label: "FAQS", path: "/faq" },
-                  { label: "Contact Us", path: "/contact" },
-                  { label: "Blogs", path: "/blog" },
-                  { label: "Bulk Orders", path: "/bulk-orders" },
-                ].map((item, i) => (
-                  <Link key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#121e42] transition-colors">{item.label}</Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Available On & Social Links */}
-            <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Available On:</h3>
-              <div className="flex flex-wrap xl:flex-nowrap gap-3 mb-8 items-center">
-                <a href="#" className="inline-block transition-transform hover:scale-[1.02] active:scale-95">
-                  <Image src="/google-play-badge.svg" alt="Get it on Google Play" width={142} height={42} className="h-[42px] w-auto" />
-                </a>
-                <a href="#" className="inline-block transition-transform hover:scale-[1.02] active:scale-95 border border-black rounded-[6px]">
-                  <Image src="/app-store-badge.svg" alt="Download on the App Store" width={135} height={40} className="h-[40px] w-auto block" />
-                </a>
-              </div>
-
-              <h3 className="text-[18px] font-semibold text-[#121e42] mb-3">Social links:</h3>
-              <div className="flex gap-3">
-                <a href="https://www.facebook.com/comsri.store" aria-label="Facebook" className="w-[36px] h-[36px] rounded-full bg-[#3b5998] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z" /></svg>
-                </a>
-                <a href="https://twitter.com/comsricorp" aria-label="Twitter (X)" className="w-[36px] h-[36px] rounded-full bg-black text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
-                </a>
-                <a href="https://www.instagram.com/comsricorporation/" aria-label="Instagram" className="w-[36px] h-[36px] rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
-                </a>
-                <a href="https://www.youtube.com/@ComsriCorporation" aria-label="YouTube" className="w-[36px] h-[36px] rounded-full bg-[#ff0000] text-white flex items-center justify-center hover:opacity-90 hover:scale-105 active:scale-95 transition-all shadow-sm">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.53 3.5 12 3.5 12 3.5s-7.53 0-9.388.555A3.002 3.002 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108C4.47 20.5 12 20.5 12 20.5s7.53 0 9.388-.555a3.003 3.003 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Newsletter Banner */}
-          <div className="bg-[#121e42] rounded-[16px] md:rounded-[24px] px-5 md:px-8 lg:px-12 py-8 md:py-10 flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8 mt-2 w-full">
-            <div className="flex flex-col text-white flex-1 text-center lg:text-left">
-              <h2 className="text-[22px] sm:text-[28px] md:text-[32px] font-bold mb-1.5 tracking-tight">Sign Up to our Newsletter</h2>
-              <p className="text-[14px] text-white/90 font-medium">Be the First to Know. Sign up to our newsletter today</p>
-            </div>
-            <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-4 items-center">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="px-5 md:px-6 py-3 md:py-3.5 rounded-full text-[14px] focus:outline-none font-medium h-[44px] md:h-[48px] text-black bg-white w-full min-w-0 md:min-w-[280px] md:w-[340px]"
-              />
-              <button className="bg-[#fcb643] hover:bg-[#fca61f] text-[#111] px-6 md:px-8 h-[44px] md:h-[48px] rounded-full font-bold text-[14px] md:text-[15px] transition-colors whitespace-nowrap shadow-sm w-full sm:w-auto">
-                Sign Up
-              </button>
-            </div>
-          </div>
-
-          {/* Copyright & Payments */}
-          <div className="flex flex-col md:flex-row items-center justify-between mt-1 gap-4 w-full">
-            <p className="text-[14px] font-bold text-[#111]">Copyright 2026 by Comsri Corporation All Rights Reserved.</p>
-            <div className="flex gap-1.5">
-              <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Mastercard_2019_logo.svg" className="h-full object-contain" alt="Mastercard" />
-              </div>
-              <div className="bg-[#1a1f71] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Visa_White.png" className="h-[70%] object-contain mt-[0.5px]" alt="Visa" />
-              </div>
-              <div className="bg-[#003087] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Paypal-logo-white.svg.png" className="h-[55%] object-contain" alt="PayPal" />
-              </div>
-              <div className="bg-[#2d9cdb] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/1685814419stripe-logo-white.png" className="h-[75%] object-contain" alt="Amex" />
-              </div>
-              <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Google_Pay_Logo.svg.webp" className="h-[55%] object-contain" alt="Google Pay" />
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
-        {/* Floating Chat Icon placeholder */}
-        <div className="absolute right-6 bottom-6 w-14 h-14 bg-[#3452ef] rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-105 transition-transform z-50">
-          <MessageCircle size={28} className="text-white fill-white" />
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -185,7 +185,18 @@ export default function DashboardClient() {
 
     const fetchOrders = async () => {
       try {
-        const response = await fetch(`/api/orders?email=${encodeURIComponent(userEmail)}`);
+        // Orders are PII — the API authenticates the caller via the Supabase
+        // access token and derives the email server-side. No token, no data.
+        const { data: { session } } = await supabase.auth.getSession();
+        const accessToken = session?.access_token;
+        if (!accessToken) {
+          console.warn("No active session; skipping order fetch.");
+          return;
+        }
+
+        const response = await fetch(`/api/orders`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
         if (!response.ok) throw new Error("Failed to load orders");
         const json = await response.json();
         

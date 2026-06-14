@@ -9,8 +9,34 @@ export const dynamic = "force-dynamic";
 const apiKey = process.env.GEMINI_API_KEY;
 const ai = apiKey && apiKey !== "MY_GEMINI_API_KEY" ? new GoogleGenAI({ apiKey }) : null;
 
+// Simple in-memory IP rate limiter to stop abuse / quota-draining of the
+// (paid) Gemini API. Note: in-memory state is per-instance; for multi-instance
+// serverless deployments back this with Redis/Upstash for hard guarantees.
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const CHAT_LIMIT = 15; // max messages
+const CHAT_WINDOW_MS = 60 * 1000; // per minute per IP
+
 export async function POST(req: NextRequest) {
   try {
+    // Enforce rate limiting before doing any expensive work.
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "127.0.0.1";
+    const now = Date.now();
+    const clientLimit = rateLimitStore.get(ip);
+    if (clientLimit) {
+      if (now > clientLimit.resetTime) {
+        rateLimitStore.set(ip, { count: 1, resetTime: now + CHAT_WINDOW_MS });
+      } else if (clientLimit.count >= CHAT_LIMIT) {
+        return NextResponse.json(
+          { error: "Too many messages. Please wait a minute and try again." },
+          { status: 429 }
+        );
+      } else {
+        clientLimit.count++;
+      }
+    } else {
+      rateLimitStore.set(ip, { count: 1, resetTime: now + CHAT_WINDOW_MS });
+    }
+
     const { messages } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {

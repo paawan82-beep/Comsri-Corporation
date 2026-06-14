@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { Link2, Check, Facebook, Twitter, Linkedin, List, ChevronRight } from "lucide-react";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 /** Fixed reading-progress bar pinned under the header. */
 export function ReadingProgress() {
@@ -258,7 +259,7 @@ export function ArticleBodyWithTOC({ content, title }: ArticleBodyWithTOCProps) 
         <div
           ref={contentRef}
           className="blog-content prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-[#3452ef] prose-a:no-underline hover:prose-a:underline prose-img:rounded-2xl prose-blockquote:border-l-4 prose-blockquote:border-[#2f55f6] prose-blockquote:bg-blue-50/20 prose-blockquote:px-5 prose-blockquote:py-2 prose-blockquote:rounded-r-xl"
-          dangerouslySetInnerHTML={{ __html: content }}
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}
         />
       </div>
     </div>

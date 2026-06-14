@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { woocommerce } from "@/lib/services/woocommerce";
 
+/** Constant-time compare of two hex/base64 signature strings to avoid timing attacks. */
+function safeSignatureEqual(a: string, b: string): boolean {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) return false;
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
 // Strictly fetch raw body for cryptographic signature verification
 export const dynamic = "force-dynamic";
 
@@ -31,7 +39,7 @@ export async function POST(req: NextRequest) {
       .update(rawBody)
       .digest("hex");
 
-    if (signature !== expectedSignature) {
+    if (!safeSignatureEqual(signature, expectedSignature)) {
       console.warn("[Razorpay Webhook Warning]: Invalid signature verification attempt.");
       return NextResponse.json({ error: "Invalid cryptographic signature." }, { status: 400 });
     }

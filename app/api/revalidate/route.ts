@@ -4,6 +4,14 @@ import crypto from "crypto";
 
 export const dynamic = "force-dynamic";
 
+/** Constant-time string compare to avoid timing attacks on secrets/signatures. */
+function safeEqual(a: string, b: string): boolean {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) return false;
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
 /**
  * WooCommerce Webhook Real-time Cache Invalidation Endpoint
  * Surgically purges ISR caches on-demand when items are altered on WordPress.
@@ -27,10 +35,11 @@ export async function POST(req: NextRequest) {
       .update(rawBody)
       .digest("base64");
 
-    if (signature !== expectedSignature) {
+    if (!safeEqual(signature, expectedSignature)) {
       // Allow manual/token-based bypass fallback if authorized via query token
       const token = req.nextUrl.searchParams.get("token");
-      if (token && token === process.env.REVALIDATION_TOKEN) {
+      const revalToken = process.env.REVALIDATION_TOKEN;
+      if (token && revalToken && safeEqual(token, revalToken)) {
         console.log("[Revalidate API]: Authorized manual token bypass triggered.");
         const targetTag = req.nextUrl.searchParams.get("tag") || "woocommerce";
         (revalidateTag as any)(targetTag, 'max');
@@ -92,8 +101,9 @@ export async function GET(req: NextRequest) {
   try {
     const token = req.nextUrl.searchParams.get("token");
     const tag = req.nextUrl.searchParams.get("tag") || "woocommerce";
+    const revalToken = process.env.REVALIDATION_TOKEN;
 
-    if (!token || token !== process.env.REVALIDATION_TOKEN) {
+    if (!token || !revalToken || !safeEqual(token, revalToken)) {
       return NextResponse.json({ error: "Unauthorized revalidation token." }, { status: 401 });
     }
 

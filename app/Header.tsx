@@ -334,25 +334,15 @@ export default function Header() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Check system memory (RAM) and CPU cores
-    const ram = (navigator as any).deviceMemory;
-    const cores = navigator.hardwareConcurrency;
-
-    const isLowRam = ram !== undefined && ram <= 4;
-    const isLowCores = cores !== undefined && cores <= 4;
-
-    // Check network speed and data saving mode
-    const conn = (navigator as any).connection;
-    const isSlowConn = conn && (conn.saveData || /2g|3g/.test(conn.effectiveType));
-
     // Respect the OS-level reduced-motion accessibility preference
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-    if (isLowRam || isLowCores || isSlowConn || prefersReducedMotion) {
+    // Hardware and network checks temporarily bypassed to allow hover animations on standard laptops
+    if (prefersReducedMotion) {
       setTimeout(() => {
         setIsLowEnd(true);
       }, 0);
-      console.log("[Perf] Low-end hardware / slow connection / reduced-motion detected. Enabled 60 FPS optimizations.");
+      console.log("[Perf] Reduced-motion detected. Enabled 60 FPS optimizations.");
     }
   }, []);
 
@@ -597,12 +587,12 @@ export default function Header() {
           {/* Left navigation links */}
           <ul className="flex flex-wrap items-center gap-y-2 gap-x-6">
             <li>
-              <Link href="/" className={`transition ${pathname === "/" ? "text-[#121e42] font-bold" : "hover:text-[#121e42]"}`}>
+              <Link href="/" className={`transition ${pathname === "/" ? "text-[#121e42] font-medium" : "hover:text-[#3452ef]"}`}>
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/about" className={`transition ${pathname === "/about" ? "text-[#121e42] font-bold" : "hover:text-[#121e42]"}`}>
+              <Link href="/about" className={`transition ${pathname === "/about" ? "text-[#121e42] font-medium" : "hover:text-[#3452ef]"}`}>
                 About Us
               </Link>
             </li>
@@ -611,13 +601,13 @@ export default function Header() {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <Link href="/shop" className={`flex items-center gap-1 ${pathname === "/shop" ? "text-[#121e42] font-bold" : "hover:text-[#121e42]"}`}>
+              <Link href="/shop" className={`flex items-center gap-1 ${pathname === "/shop" ? "text-[#121e42] font-medium" : "hover:text-[#3452ef]"}`}>
                 <span>Refurbished Products</span>
                 <ChevronDown size={14} className="transition-transform duration-200 group-hover:rotate-180" />
               </Link>
 
               {/* Mega Menu Dropdown */}
-              <div className={`absolute top-full left-0 right-0 w-full mega-menu-dropdown ${isLowEnd ? "mega-menu-low-end low-end-device" : "mega-menu-glass"} py-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible z-50 text-gray-800 font-normal rounded-b-[30px] ${isLowEnd ? "" : "transform translate-y-3 scale-[0.99]"}`}>
+              <div className={`absolute top-full left-0 right-0 w-full mega-menu-dropdown bg-white border-t border-gray-100 py-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible z-50 text-gray-800 font-normal shadow-xl`}>
                 <div className="max-w-[1600px] mx-auto px-8 lg:px-16">
                   {/* 4 Column Category Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6 pb-6">
@@ -628,7 +618,7 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-blue-50 text-[#374bf9]">
                           <Laptop size={16} />
                         </div>
-                        <Link href="/categories/buy-refurbished-laptops-online-in-india" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/categories/buy-refurbished-laptops-online-in-india" prefetch={false} className="text-gray-900 font-medium text-[15px] hover:text-[#374bf9] transition-colors">
                           Refurbished Laptops
                         </Link>
                       </div>
@@ -666,7 +656,7 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-600">
                           <Monitor size={16} />
                         </div>
-                        <Link href="/categories/buy-high-quality-refurbished-desktops" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/categories/buy-high-quality-refurbished-desktops" prefetch={false} className="text-gray-900 font-medium text-[15px] hover:text-[#374bf9] transition-colors">
                           Refurbished Desktops
                         </Link>
                       </div>
@@ -698,7 +688,7 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-indigo-50 text-[#374bf9]">
                           <Layers size={16} />
                         </div>
-                        <Link href="/categories/buy-refurbished-workstations-online-in-india" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/categories/buy-refurbished-workstations-online-in-india" prefetch={false} className="text-gray-900 font-medium text-[15px] hover:text-[#374bf9] transition-colors">
                           Refurbished Workstations
                         </Link>
                       </div>
@@ -730,7 +720,7 @@ export default function Header() {
                         <div className="p-1.5 rounded-lg bg-amber-50 text-[#fca61f]">
                           <Cpu size={16} />
                         </div>
-                        <Link href="/categories/buy-refurbished-mini-pcs-online-in-india" prefetch={false} className="text-gray-900 font-bold text-[15px] hover:text-[#374bf9] transition-colors">
+                        <Link href="/categories/buy-refurbished-mini-pcs-online-in-india" prefetch={false} className="text-gray-900 font-medium text-[15px] hover:text-[#374bf9] transition-colors">
                           Refurbished Mini PCs
                         </Link>
                       </div>
@@ -836,17 +826,17 @@ export default function Header() {
               </div>
             </li>
             <li>
-              <Link href="/bulk-orders" className={`transition ${pathname === "/bulk-orders" ? "text-[#121e42] font-bold" : "hover:text-[#121e42]"}`}>
+              <Link href="/bulk-orders" className={`transition ${pathname === "/bulk-orders" ? "text-[#121e42] font-medium" : "hover:text-[#3452ef]"}`}>
                 Bulk Orders
               </Link>
             </li>
             <li>
-              <Link href="/blog" className={`transition ${pathname === "/blog" ? "text-[#121e42] font-bold" : "hover:text-[#121e42]"}`}>
+              <Link href="/blog" className={`transition ${pathname === "/blog" ? "text-[#121e42] font-medium" : "hover:text-[#3452ef]"}`}>
                 Blog
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-[#121e42] transition">
+              <Link href="/contact" className="hover:text-[#3452ef] transition">
                 Contact Us
               </Link>
             </li>
@@ -855,47 +845,47 @@ export default function Header() {
           {/* Right navigation links and utility icons */}
           <div className="flex items-center gap-x-6 shrink-0">
             <ul className="flex items-center gap-x-6">
-              <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#121e42] transition-all py-2">
+              <li className="relative group flex items-center gap-1 cursor-pointer hover:text-[#3452ef] transition-all py-2">
                 <span>Policies</span>
                 <ChevronDown size={14} className="transition-transform duration-200 group-hover:rotate-180" />
 
                 {/* Elegant Dropdown aligned to the right edge */}
                 <div className="absolute top-[85%] right-0 mt-2 w-64 bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-gray-100 py-3 hidden group-hover:flex flex-col text-sm text-gray-800 z-50 font-normal">
-                  <Link href="/terms-conditions?tab=terms" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
+                  <Link href="/terms-conditions?tab=terms" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium transition-colors flex items-center justify-between">
                     <span>Terms & Conditions</span>
-                    <span className="text-[10px] bg-indigo-50 text-indigo-700 font-extrabold px-2 py-0.5 rounded-full">v3.5</span>
+                    <span className="text-[10px] bg-indigo-50 text-indigo-700 font-medium px-2 py-0.5 rounded-full">v3.5</span>
                   </Link>
-                  <Link href="/privacy-policy?tab=privacy" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
+                  <Link href="/privacy-policy?tab=privacy" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium transition-colors flex items-center justify-between">
                     <span>Privacy Policy</span>
-                    <span className="text-[10px] bg-emerald-50 text-emerald-700 font-extrabold px-2 py-0.5 rounded-full">Secure</span>
+                    <span className="text-[10px] bg-emerald-50 text-emerald-700 font-medium px-2 py-0.5 rounded-full">Secure</span>
                   </Link>
-                  <Link href="/return-refund?tab=refund" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
+                  <Link href="/return-refund?tab=refund" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium transition-colors flex items-center justify-between">
                     <span>Return & Refund Policy</span>
-                    <span className="text-[10px] bg-rose-50 text-rose-700 font-extrabold px-2 py-0.5 rounded-full">100%</span>
+                    <span className="text-[10px] bg-rose-50 text-rose-700 font-medium px-2 py-0.5 rounded-full">100%</span>
                   </Link>
-                  <Link href="/privacy-policy?tab=warranty" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
+                  <Link href="/privacy-policy?tab=warranty" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium transition-colors flex items-center justify-between">
                     <span>Warranty Policy</span>
-                    <span className="text-[10px] bg-amber-50 text-amber-700 font-extrabold px-2 py-0.5 rounded-full">1 Year</span>
+                    <span className="text-[10px] bg-amber-50 text-amber-700 font-medium px-2 py-0.5 rounded-full">1 Year</span>
                   </Link>
-                  <Link href="/privacy-policy?tab=shipping" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-bold transition-colors flex items-center justify-between">
+                  <Link href="/privacy-policy?tab=shipping" className="px-5 py-2.5 hover:bg-slate-50 hover:text-[#374bf9] font-medium transition-colors flex items-center justify-between">
                     <span>Shipping Policy</span>
-                    <span className="text-[10px] bg-cyan-50 text-cyan-700 font-extrabold px-2 py-0.5 rounded-full">Insured</span>
+                    <span className="text-[10px] bg-cyan-50 text-cyan-700 font-medium px-2 py-0.5 rounded-full">Insured</span>
                   </Link>
                 </div>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-[#121e42] transition">
+                <Link href="/faq" className="hover:text-[#3452ef] transition">
                   FAQs
                 </Link>
               </li>
             </ul>
 
             <div className="flex items-center gap-x-5 pl-5 border-l border-black/10">
-              <button className="flex items-center gap-1.5 hover:text-[#121e42] transition">
+              <button className="flex items-center gap-1.5 hover:text-[#3452ef] transition">
                 <Shuffle size={18} />
                 <span className="font-semibold">0</span>
               </button>
-              <button className="flex items-center gap-1.5 hover:text-[#121e42] transition">
+              <button className="flex items-center gap-1.5 hover:text-[#3452ef] transition">
                 <Heart size={18} />
                 <span className="font-semibold">0</span>
               </button>

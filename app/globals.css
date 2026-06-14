@@ -234,6 +234,7 @@ h6 {
     opacity: 0;
     transform: translateY(12px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -245,6 +246,7 @@ h6 {
     opacity: 0;
     transform: translateY(12px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -256,49 +258,68 @@ h6 {
 }
 
 @keyframes float1 {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
+
   50% {
     transform: translate3d(0, -12px, 0) rotate(8deg);
   }
 }
+
 @keyframes float2 {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate3d(0, 0, 0) rotate(20deg);
   }
+
   50% {
     transform: translate3d(0, 8px, 0) rotate(45deg);
   }
 }
+
 @keyframes float3 {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
   }
+
   50% {
     transform: translate3d(0, -10px, 0) rotate(180deg) scale(1.06);
   }
 }
+
 @keyframes float4 {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate3d(0, 0, 0) rotate(-15deg);
   }
+
   50% {
     transform: translate3d(0, 10px, 0) rotate(10deg);
   }
 }
+
 .animate-float-1 {
   animation: float1 4.5s ease-in-out infinite;
   will-change: transform;
 }
+
 .animate-float-2 {
   animation: float2 5.5s ease-in-out infinite;
   will-change: transform;
 }
+
 .animate-float-3 {
   animation: float3 7s ease-in-out infinite;
   will-change: transform;
 }
+
 .animate-float-4 {
   animation: float4 5s ease-in-out infinite;
   will-change: transform;
@@ -308,10 +329,12 @@ h6 {
   0% {
     left: -100%;
   }
+
   100% {
     left: 100%;
   }
 }
+
 .animate-scan {
   animation: scan 1.2s linear infinite;
 }
@@ -326,17 +349,15 @@ h6 {
 /* Mega Menu Premium UI Classes & Optimization */
 .mega-menu-dropdown {
   will-change: opacity, transform;
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mega-menu-glass {
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 
-    0 10px 40px -10px rgba(0, 0, 0, 0.08), 
+  background: #ffffff;
+  box-shadow:
+    0 10px 40px -10px rgba(0, 0, 0, 0.08),
     0 30px 80px -15px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(240, 242, 245, 0.9);
@@ -388,7 +409,7 @@ h6 {
   border-style: solid;
   border-color: rgba(55, 75, 249, 0.3);
   background: linear-gradient(135deg, rgba(55, 75, 249, 0.07) 0%, rgba(250, 186, 90, 0.09) 100%);
-  box-shadow: 
+  box-shadow:
     0 20px 40px -15px rgba(55, 75, 249, 0.12),
     0 0 20px 0 rgba(250, 186, 90, 0.05);
 }
@@ -406,7 +427,8 @@ h6 {
 }
 
 .low-end-device .mega-menu-link-hover::before {
-  display: none !important; /* Remove moving arrow entirely on low-end */
+  display: none !important;
+  /* Remove moving arrow entirely on low-end */
 }
 
 .low-end-device .mega-menu-gradient-card {
@@ -462,6 +484,7 @@ h6 {
   transform: none !important;
   transition: none !important;
 }
+
 .low-end-device .blog-card:hover {
   transform: none !important;
 }
@@ -488,20 +511,30 @@ h6 {
   opacity: 1;
 }
 
-.low-end-device .product-card {
+.low-end-device .product-card-container {
   transform: none !important;
   transition: none !important;
 }
-.low-end-device .product-card:hover {
+
+.low-end-device .product-card-container:hover {
   transform: none !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important;
+  border-color: #f1f5f9 !important;
 }
-.low-end-device .product-card::after {
+
+.low-end-device .product-card-container .product-card-image-wrapper {
+  transform: none !important;
+  transition: none !important;
+}
+
+.low-end-device .product-card-container::after {
   display: none !important;
 }
 
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -521,9 +554,11 @@ h6 {
 .low-end-device .razorpay-glow {
   animation: none !important;
 }
+
 .low-end-device .shimmer-btn:hover::after {
   animation: none !important;
 }
+
 .low-end-device .animate-scan {
   animation: none !important;
 }
@@ -577,6 +612,7 @@ h6 {
    hardware class.
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -663,7 +699,7 @@ h6 {
   font-weight: 450;
 }
 
-.blog-content > *:first-child {
+.blog-content>*:first-child {
   margin-top: 0;
 }
 
@@ -822,10 +858,35 @@ h6 {
   margin: 2.5rem 0;
 }
 
-/* Bypass low-end device transition overrides specifically for product cards to keep hover animations smooth */
-.low-end-device .product-card-container,
+/* Bypass low-end device transition overrides specifically for product cards to keep hover animations smooth on standard devices */
 .product-card-container {
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  transform: translateY(0) scale(1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
+.product-card-container:hover {
+  transform: translateY(-8px) scale(1.04) !important;
+}
 
+/* Premium Zoom-In Entrance Animation */
+@keyframes zoomInEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-zoom-in-entrance {
+  animation: zoomInEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Smooth zoom-in transition for the product image on card hover */
+.product-card-container .product-card-image-wrapper {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}

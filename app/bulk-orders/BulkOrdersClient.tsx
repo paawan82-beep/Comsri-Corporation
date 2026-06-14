@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Apple, Play, Facebook, Instagram, Youtube, MessageCircle, RefreshCw, Target, Briefcase, Clock, HeartPulse, IndianRupee, ClipboardCheck, Rocket, Shield, ChartColumn, Leaf, Phone, MapPin, Mail, Send, ChevronDown, ArrowRight, Trash2 } from "lucide-react";
 import Header from "../Header";
+import Footer from "../Footer";
 
 const faqs = [
   { q: "Where can I buy bulk laptops in India for my business?", a: "Comsri helps businesses buy bulk laptops in India with competitive pricing, enterprise support, and nationwide delivery. We supply quality-tested refurbished laptops, desktops, and mini PCs for startups, SMEs, educational institutions, and large enterprises." },
@@ -17,6 +18,79 @@ const faqs = [
 
 export default function BulkOrdersClient() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  const [form, setForm] = useState({
+    name: "",
+    organizationName: "",
+    email: "",
+    phone: "",
+    category: "",
+    quantity: "",
+    message: ""
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const validate = () => {
+    const e: Record<string, string> = {};
+    if (!form.name.trim()) e.name = "Full name is required";
+    if (!form.email.trim()) e.email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Enter a valid email address";
+    if (!form.phone.trim()) e.phone = "Phone number is required";
+    else if (!/^[+]?[\d\s\-()]{7,15}$/.test(form.phone)) e.phone = "Enter a valid phone number";
+    if (!form.category) e.category = "Please select a device category";
+    if (!form.quantity) e.quantity = "Quantity is required";
+    else if (parseInt(form.quantity, 10) <= 0) e.quantity = "Quantity must be greater than 0";
+    return e;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) { setErrors(validationErrors); return; }
+    setErrors({});
+    setSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          formType: "bulk",
+          name: form.name,
+          organizationName: form.organizationName,
+          email: form.email,
+          phone: form.phone,
+          category: form.category,
+          quantity: form.quantity,
+          message: form.message,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to submit request.");
+      }
+
+      setSubmitted(true);
+      setForm({
+        name: "",
+        organizationName: "",
+        email: "",
+        phone: "",
+        category: "",
+        quantity: "",
+        message: ""
+      });
+    } catch (err: any) {
+      setErrors({ submit: err.message || "An unexpected error occurred. Please try again." });
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -498,86 +572,142 @@ export default function BulkOrdersClient() {
             {/* Right Column */}
             <div className="w-full lg:w-[45%] py-8 lg:py-12 flex items-stretch">
               <div className="w-full h-full bg-[#ffc300] rounded-[24px] lg:rounded-[32px] p-8 lg:p-12 shadow-[0_20px_50px_rgba(255,195,0,0.15)] flex flex-col justify-center">
-                <div className="space-y-6 w-full">
-                  <div className="flex flex-col md:flex-row gap-6 w-full">
-                    <div className="w-full md:w-1/2">
-                      <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Your Name</label>
-                      <input
-                        type="text"
-                        placeholder="Full Name"
-                        className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium"
-                      />
+                {submitted ? (
+                  <div className="text-center py-8 flex flex-col items-center justify-center gap-5 text-[#131212]">
+                    <div className="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center text-emerald-800 animate-bounce">
+                      <ClipboardCheck size={36} />
                     </div>
-                    <div className="w-full md:w-1/2">
-                      <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Organization Name</label>
-                      <input
-                        type="text"
-                        placeholder="Organization"
-                        className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col md:flex-row gap-6 w-full">
-                    <div className="w-full md:w-1/2">
-                      <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Organization Mail</label>
-                      <input
-                        type="email"
-                        placeholder="Email Address"
-                        className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium"
-                      />
-                    </div>
-                    <div className="w-full md:w-1/2">
-                      <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Phone Number</label>
-                      <input
-                        type="tel"
-                        placeholder="Phone Number"
-                        className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col md:flex-row gap-6 w-full">
-                    <div className="w-full md:w-1/2">
-                      <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Device Category</label>
-                      <div className="relative w-full">
-                        <select defaultValue="" className="w-full bg-white/30 border-none rounded-[16px] py-4 pl-6 pr-12 text-[#131212] text-[16px] outline-none focus:bg-white/50 transition-all font-medium appearance-none cursor-pointer">
-                          <option value="" disabled className="text-[#131212]/50 bg-white">Select Category</option>
-                          <option value="desktop" className="text-[#131212] bg-white">Laptops & Desktops</option>
-                          <option value="workstation" className="text-[#131212] bg-white">Workstations</option>
-                          <option value="other" className="text-[#131212] bg-white">Other Devices</option>
-                        </select>
-                        <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-[#131212]/60">
-                          <ChevronDown size={18} />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-full md:w-1/2">
-                      <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Quantity</label>
-                      <input
-                        type="number"
-                        placeholder="Quantity"
-                        min="1"
-                        className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Additional Information</label>
-                    <textarea
-                      placeholder="Write your message or requirements here..."
-                      rows={4}
-                      className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium resize-none"
-                    ></textarea>
-                  </div>
-
-                  <div className="pt-4">
-                    <button className="bg-[#0B1120] hover:bg-[#1e293b] text-white rounded-full py-4 px-8 inline-flex items-center gap-3 transition-colors group shadow-lg hover:shadow-xl">
-                      <span className="font-bold text-[16px] pr-2">Submit Request</span>
+                    <h3 className="text-2xl font-bold">Request Submitted!</h3>
+                    <p className="text-[15px] text-[#131212]/80 leading-relaxed font-semibold">
+                      Thank you for requesting a custom bulk IT quote. Our team will verify your requirements and contact you within 24 business hours.
+                    </p>
+                    <button
+                      onClick={() => setSubmitted(false)}
+                      className="mt-4 bg-[#0B1120] hover:bg-[#1e293b] text-white font-bold py-3 px-8 rounded-full transition-all text-sm shadow-md"
+                    >
+                      Submit Another Request
                     </button>
                   </div>
-                </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6 w-full">
+                    <div className="flex flex-col md:flex-row gap-6 w-full">
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Your Name</label>
+                        <input
+                          type="text"
+                          placeholder="Full Name"
+                          value={form.name}
+                          onChange={(e) => setForm({ ...form, name: e.target.value })}
+                          className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium"
+                        />
+                        {errors.name && <p className="text-[12px] font-bold text-red-700 mt-1">{errors.name}</p>}
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Organization Name</label>
+                        <input
+                          type="text"
+                          placeholder="Organization"
+                          value={form.organizationName}
+                          onChange={(e) => setForm({ ...form, organizationName: e.target.value })}
+                          className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium"
+                        />
+                        {errors.organizationName && <p className="text-[12px] font-bold text-red-700 mt-1">{errors.organizationName}</p>}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-6 w-full">
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Organization Mail</label>
+                        <input
+                          type="email"
+                          placeholder="Email Address"
+                          value={form.email}
+                          onChange={(e) => setForm({ ...form, email: e.target.value })}
+                          className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium"
+                        />
+                        {errors.email && <p className="text-[12px] font-bold text-red-700 mt-1">{errors.email}</p>}
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Phone Number</label>
+                        <input
+                          type="tel"
+                          placeholder="Phone Number"
+                          value={form.phone}
+                          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                          className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium"
+                        />
+                        {errors.phone && <p className="text-[12px] font-bold text-red-700 mt-1">{errors.phone}</p>}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-6 w-full">
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Device Category</label>
+                        <div className="relative w-full">
+                          <select
+                            value={form.category}
+                            onChange={(e) => setForm({ ...form, category: e.target.value })}
+                            className="w-full bg-white/30 border-none rounded-[16px] py-4 pl-6 pr-12 text-[#131212] text-[16px] outline-none focus:bg-white/50 transition-all font-medium appearance-none cursor-pointer"
+                          >
+                            <option value="" disabled className="text-[#131212]/50 bg-white">Select Category</option>
+                            <option value="desktop" className="text-[#131212] bg-white">Laptops & Desktops</option>
+                            <option value="workstation" className="text-[#131212] bg-white">Workstations</option>
+                            <option value="other" className="text-[#131212] bg-white">Other Devices</option>
+                          </select>
+                          <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-[#131212]/60">
+                            <ChevronDown size={18} />
+                          </div>
+                        </div>
+                        {errors.category && <p className="text-[12px] font-bold text-red-700 mt-1">{errors.category}</p>}
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Quantity</label>
+                        <input
+                          type="number"
+                          placeholder="Quantity"
+                          min="1"
+                          value={form.quantity}
+                          onChange={(e) => setForm({ ...form, quantity: e.target.value })}
+                          className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium"
+                        />
+                        {errors.quantity && <p className="text-[12px] font-bold text-red-700 mt-1">{errors.quantity}</p>}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[13px] font-bold text-[#b38800] mb-2 uppercase tracking-wide">Additional Information</label>
+                      <textarea
+                        placeholder="Write your message or requirements here..."
+                        rows={4}
+                        value={form.message}
+                        onChange={(e) => setForm({ ...form, message: e.target.value })}
+                        className="w-full bg-white/30 border-none rounded-[16px] py-4 px-6 text-[#131212] placeholder-[#131212]/40 text-[16px] outline-none focus:bg-white/50 transition-all font-medium resize-none"
+                      ></textarea>
+                      {errors.message && <p className="text-[12px] font-bold text-red-700 mt-1">{errors.message}</p>}
+                    </div>
+
+                    {errors.submit && (
+                      <p className="text-red-700 text-[14px] font-bold mt-1">{errors.submit}</p>
+                    )}
+
+                    <div className="pt-4">
+                      <button
+                        type="submit"
+                        disabled={submitting}
+                        className="bg-[#0B1120] hover:bg-[#1e293b] text-white rounded-full py-4 px-8 inline-flex items-center gap-3 transition-colors group shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed"
+                      >
+                        {submitting ? (
+                          <>
+                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <span className="font-bold text-[16px]">Submitting...</span>
+                          </>
+                        ) : (
+                          <span className="font-bold text-[16px] pr-2">Submit Request</span>
+                        )}
+                      </button>
+                    </div>
+                  </form>
+                )}
               </div>
             </div>
           </div>
@@ -649,159 +779,7 @@ export default function BulkOrdersClient() {
       </main>
 
       {/* Footer Section */}
-      <footer className="bg-[#fcb643] pt-16 pb-12 w-full relative">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 flex flex-col gap-12">
-          {/* Top Columns */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 justify-between">
-            {/* Address */}
-            <div className="flex flex-col pr-4">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Address</h3>
-              <p className="text-[14px] font-semibold text-[#2d2d2d] leading-relaxed mb-6">
-                Office No.-T-15 Pinnacle Business Park MC Rd Shanti Nagar Andheri East Mumbai Maharastra – 400093
-              </p>
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Contact Us</h3>
-              <p className="text-[14px] font-semibold text-[#2d2d2d] mb-1.5">+91 8601-899-899</p>
-              <p className="text-[14px] font-semibold text-[#2d2d2d]">Email: info@comsri.com</p>
-            </div>
-
-            {/* Refurbished Products */}
-            <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Refurbished Products</h3>
-              <div className="flex flex-col gap-3">
-                {[
-                  { label: "Refurbished Desktops", path: "/shop?category=129" },
-                  { label: "Refurbished Laptops", path: "/shop?category=112" },
-                  { label: "Refurbished Workstations", path: "/shop?category=139" },
-                  { label: "Refurbished Macbooks", path: "/shop?category=112&search=Apple" },
-                  { label: "Refurbished Mini PCs", path: "/shop?category=137" }
-                ].map((item, i) => (
-                  <Link key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item.label}</Link>
-                ))}
-              </div>
-            </div>
-
-            {/* New Products */}
-            <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">New Products</h3>
-              <div className="flex flex-col gap-3">
-                {[
-                  { label: "New Laptops", path: "/shop?category=112&search=New" },
-                  { label: "New Desktops", path: "/shop?category=129&search=New" },
-                  { label: "New Macbooks", path: "/shop?category=112&search=Apple" },
-                  { label: "New All in One", path: "/shop?category=129&search=All%20in%20One" },
-                  { label: "New Mini PCs", path: "/shop?category=137&search=New" }
-                ].map((item, i) => (
-                  <Link key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item.label}</Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Useful Links */}
-            <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Useful Links</h3>
-              <div className="flex flex-col gap-3">
-                {[
-                  { label: "Contact Us", path: "/contact" },
-                  { label: "Terms & Conditions", path: "/terms-conditions?tab=terms" },
-                  { label: "Privacy Policy", path: "/privacy-policy?tab=privacy" },
-                  { label: "Return & Refund Policy", path: "/return-refund?tab=refund" },
-                  { label: "Warranty Policy", path: "/privacy-policy?tab=warranty" },
-                  { label: "Shipping Policy", path: "/privacy-policy?tab=shipping" }
-                ].map((item, i) => (
-                  <Link key={i} href={item.path} className="text-[14px] font-semibold text-[#2d2d2d] hover:text-[#3452ef] transition-colors">{item.label}</Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Available On & Social Links */}
-            <div className="flex flex-col">
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Avalible On:</h3>
-              <div className="flex flex-wrap xl:flex-nowrap gap-3 mb-8">
-                <a href="#" className="bg-black text-white px-3 py-1.5 rounded-[6px] flex items-center gap-2 hover:bg-gray-800 transition-colors border border-black min-w-[130px] justify-center">
-                  <Play size={18} className="fill-white" />
-                  <div className="flex flex-col items-start justify-center">
-                    <span className="text-[8px] font-medium leading-none mb-0.5">GET IT ON</span>
-                    <span className="text-[13px] font-semibold leading-none tracking-tight">Google Play</span>
-                  </div>
-                </a>
-                <a href="#" className="bg-white text-black px-3 py-1.5 rounded-[6px] flex items-center gap-2 border border-black hover:bg-gray-50 transition-colors min-w-[130px] justify-center">
-                  <Apple size={20} className="fill-black" />
-                  <div className="flex flex-col items-start justify-center">
-                    <span className="text-[8px] font-medium leading-none mb-0.5 mt-0.5">Download on the</span>
-                    <span className="text-[13px] font-semibold leading-none tracking-tight">App Store</span>
-                  </div>
-                </a>
-              </div>
-
-              <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Social links:</h3>
-              <div className="flex gap-2">
-                <a href="#" className="w-[32px] h-[32px] rounded-full bg-[#3b5998] text-white flex items-center justify-center hover:bg-[#2b4170] transition-colors shadow-sm">
-                  <Facebook size={16} className="fill-white" strokeWidth={0} />
-                </a>
-                <a href="#" className="w-[32px] h-[32px] rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-colors shadow-sm">
-                  <span className="text-white font-bold text-[14px] italic pr-0.5 leading-none mt-0.5">X</span>
-                </a>
-                <a href="#" className="w-[32px] h-[32px] rounded-full bg-[#833ab4] text-[#833ab4] flex items-center justify-center hover:opacity-90 transition-opacity shadow-sm relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] rounded-full"></div>
-                  <Instagram size={16} className="text-white relative z-10" />
-                </a>
-                <a href="#" className="w-[32px] h-[32px] rounded-full bg-[#ff0000] text-white flex items-center justify-center hover:bg-[#cc0000] transition-colors shadow-sm">
-                  <Youtube size={14} className="fill-white" strokeWidth={0} />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Newsletter Banner */}
-          <div className="bg-[#3452ef] rounded-[24px] px-8 md:px-12 py-10 flex flex-col lg:flex-row items-center justify-between gap-8 mt-2 w-full">
-            <div className="flex flex-col text-white flex-1 text-center lg:text-left">
-              <h2 className="text-[28px] md:text-[32px] font-bold mb-1.5 tracking-tight">Sign Up to us Newsletter</h2>
-              <p className="text-[14px] text-white/90 font-medium">Be the First to Know. Sign up to newsletter today</p>
-            </div>
-            <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-4 items-center">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="px-6 py-3.5 rounded-full text-[14px] focus:outline-none font-medium h-[48px] text-black w-full min-w-[280px] md:w-[340px]"
-              />
-              <button className="bg-[#fcb643] hover:bg-[#fca61f] text-[#111] px-8 h-[48px] rounded-full font-bold text-[15px] transition-colors whitespace-nowrap shadow-sm">
-                Sign Up
-              </button>
-            </div>
-          </div>
-
-          {/* Copyright & Payments */}
-          <div className="flex flex-col md:flex-row items-center justify-between mt-1 gap-4 w-full">
-            <p className="text-[14px] font-bold text-[#111]">Copyright 2026 by Comsri Corporation All Right Reserved.</p>
-                        <div className="flex gap-1.5">
-              <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@latest/dist/mastercard.svg" className="h-full object-contain" alt="Mastercard" />
-              </div>
-              <div className="bg-[#1a1f71] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@latest/dist/visa.svg" className="h-[70%] object-contain mt-[0.5px]" alt="Visa" />
-              </div>
-              <div className="bg-[#003087] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@latest/dist/paypal.svg" className="h-[55%] object-contain" alt="PayPal" />
-              </div>
-              <div className="bg-[#2d9cdb] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@latest/dist/amex.svg" className="h-[75%] object-contain" alt="Amex" />
-              </div>
-              <div className="bg-[#6772e5] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@latest/dist/stripe.svg" className="h-[50%] object-contain" alt="Stripe" />
-              </div>
-              <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@latest/dist/google-pay.svg" className="h-[55%] object-contain" alt="Google Pay" />
-              </div>
-              <div className="bg-black w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1 border border-gray-700">
-                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@latest/dist/apple-pay.svg" className="h-[60%] object-contain" alt="Apple Pay" />
-              </div>
-              <div className="bg-[#004b87] w-[42px] h-[28px] rounded-[4px] flex items-center justify-center p-1">
-                <img loading="lazy" src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@latest/dist/unionpay.svg" className="h-[70%] object-contain" alt="UnionPay" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
