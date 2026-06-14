@@ -153,7 +153,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     {
       q: `What is the warranty coverage for the refurbished ${product.name}?`,
       a: "This model comes with a standard 1-year comprehensive hardware warranty.",
-      expanded: "This covers internal hardware faults including the motherboard, RAM modules, processor defects, and SSD read/write stability. Physical breakages and water damage are excluded."
+      expanded: "This covers internal hardware faults including the RAM modules, SSD read/write stability. Physical breakages and water damage are excluded."
     },
     {
       q: `Is the battery capacity verified on the ${product.name}?`,

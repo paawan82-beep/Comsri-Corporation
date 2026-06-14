@@ -592,7 +592,7 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <Link href="/about" className={`transition ${pathname === "/about" ? "text-[#121e42] font-medium" : "hover:text-[#3452ef]"}`}>
+              <Link href="/about-us" className={`transition ${pathname === "/about-us" ? "text-[#121e42] font-medium" : "hover:text-[#3452ef]"}`}>
                 About Us
               </Link>
             </li>
@@ -953,7 +953,7 @@ export default function Header() {
           <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-3.5 text-[15px] font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-50 transition-colors">
             Home
           </Link>
-          <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-3.5 text-[15px] font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-50 transition-colors">
+          <Link href="/about-us" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-3.5 text-[15px] font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-50 transition-colors">
             About Us
           </Link>
 
@@ -1094,15 +1094,15 @@ export default function Header() {
 
           {/* About Us Tab */}
           <Link
-            href="/about"
+            href="/about-us"
             aria-label="About Us"
-            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/about"
+            className={`flex items-center gap-2 rounded-full transition-all duration-300 ${pathname === "/about-us"
               ? "bg-[#faba5b] text-black px-4 py-2"
               : "text-white/80 hover:text-white p-2"
               }`}
           >
             <Info size={20} className="stroke-[2.5]" />
-            {pathname === "/about" && (
+            {pathname === "/about-us" && (
               <span className="text-[13px] font-bold tracking-wide">About</span>
             )}
           </Link>

@@ -7,7 +7,7 @@ export async function GET() {
   const urls = [
     // Static Pages
     "",
-    "/about",
+    "/about-us",
     "/terms-conditions",
     "/privacy-policy",
     "/return-refund",

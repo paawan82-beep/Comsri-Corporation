@@ -564,7 +564,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
               <Link href="/shop" className="bg-[#ffb03a] hover:bg-[#faa129] text-gray-900 font-bold px-8 py-3 rounded-full transition-colors shadow-sm focus:outline-none text-center">
                 Shop Now!
               </Link>
-              <Link href="/about" aria-label="Learn more about Comsri Corporation" className="bg-transparent border-2 border-white/60 hover:border-white hover:bg-white/10 text-white font-bold px-8 py-3 rounded-full transition-all focus:outline-none text-center">
+              <Link href="/about-us" aria-label="Learn more about Comsri Corporation" className="bg-transparent border-2 border-white/60 hover:border-white hover:bg-white/10 text-white font-bold px-8 py-3 rounded-full transition-all focus:outline-none text-center">
                 About Comsri Corporation
               </Link>
             </div>

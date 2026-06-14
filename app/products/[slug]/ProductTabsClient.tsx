@@ -158,7 +158,7 @@ export default function ProductTabsClient({ product }: ProductTabsClientProps) {
                   {[
                     { label: "Grade-A Quality Assurance", desc: "Practically scratchless exterior, certified clean keyboard, tested components." },
                     { label: "40+ Point Diagnostic Test", desc: "Rigorous quality check on CPU, RAM, battery health, screens, storage stability." },
-                    { label: "1-Year Direct Warranty", desc: "Hassle-free replacement warranty covered directly by Comsri Corporation." },
+                    { label: "1-Year Direct Warranty", desc: "Hassle-free warranty covered directly by Comsri Corporation." },
                     { label: "Eco-Friendly Footprint", desc: "By opting for refurbished hardware, you save an estimated 180kg of carbon emissions." }
                   ].map((item, idx) => (
                     <div key={idx} className="flex flex-col gap-1 border-t border-slate-800/80 pt-3 first:border-none sm:[&:nth-child(2)]:border-none first:pt-0 sm:[&:nth-child(2)]:pt-0">
@@ -168,7 +168,7 @@ export default function ProductTabsClient({ product }: ProductTabsClientProps) {
                   ))}
                 </div>
               </div>
-              
+
               {/* Fast Facts Card */}
               <div className="bg-[#3452ef]/5 rounded-[24px] p-6 border border-[#3452ef]/10 flex flex-col justify-between">
                 <div>
@@ -187,11 +187,11 @@ export default function ProductTabsClient({ product }: ProductTabsClientProps) {
                   </div>
                   <div>
                     <span className="text-[10px] text-gray-400 font-bold uppercase block">Delivery Time</span>
-                    <span className="text-[13px] font-bold text-gray-850 block mt-0.5">3-5 Business Days</span>
+                    <span className="text-[13px] font-bold text-gray-850 block mt-0.5">6-7 Business Days</span>
                   </div>
                   <div>
                     <span className="text-[10px] text-gray-400 font-bold uppercase block">Payment Options</span>
-                    <span className="text-[13px] font-bold text-gray-850 block mt-0.5">UPI / Cards / COD</span>
+                    <span className="text-[13px] font-bold text-gray-850 block mt-0.5">UPI / Cards</span>
                   </div>
                   <div>
                     <span className="text-[10px] text-gray-400 font-bold uppercase block">Support Policy</span>
@@ -206,8 +206,8 @@ export default function ProductTabsClient({ product }: ProductTabsClientProps) {
 
             {/* WooCommerce Big Description full width wrapper */}
             <div className="w-full text-gray-700 text-[14px] leading-relaxed prose prose-slate max-w-none">
-              <div 
-                id="product-detailed-content" 
+              <div
+                id="product-detailed-content"
                 className="description-content"
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml(cleanDescription) }}
               />

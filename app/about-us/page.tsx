@@ -5,7 +5,7 @@ import { constructMetadata } from "../seo/metadata";
 export const metadata: Metadata = constructMetadata({
   title: "About Us — India's Trusted Refurbished Computer Store",
   description: "Learn about Comsri Corporation, a leading online store of refurbished laptops, desktops, workstations, and mini PCs in India. Quality-tested devices, bulk orders, and reliable IT hardware solutions.",
-  path: "/about",
+  path: "/about-us",
   keywords: [
     "About Comsri Corporation",
     "Comsri Corporation",

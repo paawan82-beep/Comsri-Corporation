@@ -52,7 +52,7 @@ export default function Footer() {
             <h3 className="text-[18px] font-semibold text-[#3452ef] mb-3">Get to Know Us</h3>
             <div className="flex flex-col gap-3">
               {[
-                { label: "About Us", path: "/about" },
+                { label: "About Us", path: "/about-us" },
                 { label: "FAQS", path: "/faq" },
                 { label: "Contact Us", path: "/contact" },
                 { label: "Blogs", path: "/blog" },
