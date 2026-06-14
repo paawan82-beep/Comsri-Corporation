@@ -69,6 +69,7 @@ const nextConfig: any = {
         { source: '/categories-sitemap.xml', destination: '/categories-sitemap' },
         { source: '/blog-sitemap.xml', destination: '/blog-sitemap' },
         { source: '/images-sitemap.xml', destination: '/images-sitemap' },
+        { source: '/merchant-feed.xml', destination: '/api/merchant-feed' },
       ],
     };
   },
