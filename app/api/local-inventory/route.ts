@@ -60,7 +60,7 @@ export async function GET() {
 
       itemEntries += `
     <item>
-      <g:id>${esc(id)}</g:id>
+      <g:item_id>${esc(id)}</g:item_id>
       <g:store_code>${esc(storeCode)}</g:store_code>
       <g:availability>${availability}</g:availability>${priceXml}
       <g:quantity>${esc(quantity)}</g:quantity>
