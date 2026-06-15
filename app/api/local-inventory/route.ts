@@ -6,7 +6,7 @@ import { woocommerce } from "../../../lib/services/woocommerce";
 
 export async function GET() {
   let itemEntries = "";
-  const storeCode = process.env.LOCAL_STORE_CODE || "Physical shop (India)";
+  const storeCode = process.env.LOCAL_STORE_CODE || "13865714257187921753";
   let products: any[] = [];
   let fetchedLive = false;
 
