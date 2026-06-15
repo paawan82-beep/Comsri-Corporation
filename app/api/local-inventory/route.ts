@@ -54,9 +54,19 @@ export async function GET() {
 
       // Only emit a price when we have a valid positive number; an empty
       // price is invalid and triggers "missing inventory data" in Merchant Center.
-      const rawPrice = prod.regular_price || prod.price;
-      const hasPrice = rawPrice !== "" && rawPrice !== null && rawPrice !== undefined && !isNaN(parseFloat(rawPrice)) && parseFloat(rawPrice) > 0;
-      const priceXml = hasPrice ? `\n      <g:price>${esc(rawPrice)} INR</g:price>` : "";
+      const activePrice = prod.price;
+      const regularPrice = prod.regular_price || prod.price;
+      const hasPrice = activePrice !== "" && activePrice !== null && activePrice !== undefined && !isNaN(parseFloat(activePrice)) && parseFloat(activePrice) > 0;
+
+      let priceXml = "";
+      if (hasPrice) {
+        const isOnSale = prod.on_sale || (prod.regular_price && parseFloat(prod.price) < parseFloat(prod.regular_price));
+        if (isOnSale) {
+          priceXml = `\n      <g:price>${esc(regularPrice)} INR</g:price>\n      <g:sale_price>${esc(activePrice)} INR</g:sale_price>`;
+        } else {
+          priceXml = `\n      <g:price>${esc(activePrice)} INR</g:price>`;
+        }
+      }
 
       itemEntries += `
     <item>

@@ -40,10 +40,9 @@ export async function GET() {
     products.forEach((prod) => {
       if (!prod.slug) return;
 
-      // A product with no valid price will be disapproved by Merchant Center,
-      // so skip it rather than emit an empty <g:price>.
-      const rawPrice = prod.regular_price || prod.price;
-      const hasPrice = rawPrice !== "" && rawPrice !== null && rawPrice !== undefined && !isNaN(parseFloat(rawPrice)) && parseFloat(rawPrice) > 0;
+      const activePrice = prod.price;
+      const regularPrice = prod.regular_price || prod.price;
+      const hasPrice = activePrice !== "" && activePrice !== null && activePrice !== undefined && !isNaN(parseFloat(activePrice)) && parseFloat(activePrice) > 0;
       if (!hasPrice) return;
 
       const id = prod.id || prod.slug;
@@ -52,11 +51,11 @@ export async function GET() {
       // Clean HTML description to plain text
       let cleanDescription = prod.short_description || prod.description || "Premium refurbished computer hardware from Comsri Corporation.";
       cleanDescription = cleanDescription
-        .replace(/<[^>]*>/g, "")
-        .replace(/&nbsp;/g, " ")
-        .replace(/&amp;/g, "&")
-        .replace(/&quot;/g, '"')
-        .trim();
+          .replace(/<[^>]*>/g, "")
+          .replace(/&nbsp;/g, " ")
+          .replace(/&amp;/g, "&")
+          .replace(/&quot;/g, '"')
+          .trim();
       cleanDescription = cleanDescription.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
       const link = getAbsoluteUrl(`/products/${prod.slug}`);
@@ -68,8 +67,19 @@ export async function GET() {
         imageLink = imageLink.replace("//comsri.com/wp-content/", "//cms.comsri.com/wp-content/");
       }
 
-      const price = `${rawPrice} INR`;
-      const salePriceXml = prod.on_sale && prod.sale_price ? `\n      <g:sale_price>${prod.sale_price} INR</g:sale_price>` : "";
+      // If the product is on sale and the active price is lower than the regular price
+      const isOnSale = prod.on_sale || (prod.regular_price && parseFloat(prod.price) < parseFloat(prod.regular_price));
+      
+      let price = "";
+      let salePriceXml = "";
+      
+      if (isOnSale) {
+        price = `${regularPrice} INR`;
+        salePriceXml = `\n      <g:sale_price>${activePrice} INR</g:sale_price>`;
+      } else {
+        price = `${activePrice} INR`;
+      }
+      
       const availability = prod.stock_status === "instock" ? "in_stock" : "out_of_stock";
 
       // Normalize categories (handles both WooCommerce object array and mock string array)
