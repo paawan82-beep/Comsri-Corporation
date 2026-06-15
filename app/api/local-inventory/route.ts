@@ -49,31 +49,40 @@ export async function GET() {
       if (!prod.slug) return;
 
       const id = prod.id || prod.slug;
-      const availability = prod.stock_status === "instock" ? "in_stock" : "out_of_stock";
-      const quantity = prod.stock_quantity !== null && prod.stock_quantity !== undefined ? prod.stock_quantity : 5; // Default fallback quantity to 5 if manage stock is off
 
-      // Only emit a price when we have a valid positive number; an empty
-      // price is invalid and triggers "missing inventory data" in Merchant Center.
-      const activePrice = prod.price;
-      const regularPrice = prod.regular_price || prod.price;
-      const hasPrice = activePrice !== "" && activePrice !== null && activePrice !== undefined && !isNaN(parseFloat(activePrice)) && parseFloat(activePrice) > 0;
-
-      let priceXml = "";
-      if (hasPrice) {
-        const isOnSale = prod.on_sale || (prod.regular_price && parseFloat(prod.price) < parseFloat(prod.regular_price));
-        if (isOnSale) {
-          priceXml = `\n      <g:price>${esc(regularPrice)} INR</g:price>\n      <g:sale_price>${esc(activePrice)} INR</g:sale_price>`;
-        } else {
-          priceXml = `\n      <g:price>${esc(activePrice)} INR</g:price>`;
+      // Determine quantity based on stock status and quantity fields
+      let quantity = 0;
+      if (prod.stock_status === "instock") {
+        quantity = prod.stock_quantity !== null && prod.stock_quantity !== undefined ? prod.stock_quantity : 5;
+        if (quantity <= 0) {
+          quantity = 5; // Fallback to 5 if instock but quantity is 0 or negative
         }
       }
 
+      // Enforce validation rules:
+      // If quantity = 0 -> availability = out_of_stock
+      // If quantity > 0 -> availability = in_stock
+      let availability = "out_of_stock";
+      if (quantity > 0) {
+        availability = "in_stock";
+      } else {
+        quantity = 0;
+        availability = "out_of_stock";
+      }
+
+      // Determine the actual active selling price shown to customers
+      const sellingPrice = prod.price;
+      const hasPrice = sellingPrice !== "" && sellingPrice !== null && sellingPrice !== undefined && !isNaN(parseFloat(sellingPrice)) && parseFloat(sellingPrice) > 0;
+      const priceXml = hasPrice ? `\n      <g:price>${esc(sellingPrice)} INR</g:price>` : "";
+
       itemEntries += `
     <item>
-      <g:item_id>${esc(id)}</g:item_id>
+      <g:id>${esc(id)}</g:id>
       <g:store_code>${esc(storeCode)}</g:store_code>
       <g:availability>${availability}</g:availability>${priceXml}
       <g:quantity>${esc(quantity)}</g:quantity>
+      <g:pickup_method>buy</g:pickup_method>
+      <g:pickup_sla>same_day</g:pickup_sla>
     </item>`;
     });
   } catch (error) {

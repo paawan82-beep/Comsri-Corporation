@@ -110,6 +110,8 @@ export async function GET() {
         googleProductCategory = "Electronics > Computers > Desktop Computers";
       }
 
+      const identifierExistsXml = isRefurbished ? "\n    <g:identifier_exists>no</g:identifier_exists>" : "";
+
       itemEntries += `
   <item>
     <g:id>${id}</g:id>
@@ -121,7 +123,7 @@ export async function GET() {
     <g:availability>${availability}</g:availability>
     <g:condition>${condition}</g:condition>
     <g:brand>${brand}</g:brand>
-    <g:google_product_category>${googleProductCategory}</g:google_product_category>
+    <g:google_product_category>${googleProductCategory}</g:google_product_category>${identifierExistsXml}
   </item>`;
     });
   } catch (error) {

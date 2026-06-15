@@ -187,7 +187,8 @@ class WooCommerceServiceClient {
       if (fs.existsSync(dumpPath)) {
         const fileData = fs.readFileSync(dumpPath, "utf-8");
         const products = JSON.parse(fileData);
-        const matched = products.find((p: any) => p.slug === slug);
+        const decodedTarget = decodeURIComponent(slug);
+        const matched = products.find((p: any) => p.slug === slug || decodeURIComponent(p.slug) === decodedTarget);
         if (matched) {
           return {
             id: matched.id,
@@ -225,12 +226,13 @@ class WooCommerceServiceClient {
    * 3. FETCH SINGLE PRODUCT BY SLUG (Perfect for dynamic routes and SEO validation)
    */
   async getProductBySlug(slug: string): Promise<WooCommerceProduct | null> {
+    const decodedSlug = decodeURIComponent(slug);
     try {
-      const endpoint = `products?slug=${encodeURIComponent(slug)}`;
+      const endpoint = `products?slug=${encodeURIComponent(decodedSlug)}`;
       const response = await this.request(endpoint, {
         method: "GET",
         next: {
-          tags: ["woocommerce", `woocommerce-slug-${slug}`],
+          tags: ["woocommerce", `woocommerce-slug-${decodedSlug}`],
           revalidate: 3600,
         },
       });
@@ -240,10 +242,10 @@ class WooCommerceServiceClient {
         if (products.length > 0) return products[0];
       }
     } catch (error) {
-      console.warn(`[WooCommerce Service]: Failed to fetch from API, trying fallback for slug: ${slug}`);
+      console.warn(`[WooCommerce Service]: Failed to fetch from API, trying fallback for slug: ${decodedSlug}`);
     }
 
-    const fallback = this.getProductFromDump(slug);
+    const fallback = this.getProductFromDump(decodedSlug);
     if (fallback) {
       return fallback;
     }

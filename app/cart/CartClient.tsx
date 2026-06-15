@@ -5,12 +5,19 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import Header from "../Header";
 import { Trash2, Plus, Minus, ArrowLeft, ShieldCheck, ShoppingCart, CreditCard } from "lucide-react";
+import GoogleCustomerReviews from "../components/GoogleCustomerReviews";
 
 export default function CartClient() {
   const { cartItems, updateQuantity, removeFromCart, getCartTotal, clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
+  const [completedOrder, setCompletedOrder] = useState<{
+    id: string | number;
+    email: string;
+    products: { gtin?: string }[];
+    estimatedDeliveryDate: string;
+  } | null>(null);
 
   const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState("");
@@ -177,6 +184,24 @@ export default function CartClient() {
         handler: async function (response: any) {
           console.log("[Razorpay Transaction Completed]:", response);
           setIsProcessing(false);
+
+          // Calculate estimated delivery date: 5 days from today
+          const estDate = new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)
+            .toISOString()
+            .split("T")[0];
+
+          // Map cart items to the products payload for Google Customer Reviews
+          const orderProducts = cartItems.map((item: any) => ({
+            gtin: item.gtin || "",
+          }));
+
+          setCompletedOrder({
+            id: data.wooCommerceOrderId,
+            email: formData.email,
+            products: orderProducts,
+            estimatedDeliveryDate: estDate,
+          });
+
           setCheckoutSuccess(true);
           clearCart();
         },
@@ -226,6 +251,17 @@ export default function CartClient() {
             >
               Continue Shopping
             </Link>
+
+            {/* Inject Google Customer Reviews Survey Opt-In after completed order */}
+            {completedOrder && (
+              <GoogleCustomerReviews
+                orderId={completedOrder.id}
+                email={completedOrder.email}
+                deliveryCountry="IN"
+                estimatedDeliveryDate={completedOrder.estimatedDeliveryDate}
+                products={completedOrder.products}
+              />
+            )}
           </div>
         ) : cartItems.length === 0 ? (
           <div className="max-w-lg mx-auto bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-8 text-center animate-fade-in my-12">
