@@ -61,8 +61,11 @@ export async function GET() {
 
       const link = getAbsoluteUrl(`/products/${prod.slug}`);
       let imageLink = prod.images?.[0]?.src || `${SITE_CONFIG.url}/images/og-default.jpg`;
-      if (imageLink.includes("comsri.com/wp-content/")) {
-        imageLink = imageLink.replace("comsri.com/wp-content/", "cms.comsri.com/wp-content/");
+      // Serve WooCommerce media from the cms subdomain. Match the bare domain
+      // only (with the // boundary) so already-correct cms.comsri.com URLs
+      // aren't double-prefixed into the unreachable cms.cms.comsri.com.
+      if (imageLink.includes("//comsri.com/wp-content/")) {
+        imageLink = imageLink.replace("//comsri.com/wp-content/", "//cms.comsri.com/wp-content/");
       }
 
       const price = `${rawPrice} INR`;
