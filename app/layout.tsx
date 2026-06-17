@@ -79,6 +79,7 @@ export const metadata: Metadata = {
 
 import ChatBotWrapper from "./components/ChatBotWrapper";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   const fetchSetterPolyfill = `
@@ -128,6 +129,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           {children}
           <ChatBotWrapper />
           <SpeedInsights />
+          <Analytics />
         </CartProvider>
       </body>
     </html>
