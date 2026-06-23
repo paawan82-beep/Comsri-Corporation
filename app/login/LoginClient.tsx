@@ -130,6 +130,7 @@ export default function LoginClient() {
               data: {
                 full_name: fullName,
               },
+              emailRedirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
             },
           });
 
