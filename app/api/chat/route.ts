@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
 import fs from "fs";
 import path from "path";
 
 export const dynamic = "force-dynamic";
 
-// Initialize Gemini Client
+// Gemini is called via the REST API directly (instead of the @google/genai SDK)
+// to keep the Cloudflare Worker bundle small enough for the free-plan size limit.
 const apiKey = process.env.GEMINI_API_KEY;
-const ai = apiKey && apiKey !== "MY_GEMINI_API_KEY" ? new GoogleGenAI({ apiKey }) : null;
+const isAiConfigured = !!(apiKey && apiKey !== "MY_GEMINI_API_KEY");
 
 // Simple in-memory IP rate limiter to stop abuse / quota-draining of the
 // (paid) Gemini API. Note: in-memory state is per-instance; for multi-instance
@@ -90,7 +90,7 @@ Your behavior:
 \`\`\`
 Do not write anything else inside that code block. Only use products present in the inventory list.`;
 
-    if (!ai) {
+    if (!isAiConfigured) {
       // Fallback response for missing API key
       const lastUserMessage = messages[messages.length - 1]?.content || "";
       let mockReply = "Hello! I am your Comsri AI Assistant. I notice that the Gemini API Key is not fully configured yet. ";
@@ -121,16 +121,29 @@ Do not write anything else inside that code block. Only use products present in 
       parts: [{ text: m.content }]
     }));
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents,
-      config: {
-        systemInstruction,
-        temperature: 0.7,
+    const geminiRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents,
+          systemInstruction: { parts: [{ text: systemInstruction }] },
+          generationConfig: { temperature: 0.7 },
+        }),
       }
-    });
+    );
 
-    const replyText = response.text || "I apologize, I could not process that request.";
+    if (!geminiRes.ok) {
+      const errText = await geminiRes.text();
+      console.error("Gemini API error:", geminiRes.status, errText);
+      return NextResponse.json({ error: "AI service is temporarily unavailable." }, { status: 502 });
+    }
+
+    const data: any = await geminiRes.json();
+    const replyText =
+      data?.candidates?.[0]?.content?.parts?.map((p: any) => p.text).join("") ||
+      "I apologize, I could not process that request.";
 
     return NextResponse.json({
       content: replyText

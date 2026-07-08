@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import Razorpay from "razorpay";
 import { woocommerce } from "@/lib/services/woocommerce";
 
 export const dynamic = "force-dynamic";
 
-// Helper to initialize Razorpay safely with API guards
-const getRazorpayInstance = (): Razorpay => {
+// Razorpay order creation is done via the REST API directly (instead of the
+// `razorpay` Node SDK) to keep the Cloudflare Worker bundle within the free-plan
+// size limit and to stay compatible with the Workers runtime.
+async function createRazorpayOrder(options: {
+  amount: number;
+  currency: string;
+  receipt: string;
+  notes: Record<string, string>;
+}): Promise<{ id: string; amount: number; currency: string }> {
   const keyId = process.env.RAZORPAY_KEY_ID;
   const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
@@ -13,11 +19,23 @@ const getRazorpayInstance = (): Razorpay => {
     throw new Error("Razorpay API Keys are missing in the server's environment configuration.");
   }
 
-  return new Razorpay({
-    key_id: keyId,
-    key_secret: keySecret,
+  const auth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
+  const res = await fetch("https://api.razorpay.com/v1/orders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Basic ${auth}`,
+    },
+    body: JSON.stringify(options),
   });
-};
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Razorpay order creation failed (${res.status}): ${errText}`);
+  }
+
+  return res.json();
+}
 
 // Simple in-memory rate limiter store to protect API from flooding
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -183,12 +201,11 @@ export async function POST(req: NextRequest) {
 
     // 4. CREATE CORRESPONDING RAZORPAY PAYMENT TRANSACTION
     console.log(`[Checkout API]: Generating companion payment transaction inside Razorpay...`);
-    const razorpay = getRazorpayInstance();
 
     // Razorpay works in Paisas (1 INR = 100 Paisa)
     const paisaAmount = Math.round(totalLinePrice * 100);
 
-    const rzpOrderOptions = {
+    const createdRzpOrder = await createRazorpayOrder({
       amount: paisaAmount,
       currency: "INR",
       receipt: wooOrderId.toString(),
@@ -196,9 +213,7 @@ export async function POST(req: NextRequest) {
         woocommerce_order_id: wooOrderId.toString(),
         description: descriptionNote,
       },
-    };
-
-    const createdRzpOrder = await razorpay.orders.create(rzpOrderOptions);
+    });
 
     console.log(`[Checkout API]: Successfully synced order ${wooOrderId} with Razorpay Transaction ID: ${createdRzpOrder.id}`);
 
