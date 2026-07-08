@@ -47,13 +47,11 @@ class WooCommerceServiceClient {
     }
 
     const separator = endpoint.includes("?") ? "&" : "?";
-    // TEMP: pass credentials via query string instead of the Authorization header
-    const url =
-      `${this.baseUrl}/wp-json/wc/v3/${endpoint}` +
-      `${separator}consumer_key=${process.env.WOOCOMMERCE_CONSUMER_KEY}` +
-      `&consumer_secret=${process.env.WOOCOMMERCE_CONSUMER_SECRET}`;
+    // Construct the endpoint WITHOUT appending consumer credentials in query values
+    const url = `${this.baseUrl}/wp-json/wc/v3/${endpoint}`;
 
     const headers = new Headers(options.headers);
+    headers.set("Authorization", this.authHeader);
     headers.set("Content-Type", "application/json");
     headers.set("User-Agent", "Headless-NextJS-Ecommerce/1.0");
 
@@ -126,14 +124,7 @@ class WooCommerceServiceClient {
     });
 
     if (!response.ok) {
-      const body = await response.text();
-
-      throw new Error(`
-Status: ${response.status}
-StatusText: ${response.statusText}
-Response:
-${body}
-`);
+      throw new Error(`Failed to fetch WooCommerce products: ${response.statusText}`);
     }
 
     const data: WooCommerceProduct[] = await response.json();
@@ -276,14 +267,7 @@ ${body}
     });
 
     if (!response.ok) {
-      const body = await response.text();
-
-      throw new Error(`
-Status: ${response.status}
-StatusText: ${response.statusText}
-Response:
-${body}
-`);
+      throw new Error(`Failed to fetch categories: ${response.statusText}`);
     }
 
     return response.json();
