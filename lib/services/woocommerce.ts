@@ -47,11 +47,13 @@ class WooCommerceServiceClient {
     }
 
     const separator = endpoint.includes("?") ? "&" : "?";
-    // Construct the endpoint WITHOUT appending consumer credentials in query values
-    const url = `${this.baseUrl}/wp-json/wc/v3/${endpoint}`;
+    // TEMP: pass credentials via query string instead of the Authorization header
+    const url =
+      `${this.baseUrl}/wp-json/wc/v3/${endpoint}` +
+      `${separator}consumer_key=${process.env.WOOCOMMERCE_CONSUMER_KEY}` +
+      `&consumer_secret=${process.env.WOOCOMMERCE_CONSUMER_SECRET}`;
 
     const headers = new Headers(options.headers);
-    headers.set("Authorization", this.authHeader);
     headers.set("Content-Type", "application/json");
     headers.set("User-Agent", "Headless-NextJS-Ecommerce/1.0");
 
