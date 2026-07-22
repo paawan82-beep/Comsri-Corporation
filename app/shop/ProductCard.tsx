@@ -144,11 +144,17 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           </p>
 
           <div className="flex items-center gap-2.5 mb-5 mt-1">
-            <span className="text-[18px] font-bold text-[#111] price-font">₹{salePrice}</span>
-            <span className="text-[14px] text-gray-600 line-through font-medium price-font">₹{regularPrice}</span>
-            <span className="text-[14.5px] font-bold text-[#005c00] bg-emerald-50 px-2 py-0.5 rounded-md">
-              {discountPercent}% off
-            </span>
+            {salePrice > 0 ? (
+              <>
+                <span className="text-[18px] font-bold text-[#111] price-font">₹{salePrice}</span>
+                <span className="text-[14px] text-gray-600 line-through font-medium price-font">₹{regularPrice}</span>
+                <span className="text-[14.5px] font-bold text-[#005c00] bg-emerald-50 px-2 py-0.5 rounded-md">
+                  {discountPercent}% off
+                </span>
+              </>
+            ) : (
+              <span className="text-[15px] font-semibold text-gray-500">Price on request</span>
+            )}
           </div>
 
           {/* Action Buttons with CSS transitions */}

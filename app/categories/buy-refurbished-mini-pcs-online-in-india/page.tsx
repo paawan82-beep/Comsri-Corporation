@@ -156,38 +156,6 @@ export default async function RefurbishedMiniPCsPage({ searchParams }: CategoryP
     },
   };
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#article`,
-    "headline": "Buy Refurbished Mini PCs Online in India – Complete Buyer's Guide",
-    "description": "A comprehensive guide to buying certified refurbished mini PCs and micro factor computers online in India. Covers space savings, brands, reliability, and costs.",
-    "author": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-    },
-    "publisher": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-      "logo": { "@type": "ImageObject", "url": `${SITE_CONFIG.url}/images/logo.png` },
-    },
-    "datePublished": "2024-01-01",
-    "dateModified": new Date().toISOString().split("T")[0],
-    "mainEntityOfPage": { "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#webpage` },
-    "image": `${SITE_CONFIG.url}/images/og-default.jpg`,
-    "about": { "@type": "Thing", "name": "Refurbished Mini PCs" },
-    "mentions": [
-      { "@type": "Brand", "name": "Dell" },
-      { "@type": "Brand", "name": "HP" },
-      { "@type": "Brand", "name": "Lenovo" },
-      { "@type": "Brand", "name": "Apple" }
-    ],
-    "keywords": "refurbished mini PC, buy micro computer India, certified tiny PC",
-    "articleSection": "Buyer's Guide",
-  };
-
   const offerCatalogSchema = {
     "@context": "https://schema.org",
     "@type": "OfferCatalog",
@@ -273,103 +241,13 @@ export default async function RefurbishedMiniPCsPage({ searchParams }: CategoryP
     })),
   };
 
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#howto`,
-    "name": "How to Buy a Refurbished Mini PC Online in India",
-    "description": "Step-by-step guide to safely purchasing a certified refurbished mini PC online.",
-    "totalTime": "PT10M",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Define Your Use Case",
-        "text": "Determine if you need a mini PC for basic home/office use, programming, media streaming, or continuous server tasks.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Select Your Preferred Brand",
-        "text": "Choose from top enterprise line-ups such as Dell OptiPlex Micro, HP EliteDesk/ProDesk Mini, Lenovo ThinkCentre Tiny, or Apple Mac Mini.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "Choose Processor & RAM",
-        "text": "Pick the processor generation (e.g., Intel 6th to 10th Gen Core i5/i7) and memory (8GB or 16GB RAM) to suit your speed requirements.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "name": "Confirm Storage Needs",
-        "text": "Verify SSD size (256GB or 512GB NVMe SSD) to ensure enough high-speed storage space for your apps and files.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 5,
-        "name": "Place Order with Warranty",
-        "text": "Complete your secure purchase online at comsri.com to enjoy free pan-India shipping and our standard 1-year replacement warranty.",
-      },
-    ],
-  };
-
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": `${SITE_CONFIG.url}/#organization`,
-    "name": SITE_CONFIG.name,
-    "image": `${SITE_CONFIG.url}/images/logo.png`,
-    "telephone": SITE_CONFIG.telephone,
-    "email": SITE_CONFIG.email,
-    "url": SITE_CONFIG.url,
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": SITE_CONFIG.address.streetAddress,
-      "addressLocality": SITE_CONFIG.address.addressLocality,
-      "addressRegion": SITE_CONFIG.address.addressRegion,
-      "postalCode": SITE_CONFIG.address.postalCode,
-      "addressCountry": SITE_CONFIG.address.addressCountry,
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "19.1196",
-      "longitude": "72.8665"
-    },
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-        "opens": "10:00",
-        "closes": "19:00"
-      }
-    ],
-    "sameAs": [
-      SITE_CONFIG.social.facebook,
-      SITE_CONFIG.social.instagram,
-      SITE_CONFIG.social.youtube,
-      SITE_CONFIG.social.twitter
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "584",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "priceRange": "₹₹"
-  };
-
   return (
     <div className="min-h-screen bg-[#F6F5F8] flex flex-col font-sans">
       {/* ─── ALL JSON-LD SCHEMAS ─────────────────────────────────────── */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
 
       <Header />
 
@@ -487,6 +365,7 @@ export default async function RefurbishedMiniPCsPage({ searchParams }: CategoryP
             initialTotalPages={productsResult.totalPages}
             initialCounts={productsResult.counts}
             categories={categories}
+            embedded
             initialParams={{
               category: CATEGORY_ID,
               search: currentQuery,

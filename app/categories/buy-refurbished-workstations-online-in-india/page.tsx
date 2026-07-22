@@ -156,38 +156,6 @@ export default async function RefurbishedWorkstationsPage({ searchParams }: Cate
     },
   };
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#article`,
-    "headline": "Buy Refurbished Workstations Online in India – Performance Buyer's Guide",
-    "description": "A comprehensive guide to buying certified refurbished workstations, Xeon computers, and high-performance rendering systems online in India.",
-    "author": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-    },
-    "publisher": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-      "logo": { "@type": "ImageObject", "url": `${SITE_CONFIG.url}/images/logo.png` },
-    },
-    "datePublished": "2024-01-01",
-    "dateModified": new Date().toISOString().split("T")[0],
-    "mainEntityOfPage": { "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#webpage` },
-    "image": `${SITE_CONFIG.url}/images/og-default.jpg`,
-    "about": { "@type": "Thing", "name": "Refurbished Workstations" },
-    "mentions": [
-      { "@type": "Brand", "name": "Dell" },
-      { "@type": "Brand", "name": "HP" },
-      { "@type": "Brand", "name": "Lenovo" },
-      { "@type": "Brand", "name": "Apple" }
-    ],
-    "keywords": "refurbished workstations, buy Xeon PC India, certified rendering computers",
-    "articleSection": "Buyer's Guide",
-  };
-
   const offerCatalogSchema = {
     "@context": "https://schema.org",
     "@type": "OfferCatalog",
@@ -269,103 +237,13 @@ export default async function RefurbishedWorkstationsPage({ searchParams }: Cate
     })),
   };
 
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#howto`,
-    "name": "How to Buy a Refurbished Workstation Online in India",
-    "description": "Step-by-step guide to choosing and purchasing a certified refurbished workstation online.",
-    "totalTime": "PT15M",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Identify Your Workload Requirements",
-        "text": "Determine the resource needs of your applications: high-core count CPUs for CPU rendering, professional CUDA-enabled GPUs for 3D modeling and rendering, or massive RAM for virtualization.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Choose a Form Factor & Platform",
-        "text": "Select tower workstations (like Dell Precision Tower, HP Z4/Z6/Z8) for high expandability, or compact platforms (like Apple Mac Studio) for office spaces.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "Configure Processor & ECC RAM",
-        "text": "Choose standard multi-core Intel Core i7/i9 or dedicated server-grade Intel Xeon processors, paired with ECC memory to prevent computing errors.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "name": "Select Professional Graphics Card",
-        "text": "Ensure your workstation has a dedicated professional GPU (like NVIDIA Quadro, RTX, or AMD Radeon Pro) certified for ISV software like AutoCAD, SolidWorks, and Maya.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 5,
-        "name": "Place Order Online with Warranty",
-        "text": "Securely checkout at comsri.com to benefit from 40+ point certification, 1-year replacement warranty, and free insured pan-India delivery.",
-      },
-    ],
-  };
-
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": `${SITE_CONFIG.url}/#organization`,
-    "name": SITE_CONFIG.name,
-    "image": `${SITE_CONFIG.url}/images/logo.png`,
-    "telephone": SITE_CONFIG.telephone,
-    "email": SITE_CONFIG.email,
-    "url": SITE_CONFIG.url,
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": SITE_CONFIG.address.streetAddress,
-      "addressLocality": SITE_CONFIG.address.addressLocality,
-      "addressRegion": SITE_CONFIG.address.addressRegion,
-      "postalCode": SITE_CONFIG.address.postalCode,
-      "addressCountry": SITE_CONFIG.address.addressCountry,
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "19.1196",
-      "longitude": "72.8665"
-    },
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "opens": "10:00",
-        "closes": "19:00"
-      }
-    ],
-    "sameAs": [
-      SITE_CONFIG.social.facebook,
-      SITE_CONFIG.social.instagram,
-      SITE_CONFIG.social.youtube,
-      SITE_CONFIG.social.twitter
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "584",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "priceRange": "₹₹"
-  };
-
   return (
     <div className="min-h-screen bg-[#F6F5F8] flex flex-col font-sans">
       {/* ─── ALL JSON-LD SCHEMAS ─────────────────────────────────────── */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
 
       <Header />
 
@@ -483,6 +361,7 @@ export default async function RefurbishedWorkstationsPage({ searchParams }: Cate
             initialTotalPages={productsResult.totalPages}
             initialCounts={productsResult.counts}
             categories={categories}
+            embedded
             initialParams={{
               category: CATEGORY_ID,
               search: currentQuery,

@@ -98,24 +98,14 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   // Retrieve related items dynamically on the server
   const relatedProducts = await woocommerce.getRelatedProducts(product.related_ids);
 
-  // Generate mock rating metrics if none exist to guarantee valid AggregateRating schema.org reviews
-  const ratingValue = parseFloat(product.average_rating) || 4.7;
-  const ratingCount = product.rating_count || 14;
-
-  const mockReviews = [
-    {
-      author: "Rahul Sharma",
-      date: "2026-04-12",
-      content: "Excellent refurbishing quality. The laptop looks practically brand new with almost zero scratches. System performance is solid and boots in under 10 seconds.",
-      rating: 5,
-    },
-    {
-      author: "Priya Patel",
-      date: "2026-05-01",
-      content: "Very satisfied with the purchase. The battery health was reported at 88%. Screen is bright with no dead pixels. Free shipping was very fast.",
-      rating: 4,
-    }
-  ];
+  // Only emit AggregateRating/Review schema from GENUINE WooCommerce data.
+  // Fabricated ratings/reviews (e.g. a hardcoded 4.7 or a boilerplate "battery
+  // health 88%" review applied to desktops) violate Google's review-snippet
+  // genuineness policy and risk a site-wide manual action, so we omit them
+  // entirely when the product has no real ratings.
+  const genuineRatingCount = Number(product.rating_count) || 0;
+  const genuineRatingValue = parseFloat(product.average_rating);
+  const hasGenuineRating = genuineRatingCount > 0 && Number.isFinite(genuineRatingValue) && genuineRatingValue > 0;
 
   const productSchema = getProductSchema({
     id: product.id,
@@ -127,9 +117,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     stock_status: product.stock_status,
     images: product.images,
     brand: "Comsri Certified",
-    ratingValue,
-    ratingCount,
-    reviews: mockReviews,
+    ...(hasGenuineRating ? { ratingValue: genuineRatingValue, ratingCount: genuineRatingCount } : {}),
   });
 
   // Breadcrumbs mapping

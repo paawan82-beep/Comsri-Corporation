@@ -14,7 +14,7 @@ export async function GET() {
     "/shipping-policy",
     "/faq",
     "/bulk-orders",
-    "/cart",
+    "/contact",
     "/shop",
     // Categories
     "/categories/buy-refurbished-laptops-online-in-india",

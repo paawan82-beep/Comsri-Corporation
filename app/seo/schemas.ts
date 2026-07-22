@@ -30,7 +30,12 @@ export function getOrganizationSchema() {
     "@id": `${SITE_CONFIG.url}/#organization`,
     "name": SITE_CONFIG.name,
     "url": SITE_CONFIG.url,
-    "logo": getAbsoluteUrl(SITE_CONFIG.logo),
+    "logo": {
+      "@type": "ImageObject",
+      "url": getAbsoluteUrl(SITE_CONFIG.logo),
+      "width": 512,
+      "height": 512,
+    },
     "telephone": SITE_CONFIG.telephone,
     "email": SITE_CONFIG.email,
     "address": {
@@ -71,6 +76,14 @@ export function getProductSchema(product: {
   const brandName = product.brand || "Comsri Certified";
   const entityData = getBrandEntity(brandName);
 
+  // Price-integrity guard: only emit an Offer when we have a genuine positive
+  // price. A missing/zero/placeholder price must never reach structured data
+  // (it can trigger a Google Merchant Center price-mismatch suspension). When
+  // there is no valid price we omit `offers` entirely rather than shipping a
+  // fabricated "0.00".
+  const numericPrice = parseFloat(product.price ?? "");
+  const hasValidPrice = Number.isFinite(numericPrice) && numericPrice > 0;
+
   const schema: any = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -79,7 +92,9 @@ export function getProductSchema(product: {
     "image": images,
     "description": description,
     "sku": product.sku || `SKU-${product.id}`,
-    "mpn": product.sku || `MPN-${product.id}`,
+    // `mpn` intentionally omitted — we do not have genuine manufacturer part
+    // numbers, and a fabricated placeholder violates Google's product-data
+    // accuracy guidance.
     "brand": {
       "@type": "Brand",
       "name": brandName,
@@ -101,12 +116,22 @@ export function getProductSchema(product: {
         },
       ],
     },
-    "offers": {
+  };
+
+  if (hasValidPrice) {
+    // priceValidUntil ~30 days out, generated at render time (not a hardcoded
+    // far-future constant which Google flags as a quality signal).
+    const priceValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0];
+
+    schema.offers = {
       "@type": "Offer",
       "url": canonicalUrl,
       "priceCurrency": SITE_CONFIG.defaultCurrency,
-      "price": product.price || "0.00",
-      "priceValidUntil": "2030-12-31",
+      "price": numericPrice.toString(),
+      "priceValidUntil": priceValidUntil,
+      // Every product in the catalogue is refurbished.
       "itemCondition": "https://schema.org/RefurbishedCondition",
       "availability": getAvailabilityUrl(product.stock_status || "in_stock"),
       "seller": {
@@ -114,8 +139,47 @@ export function getProductSchema(product: {
         "name": SITE_CONFIG.name,
         "url": SITE_CONFIG.url,
       },
-    },
-  };
+      // Return + shipping details for the enhanced Merchant Listing rich result.
+      // Values mirror the actual published policy: 14-day returns on refurbished
+      // products (customer bears return courier charges) and free PAN-India
+      // shipping.
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "IN",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 14,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/ReturnShippingFees",
+      },
+      "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "value": "0",
+          "currency": SITE_CONFIG.defaultCurrency,
+        },
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": "IN",
+        },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "handlingTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 1,
+            "maxValue": 2,
+            "unitCode": "DAY",
+          },
+          "transitTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 3,
+            "maxValue": 7,
+            "unitCode": "DAY",
+          },
+        },
+      },
+    };
+  }
 
   if (product.category) {
     schema.category = product.category;
@@ -211,7 +275,7 @@ export function getCollectionPageSchema(collection: {
 export function getLocalBusinessSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "ElectronicsStore",
     "@id": `${SITE_CONFIG.url}/#localbusiness`,
     "name": SITE_CONFIG.name,
     "image": getAbsoluteUrl(SITE_CONFIG.ogImage),

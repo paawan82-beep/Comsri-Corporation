@@ -131,52 +131,6 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
     ],
   };
 
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": `${SITE_CONFIG.url}/#organization`,
-    "name": SITE_CONFIG.name,
-    "image": `${SITE_CONFIG.url}/images/logo.png`,
-    "telephone": SITE_CONFIG.telephone,
-    "email": SITE_CONFIG.email,
-    "url": SITE_CONFIG.url,
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": SITE_CONFIG.address.streetAddress,
-      "addressLocality": SITE_CONFIG.address.addressLocality,
-      "addressRegion": SITE_CONFIG.address.addressRegion,
-      "postalCode": SITE_CONFIG.address.postalCode,
-      "addressCountry": SITE_CONFIG.address.addressCountry,
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "19.1196",
-      "longitude": "72.8665"
-    },
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "opens": "10:00",
-        "closes": "19:00"
-      }
-    ],
-    "sameAs": [
-      SITE_CONFIG.social.facebook,
-      SITE_CONFIG.social.instagram,
-      SITE_CONFIG.social.youtube,
-      SITE_CONFIG.social.twitter
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "584",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "priceRange": "₹₹"
-  };
-
   const webPageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -200,38 +154,6 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
       "@type": "Organization",
       "@id": `${SITE_CONFIG.url}/#organization`,
     },
-  };
-
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#article`,
-    "headline": "Buy Refurbished Desktops Online in India – Complete Buyer's Guide",
-    "description": "A comprehensive guide to buying certified refurbished desktops and computers online in India. Covers specs, E-E-A-T, and top desktop brands.",
-    "image": `${SITE_CONFIG.url}/images/og-default.jpg`,
-    "author": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-    },
-    "publisher": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-      "logo": { "@type": "ImageObject", "url": `${SITE_CONFIG.url}/images/logo.png` },
-    },
-    "datePublished": "2024-01-01",
-    "dateModified": new Date().toISOString().split("T")[0],
-    "mainEntityOfPage": { "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#webpage` },
-    "about": { "@type": "Thing", "name": "Refurbished Desktops" },
-    "mentions": [
-      { "@type": "Brand", "name": "Dell" },
-      { "@type": "Brand", "name": "HP" },
-      { "@type": "Brand", "name": "Lenovo" },
-      { "@type": "Brand", "name": "Apple" }
-    ],
-    "keywords": "refurbished desktops, buy refurbished desktops India, certified used computers",
-    "articleSection": "Buyer's Guide",
   };
 
   const offerCatalogSchema = {
@@ -319,57 +241,13 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
     })),
   };
 
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#howto`,
-    "name": "How to Buy a Refurbished Desktop Online in India",
-    "description": "Step-by-step guide to purchasing a reliable certified refurbished desktop online.",
-    "totalTime": "PT10M",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Select Form Factor",
-        "text": "Pick from Tower PCs, Space-saving Mini PCs, or integrated All-in-One systems.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Choose Core Specs",
-        "text": "Verify required processor levels, RAM size (8GB/16GB), and SSD storage volumes.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "Verify Warranty details",
-        "text": "Confirm the product includes a 1-year replacement warranty for peace of mind.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "name": "Review Accessories",
-        "text": "Add matching monitors, keyboard sets, and Wi-Fi dongles to complete your setup.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 5,
-        "name": "Secure Nationwide Shipping",
-        "text": "Place your order for secure pan-India shipping with tracked logistics handlers.",
-      },
-    ],
-  };
-
   return (
     <div className="min-h-screen bg-[#F6F5F8] flex flex-col font-sans">
       {/* ─── ALL JSON-LD SCHEMAS ─────────────────────────────────────── */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <Header />
 
@@ -487,6 +365,7 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
             initialTotalPages={productsResult.totalPages}
             initialCounts={productsResult.counts}
             categories={categories}
+            embedded
             initialParams={{
               category: CATEGORY_ID,
               search: currentQuery,

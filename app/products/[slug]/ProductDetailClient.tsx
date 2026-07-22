@@ -373,7 +373,7 @@ export default function ProductDetailClient({ product, variations = [] }: Produc
                   >
                     <Image
                       src={img.src}
-                      alt={img.alt || product.name}
+                      alt={img.alt || `${product.name} — view ${i + 1}`}
                       fill
                       className="object-cover"
                       sizes="150px"
