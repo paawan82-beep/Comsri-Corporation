@@ -71,6 +71,18 @@ const nextConfig: any = {
       }
     ];
   },
+  async redirects() {
+    return [
+      // Canonicalise www -> apex with a permanent (308) redirect so link equity
+      // isn't split across hosts (previously served as a temporary 307).
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.comsri.com' }],
+        destination: 'https://comsri.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return {
       beforeFiles: [
