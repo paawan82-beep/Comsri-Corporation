@@ -269,47 +269,6 @@ export default async function RefurbishedWorkstationsPage({ searchParams }: Cate
     })),
   };
 
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#howto`,
-    "name": "How to Buy a Refurbished Workstation Online in India",
-    "description": "Step-by-step guide to choosing and purchasing a certified refurbished workstation online.",
-    "totalTime": "PT15M",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Identify Your Workload Requirements",
-        "text": "Determine the resource needs of your applications: high-core count CPUs for CPU rendering, professional CUDA-enabled GPUs for 3D modeling and rendering, or massive RAM for virtualization.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Choose a Form Factor & Platform",
-        "text": "Select tower workstations (like Dell Precision Tower, HP Z4/Z6/Z8) for high expandability, or compact platforms (like Apple Mac Studio) for office spaces.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "Configure Processor & ECC RAM",
-        "text": "Choose standard multi-core Intel Core i7/i9 or dedicated server-grade Intel Xeon processors, paired with ECC memory to prevent computing errors.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "name": "Select Professional Graphics Card",
-        "text": "Ensure your workstation has a dedicated professional GPU (like NVIDIA Quadro, RTX, or AMD Radeon Pro) certified for ISV software like AutoCAD, SolidWorks, and Maya.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 5,
-        "name": "Place Order Online with Warranty",
-        "text": "Securely checkout at comsri.com to benefit from 40+ point certification, 1-year replacement warranty, and free insured pan-India delivery.",
-      },
-    ],
-  };
-
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -364,7 +323,6 @@ export default async function RefurbishedWorkstationsPage({ searchParams }: Cate
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
 
       <Header />

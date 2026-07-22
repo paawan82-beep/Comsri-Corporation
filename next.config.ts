@@ -11,7 +11,10 @@ const nextConfig: any = {
   turbopack: {},
   // Allow access to remote image placeholder.
   images: {
-    unoptimized: true,
+    // Image Optimization is handled by Vercel at the edge (AVIF/WebP + responsive
+    // srcset). It was previously disabled for the Cloudflare/OpenNext build; on
+    // Vercel this must stay ON — it is the single biggest LCP win on mobile.
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',

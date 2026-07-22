@@ -266,47 +266,6 @@ export default async function RefurbishedLaptopsPage({ searchParams }: CategoryP
     })),
   };
 
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#howto`,
-    "name": "How to Buy a Refurbished Laptop Online in India",
-    "description": "Step-by-step guide to safely purchasing a certified refurbished laptop online in India.",
-    "totalTime": "PT10M",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Define Your Requirements",
-        "text": "Identify your use case — student, professional, gaming, or business. Decide on RAM (8GB or 16GB), storage (256GB or 512GB SSD), and display size (13\", 14\", or 15.6\").",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Choose a Trusted Seller",
-        "text": "Select a certified refurbisher like Comsri that offers 40+ point quality checks, transparent grading, 1-year warranty, and a clear return policy.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "Check the Product Specification",
-        "text": "Verify the laptop's processor generation, RAM, storage type, battery health, and cosmetic grade (Grade A, B, or C) to match your budget and requirements.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "name": "Review Warranty and Return Policy",
-        "text": "Confirm the warranty duration (minimum 1 year), what it covers, and the return window. A reliable seller will have clear, written policies.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 5,
-        "name": "Place Your Order",
-        "text": "Add the laptop to your cart, enter your delivery address, and complete payment via secure checkout. Comsri ships pan-India with tracking.",
-      },
-    ],
-  };
-
   return (
     <div className="min-h-screen bg-[#F6F5F8] flex flex-col font-sans">
       {/* ─── ALL JSON-LD SCHEMAS ─────────────────────────────────────── */}
@@ -315,7 +274,6 @@ export default async function RefurbishedLaptopsPage({ searchParams }: CategoryP
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <Header />
 

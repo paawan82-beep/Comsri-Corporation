@@ -319,47 +319,6 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
     })),
   };
 
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#howto`,
-    "name": "How to Buy a Refurbished Desktop Online in India",
-    "description": "Step-by-step guide to purchasing a reliable certified refurbished desktop online.",
-    "totalTime": "PT10M",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Select Form Factor",
-        "text": "Pick from Tower PCs, Space-saving Mini PCs, or integrated All-in-One systems.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Choose Core Specs",
-        "text": "Verify required processor levels, RAM size (8GB/16GB), and SSD storage volumes.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "Verify Warranty details",
-        "text": "Confirm the product includes a 1-year replacement warranty for peace of mind.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "name": "Review Accessories",
-        "text": "Add matching monitors, keyboard sets, and Wi-Fi dongles to complete your setup.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 5,
-        "name": "Secure Nationwide Shipping",
-        "text": "Place your order for secure pan-India shipping with tracked logistics handlers.",
-      },
-    ],
-  };
-
   return (
     <div className="min-h-screen bg-[#F6F5F8] flex flex-col font-sans">
       {/* ─── ALL JSON-LD SCHEMAS ─────────────────────────────────────── */}
@@ -369,7 +328,6 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <Header />
 

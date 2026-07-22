@@ -273,47 +273,6 @@ export default async function RefurbishedMiniPCsPage({ searchParams }: CategoryP
     })),
   };
 
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#howto`,
-    "name": "How to Buy a Refurbished Mini PC Online in India",
-    "description": "Step-by-step guide to safely purchasing a certified refurbished mini PC online.",
-    "totalTime": "PT10M",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Define Your Use Case",
-        "text": "Determine if you need a mini PC for basic home/office use, programming, media streaming, or continuous server tasks.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Select Your Preferred Brand",
-        "text": "Choose from top enterprise line-ups such as Dell OptiPlex Micro, HP EliteDesk/ProDesk Mini, Lenovo ThinkCentre Tiny, or Apple Mac Mini.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "Choose Processor & RAM",
-        "text": "Pick the processor generation (e.g., Intel 6th to 10th Gen Core i5/i7) and memory (8GB or 16GB RAM) to suit your speed requirements.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "name": "Confirm Storage Needs",
-        "text": "Verify SSD size (256GB or 512GB NVMe SSD) to ensure enough high-speed storage space for your apps and files.",
-      },
-      {
-        "@type": "HowToStep",
-        "position": 5,
-        "name": "Place Order with Warranty",
-        "text": "Complete your secure purchase online at comsri.com to enjoy free pan-India shipping and our standard 1-year replacement warranty.",
-      },
-    ],
-  };
-
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -368,7 +327,6 @@ export default async function RefurbishedMiniPCsPage({ searchParams }: CategoryP
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
 
       <Header />

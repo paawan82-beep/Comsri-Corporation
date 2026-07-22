@@ -71,6 +71,14 @@ export function getProductSchema(product: {
   const brandName = product.brand || "Comsri Certified";
   const entityData = getBrandEntity(brandName);
 
+  // Price-integrity guard: only emit an Offer when we have a genuine positive
+  // price. A missing/zero/placeholder price must never reach structured data
+  // (it can trigger a Google Merchant Center price-mismatch suspension). When
+  // there is no valid price we omit `offers` entirely rather than shipping a
+  // fabricated "0.00".
+  const numericPrice = parseFloat(product.price ?? "");
+  const hasValidPrice = Number.isFinite(numericPrice) && numericPrice > 0;
+
   const schema: any = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -79,7 +87,9 @@ export function getProductSchema(product: {
     "image": images,
     "description": description,
     "sku": product.sku || `SKU-${product.id}`,
-    "mpn": product.sku || `MPN-${product.id}`,
+    // `mpn` intentionally omitted — we do not have genuine manufacturer part
+    // numbers, and a fabricated placeholder violates Google's product-data
+    // accuracy guidance.
     "brand": {
       "@type": "Brand",
       "name": brandName,
@@ -101,12 +111,22 @@ export function getProductSchema(product: {
         },
       ],
     },
-    "offers": {
+  };
+
+  if (hasValidPrice) {
+    // priceValidUntil ~30 days out, generated at render time (not a hardcoded
+    // far-future constant which Google flags as a quality signal).
+    const priceValidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0];
+
+    schema.offers = {
       "@type": "Offer",
       "url": canonicalUrl,
       "priceCurrency": SITE_CONFIG.defaultCurrency,
-      "price": product.price || "0.00",
-      "priceValidUntil": "2030-12-31",
+      "price": numericPrice.toString(),
+      "priceValidUntil": priceValidUntil,
+      // Every product in the catalogue is refurbished.
       "itemCondition": "https://schema.org/RefurbishedCondition",
       "availability": getAvailabilityUrl(product.stock_status || "in_stock"),
       "seller": {
@@ -114,8 +134,8 @@ export function getProductSchema(product: {
         "name": SITE_CONFIG.name,
         "url": SITE_CONFIG.url,
       },
-    },
-  };
+    };
+  }
 
   if (product.category) {
     schema.category = product.category;

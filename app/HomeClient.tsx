@@ -179,6 +179,15 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
 
       {/* Hero Section */}
       <main className="relative bg-gray-200 overflow-hidden w-full">
+        {/*
+          Primary page heading. The hero visual is image-led, so this H1 is
+          visually hidden (sr-only) but present in the DOM — it gives crawlers
+          and AI answer engines the single topical anchor the homepage was
+          missing, without altering the design.
+        */}
+        <h1 className="sr-only">
+          Buy Refurbished Laptops, Desktops, Workstations &amp; Mini PCs Online in India — Comsri Corporation
+        </h1>
         {/* Slider Images */}
         {slides.map((slide, index) => (
           <div
