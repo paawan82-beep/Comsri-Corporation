@@ -83,8 +83,43 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const author = getAuthor(post);
   const minutes = readingTime(post.content.rendered);
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `https://comsri.com/blog/${post.slug}/#article`,
+    "headline": stripHtml(post.title.rendered),
+    "description": stripHtml(post.excerpt.rendered),
+    "image": getFeaturedImage(post),
+    "datePublished": post.date,
+    "dateModified": (post as any).modified || post.date,
+    "author": {
+      "@type": "Organization",
+      "name": author,
+      "url": "https://comsri.com",
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Comsri Corporation",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://comsri.com/images/logo.png",
+        "width": 512,
+        "height": 512,
+      },
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://comsri.com/blog/${post.slug}`,
+    },
+    "articleSection": category,
+  };
+
   return (
     <div className="min-h-screen bg-[#f5f6f8] flex flex-col font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <ReadingProgress />
       <Header />
 

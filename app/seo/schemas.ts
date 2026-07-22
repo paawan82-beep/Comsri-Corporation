@@ -30,7 +30,12 @@ export function getOrganizationSchema() {
     "@id": `${SITE_CONFIG.url}/#organization`,
     "name": SITE_CONFIG.name,
     "url": SITE_CONFIG.url,
-    "logo": getAbsoluteUrl(SITE_CONFIG.logo),
+    "logo": {
+      "@type": "ImageObject",
+      "url": getAbsoluteUrl(SITE_CONFIG.logo),
+      "width": 512,
+      "height": 512,
+    },
     "telephone": SITE_CONFIG.telephone,
     "email": SITE_CONFIG.email,
     "address": {
@@ -270,7 +275,7 @@ export function getCollectionPageSchema(collection: {
 export function getLocalBusinessSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "ElectronicsStore",
     "@id": `${SITE_CONFIG.url}/#localbusiness`,
     "name": SITE_CONFIG.name,
     "image": getAbsoluteUrl(SITE_CONFIG.ogImage),

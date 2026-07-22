@@ -271,8 +271,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
                     alt={cat.title}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    priority={idx === 0}
-                    fetchPriority={idx === 0 ? "high" : undefined}
+                    loading="lazy"
                     className="object-cover"
                   />
                 </div>
@@ -299,7 +298,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 h-auto">
             {/* Refurbished Mini PCs */}
             <Link href="/categories/buy-refurbished-mini-pcs-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
-              <Image src="https://cms.comsri.com/wp-content/uploads/2025/10/mini-pc-showcase-1.jpg" alt="New Mini PCs" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              <Image src="https://cms.comsri.com/wp-content/uploads/2025/10/mini-pc-showcase-1.jpg" alt="Refurbished Mini PCs" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
                 <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-1 md:mb-2 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">Refurbished Mini PCs</h3>
@@ -315,7 +314,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
 
             {/* Refurbished Workstations */}
             <Link href="/categories/buy-refurbished-workstations-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 h-[180px] sm:h-[220px] md:h-[350px]">
-              <Image src="https://cms.comsri.com/wp-content/uploads/2025/10/dark-desk-setup-img.jpg-1.webp" alt="New All-In-One PCs" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              <Image src="https://cms.comsri.com/wp-content/uploads/2025/10/dark-desk-setup-img.jpg-1.webp" alt="Refurbished All-In-One PCs" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-5 md:p-8 lg:p-12 flex flex-col justify-center items-start text-white">
                 <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-1 md:mb-2 max-w-[70%] leading-tight drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-2">Refurbished Workstations</h3>
@@ -335,7 +334,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
             {/* Refurbished Desktops */}
             <Link href="/categories/buy-high-quality-refurbished-desktops" className="bg-[#143f29] rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 flex flex-col min-h-[280px] md:min-h-0">
               <div className="h-[65%] relative overflow-hidden">
-                <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Desktop-Showcase.png" alt="New Desktops" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+                <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Desktop-Showcase.png" alt="Refurbished Desktops" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               </div>
               <div className="flex-1 p-8 flex flex-col justify-end items-start text-white relative">
                 <div className="absolute inset-0 bg-white/0 transition-colors duration-500 group-hover:bg-white/10 pointer-events-none"></div>
@@ -352,7 +351,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
 
             {/* Refurbished Laptops */}
             <Link href="/categories/buy-refurbished-laptops-online-in-india" className="relative rounded-[16px] md:rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-transform duration-500 hover:-translate-y-1 min-h-[250px] md:min-h-0 md:h-full">
-              <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Laptop-Showcase.webp" alt="New Laptops" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+              <Image src="https://hglntgfpbilqvdcazjsv.supabase.co/storage/v1/object/public/product-images/Laptop-Showcase.webp" alt="Refurbished Laptops" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-90"></div>
               <div className="absolute inset-0 p-8 flex flex-col justify-end items-start text-white">
                 <h3 className="text-2xl md:text-4xl font-bold mb-1 drop-shadow-md tracking-tight transform transition-transform duration-500 group-hover:-translate-y-1">Refurbished Laptops</h3>
@@ -392,7 +391,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
         <div className="animate-marquee flex items-center shrink-0">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="flex items-center">
-              <span className="mx-6 text-[15px] font-bold">Upto 70% on New & Refurbished Laptops & Desktops</span>
+              <span className="mx-6 text-[15px] font-bold">Upto 70% off on Refurbished Laptops & Desktops</span>
               <span className="text-black text-lg">✦</span>
               <span className="mx-6 text-[15px] font-bold">Best Deals in India</span>
               <span className="text-black text-lg">✦</span>
@@ -547,7 +546,7 @@ export default function HomeClient({ initialLaptops = [], initialDesktops = [], 
           {/* Left Content */}
           <div className="flex-1 text-white">
             <div className="inline-block bg-[#b81d06] text-white text-[14px] font-bold px-4 py-1.5 rounded-full mb-6 shadow-sm">
-              Get Upto 70% Off on New & Refurbished Products
+              Get Upto 70% Off on Refurbished Products
             </div>
 
             <h2 className="text-[24px] sm:text-[28px] md:text-5xl font-extrabold leading-[1.15] mb-4 md:mb-6">

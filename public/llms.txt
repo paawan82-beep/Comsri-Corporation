@@ -1,6 +1,8 @@
 # Comsri Corporation - Refurbished IT Hardware Directory
 
-Comsri Corporation is a premium supplier of refurbished and brand-new computers, laptops, workstations, mini PCs, and IT accessories in India.
+> Last updated: 2026-07-23
+
+Comsri Corporation is a premium supplier of certified refurbished computers, laptops, workstations, mini PCs, and IT accessories in India. Every product is refurbished and certified through a 40+ point diagnostic process — Comsri does not sell brand-new hardware.
 
 ## Company Information
 - **Official Name:** Comsri Corporation
@@ -12,22 +14,26 @@ Comsri Corporation is a premium supplier of refurbished and brand-new computers,
 1. **Refurbished Laptops:** High-grade business laptops (Dell Latitude, Lenovo ThinkPad, HP EliteBook, Apple MacBooks).
 2. **Refurbished Desktops & Workstations:** Enterprise-grade small form factor (SFF) PCs and multi-core Xeon workstations (Dell Precision, HP Z-Series).
 3. **Refurbished Mini PCs:** Compact micro desktops (Dell OptiPlex Micro, HP ProDesk Mini, Apple Mac Mini).
-4. **New Hardware:** Brand new laptops, workstations, and all-in-one PCs.
 
 ## Core Customer Policies & Guidelines
-- **Warranty Policy:** 1-year hardware warranty standard on all refurbished systems. Reverse pick-up service included.
-- **Return & Refund Policy:** 7-day technical replacement window for dead-on-arrival (DOA) hardware.
-- **Shipping Policy:** Free fully-insured PAN-India shipping with premium protective multi-layer packaging.
+- **Warranty Policy:** 1-year comprehensive hardware warranty standard on all refurbished systems, with reverse pick-up service included.
+- **Return & Refund Policy:** 14-day return window on refurbished products; returns during the warranty period are also supported (return courier charges apply).
+- **Shipping Policy:** Free, fully-insured PAN-India shipping with premium protective multi-layer packaging.
 - **Terms & Conditions:** Consumer protection framework and corporate compliance parameters.
 
 ## Crucial Platform Links
 - **Home Page:** https://comsri.com/
 - **Shop Catalog:** https://comsri.com/shop
+- **Refurbished Laptops:** https://comsri.com/categories/buy-refurbished-laptops-online-in-india
+- **Refurbished Desktops:** https://comsri.com/categories/buy-high-quality-refurbished-desktops
+- **Refurbished Workstations:** https://comsri.com/categories/buy-refurbished-workstations-online-in-india
+- **Refurbished Mini PCs:** https://comsri.com/categories/buy-refurbished-mini-pcs-online-in-india
 - **Bulk & Corporate Procurement:** https://comsri.com/bulk-orders
 - **FAQ Help Center:** https://comsri.com/faq
-- **About Us & Profile:** https://comsri.com/about
-- **Terms & Conditions:** https://comsri.com/terms-conditions?tab=terms
-- **Privacy Framework:** https://comsri.com/privacy-policy?tab=privacy
-- **Refund Guidelines:** https://comsri.com/return-refund?tab=refund
-- **Warranty Details:** https://comsri.com/privacy-policy?tab=warranty
-- **Shipping Logistics:** https://comsri.com/privacy-policy?tab=shipping
+- **About Us & Profile:** https://comsri.com/about-us
+- **Contact:** https://comsri.com/contact
+- **Terms & Conditions:** https://comsri.com/terms-conditions
+- **Privacy Policy:** https://comsri.com/privacy-policy
+- **Return & Refund Policy:** https://comsri.com/return-refund
+- **Warranty Policy:** https://comsri.com/warranty-policy
+- **Shipping Policy:** https://comsri.com/shipping-policy
