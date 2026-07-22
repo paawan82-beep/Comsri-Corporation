@@ -156,31 +156,6 @@ export default async function RefurbishedLaptopsPage({ searchParams }: CategoryP
     },
   };
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#article`,
-    "headline": "Buy Refurbished Laptops Online in India – Complete Buyer's Guide",
-    "description": "A comprehensive guide to buying certified refurbished laptops online in India. Covers quality, brands, savings, and where to buy.",
-    "author": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-    },
-    "publisher": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-      "logo": { "@type": "ImageObject", "url": `${SITE_CONFIG.url}/images/logo.png` },
-    },
-    "datePublished": "2024-01-01",
-    "dateModified": new Date().toISOString().split("T")[0],
-    "mainEntityOfPage": { "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#webpage` },
-    "about": { "@type": "Thing", "name": "Refurbished Laptops" },
-    "keywords": "refurbished laptops, buy refurbished laptops India, certified used laptops",
-    "articleSection": "Buyer's Guide",
-  };
-
   const offerCatalogSchema = {
     "@context": "https://schema.org",
     "@type": "OfferCatalog",
@@ -271,7 +246,6 @@ export default async function RefurbishedLaptopsPage({ searchParams }: CategoryP
       {/* ─── ALL JSON-LD SCHEMAS ─────────────────────────────────────── */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 

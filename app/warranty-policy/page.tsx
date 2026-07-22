@@ -1,19 +1,12 @@
-"use client";
+import { constructMetadata } from "@/app/seo/metadata";
+import PolicyClient from "@/app/components/PolicyClient";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+export const metadata = constructMetadata({
+  title: "Warranty Policy",
+  description: "Comsri Corporation’s warranty policy for refurbished laptops, desktops, workstations and mini PCs: 1-year comprehensive hardware coverage, what’s included, and how to raise a claim.",
+  path: "/warranty-policy",
+});
 
-export default function WarrantyPolicyRedirect() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace("/privacy-policy?tab=warranty");
-  }, [router]);
-
-  return (
-    <div className="min-h-screen bg-[#f6f5f8] flex flex-col justify-center items-center font-sans">
-      <div className="animate-spin w-12 h-12 border-t-4 border-indigo-600 rounded-full mb-4" />
-      <p className="text-slate-600 font-bold text-sm tracking-wide">Syncing Comsri Warranty Policy...</p>
-    </div>
-  );
+export default function WarrantyPolicyPage() {
+  return <PolicyClient defaultTab="warranty" />;
 }

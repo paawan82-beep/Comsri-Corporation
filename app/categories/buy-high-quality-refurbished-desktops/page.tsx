@@ -156,38 +156,6 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
     },
   };
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#article`,
-    "headline": "Buy Refurbished Desktops Online in India – Complete Buyer's Guide",
-    "description": "A comprehensive guide to buying certified refurbished desktops and computers online in India. Covers specs, E-E-A-T, and top desktop brands.",
-    "image": `${SITE_CONFIG.url}/images/og-default.jpg`,
-    "author": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-    },
-    "publisher": {
-      "@type": "Organization",
-      "@id": `${SITE_CONFIG.url}/#organization`,
-      "name": SITE_CONFIG.name,
-      "logo": { "@type": "ImageObject", "url": `${SITE_CONFIG.url}/images/logo.png` },
-    },
-    "datePublished": "2024-01-01",
-    "dateModified": new Date().toISOString().split("T")[0],
-    "mainEntityOfPage": { "@id": `${SITE_CONFIG.url}${PAGE_PATH}/#webpage` },
-    "about": { "@type": "Thing", "name": "Refurbished Desktops" },
-    "mentions": [
-      { "@type": "Brand", "name": "Dell" },
-      { "@type": "Brand", "name": "HP" },
-      { "@type": "Brand", "name": "Lenovo" },
-      { "@type": "Brand", "name": "Apple" }
-    ],
-    "keywords": "refurbished desktops, buy refurbished desktops India, certified used computers",
-    "articleSection": "Buyer's Guide",
-  };
-
   const offerCatalogSchema = {
     "@context": "https://schema.org",
     "@type": "OfferCatalog",
@@ -278,7 +246,6 @@ export default async function RefurbishedDesktopsPage({ searchParams }: Category
       {/* ─── ALL JSON-LD SCHEMAS ─────────────────────────────────────── */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 

@@ -231,13 +231,41 @@ export default function ShopCatalogClient({
     "@context": "https://schema.org",
     "@type": "ItemList",
     "numberOfItems": products?.length || 0,
-    "itemListElement": (products || []).map((prod, idx) => ({
-      "@type": "ListItem",
-      "position": idx + 1,
-      "url": `https://comsri.com/products/${prod.slug}`,
-      "name": prod.name,
-      "image": prod.images?.[0]?.src || "https://comsri.com/og-image.jpg"
-    }))
+    "itemListElement": (products || []).map((prod, idx) => {
+      const productUrl = `https://comsri.com/products/${prod.slug}`;
+      const numericPrice = parseFloat(prod.sale_price || prod.price || "");
+      const hasValidPrice = Number.isFinite(numericPrice) && numericPrice > 0;
+
+      const productNode: any = {
+        "@type": "Product",
+        "name": prod.name,
+        "url": productUrl,
+        "image": prod.images?.[0]?.src || "https://comsri.com/og-image.jpg",
+        "sku": prod.sku || `SKU-${prod.id}`,
+        "itemCondition": "https://schema.org/RefurbishedCondition",
+      };
+
+      // Only attach an Offer for a genuine positive price so listing pages
+      // never surface a fabricated/zero price in structured data.
+      if (hasValidPrice) {
+        productNode.offers = {
+          "@type": "Offer",
+          "url": productUrl,
+          "price": numericPrice.toString(),
+          "priceCurrency": "INR",
+          "itemCondition": "https://schema.org/RefurbishedCondition",
+          "availability": prod.stock_status === "instock"
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock",
+        };
+      }
+
+      return {
+        "@type": "ListItem",
+        "position": idx + 1,
+        "item": productNode,
+      };
+    })
   };
 
   return (
