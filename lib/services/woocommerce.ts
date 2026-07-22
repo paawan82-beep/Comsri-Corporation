@@ -13,6 +13,7 @@ import {
 class WooCommerceServiceClient {
   private baseUrl: string;
   private authHeader: string;
+  private proxySecret: string;
   private maxRetries = 5;
   private initialBackoffMs = 500;
 
@@ -20,6 +21,11 @@ class WooCommerceServiceClient {
     const url = process.env.WOOCOMMERCE_URL || "";
     const key = process.env.WOOCOMMERCE_CONSUMER_KEY || "";
     const secret = process.env.WOOCOMMERCE_CONSUMER_SECRET || "";
+
+    // Optional shared secret so the origin's Cloudflare WAF can allow-list
+    // requests coming from this app (the deployed Worker has no browser
+    // fingerprint and would otherwise be blocked as a bot).
+    this.proxySecret = process.env.WOOCOMMERCE_PROXY_SECRET || "";
 
     // Normalize base URL
     this.baseUrl = url.endsWith("/") ? url.slice(0, -1) : url;
@@ -54,6 +60,9 @@ class WooCommerceServiceClient {
     headers.set("Authorization", this.authHeader);
     headers.set("Content-Type", "application/json");
     headers.set("User-Agent", "Headless-NextJS-Ecommerce/1.0");
+    if (this.proxySecret) {
+      headers.set("X-Comsri-Proxy", this.proxySecret);
+    }
 
     let attempt = 0;
     let delay = this.initialBackoffMs;
